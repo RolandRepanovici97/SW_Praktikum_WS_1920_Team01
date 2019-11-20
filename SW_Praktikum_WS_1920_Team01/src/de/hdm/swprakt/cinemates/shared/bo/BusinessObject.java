@@ -6,13 +6,13 @@ import java.util.Date;
 /**
  * 
  * Diese Klasse stellt die Basisklasse dar. Sie beinhaltet Attribute und
- * Methoden, welche die anderen Business Objects auch benötigen.
+ * Methoden, welche die anderen Business Objects auch benÃ¶tigen.
  * <p>
  * Zentrales Merkmal ist, dass jedes <code>BusinessObject</code> eine Nummer
- * besitzt, die man in einer relationalen Datenbank auch als Primärschlüssel
- * bezeichnen würde. Außerdem ist jedes <code>BusinessObject</code> als
+ * besitzt, die man in einer relationalen Datenbank auch als PrimÃ¤rschlÃ¼ssel
+ * bezeichnen wÃ¼rde. AuÃŸerdem ist jedes <code>BusinessObject</code> als
  * {@link Serializable} gekennzeichnet. Durch diese Eigenschaft kann jedes
- * <code>BusinessObject</code> automatisch in eine textuelle Form überführt und
+ * <code>BusinessObject</code> automatisch in eine textuelle Form Ã¼berfÃ¼hrt und
  * z.B. zwischen Client und Server transportiert werden.
  * </p>
  * 
@@ -83,13 +83,13 @@ public abstract class BusinessObject implements Serializable {
 	@Override
 	public String toString() {
 		/*
-		 * Wir geben den Klassennamen gefolgt von der ID des Objekts zurück.
+		 * Wir geben den Klassennamen gefolgt von der ID des Objekts zurÃ¼ck.
 		 */
 		return this.getClass().getName() + " #" + this.id;
 	}
 
 	/*
-	 * Diese Methode überprüft zwei Objekte auf Gleichheit
+	 * Diese Methode Ã¼berprÃ¼ft zwei Objekte auf Gleichheit
 	 * 
 	 */
 
@@ -110,7 +110,7 @@ public abstract class BusinessObject implements Serializable {
 			} catch (IllegalArgumentException e) {
 
 				/*
-				 * falls eine Exception geworfen wird, geben wir false zurück.
+				 * falls eine Exception geworfen wird, geben wir false zurÃ¼ck.
 				 * 
 				 */
 
@@ -118,14 +118,14 @@ public abstract class BusinessObject implements Serializable {
 			}
 		}
 		/*
-		 * Wenn keine Gleichheit festgestellt wurde, geben wir false zurück.
+		 * Wenn keine Gleichheit festgestellt wurde, geben wir false zurÃ¼ck.
 		 */
 
 		return false;
 	}
 
 	/*
-	 * Diese Methode erzeugt eine ganze Zahl, die für das
+	 * Diese Methode erzeugt eine ganze Zahl, die fÃ¼r das
 	 * <code>BusinessObject</code> charakteristisch ist.
 	 * 
 	 */

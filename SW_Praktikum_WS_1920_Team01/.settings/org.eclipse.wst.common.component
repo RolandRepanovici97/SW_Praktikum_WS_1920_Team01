@@ -3,5 +3,6 @@
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/" source-path="/src"/>
         <property name="context-root" value="SW_Praktikum_WS_1920_Team01"/>
+        <property name="java-output-path" value="/SW_Praktikum_WS_1920_Team01/bin"/>
     </wb-module>
 </project-modules>

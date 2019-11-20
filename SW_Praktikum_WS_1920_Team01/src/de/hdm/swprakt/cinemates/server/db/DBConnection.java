@@ -11,7 +11,7 @@ public class DBConnection {
 
    
 //    private static String googleUrl = "";
-    private static String localUrl = "jdbc:mysql://\" + \"localhost\" + \":\" + \"3306\" + \"/\" + \"cinemates\" + \"?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Europe/Berlin";
+    private static String localUrl = "jdbc:mysql://" + "localhost" + ":" + "3306" + "/" + "cinemates" + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Europe/Berlin";
 
     
     public static Connection connection() {
@@ -29,9 +29,9 @@ public class DBConnection {
 //                    url = googleUrl;
 //                } else {
                     // Local MySQL instance to use during development.
-                   Class.forName("com.mysql.jdbc.Driver");
+//                   Class.forName("com.mysql.jdbc.Driver");
                     url = localUrl;
-                    System.out.println("connection successfull");
+//                    System.out.println("connection successfull");
 //                }
                 /*
                  * Dann erst kann uns der DriverManager eine Verbindung mit den

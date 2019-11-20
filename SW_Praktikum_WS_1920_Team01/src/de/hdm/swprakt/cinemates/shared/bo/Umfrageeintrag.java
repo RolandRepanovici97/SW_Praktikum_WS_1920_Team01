@@ -2,7 +2,8 @@ package de.hdm.swprakt.cinemates.shared.bo;
 
 /**
  * 
- * Diese Klasse repräsentiert Umfrageeinträge einer Umfrage.
+ * Diese Klasse repräsentiert Umfrageeinträge einer Umfrage. 
+ * Die Klasse <code> Umfrageeintrag </code> erweitert <code> BusinessObject </code>.
  * 
  * @author alina
  * @version 1.o
@@ -28,6 +29,17 @@ public class Umfrageeintrag extends BusinessObject {
 	 */
 
 	private int spielzeitID;
+
+	/*default Konstruktor 
+	 */
+	public Umfrageeintrag() {
+		super();
+	}
+
+	/*
+	 * Im Folgenden werden die Getter und Setter für die privaten Attribute gesetzt,
+	 * damit wir von außen auf diese zugreifen können.
+	 */
 
 	/**
 	 * Auslesen des Attributs umfrageID

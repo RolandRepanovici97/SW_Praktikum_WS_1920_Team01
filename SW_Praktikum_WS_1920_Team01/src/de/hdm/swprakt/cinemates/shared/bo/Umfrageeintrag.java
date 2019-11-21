@@ -19,7 +19,7 @@ public class Umfrageeintrag extends BusinessObject {
 	 */
 	private int umfrageID;
 
-	/*
+	/**
 	 * Ein Umfrageeintrag benötigt eine zugehörige Spielzeit. Die Referenz wird
 	 * mithilfe einer id, welche auf die zugehörige Spielezeit zeigt, realisiert.
 	 * Aus der id kann mithilfe einer entsprechenden Methode (siehe Mapperklasse)

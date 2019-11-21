@@ -4,7 +4,7 @@ import java.util.Vector;
 
 
 
-public class Spielplan extends BusinessObject {
+public class Spielplan extends OwnedBusinessObject {
 	
 	
 	/*
@@ -19,9 +19,6 @@ public class Spielplan extends BusinessObject {
 	private static final long serialVersionUID = 1L;
 
 	
-	// Attribut erstellerID
-	
-	private String erstellerID;
 	
 	// Attribut spielPlanName
 	
@@ -32,18 +29,7 @@ public class Spielplan extends BusinessObject {
 	 * 
 	 */
 	Vector<Integer> spielzeitIDs = new Vector<>();
-	
-	// Aulesen des Attributs erstellerID
 
-	public String getErstellerID() {
-		return erstellerID;
-	}
-	
-	// Setzen des Attributs erstellerID
-
-	public void setErstellerID(String erstellerID) {
-		this.erstellerID = erstellerID;
-	}
 
 	// Aulesen des Attributs spielplanname
 	

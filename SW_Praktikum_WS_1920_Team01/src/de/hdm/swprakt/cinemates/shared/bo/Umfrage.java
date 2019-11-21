@@ -17,17 +17,12 @@ import java.util.Vector;
  *
  */
 
-public class Umfrage extends BusinessObject {
+public class Umfrage extends OwnedBusinessObject {
 
 	/**
 	 * Attribut serialVersionUID
 	 */
 	public static final long serialVersionUID = 1L;
-
-	/**
-	 * Fremdschlüsselbeziehung zum Inhaber des Umfrages
-	 */
-	private int erstellerID = 0;
 
 	/**
 	 * Die Beschreibung des Umfrages
@@ -50,24 +45,6 @@ public class Umfrage extends BusinessObject {
 	 * zu den Spielpläne des Umfrages besteht
 	 */
 	Vector<Integer> gruppenIDs = new Vector<>();
-
-	/**
-	 * Auslesen des Fremdschlüssels des Umfrage Erstellers
-	 * 
-	 * @return
-	 */
-	public int getErstellerID() {
-		return erstellerID;
-	}
-
-	/**
-	 * Setzen des Fremdschlüssels des Umfrage Erstellers
-	 * 
-	 * @param erstellerID
-	 */
-	public void setErstellerID(int erstellerID) {
-		this.erstellerID = erstellerID;
-	}
 
 	/**
 	 * Auslesen des Umfrage Beschreibungs
@@ -145,7 +122,7 @@ public class Umfrage extends BusinessObject {
 	@Override
 	public String toString() {
 		return super.toString() + "Name von der Umfrage oder sowas: " + this.umfragenname + "Umfrage ErstellerID "
-				+ this.erstellerID;
+				+ super.getOwnerID();
 	}
 
 	/**
@@ -169,11 +146,7 @@ public class Umfrage extends BusinessObject {
 		return false;
 
 	}
-
-	// Wir brauchen kein hashCode hier. Nur bei den BO
-	@Override
-	public int hashCode() {
-		return this.erstellerID;
-	}
-
+	
+}
+}
 }

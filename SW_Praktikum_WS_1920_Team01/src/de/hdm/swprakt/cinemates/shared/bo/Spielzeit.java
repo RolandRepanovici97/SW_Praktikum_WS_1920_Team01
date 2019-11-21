@@ -18,7 +18,7 @@ public class Spielzeit extends BusinessObject{
 	// Attribut serialVersionUID
 
 	private static final long serialVersionUID = 1L;
-	
+	g
 	// Attribut datum
 	
 	private Date zeitpunkt;
@@ -35,20 +35,13 @@ public class Spielzeit extends BusinessObject{
 	
 	private int erstellerID;
 
-	public Date getUhrzeit() {
-		return uhrzeit;
+
+	public Date getZeitpunkt() {
+		return zeitpunkt;
 	}
 
-	public void setUhrzeit(Date uhrzeit) {
-		this.uhrzeit = uhrzeit;
-	}
-
-	public Date getDatum() {
-		return datum;
-	}
-
-	public void setDatum(Date datum) {
-		this.datum = datum;
+	public void setZeitpunkt(Date zeitpunkt) {
+		this.zeitpunkt = zeitpunkt;
 	}
 
 	public int getFilmID() {

@@ -19,7 +19,7 @@ public class FilmMapper {
 	/**
 	 * 
 	 */
-	private static FilmMapper filmmapper = null;
+	private static FilmMapper filmMapper = null;
 
 }
 

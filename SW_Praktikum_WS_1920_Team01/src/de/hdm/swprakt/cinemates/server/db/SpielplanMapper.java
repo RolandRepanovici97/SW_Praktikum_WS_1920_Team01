@@ -24,6 +24,6 @@ public class SpielplanMapper {
 	 * 
 	 */
 	
-	private static SpielplanMapper spielplanmapper = null;
+	private static SpielplanMapper spielplanMapper = null;
 
 }

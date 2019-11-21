@@ -19,7 +19,7 @@ public class SpielzeitMapper {
 	 * 
 	 */
 	
-	private static SpielzeitMapper spielzeitmapper = null;
+	private static SpielzeitMapper spielzeitMapper = null;
 
 
 }

@@ -1,5 +1,6 @@
 package de.hdm.swprakt.cinemates.shared.bo;
 
+import java.sql.Time;
 import java.util.Date;
 
 
@@ -17,14 +18,10 @@ public class Spielzeit extends BusinessObject{
 	// Attribut serialVersionUID
 
 	private static final long serialVersionUID = 1L;
-
-	// Attribut uhrzeit
-	
-	private Date uhrzeit;
 	
 	// Attribut datum
 	
-	private Date datum;
+	private Date zeitpunkt;
 	
 	// Attribut filmID 
 	

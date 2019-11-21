@@ -25,7 +25,7 @@ public class Umfrage extends BusinessObject {
 	public static final long serialVersionUID = 1L;
 
 	/**
-	 * Fremdschl�sselbeziehung zum Inhaber des Umfrages
+	 * Fremdschlüsselbeziehung zum Inhaber des Umfrages
 	 */
 	private int erstellerID = 0;
 
@@ -40,19 +40,19 @@ public class Umfrage extends BusinessObject {
 	private String umfragenname;
 
 	/**
-	 * Sammlung der IDs der Spielpl�ne in einer Vector die aus ein
-	 * Fremdschl�sselbeziehung zu den Spielpl�ne des Umfrages besteht
+	 * Sammlung der IDs der Spielpläne in einer Vector die aus ein
+	 * Fremdschlüsselbeziehung zu den Spielpläne des Umfrages besteht
 	 */
 	Vector<Integer> spielplanIDs = new Vector<>();
 
 	/**
-	 * Sammlung der IDs der Gruppen in einer Vector die ein Fremdschl�sselbeziehung
-	 * zu den Spielpl�ne des Umfrages besteht
+	 * Sammlung der IDs der Gruppen in einer Vector die ein Fremdschlüsselbeziehung
+	 * zu den Spielpläne des Umfrages besteht
 	 */
 	Vector<Integer> gruppenIDs = new Vector<>();
 
 	/**
-	 * Auslesen des Fremdschl�ssels des Umfrage Erstellers
+	 * Auslesen des Fremdschlüssels des Umfrage Erstellers
 	 * 
 	 * @return
 	 */
@@ -61,7 +61,7 @@ public class Umfrage extends BusinessObject {
 	}
 
 	/**
-	 * Setzen des Fremdschl�ssels des Umfrage Erstellers
+	 * Setzen des Fremdschlüssels des Umfrage Erstellers
 	 * 
 	 * @param erstellerID
 	 */
@@ -88,14 +88,14 @@ public class Umfrage extends BusinessObject {
 	}
 
 	/*
-	 * Auslesen des IDs der Spielpl�ne die zu der Umfrage geh�ren
+	 * Auslesen des IDs der Spielpläne die zu der Umfrage geh�ren
 	 */
 	public Vector<Integer> getSpielplanIDs() {
 		return spielplanIDs;
 	}
 
 	/**
-	 * Setzen des IDs der Spielpl�ne die zu der Umfrage geh�ren
+	 * Setzen des IDs der Spielpläne die zu der Umfrage gehören
 	 * 
 	 * @param spielplanIDs
 	 */

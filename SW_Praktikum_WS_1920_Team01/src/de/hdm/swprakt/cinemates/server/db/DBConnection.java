@@ -49,7 +49,7 @@ public class DBConnection {
             }
         }
 
-        // Zurückgegeben der Verbindung
+        // Zurï¿½ckgegeben der Verbindung
         return con;
     }
 

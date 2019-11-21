@@ -5,11 +5,11 @@ package de.hdm.swprakt.cinemates.shared.bo;
 
 /**
  * Diese Klasse repräsentiert das Votum zu einem zugehörigen Umfrageeintrag.
- * Die Klasse <code> Votum </code> erweitert <code> Business Object </code>.
+ * Die Klasse <code> Votum </code> erweitert <code> OwnedBusinessObject </code>.
  * @author alina
  * @version 1.0
  */
-public class Votum extends BusinessObject{
+public class Votum extends OwnedBusinessObject{
 
 	/**
 	 * Ein Votum benötigt einen zugehörigen Umfrageeintrag. Die Referenz wird
@@ -18,14 +18,6 @@ public class Votum extends BusinessObject{
 	 * zughörige Umfrageeintragobjekt ermittelt werden.
 	 */
 	private int umfrageeintragID;
-
-	/**
-	 * Ein Votum benötigt einen "Votumgeber", der darstellt, von welchem Nutzer die Stimme abgegeben wird.
-	   Die Referenz wird mithilfe einer id, welche auf das zugehörige Nutzerobjekt zeigt, realisiert. Aus
-	 * der id kann mithilfe einer entsprechenden Methode (siehe Mapperklasse) das
-	 * zughörige Nutzerobjekt ermittelt werden.
-	 */
-	private int votumgeberID;
 
 	/**
 	 *Dieses Attribut repräsentiert die Abstimmung eines Nutzers. 
@@ -67,21 +59,6 @@ public class Votum extends BusinessObject{
 		this.umfrageeintragID = umfrageeintragID;
 	}
 
-	/**
-	 * Auslesen des Attributs votumgeberID
-	 * @return the votumgeberID
-	 */
-	public int getVotumgeberID() {
-		return votumgeberID;
-	}
-
-	/**
-	 * Setzen des Attributs votumgeberID
-	 * @param votumgeberID the votumgeberID to set
-	 */
-	public void setVotumgeberID(int votumgeberID) {
-		this.votumgeberID = votumgeberID;
-	}
 
 	/**
 	 * Auslesen des Attributs istMöglicherTermin
@@ -102,13 +79,13 @@ public class Votum extends BusinessObject{
 	/**
 	 * Erzeugen einer textuellen Darstellung der jeweiligen Instanz der Klasse
 	 * <code> Votum </code>. Diese besteht aus dem Text, der durch die
-	 * <code>toString()</code>-Methode der Superklasse <code> BusinessObject </code>
-	 * erzeugt wird, ergänzt durch die Attribute umfrageeintragID, votumgeberID und istMöglicherTermin.
+	 * <code>toString()</code>-Methode der Superklasse <code> OwnedBusinessObject </code>
+	 * erzeugt wird, ergänzt durch die Attribute umfrageeintragID und istMöglicherTermin.
 	 */
 	@Override
 	public String toString() {
 		return super.toString() + "Votum zu Umfrageeintrag # " + this.umfrageeintragID 
-				+ "Abgegeben von # " + this.votumgeberID + "Ist der Termin möglich?" + this.istMöglicherTermin;
+				+ "Abgegeben von # " + super.getOwnerID() + "Ist der Termin möglich?" + this.istMöglicherTermin;
 	}
 
 

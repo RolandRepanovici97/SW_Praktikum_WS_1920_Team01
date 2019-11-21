@@ -18,7 +18,7 @@ public class Spielzeit extends BusinessObject{
 	// Attribut serialVersionUID
 
 	private static final long serialVersionUID = 1L;
-	g
+	
 	// Attribut datum
 	
 	private Date zeitpunkt;

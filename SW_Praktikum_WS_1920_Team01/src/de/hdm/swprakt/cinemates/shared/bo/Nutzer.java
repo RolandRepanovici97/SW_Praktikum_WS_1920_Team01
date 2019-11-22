@@ -9,7 +9,6 @@ public class Nutzer extends BusinessObject {
 	  private boolean loggedIn = false;
 	  private String loginUrl;
 	  private String logoutUrl;
-	  private String emailAddress;
 	  private String nickname;
 	  
 	  public Nutzer() {
@@ -61,13 +60,6 @@ public class Nutzer extends BusinessObject {
 	    this.logoutUrl = logoutUrl;
 	  }
 
-	  public String getEmailAddress() {
-	    return emailAddress;
-	  }
-
-	  public void setEmailAddress(String emailAddress) {
-	    this.emailAddress = emailAddress;
-	  }
 
 	  public String getNickname() {
 	    return nickname;

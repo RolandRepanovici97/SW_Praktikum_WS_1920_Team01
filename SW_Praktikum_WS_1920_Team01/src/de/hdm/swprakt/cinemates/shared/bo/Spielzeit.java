@@ -1,6 +1,5 @@
 package de.hdm.swprakt.cinemates.shared.bo;
 
-import java.sql.Time;
 import java.util.Date;
 
 

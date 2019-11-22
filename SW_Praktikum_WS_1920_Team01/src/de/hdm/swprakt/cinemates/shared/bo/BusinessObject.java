@@ -89,7 +89,7 @@ public abstract class BusinessObject implements Serializable {
 	}
 
 	/*
-	 * Diese Methode überprüft zwei Objekte auf Gleichheit
+	 * Diese Methode überprüft zwei Objekte auf Gleichheit.
 	 * 
 	 */
 
@@ -124,7 +124,7 @@ public abstract class BusinessObject implements Serializable {
 		return false;
 	}
 
-	/*
+	/**
 	 * Diese Methode erzeugt eine ganze Zahl, die für das
 	 * <code>BusinessObject</code> charakteristisch ist.
 	 * 

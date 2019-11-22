@@ -2,10 +2,9 @@ package de.hdm.swprakt.cinemates.shared.bo;
 
 import java.util.Vector;
 
-public class Gruppe extends BusinessObject{
+public class Gruppe extends OwnedBusinessObject{
 	
 	private String gruppenname;
-	private int ersteller_id;
 	private Vector<Integer> gruppenmitglieder;
 	
 	public Gruppe() {
@@ -19,14 +18,7 @@ public class Gruppe extends BusinessObject{
 	public void setGruppenname(String gruppenname) {
 		this.gruppenname = gruppenname;
 	}
-
-	public int getErstellerId() {
-		return ersteller_id;
-	}
-
-	public void setErstellerId(int ersteller_id) {
-		this.ersteller_id = ersteller_id;
-	}
+	
 	
 	public void addGrupenmitglied(int nutzerkonto_id) {
 		gruppenmitglieder.add(nutzerkonto_id);

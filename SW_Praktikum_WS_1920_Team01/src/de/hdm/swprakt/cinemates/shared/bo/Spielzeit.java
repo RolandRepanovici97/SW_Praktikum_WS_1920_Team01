@@ -4,7 +4,7 @@ import java.util.Date;
 
 
 
-public class Spielzeit extends BusinessObject{
+public class Spielzeit extends OwnedBusinessObject{
 	
 	/*
 	 * Diese Klasse stellt die Spielzeit der Filme dar....
@@ -30,9 +30,6 @@ public class Spielzeit extends BusinessObject{
 	
 	private int kinoID;
 	
-	// Attribut erstellerID
-	
-	private int erstellerID;
 
 
 	public Date getZeitpunkt() {
@@ -59,13 +56,6 @@ public class Spielzeit extends BusinessObject{
 		this.kinoID = kinoID;
 	}
 
-	public int getErstellerID() {
-		return erstellerID;
-	}
-
-	public void setErstellerID(int erstellerID) {
-		this.erstellerID = erstellerID;
-	}
 	
 	
 	

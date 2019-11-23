@@ -2,7 +2,7 @@ package de.hdm.swprakt.cinemates.shared.bo;
 
 import java.io.Serializable;
 
-public class Nutzer extends OwnedBusinessObject {
+public class Nutzer extends BusinessObject {
 
 	  private String email;
 	  private String nutzername;

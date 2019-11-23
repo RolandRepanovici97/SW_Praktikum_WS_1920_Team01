@@ -3,7 +3,6 @@
  */
 package de.hdm.swprakt.cinemates.shared.bo;
 
-import java.util.Date;
 
 /**
  * Diese Klasse stellt eine Erweiterung der abstrakten Klasse <code> BusinessObject </code> dar. Sie beinhaltet alle Attribute und
@@ -25,7 +24,6 @@ public abstract class OwnedBusinessObject extends BusinessObject {
 	 */
 
 	private int ownerID;
-	
 
 	/**
 	 * Auslesen des Attributs ownerID
@@ -41,8 +39,7 @@ public abstract class OwnedBusinessObject extends BusinessObject {
 	 */
 	public void setOwnerID(int ownerID) {
 		this.ownerID = ownerID;
-	}
-
+	}	
 	
 
 

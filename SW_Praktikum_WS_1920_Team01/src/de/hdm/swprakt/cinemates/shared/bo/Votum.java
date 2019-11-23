@@ -19,7 +19,10 @@ public class Votum extends OwnedBusinessObject{
 	 */
 	private int umfrageeintragID;
 	
+<<<<<<< HEAD
 
+=======
+>>>>>>> branch 'master' of https://github.com/alinahafner/SW_Praktikum_WS_1920_Team01.git
 	/**
 	 *Dieses Attribut repräsentiert die Abstimmung eines Nutzers. 
 	 Stimmmt ein Nutzer für den jeweiligen Umfrageeintrag positiv ab (d.h. diese Kombination aus Spielzeit und Ort ist für ihn möglich), 
@@ -28,7 +31,7 @@ public class Votum extends OwnedBusinessObject{
 	 Das Attribut wird später zur Ermittlung des optimalen Termins innerhalb einer <code> Umfrage </code> benötigt. 
 	 */
 
-	private boolean istM�glicherTermin;
+	private boolean istMöglicherTermin;
 
 
 	/*default Konstruktor 
@@ -60,23 +63,26 @@ public class Votum extends OwnedBusinessObject{
 		this.umfrageeintragID = umfrageeintragID;
 	}
 	
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> branch 'master' of https://github.com/alinahafner/SW_Praktikum_WS_1920_Team01.git
 	/**
 	 * Auslesen des Attributs istMöglicherTermin
 	 * @return the istMöglicherTermin
 	 */
-	public boolean isIstM�glicherTermin() {
-		return istM�glicherTermin;
+	public boolean isIstMöglicherTermin() {
+		return istMöglicherTermin;
 	}
 
 	/**
 	 * Setzen des Attributs istMöglicherTermin
 	 * @param istMöglicherTermin the istMöglicherTermin to set
 	 */
-	public void setIstM�glicherTermin(boolean istM�glicherTermin) {
-		this.istM�glicherTermin = istM�glicherTermin;
+	public void setIstMöglicherTermin(boolean istMöglicherTermin) {
+		this.istMöglicherTermin = istMöglicherTermin;
 	}
 
 	/**
@@ -88,7 +94,7 @@ public class Votum extends OwnedBusinessObject{
 	@Override
 	public String toString() {
 		return super.toString() + "Votum zu Umfrageeintrag # " + this.umfrageeintragID 
-				+ "Abgegeben von # " + super.getOwnerID() + "Ist der Termin möglich?" + this.istM�glicherTermin;
+				+ "Abgegeben von # " + super.getOwnerID() + "Ist der Termin möglich?" + this.istMöglicherTermin;
 	}
 
 

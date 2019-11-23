@@ -1,6 +1,6 @@
 package de.hdm.swprakt.cinemates.shared.bo;
 
-import java.util.Date;
+
 
 /**
  * 
@@ -23,7 +23,7 @@ public class Umfrageeintrag extends BusinessObject {
 
 	/**
 	 * Ein Umfrageeintrag benötigt eine zugehörige Spielzeit und ein Kino. Die Referenz wird
-	 * mithilfe einer id, welche auf die zugehörige Spielezeit bzw. das zugeh�rige Kino zeigt, realisiert.
+	 * mithilfe einer id, welche auf die zugehörige Spielezeit bzw. das zugehörige Kino zeigt, realisiert.
 	 * Aus der id kann mithilfe einer entsprechenden Methode (siehe Mapperklasse)
 	 * das zughörige Spielzeitobjekt ermittelt werden. Die Spielzeit wird aus einem
 	 * Spielplan entnommen und stellt die Vorführung eines Films zu einer bestimmten
@@ -31,10 +31,7 @@ public class Umfrageeintrag extends BusinessObject {
 	 */
 
 	private int spielzeitID;
-	
-	private int kinoID;
-	
-	private Date erstellungszeitpunkt;
+
 
 	/*default Konstruktor 
 	 */
@@ -74,30 +71,8 @@ public class Umfrageeintrag extends BusinessObject {
 	public void setSpielzeitID(int spielzeitID) {
 		this.spielzeitID = spielzeitID;
 	}
-	
-	
 
-	public int getKinoID() {
-		return kinoID;
-	}
 
-	public void setKinoID(int kinoID) {
-		this.kinoID = kinoID;
-	}
-	
-	
-
-	public Date getErstellungszeitpunkt() {
-		return erstellungszeitpunkt;
-	}
-
-	public void setErstellungszeitpunkt(Date erstellungszeitpunkt) {
-		this.erstellungszeitpunkt = erstellungszeitpunkt;
-	}
-
-	/*
-	 * 
-	 */
 	/**
 	 * Erzeugen einer textuellen Darstellung der jeweiligen Instanz der Klasse
 	 * Umfrageeintrag. Diese besteht aus dem Text, der durch die

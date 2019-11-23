@@ -25,7 +25,7 @@ public class Film extends BusinessObject {
 
 	// Attribut spiell√§nge
 
-	private float spiell‰nge;
+	private String details;
 
 	// Aulesen des Attributs filmtitel
 
@@ -51,16 +51,16 @@ public class Film extends BusinessObject {
 		this.beschreibung = beschreibung;
 	}
 
-	// Aulesen des Attributs spiell√§nge
+	// Aulesen des Attributs details
 
-	public float getSpiell‰nge() {
-		return spiell‰nge;
+	public String getDetails() {
+		return details;
 	}
 
 	// Setzen des Attributs spiell√§nge
 
-	public void setSpiell√§nge(float spiell‰nge) {
-		this.spiell‰nge = spiell‰nge;
+	public void setDetails(String details) {
+		this.details = details;
 	}
 
 	/**

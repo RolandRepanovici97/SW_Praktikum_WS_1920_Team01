@@ -72,4 +72,12 @@ public class Nutzer extends OwnedBusinessObject {
 	  }
 	  
 	  
+	  public String toString() {
+			/*
+			 * Wir geben den Klassennamen gefolgt von der ID des Objekts zurück.
+			 */
+			return super.toString() + " Email: " + this.getEmail() + "; Nutzername: " + this.getNutzername();
+		}
+	  
+	  
 }

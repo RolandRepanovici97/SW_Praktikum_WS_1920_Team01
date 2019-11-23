@@ -36,14 +36,12 @@ public class NutzerMapper {
 		try {
 			
 		Statement stmt = con.createStatement();
-		ResultSet rs = stmt.executeQuery("SELECT * FROM cinemates.nutzer ORDER BY user_id");
+		ResultSet rs = stmt.executeQuery("SELECT * FROM `nutzer` LEFT JOIN `ownedbusinessobject` ON `nutzer`.`bo_id` = `ownedbusinessobject`.`bo_id` ORDER BY `user_id`;");
 		
 		
 		while(rs.next()) {
 			Nutzer n = new Nutzer();
-			int bo_id = rs.getInt("bo_id");
-//			ResultSet rsbo = stmt.executeQuery("SELECT * FROM ownedbusinessobject WHERE bo_id = " + bo_id);
-//			n.setErstellungszeitpunkt(rsbo.getTimestamp("Erstellungszeitpunkt"));
+			n.setErstellungszeitpunkt(rs.getTimestamp("Erstellungszeitpunkt"));
 			n.setID(rs.getInt("user_id"));
 			n.setEmail(rs.getString("Email"));
 			n.setNutzername(rs.getString("Nutzername"));
@@ -66,10 +64,11 @@ public class NutzerMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM nutzer WHERE user_id = " + id);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `nutzer` LEFT JOIN `ownedbusinessobject` ON `nutzer`.`bo_id` = `ownedbusinessobject`.`bo_id` WHERE user_id = " + id + " ORDER BY `user_id`");
 
 			if (rs.next()) {
 				Nutzer n = new Nutzer();
+				n.setErstellungszeitpunkt(rs.getTimestamp("Erstellungszeitpunkt"));
 				n.setID(rs.getInt("user_id"));
 				n.setEmail(rs.getString("Email"));
 				n.setNutzername(rs.getString("Nutzername"));

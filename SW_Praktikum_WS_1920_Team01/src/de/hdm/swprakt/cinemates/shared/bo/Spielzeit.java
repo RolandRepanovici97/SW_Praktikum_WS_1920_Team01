@@ -44,15 +44,6 @@ public class Spielzeit extends OwnedBusinessObject{
 		this.filmID = filmID;
 	}
 
-	public int getKinoID() {
-		return kinoID;
-	}
-
-	public void setKinoID(int kinoID) {
-		this.kinoID = kinoID;
-	}
-
-	
 	
 	
 	/*

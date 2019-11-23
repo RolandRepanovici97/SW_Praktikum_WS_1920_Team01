@@ -1,6 +1,6 @@
 package de.hdm.swprakt.cinemates.shared.bo;
 
-
+import java.util.Date;
 
 /**
  * 
@@ -31,7 +31,9 @@ public class Umfrageeintrag extends BusinessObject {
 	 */
 
 	private int spielzeitID;
-
+	
+	private int kinoID;
+	
 
 	/*default Konstruktor 
 	 */
@@ -71,7 +73,17 @@ public class Umfrageeintrag extends BusinessObject {
 	public void setSpielzeitID(int spielzeitID) {
 		this.spielzeitID = spielzeitID;
 	}
+	
+	
+	
 
+	public int getKinoID() {
+		return kinoID;
+	}
+
+	public void setKinoID(int kinoID) {
+		this.kinoID = kinoID;
+	}
 
 	/**
 	 * Erzeugen einer textuellen Darstellung der jeweiligen Instanz der Klasse

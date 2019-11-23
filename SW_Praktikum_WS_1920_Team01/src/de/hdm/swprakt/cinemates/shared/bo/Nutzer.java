@@ -2,10 +2,12 @@ package de.hdm.swprakt.cinemates.shared.bo;
 
 import java.io.Serializable;
 
-public class Nutzer extends BusinessObject {
+public class Nutzer extends OwnedBusinessObject {
 
 	  private String email;
 	  private String nutzername;
+	  
+	  //Folgende Attribute sind diejenigen, die vom Google Login Service bereitgestellt werden
 	  private boolean loggedIn = false;
 	  private String loginUrl;
 	  private String logoutUrl;

@@ -18,6 +18,8 @@ public class Votum extends OwnedBusinessObject{
 	 * zughÃ¶rige Umfrageeintragobjekt ermittelt werden.
 	 */
 	private int umfrageeintragID;
+	
+	private int votumgeberID;
 
 	/**
 	 *Dieses Attribut reprÃ¤sentiert die Abstimmung eines Nutzers. 
@@ -58,13 +60,24 @@ public class Votum extends OwnedBusinessObject{
 	public void setUmfrageeintragID(int umfrageeintragID) {
 		this.umfrageeintragID = umfrageeintragID;
 	}
+	
+	
+
+
+	public int getVotumgeberID() {
+		return votumgeberID;
+	}
+
+	public void setVotumgeberID(int votumgeberID) {
+		this.votumgeberID = votumgeberID;
+	}
 
 
 	/**
 	 * Auslesen des Attributs istMÃ¶glicherTermin
 	 * @return the istMÃ¶glicherTermin
 	 */
-	public boolean isistMöglicherTermin() {
+	public boolean isIstMöglicherTermin() {
 		return istMöglicherTermin;
 	}
 
@@ -72,7 +85,7 @@ public class Votum extends OwnedBusinessObject{
 	 * Setzen des Attributs istMÃ¶glicherTermin
 	 * @param istMÃ¶glicherTermin the istMÃ¶glicherTermin to set
 	 */
-	public void setistMöglicherTermin(boolean istMöglicherTermin) {
+	public void setIstMöglicherTermin(boolean istMöglicherTermin) {
 		this.istMöglicherTermin = istMöglicherTermin;
 	}
 

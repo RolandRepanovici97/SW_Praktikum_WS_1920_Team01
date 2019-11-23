@@ -26,7 +26,6 @@ public abstract class OwnedBusinessObject extends BusinessObject {
 
 	private int ownerID;
 	
-	private Date erstellungszeitpunkt;
 
 	/**
 	 * Auslesen des Attributs ownerID
@@ -44,14 +43,6 @@ public abstract class OwnedBusinessObject extends BusinessObject {
 		this.ownerID = ownerID;
 	}
 
-	public Date getErstellungszeitpunkt() {
-		return erstellungszeitpunkt;
-	}
-
-	public void setErstellungszeitpunkt(Date erstellungszeitpunkt) {
-		this.erstellungszeitpunkt = erstellungszeitpunkt;
-	}
-	
 	
 
 

@@ -19,7 +19,6 @@ public class Votum extends OwnedBusinessObject{
 	 */
 	private int umfrageeintragID;
 	
-	private int votumgeberID;
 
 	/**
 	 *Dieses Attribut repräsentiert die Abstimmung eines Nutzers. 
@@ -61,16 +60,7 @@ public class Votum extends OwnedBusinessObject{
 		this.umfrageeintragID = umfrageeintragID;
 	}
 	
-	
 
-
-	public int getVotumgeberID() {
-		return votumgeberID;
-	}
-
-	public void setVotumgeberID(int votumgeberID) {
-		this.votumgeberID = votumgeberID;
-	}
 
 
 	/**

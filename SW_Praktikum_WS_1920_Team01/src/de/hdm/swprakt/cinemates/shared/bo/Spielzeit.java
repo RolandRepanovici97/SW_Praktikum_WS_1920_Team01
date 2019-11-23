@@ -26,10 +26,6 @@ public class Spielzeit extends OwnedBusinessObject{
 	
 	private int filmID;
 	
-	// Attribut kinoID
-	
-	private int kinoID;
-	
 
 
 	public Date getZeitpunkt() {

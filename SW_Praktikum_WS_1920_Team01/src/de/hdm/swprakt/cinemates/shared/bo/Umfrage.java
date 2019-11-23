@@ -3,6 +3,7 @@
  */
 package de.hdm.swprakt.cinemates.shared.bo;
 
+import java.util.Date;
 import java.util.Vector;
 
 /**
@@ -33,12 +34,16 @@ public class Umfrage extends OwnedBusinessObject {
 	 * Der Name des Umfrages
 	 */
 	private String umfragenname;
+	
+	private Date datum;
+	
+	private int filmID;
 
 	/**
-	 * Sammlung der IDs der Spielpl√§ne in einer Vector die aus ein
-	 * Fremdschl√ºsselbeziehung zu den Spielpl√§ne des Umfrages besteht
+	 * Sammlung der IDs der Umrageeintr‰ge in einer Vector die aus ein
+	 * Fremdschl√ºsselbeziehung zu den Umfrageeintr‰gen der Umfrage besteht
 	 */
-	Vector<Integer> spielplanIDs = new Vector<>();
+	Vector<Integer> umfrageeintr‰geIDs = new Vector<>();
 
 	/**
 	 * Sammlung der IDs der Gruppen in einer Vector die ein Fremdschl√ºsselbeziehung
@@ -65,19 +70,19 @@ public class Umfrage extends OwnedBusinessObject {
 	}
 
 	/*
-	 * Auslesen des IDs der Spielpl√§ne die zu der Umfrage gehÔøΩren
+	 * Auslesen des IDs der Umfrageeintr‰ge die zu der Umfrage gehÔøΩren
 	 */
-	public Vector<Integer> getSpielplanIDs() {
-		return spielplanIDs;
+	public Vector<Integer> getUmfrageeintr‰geIDs() {
+		return umfrageeintr‰geIDs;
 	}
 
 	/**
-	 * Setzen des IDs der Spielpl√§ne die zu der Umfrage geh√∂ren
+	 * Setzen des IDs der Umfrageeintr‰ge die zu der Umfrage geh√∂ren
 	 * 
-	 * @param spielplanIDs
+	 * @param umfrageeintr‰geIDs
 	 */
-	public void setSpielplanIDs(Vector<Integer> spielplanIDs) {
-		this.spielplanIDs = spielplanIDs;
+	public void setSpielplanIDs(Vector<Integer> umfrageeintr‰geIDs) {
+		this.umfrageeintr‰geIDs = umfrageeintr‰geIDs;
 	}
 
 	/**
@@ -114,6 +119,24 @@ public class Umfrage extends OwnedBusinessObject {
 	 */
 	public void setGruppenIDs(Vector<Integer> gruppenIDs) {
 		this.gruppenIDs = gruppenIDs;
+	}
+	
+	
+
+	public Date getDatum() {
+		return datum;
+	}
+
+	public void setDatum(Date datum) {
+		this.datum = datum;
+	}
+
+	public int getFilmID() {
+		return filmID;
+	}
+
+	public void setFilmID(int filmID) {
+		this.filmID = filmID;
 	}
 
 	/**

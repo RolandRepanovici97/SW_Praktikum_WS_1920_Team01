@@ -40,10 +40,10 @@ public class Umfrage extends OwnedBusinessObject {
 	private int filmID;
 
 	/**
-	 * Sammlung der IDs der Umrageeinträge in einer Vector die aus ein
-	 * FremdschlÃ¼sselbeziehung zu den Umfrageeinträgen der Umfrage besteht
+	 * Sammlung der IDs der Umrageeintrï¿½ge in einer Vector die aus ein
+	 * FremdschlÃ¼sselbeziehung zu den Umfrageeintrï¿½gen der Umfrage besteht
 	 */
-	Vector<Integer> umfrageeinträgeIDs = new Vector<>();
+	Vector<Integer> umfrageeintrÃ¤geIDs = new Vector<>();
 
 	/**
 	 * Sammlung der IDs der Gruppen in einer Vector die ein FremdschlÃ¼sselbeziehung
@@ -70,19 +70,19 @@ public class Umfrage extends OwnedBusinessObject {
 	}
 
 	/*
-	 * Auslesen des IDs der Umfrageeinträge die zu der Umfrage gehï¿½ren
+	 * Auslesen des IDs der Umfrageeintrï¿½ge die zu der Umfrage gehï¿½ren
 	 */
-	public Vector<Integer> getUmfrageeinträgeIDs() {
-		return umfrageeinträgeIDs;
+	public Vector<Integer> getUmfrageeintrÃ¤geIDs() {
+		return umfrageeintrÃ¤geIDs;
 	}
 
 	/**
-	 * Setzen des IDs der Umfrageeinträge die zu der Umfrage gehÃ¶ren
+	 * Setzen des IDs der Umfrageeintrï¿½ge die zu der Umfrage gehÃ¶ren
 	 * 
-	 * @param umfrageeinträgeIDs
+	 * @param umfrageeintrï¿½geIDs
 	 */
-	public void setSpielplanIDs(Vector<Integer> umfrageeinträgeIDs) {
-		this.umfrageeinträgeIDs = umfrageeinträgeIDs;
+	public void setSpielplanIDs(Vector<Integer> umfrageeintrÃ¤geIDs) {
+		this.umfrageeintrÃ¤geIDs = umfrageeintrÃ¤geIDs;
 	}
 
 	/**

@@ -28,7 +28,7 @@ public class Votum extends OwnedBusinessObject{
 	 Das Attribut wird später zur Ermittlung des optimalen Termins innerhalb einer <code> Umfrage </code> benötigt. 
 	 */
 
-	private boolean istM�glicherTermin;
+	private boolean istMöglicherTermin;
 
 
 	/*default Konstruktor 
@@ -65,16 +65,16 @@ public class Votum extends OwnedBusinessObject{
 	 * Auslesen des Attributs istMöglicherTermin
 	 * @return the istMöglicherTermin
 	 */
-	public boolean isIstM�glicherTermin() {
-		return istM�glicherTermin;
+	public boolean isIstMölicherTermin() {
+		return istMöglicherTermin;
 	}
 
 	/**
 	 * Setzen des Attributs istMöglicherTermin
 	 * @param istMöglicherTermin the istMöglicherTermin to set
 	 */
-	public void setIstM�glicherTermin(boolean istM�glicherTermin) {
-		this.istM�glicherTermin = istM�glicherTermin;
+	public void setIstMöglicherTermin(boolean istMöglicherTermin) {
+		this.istMöglicherTermin = istMöglicherTermin;
 	}
 
 	/**
@@ -86,7 +86,7 @@ public class Votum extends OwnedBusinessObject{
 	@Override
 	public String toString() {
 		return super.toString() + "Votum zu Umfrageeintrag # " + this.umfrageeintragID 
-				+ "Abgegeben von # " + super.getOwnerID() + "Ist der Termin möglich?" + this.istM�glicherTermin;
+				+ "Abgegeben von # " + super.getOwnerID() + "Ist der Termin möglich?" + this.istMöglicherTermin;
 	}
 
 

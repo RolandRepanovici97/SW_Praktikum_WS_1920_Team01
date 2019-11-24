@@ -9,6 +9,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.PopupPanel;
 
 import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
@@ -29,11 +30,12 @@ public class Header extends HorizontalPanel {
 	private Button adminButton;
 	private Button planerButton;
 	private Anchor adminLink;
-	private Anchor planerLiknk;
+	private Anchor planerLink;
 	private PopupPanel nutzerBearbeitungspanel;
 	private Button nutzerkontoAnzeigenButton;
 	private Button nutzerkontoBearbeitenButton;
 	private Button logoutButton;
+	private Image logo;
 	
 	
 	
@@ -52,6 +54,7 @@ public class Header extends HorizontalPanel {
 		nutzerkontoAnzeigenButton = new Button("Nutzerkonto anzeigen");
 		nutzerkontoBearbeitenButton = new Button ("Nutzerkonto bearbeiten");
 		logoutButton = new Button("Logout");
+		logo = new Image("");
 		
 		nutzerBearbeitungspanel = new PopupPanel();
 		/**
@@ -64,6 +67,7 @@ public class Header extends HorizontalPanel {
 		/** Hinzufügen der Buttons/Widgtes zum HorizontalPanel
 		 * 
 		 */
+		this.add(logo);
 		this.add(planerButton);
 		this.add(adminButton);
 		nutzerBearbeitungspanel.add(nutzerkontoAnzeigenButton);

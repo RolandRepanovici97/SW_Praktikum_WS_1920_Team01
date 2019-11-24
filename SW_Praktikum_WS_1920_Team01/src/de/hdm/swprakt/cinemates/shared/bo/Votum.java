@@ -12,6 +12,12 @@ package de.hdm.swprakt.cinemates.shared.bo;
 public class Votum extends OwnedBusinessObject{
 
 	/**
+	 * zur Serialisierung benötigt.
+	 */
+	private static final long serialVersionUID = 1L;
+
+
+	/**
 	 * Ein Votum benötigt einen zugehörigen Umfrageeintrag. Die Referenz wird
 	 * mithilfe einer id, welche auf den zugehörigen <code> Uumfrageeintrag </code>, zeigt, realisiert. Aus
 	 * der id kann mithilfe einer entsprechenden Methode (siehe Mapperklasse) das

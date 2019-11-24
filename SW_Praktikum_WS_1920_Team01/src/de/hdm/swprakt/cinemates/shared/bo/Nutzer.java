@@ -4,7 +4,11 @@ import java.io.Serializable;
 
 public class Nutzer extends OwnedBusinessObject {
 
-	  private String email;
+	  /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String email;
 	  private String nutzername;
 	  
 	  //Folgende Attribute sind diejenigen, die vom Google Login Service bereitgestellt werden

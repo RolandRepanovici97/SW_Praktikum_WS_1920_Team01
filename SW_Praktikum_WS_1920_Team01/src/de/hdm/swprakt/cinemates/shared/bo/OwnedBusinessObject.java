@@ -17,6 +17,10 @@ package de.hdm.swprakt.cinemates.shared.bo;
 public abstract class OwnedBusinessObject extends BusinessObject {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
 	 *  Ein <code> OwnedBusinessObject </code> benötigt einen zugehörigen Owner (Objekt der Klasse <code> Nutzer </code>). Die Referenz wird
 	 * mithilfe einer id, welche auf den zugehörigen Nutzer zeigt, realisiert.
 	 *  Aus der id kann mithilfe einer entsprechenden Methode (siehe Mapperklasse)

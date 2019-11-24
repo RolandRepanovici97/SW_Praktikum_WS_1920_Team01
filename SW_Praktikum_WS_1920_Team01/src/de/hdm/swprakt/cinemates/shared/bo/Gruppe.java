@@ -4,6 +4,10 @@ import java.util.Vector;
 
 public class Gruppe extends OwnedBusinessObject{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String gruppenname;
 	private Vector<Integer> gruppenmitglieder;
 	

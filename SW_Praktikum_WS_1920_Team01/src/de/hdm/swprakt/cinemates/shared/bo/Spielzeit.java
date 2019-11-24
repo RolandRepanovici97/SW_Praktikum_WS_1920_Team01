@@ -4,7 +4,7 @@ import java.util.Date;
 
 
 
-public class Spielzeit extends OwnedBusinessObject{
+public class Spielzeit extends BusinessObject{
 	
 	/*
 	 * Diese Klasse stellt die Spielzeit der Filme dar....

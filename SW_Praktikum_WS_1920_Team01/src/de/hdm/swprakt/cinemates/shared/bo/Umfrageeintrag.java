@@ -1,7 +1,5 @@
 package de.hdm.swprakt.cinemates.shared.bo;
 
-import java.util.Date;
-
 /**
  * 
  * Diese Klasse repräsentiert Umfrageeinträge einer Umfrage. 
@@ -12,6 +10,12 @@ import java.util.Date;
  *
  */
 public class Umfrageeintrag extends BusinessObject {
+
+	/**
+	 * zur Serialisierung benötigt.
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/*
 	 * Ein Umfrageeintrag benötigt eine zugehörige Umfrage. Die Referenz wird
@@ -31,7 +35,7 @@ public class Umfrageeintrag extends BusinessObject {
 	 */
 
 	private int spielzeitID;
-	
+
 	/**
 	 * Ein Umfrageeintrag benötigt ein zugehöriges Kino. Die Referenz wird
 	 * mithilfe einer id, welche auf das zugehörige Kino zeigt, realisiert.
@@ -40,9 +44,9 @@ public class Umfrageeintrag extends BusinessObject {
 	 * Spielplan entnommen und stellt die Vorführung eines Films zu einer bestimmten
 	 * Zeit in einem bestimmten Kino dar.
 	 */
-	
+
 	private int kinoID;
-	
+
 
 	/*default Konstruktor 
 	 */
@@ -82,8 +86,8 @@ public class Umfrageeintrag extends BusinessObject {
 	public void setSpielzeitID(int spielzeitID) {
 		this.spielzeitID = spielzeitID;
 	}
-	
-	
+
+
 	/**
 	 * Auslesen des Attributs kinoID
 	 */

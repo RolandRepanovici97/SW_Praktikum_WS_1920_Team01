@@ -3,6 +3,11 @@
  */
 package de.hdm.swprakt.cinemates.server.db;
 
+import java.sql.Connection;
+import java.sql.Statement;
+
+import de.hdm.swprakt.cinemates.shared.bo.Umfrageeintrag;
+
 /**
  * Diese Mapperklasse bildet <code>Umfrageeintrag</code> Objekte auf eine
  * relationale Datenbank ab. 
@@ -47,5 +52,33 @@ public class UmfrageeintragMapper {
 
 		return umfrageeintragMapper;
 	}
+	
+	/**
+	 * Suchen eines Umfrageeintrags mithilfe seiner ID. Die ID ist eindeutig, es wird genau
+	 * ein Objekt der Klasse <code >Umfrageeintrag </code>zurückgegeben. 
+	 * 
+	 * @param id (Siehe Primärschlüsselattribut der Tabelle Umfrageeintrag in der DB)
+	 * @return Kunden-Objekt, das dem übergebenen Schlüssel entspricht. 
+	 * Ist kein entsprechender Tupel in der DB vorhanden, so geben wir null zurück.
+	 */
 
+	
+public Umfrageeintrag findByKey(int id) {
+	/**
+	 *  Verbindung zur Datenbank aufbauen.
+	 */
+	
+	
+Connection con = DBConnection.connection();
+
+try {
+	/* Leeres SQL-Statement (JDBC) anlegen
+	 * 
+	 */
+	Statement stmt = con.createStatement();
+	
+	
+}
+
+}
 }

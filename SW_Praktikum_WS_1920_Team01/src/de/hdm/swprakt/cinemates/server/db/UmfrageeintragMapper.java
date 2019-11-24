@@ -51,7 +51,7 @@ public class UmfrageeintragMapper {
 		}
 
 		return umfrageeintragMapper;
-	}
+	}}
 	
 	/**
 	 * Suchen eines Umfrageeintrags mithilfe seiner ID. Die ID ist eindeutig, es wird genau
@@ -61,24 +61,3 @@ public class UmfrageeintragMapper {
 	 * @return Kunden-Objekt, das dem übergebenen Schlüssel entspricht. 
 	 * Ist kein entsprechender Tupel in der DB vorhanden, so geben wir null zurück.
 	 */
-
-	
-public Umfrageeintrag findByKey(int id) {
-	/**
-	 *  Verbindung zur Datenbank aufbauen.
-	 */
-	
-	
-Connection con = DBConnection.connection();
-
-try {
-	/* Leeres SQL-Statement (JDBC) anlegen
-	 * 
-	 */
-	Statement stmt = con.createStatement();
-	
-	
-}
-
-}
-}

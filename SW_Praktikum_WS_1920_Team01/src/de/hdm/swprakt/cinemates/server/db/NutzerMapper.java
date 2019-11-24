@@ -85,5 +85,22 @@ public class NutzerMapper {
 		
 		return null;
 	}
+	
+/** @Jon: Nicht sauer ist sein, ich habe diese Methode nur für den Login benötigt,
+ * 
+ */
 
+	public Nutzer findByEmail(String email) {
+		return null;
+		
+	}
+	
+	/** @Jon: Nicht sauer ist sein, ich habe diese Methode nur für den Login benötigt,
+	 * 
+	 */
+
+public void insert(Nutzer nutzer) {
+	// TODO Auto-generated method stub
+	
+}
  }

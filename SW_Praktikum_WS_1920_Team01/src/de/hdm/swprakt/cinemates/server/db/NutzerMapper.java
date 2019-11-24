@@ -1,6 +1,7 @@
 package de.hdm.swprakt.cinemates.server.db;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -12,6 +13,7 @@ import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 public class NutzerMapper {
 	
 	private static NutzerMapper nutzerMapper = null;
+	private static TimestampManager tsm = new TimestampManager();
 	
 	
 	protected NutzerMapper() {
@@ -33,6 +35,7 @@ public class NutzerMapper {
 		Connection con = DBConnection.connection();
 		Vector<Nutzer> nutzer = new Vector<Nutzer>();
 		
+		
 		try {
 			
 		Statement stmt = con.createStatement();
@@ -41,7 +44,7 @@ public class NutzerMapper {
 		
 		while(rs.next()) {
 			Nutzer n = new Nutzer();
-			n.setErstellungszeitpunkt(rs.getTimestamp("Erstellungszeitpunkt"));
+			n.setErstellungszeitpunkt(tsm.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 			n.setID(rs.getInt("user_id"));
 			n.setEmail(rs.getString("Email"));
 			n.setNutzername(rs.getString("Nutzername"));
@@ -68,7 +71,7 @@ public class NutzerMapper {
 
 			if (rs.next()) {
 				Nutzer n = new Nutzer();
-				n.setErstellungszeitpunkt(rs.getTimestamp("Erstellungszeitpunkt"));
+				n.setErstellungszeitpunkt(tsm.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 				n.setID(rs.getInt("user_id"));
 				n.setEmail(rs.getString("Email"));
 				n.setNutzername(rs.getString("Nutzername"));

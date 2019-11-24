@@ -85,7 +85,7 @@ public abstract class BusinessObject implements Serializable {
 		/*
 		 * Wir geben den Klassennamen gefolgt von der ID des Objekts zurück.
 		 */
-		return this.getClass().getName() + " #" + this.id;
+		return this.getClass().getName() + " #" + this.id + "; Erstellungszeitpunkt: " + this.erstellungszeitpunkt;
 	}
 
 	/*

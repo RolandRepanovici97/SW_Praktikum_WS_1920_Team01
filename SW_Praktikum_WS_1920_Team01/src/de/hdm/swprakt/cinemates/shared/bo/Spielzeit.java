@@ -4,7 +4,7 @@ import java.util.Date;
 
 
 
-public class Spielzeit extends OwnedBusinessObject{
+public class Spielzeit extends BusinessObject{
 	
 	/*
 	 * Diese Klasse stellt die Spielzeit der Filme dar....
@@ -17,38 +17,23 @@ public class Spielzeit extends OwnedBusinessObject{
 	// Attribut serialVersionUID
 
 	private static final long serialVersionUID = 1L;
-
-	// Attribut uhrzeit
-	
-	private Date uhrzeit;
 	
 	// Attribut datum
 	
-	private Date datum;
+	private Date zeitpunkt;
 	
 	// Attribut filmID 
 	
 	private int filmID;
 	
-	// Attribut kinoID
-	
-	private int kinoID;
-	
 
-	public Date getUhrzeit() {
-		return uhrzeit;
+
+	public Date getZeitpunkt() {
+		return zeitpunkt;
 	}
 
-	public void setUhrzeit(Date uhrzeit) {
-		this.uhrzeit = uhrzeit;
-	}
-
-	public Date getDatum() {
-		return datum;
-	}
-
-	public void setDatum(Date datum) {
-		this.datum = datum;
+	public void setZeitpunkt(Date zeitpunkt) {
+		this.zeitpunkt = zeitpunkt;
 	}
 
 	public int getFilmID() {
@@ -59,15 +44,6 @@ public class Spielzeit extends OwnedBusinessObject{
 		this.filmID = filmID;
 	}
 
-	public int getKinoID() {
-		return kinoID;
-	}
-
-	public void setKinoID(int kinoID) {
-		this.kinoID = kinoID;
-	}
-
-	
 	
 	
 	/*

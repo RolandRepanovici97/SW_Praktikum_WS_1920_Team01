@@ -3,6 +3,7 @@
  */
 package de.hdm.swprakt.cinemates.shared.bo;
 
+
 /**
  * Diese Klasse stellt eine Erweiterung der abstrakten Klasse <code> BusinessObject </code> dar. Sie beinhaltet alle Attribute und
  * Methoden, welche in der Superklasse <code> BusinessObject </code> definiert sind,
@@ -15,6 +16,10 @@ package de.hdm.swprakt.cinemates.shared.bo;
  */
 public abstract class OwnedBusinessObject extends BusinessObject {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/**
 	 *  Ein <code> OwnedBusinessObject </code> benötigt einen zugehörigen Owner (Objekt der Klasse <code> Nutzer </code>). Die Referenz wird
 	 * mithilfe einer id, welche auf den zugehörigen Nutzer zeigt, realisiert.
@@ -38,7 +43,8 @@ public abstract class OwnedBusinessObject extends BusinessObject {
 	 */
 	public void setOwnerID(int ownerID) {
 		this.ownerID = ownerID;
-	}
+	}	
+	
 
 
 }

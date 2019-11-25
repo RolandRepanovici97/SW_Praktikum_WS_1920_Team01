@@ -5,7 +5,7 @@
 -->
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.8.1//EN"
   "http://www.gwtproject.org/doctype/2.8.1/gwt-module.dtd">
-<module rename-to='sw_praktikum_ws_1920_team01'>
+<module rename-to='kinoadministration'>
   <!-- Inherit the core Web Toolkit stuff.                        -->
   <inherits name='com.google.gwt.user.User'/>
 
@@ -20,7 +20,7 @@
   <!-- Other module inherits                                      -->
 
   <!-- Specify the app entry point class.                         -->
-  <entry-point class='de.hdm.swprakt.cinemates.client.KinobesuchsplanungEntry'/>
+  <entry-point class='de.hdm.swprakt.cinemates.client.AdministrationEntry'/>
 
   <!-- Specify the paths for translatable code                    -->
   <source path='client'/>

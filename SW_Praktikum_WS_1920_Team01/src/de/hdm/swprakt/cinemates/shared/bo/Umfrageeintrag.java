@@ -11,6 +11,12 @@ package de.hdm.swprakt.cinemates.shared.bo;
  */
 public class Umfrageeintrag extends BusinessObject {
 
+	/**
+	 * zur Serialisierung benötigt.
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/*
 	 * Ein Umfrageeintrag benötigt eine zugehörige Umfrage. Die Referenz wird
 	 * mithilfe einer id, welche auf die zugehörige Umfrage zeigt, realisiert. Aus
@@ -20,8 +26,8 @@ public class Umfrageeintrag extends BusinessObject {
 	private int umfrageID;
 
 	/**
-	 * Ein Umfrageeintrag benötigt eine zugehörige Spielzeit. Die Referenz wird
-	 * mithilfe einer id, welche auf die zugehörige Spielezeit zeigt, realisiert.
+	 * Ein Umfrageeintrag benötigt eine zugehörige Spielzeit und ein Kino. Die Referenz wird
+	 * mithilfe einer id, welche auf die zugehörige Spielezeit bzw. das zugehörige Kino zeigt, realisiert.
 	 * Aus der id kann mithilfe einer entsprechenden Methode (siehe Mapperklasse)
 	 * das zughörige Spielzeitobjekt ermittelt werden. Die Spielzeit wird aus einem
 	 * Spielplan entnommen und stellt die Vorführung eines Films zu einer bestimmten
@@ -29,6 +35,18 @@ public class Umfrageeintrag extends BusinessObject {
 	 */
 
 	private int spielzeitID;
+
+	/**
+	 * Ein Umfrageeintrag benötigt ein zugehöriges Kino. Die Referenz wird
+	 * mithilfe einer id, welche auf das zugehörige Kino zeigt, realisiert.
+	 * Aus der id kann mithilfe einer entsprechenden Methode (siehe Mapperklasse)
+	 * das zughörige Kinoobjekt ermittelt werden. Die Spielzeit wird aus einem
+	 * Spielplan entnommen und stellt die Vorführung eines Films zu einer bestimmten
+	 * Zeit in einem bestimmten Kino dar.
+	 */
+
+	private int kinoID;
+
 
 	/*default Konstruktor 
 	 */
@@ -69,18 +87,32 @@ public class Umfrageeintrag extends BusinessObject {
 		this.spielzeitID = spielzeitID;
 	}
 
-	/*
-	 * 
+
+	/**
+	 * Auslesen des Attributs kinoID
 	 */
+
+	public int getKinoID() {
+		return kinoID;
+	}
+	/**
+	 * Setzen des Attributs kinoID
+	 */
+
+	public void setKinoID(int kinoID) {
+		this.kinoID = kinoID;
+	}
+
 	/**
 	 * Erzeugen einer textuellen Darstellung der jeweiligen Instanz der Klasse
 	 * Umfrageeintrag. Diese besteht aus dem Text, der durch die
 	 * <code>toString()</code>-Methode der Superklasse <code> BusinessObject </code>
-	 * erzeugt wird, ergänzt durch die Attribute umfrageID und spielzeitID.
+	 * erzeugt wird, ergänzt durch die Attribute umfrageID, spielzeitID und kinoID.
 	 */
 	@Override
 	public String toString() {
-		return super.toString() + "Umfrage # " + this.umfrageID + "Spielzeit # " + this.spielzeitID;
+		return super.toString() + "Umfrage # " + this.umfrageID + "Spielzeit # " + this.spielzeitID 
+				+ "Kino # " +this.kinoID;
 	}
 
 	/**

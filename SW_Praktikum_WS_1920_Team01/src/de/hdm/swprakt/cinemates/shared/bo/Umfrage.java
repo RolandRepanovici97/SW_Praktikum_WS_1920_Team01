@@ -3,6 +3,7 @@
  */
 package de.hdm.swprakt.cinemates.shared.bo;
 
+import java.util.Date;
 import java.util.Vector;
 
 /**
@@ -33,12 +34,16 @@ public class Umfrage extends OwnedBusinessObject {
 	 * Der Name des Umfrages
 	 */
 	private String umfragenname;
+	
+	private Date datum;
+	
+	private int filmID;
 
 	/**
-	 * Sammlung der IDs der Spielpläne in einer Vector die aus ein
-	 * Fremdschlüsselbeziehung zu den Spielpläne des Umfrages besteht
+	 * Sammlung der IDs der Umrageeintr�ge in einer Vector die aus ein
+	 * Fremdschlüsselbeziehung zu den Umfrageeintr�gen der Umfrage besteht
 	 */
-	Vector<Integer> spielplanIDs = new Vector<>();
+	Vector<Integer> umfrageeinträgeIDs = new Vector<>();
 
 	/**
 	 * Sammlung der IDs der Gruppen in einer Vector die ein Fremdschlüsselbeziehung
@@ -65,19 +70,19 @@ public class Umfrage extends OwnedBusinessObject {
 	}
 
 	/*
-	 * Auslesen des IDs der Spielpläne die zu der Umfrage geh�ren
+	 * Auslesen des IDs der Umfrageeintr�ge die zu der Umfrage geh�ren
 	 */
-	public Vector<Integer> getSpielplanIDs() {
-		return spielplanIDs;
+	public Vector<Integer> getUmfrageeinträgeIDs() {
+		return umfrageeinträgeIDs;
 	}
 
 	/**
-	 * Setzen des IDs der Spielpläne die zu der Umfrage gehören
+	 * Setzen des IDs der Umfrageeintr�ge die zu der Umfrage gehören
 	 * 
-	 * @param spielplanIDs
+	 * @param umfrageeintr�geIDs
 	 */
-	public void setSpielplanIDs(Vector<Integer> spielplanIDs) {
-		this.spielplanIDs = spielplanIDs;
+	public void setSpielplanIDs(Vector<Integer> umfrageeinträgeIDs) {
+		this.umfrageeinträgeIDs = umfrageeinträgeIDs;
 	}
 
 	/**
@@ -115,6 +120,24 @@ public class Umfrage extends OwnedBusinessObject {
 	public void setGruppenIDs(Vector<Integer> gruppenIDs) {
 		this.gruppenIDs = gruppenIDs;
 	}
+	
+	
+
+	public Date getDatum() {
+		return datum;
+	}
+
+	public void setDatum(Date datum) {
+		this.datum = datum;
+	}
+
+	public int getFilmID() {
+		return filmID;
+	}
+
+	public void setFilmID(int filmID) {
+		this.filmID = filmID;
+	}
 
 	/**
 	 * Erzeugen einer textuellen Darstellung der ...
@@ -148,5 +171,4 @@ public class Umfrage extends OwnedBusinessObject {
 	}
 	
 }
-}
-}
+

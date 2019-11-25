@@ -2,14 +2,19 @@ package de.hdm.swprakt.cinemates.shared.bo;
 
 import java.io.Serializable;
 
-public class Nutzer extends BusinessObject {
+public class Nutzer extends OwnedBusinessObject {
 
-	  private String email;
+	  /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String email;
 	  private String nutzername;
+	  
+	  //Folgende Attribute sind diejenigen, die vom Google Login Service bereitgestellt werden
 	  private boolean loggedIn = false;
 	  private String loginUrl;
 	  private String logoutUrl;
-	  private String emailAddress;
 	  private String nickname;
 	  
 	  public Nutzer() {
@@ -61,13 +66,6 @@ public class Nutzer extends BusinessObject {
 	    this.logoutUrl = logoutUrl;
 	  }
 
-	  public String getEmailAddress() {
-	    return emailAddress;
-	  }
-
-	  public void setEmailAddress(String emailAddress) {
-	    this.emailAddress = emailAddress;
-	  }
 
 	  public String getNickname() {
 	    return nickname;
@@ -76,6 +74,14 @@ public class Nutzer extends BusinessObject {
 	  public void setNickname(String nickname) {
 	    this.nickname = nickname;
 	  }
+	  
+	  
+	  public String toString() {
+			/*
+			 * Wir geben den Klassennamen gefolgt von der ID des Objekts zurück.
+			 */
+			return super.toString() + " Email: " + this.getEmail() + "; Nutzername: " + this.getNutzername();
+		}
 	  
 	  
 }

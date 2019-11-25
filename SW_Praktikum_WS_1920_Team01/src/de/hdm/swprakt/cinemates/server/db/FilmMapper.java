@@ -1,6 +1,12 @@
 package de.hdm.swprakt.cinemates.server.db;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Vector;
 
+import de.hdm.swprakt.cinemates.shared.bo.Film;
 
 /**
  * Diese Mapperklasse bildet <code>Film</code> Objekte auf eine relationale
@@ -51,5 +57,55 @@ public class FilmMapper {
 		}
 
 		return filmMapper;
+	}
+
+	public Vector<Film> findAll() {
+
+		Connection con = DBConnection.connection();
+		Vector<Film> film = new Vector<Film>();
+
+		try {
+
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `film`");
+
+			while (rs.next()) {
+				Film f = new Film();
+				f.setID(rs.getInt("film_id"));
+				f.setFilmtitel(rs.getString("filmtitel"));
+				f.setBeschreibung(rs.getString("Beschreibung"));
+				f.setDetails(rs.getString("Details"));
+				film.add(f);
+			}
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return film;
+
+	}
+
+	public Film findByID(int id) {
+
+		Connection con = DBConnection.connection();
+
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `film` WHERE film_id = " + id + "ORDER BY `film_id`");
+
+			if (rs.next()) {
+				Film f = new Film();
+				f.setFilmtitel(rs.getString("film_id"));
+				f.setBeschreibung(rs.getString("Beschreibung"));
+				f.setDetails(rs.getString("Details"));
+
+				return f;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

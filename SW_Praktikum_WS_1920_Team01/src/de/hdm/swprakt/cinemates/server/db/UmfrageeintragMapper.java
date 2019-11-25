@@ -4,8 +4,12 @@
 package de.hdm.swprakt.cinemates.server.db;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Vector;
 
+import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 import de.hdm.swprakt.cinemates.shared.bo.Umfrageeintrag;
 
 /**
@@ -27,6 +31,7 @@ public class UmfrageeintragMapper {
 	 * 
 	 */
 	private static UmfrageeintragMapper umfrageeintragMapper = null;
+	private static TimestampManager tsm = new TimestampManager();
 
 
 	/** 
@@ -51,13 +56,80 @@ public class UmfrageeintragMapper {
 		}
 
 		return umfrageeintragMapper;
-	}}
-	
+	}
+
 	/**
 	 * Suchen eines Umfrageeintrags mithilfe seiner ID. Die ID ist eindeutig, es wird genau
 	 * ein Objekt der Klasse <code >Umfrageeintrag </code>zurückgegeben. 
 	 * 
 	 * @param id (Siehe Primärschlüsselattribut der Tabelle Umfrageeintrag in der DB)
-	 * @return Kunden-Objekt, das dem übergebenen Schlüssel entspricht. 
+	 * @return Umfrageeintrag-Objekt, das dem übergebenen Schlüssel entspricht. 
 	 * Ist kein entsprechender Tupel in der DB vorhanden, so geben wir null zurück.
 	 */
+
+	public Umfrageeintrag findByID(int id) {
+
+		//Verbindung zur Datenbank aufbauen.
+		Connection con = DBConnection.connection();
+
+		try {
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM umfrageeintrag = " + "WHERE id=" + id + "ORDER BY umfrageeintrag_id");
+
+			/* Da ID Primaerschlüssel ist, kann max. nur ein Tupel zurückgegeben werden.
+			 * Prüfe, ob ein Ergebnis vorliegt.
+			 */
+			if (rs.next()) {
+				// Ergebnis-Tupel in Objekt umwandeln
+				Umfrageeintrag umfrageeintrag = new Umfrageeintrag();
+				umfrageeintrag.setErstellungszeitpunkt(tsm.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+				umfrageeintrag.setID(rs.getInt("umfrageeintrag_id"));
+				umfrageeintrag.setKinoID(rs.getInt("kino_id"));
+				umfrageeintrag.setUmfrageID(rs.getInt("umfrage_id"));
+
+
+				return umfrageeintrag;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+	public Vector <Umfrageeintrag> findAll(){
+		//Verbindung zur Datenbank aufbauen.
+		Connection con = DBConnection.connection();
+		//Neuen Vector instantiieren, in welchem Umfrageeintrag-Objekte gespeichert werden.
+
+		Vector <Umfrageeintrag> vectorumfrageeintrag = new Vector <Umfrageeintrag>();
+
+		try {
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM umfrageeintrag ORDER BY umfrageeintrag_id");
+
+			/* Befüllen des result sets
+			 */
+			if (rs.next()) {
+				// Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt
+				Umfrageeintrag umfrageeintrag = new Umfrageeintrag();
+				umfrageeintrag.setErstellungszeitpunkt(tsm.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+				umfrageeintrag.setID(rs.getInt("umfrageeintrag_id"));
+				umfrageeintrag.setKinoID(rs.getInt("kino_id"));
+				umfrageeintrag.setUmfrageID(rs.getInt("umfrage_id"));
+				vectorumfrageeintrag.add(umfrageeintrag);
+
+				return vectorumfrageeintrag;
+
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+}

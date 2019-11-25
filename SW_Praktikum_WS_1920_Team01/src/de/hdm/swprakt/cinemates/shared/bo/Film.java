@@ -63,6 +63,23 @@ public class Film extends BusinessObject {
 		this.details = details;
 	}
 
+	
+	
+	/**
+	 * Erzeugen einer textuellen Darstellung der jeweiligen Instanz der Klasse
+	 * <code> Film </code>. Diese besteht aus dem Text, der durch die
+	 * <code>toString()</code>-Methode der Superklasse <code> OwnedBusinessObject </code>
+	 * erzeugt wird. 
+	 */
+	@Override
+	public String toString() {
+		return super.toString() + "Film: " + this.filmtitel 
+				+ "Beschreibung " + this.beschreibung + "Details:" + this.details;
+	}
+
+
+	
+	
 	/**
 	 * Diese Methode erzeugt eine ganze Zahl, die für die Instanz von
 	 * <code>Spielzeit</code> charakteristisch ist.

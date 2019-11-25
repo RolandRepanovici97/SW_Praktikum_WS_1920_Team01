@@ -55,6 +55,20 @@ public class Spielplan extends OwnedBusinessObject {
 		this.spielzeitIDs = spielzeitIDs;
 	}
 	
+	
+	/**
+	 * Erzeugen einer textuellen Darstellung der jeweiligen Instanz der Klasse
+	 * <code> Spielplan </code>. Diese besteht aus dem Text, der durch die
+	 * <code>toString()</code>-Methode der Superklasse <code> OwnedBusinessObject </code>
+	 * erzeugt wird. 
+	 */
+	@Override
+	public String toString() {
+		return super.toString() + "Spielplanname: " + this.spielplanname 
+				+ "Spielzeit der FIlme " + this.spielzeitIDs;
+	}
+	
+	
 	/**
 	 * Diese Methode erzeugt eine ganze Zahl, die für die Instanz von
 	 * <code>Spielplan</code> charakteristisch ist.

@@ -71,7 +71,8 @@ public class FilmMapper {
 
 			while (rs.next()) {
 				Film f = new Film();
-				f.setFilmtitel(rs.getString("film_id"));
+				f.setID(rs.getInt("film_id"));
+				f.setFilmtitel(rs.getString("filmtitel"));
 				f.setBeschreibung(rs.getString("Beschreibung"));
 				f.setDetails(rs.getString("Details"));
 				film.add(f);

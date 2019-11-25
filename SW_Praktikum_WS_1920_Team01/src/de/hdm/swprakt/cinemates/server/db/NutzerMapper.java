@@ -9,8 +9,6 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Vector;
-
-import de.hdm.softwarepraktikum.shared.bo.User;
 import de.hdm.swprakt.cinemates.shared.bo.Gruppe;
 import de.hdm.swprakt.cinemates.shared.bo.Kinokette;
 import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
@@ -237,49 +235,7 @@ public class NutzerMapper {
 		
 	}
 	
-	// wird hier nicht gebraucht. Im Umfragemapper eine Funktion getGruppenOf (Umfrage umfrage). Dann werden Gruppenmitglieder über die NutzerMapper Methode getGruppenmitgliederOf ausgelesen
-//	public Vector<Nutzer> getUmfragemitgliederOf (Umfrage umfrage){
-//		
-//		return null;
-//		
-//	}
-	
-	public Nutzer getKinobetreiberOf (Kinokette kinokette) {
-		return null;
-		
-	}
-	
-	public Nutzer getGruppenadminOf (Gruppe gruppe) {
-		
-		return null;
-		
-	}
-	
-	public Nutzer getUmfrageerstellerOf (Umfrage umfrage) {
-		
-		return null;
-		
-	}
-	
-	public Nutzer getVotumgeberOf (Votum votum) {
-		
-		return null;
-		
-	}
-	
-	public Nutzer getSpielplanerstellerOf (Spielplan spielplan) {
-		
-		return null;
-		
-	}
-	
-	
-	public Nutzer getSpielzeiterstellerOf (Spielzeit spielzeit) {
-		
-		return null;
-		
-	}
-	
+
 	
 
  }

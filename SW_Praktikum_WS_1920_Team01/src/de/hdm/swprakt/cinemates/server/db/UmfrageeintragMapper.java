@@ -103,7 +103,7 @@ public class UmfrageeintragMapper {
 
 		return null;
 	}
-	
+
 	/**
 	 * Suchen aller Objekte der Klasse <code> Umfrageeintrag </code>
 	 * @return Vector <Umfrageeintrag>, welcher alle Umfrageeinträge beinhaltet
@@ -154,40 +154,40 @@ public class UmfrageeintragMapper {
 	public Vector <Umfrageeintrag> findUmfrageeinträgeByUmfrage(Umfrage umfrage) {
 
 		//Verbindung zur Datenbank aufbauen.
-		
+
 		Connection con = DBConnection.connection();
 		//Neuen Vector instantiieren, in welchem Umfrageeintrag-Objekte gespeichert werden.
 
 		Vector <Umfrageeintrag> vectorumfrageeintrag = new Vector <Umfrageeintrag>();
 		try {
-			
-		
-		// Leeres SQL-Statement (JDBC) anlegen
-					Statement stmt = con.createStatement();
-					ResultSet rs = stmt.executeQuery("SELECT * FROM umfrageeintrag LEFT JOIN umfrage WHERE umfrageeintrag.umfrage_id=" +umfrage.getID() + "ORDER BY umfrageeintrag_id");
 
-					/* Befüllen des result sets
-					 */
-					if (rs.next()) {
-						// Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt
-						Umfrageeintrag umfrageeintrag = new Umfrageeintrag();
-						umfrageeintrag.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
-						umfrageeintrag.setID(rs.getInt("umfrageeintrag_id"));
-						umfrageeintrag.setKinoID(rs.getInt("kino_id"));
-						umfrageeintrag.setUmfrageID(rs.getInt("umfrage_id"));
-						vectorumfrageeintrag.add(umfrageeintrag);
 
-						return vectorumfrageeintrag;
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM umfrageeintrag LEFT JOIN umfrage WHERE umfrageeintrag.umfrage_id=" +umfrage.getID() + "ORDER BY umfrageeintrag_id");
 
-					}
-				}
-				catch (SQLException e) {
-					e.printStackTrace();
-				}
+			/* Befüllen des result sets
+			 */
+			if (rs.next()) {
+				// Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt
+				Umfrageeintrag umfrageeintrag = new Umfrageeintrag();
+				umfrageeintrag.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+				umfrageeintrag.setID(rs.getInt("umfrageeintrag_id"));
+				umfrageeintrag.setKinoID(rs.getInt("kino_id"));
+				umfrageeintrag.setUmfrageID(rs.getInt("umfrage_id"));
+				vectorumfrageeintrag.add(umfrageeintrag);
 
-				return null;
+				return vectorumfrageeintrag;
+
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
 	}
-	
+
 	/**
 	 * Suchen aller Objekte der Klasse <code> Umfrageeintrag </code>, welche die übergebene Spielzeit enthalten
 	 * @param Objekt der Klasse <Spielzeit>
@@ -198,40 +198,40 @@ public class UmfrageeintragMapper {
 	public Vector <Umfrageeintrag> findUmfrageeinträgeBySpielzeit(Spielzeit spielzeit) {
 
 		//Verbindung zur Datenbank aufbauen.
-		
+
 		Connection con = DBConnection.connection();
 		//Neuen Vector instantiieren, in welchem Umfrageeintrag-Objekte gespeichert werden.
 
 		Vector <Umfrageeintrag> vectorumfrageeintrag = new Vector <Umfrageeintrag>();
 		try {
-			
-		
-		// Leeres SQL-Statement (JDBC) anlegen
-					Statement stmt = con.createStatement();
-					ResultSet rs = stmt.executeQuery("SELECT * FROM umfrageeintrag LEFT JOIN spielzeit WHERE umfrageeintrag.spielzeit_id=" +spielzeit.getID() + "ORDER BY umfrageeintrag_id");
 
-					/* Befüllen des result sets
-					 */
-					if (rs.next()) {
-						// Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt
-						Umfrageeintrag umfrageeintrag = new Umfrageeintrag();
-						umfrageeintrag.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
-						umfrageeintrag.setID(rs.getInt("umfrageeintrag_id"));
-						umfrageeintrag.setKinoID(rs.getInt("kino_id"));
-						umfrageeintrag.setUmfrageID(rs.getInt("umfrage_id"));
-						vectorumfrageeintrag.add(umfrageeintrag);
 
-						return vectorumfrageeintrag;
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM umfrageeintrag LEFT JOIN spielzeit WHERE umfrageeintrag.spielzeit_id=" +spielzeit.getID() + "ORDER BY umfrageeintrag_id");
 
-					}
-				}
-				catch (SQLException e) {
-					e.printStackTrace();
-				}
+			/* Befüllen des result sets
+			 */
+			if (rs.next()) {
+				// Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt
+				Umfrageeintrag umfrageeintrag = new Umfrageeintrag();
+				umfrageeintrag.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+				umfrageeintrag.setID(rs.getInt("umfrageeintrag_id"));
+				umfrageeintrag.setKinoID(rs.getInt("kino_id"));
+				umfrageeintrag.setUmfrageID(rs.getInt("umfrage_id"));
+				vectorumfrageeintrag.add(umfrageeintrag);
 
-				return null;
+				return vectorumfrageeintrag;
+
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
 	}
-	
+
 	/**
 	 * Suchen aller Objekte der Klasse <code> Umfrageeintrag </code>, welche ein übergebenes Kino enthalten
 	 * @param Objekt der Klasse <Spielzeit>
@@ -242,50 +242,50 @@ public class UmfrageeintragMapper {
 	public Vector <Umfrageeintrag> findUmfrageeinträgeByKino(Kino kino) {
 
 		//Verbindung zur Datenbank aufbauen.
-		
+
 		Connection con = DBConnection.connection();
 		//Neuen Vector instantiieren, in welchem Umfrageeintrag-Objekte gespeichert werden.
 
 		Vector <Umfrageeintrag> vectorumfrageeintrag = new Vector <Umfrageeintrag>();
 		try {
-			
-		
-		// Leeres SQL-Statement (JDBC) anlegen
-					Statement stmt = con.createStatement();
-					ResultSet rs = stmt.executeQuery("SELECT * FROM umfrageeintrag LEFT JOIN kino WHERE umfrageeintrag.kino_id=" + kino.getID() + "ORDER BY umfrageeintrag_id");
 
-					/* Befüllen des result sets
-					 */
-					if (rs.next()) {
-						// Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt
-						Umfrageeintrag umfrageeintrag = new Umfrageeintrag();
-						umfrageeintrag.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
-						umfrageeintrag.setID(rs.getInt("umfrageeintrag_id"));
-						umfrageeintrag.setKinoID(rs.getInt("kino_id"));
-						umfrageeintrag.setUmfrageID(rs.getInt("umfrage_id"));
-						vectorumfrageeintrag.add(umfrageeintrag);
 
-						return vectorumfrageeintrag;
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM umfrageeintrag LEFT JOIN kino WHERE umfrageeintrag.kino_id=" + kino.getID() + "ORDER BY umfrageeintrag_id");
 
-					}
-				}
-				catch (SQLException e) {
-					e.printStackTrace();
-				}
+			/* Befüllen des result sets
+			 */
+			if (rs.next()) {
+				// Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt
+				Umfrageeintrag umfrageeintrag = new Umfrageeintrag();
+				umfrageeintrag.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+				umfrageeintrag.setID(rs.getInt("umfrageeintrag_id"));
+				umfrageeintrag.setKinoID(rs.getInt("kino_id"));
+				umfrageeintrag.setUmfrageID(rs.getInt("umfrage_id"));
+				vectorumfrageeintrag.add(umfrageeintrag);
 
-				return null;
+				return vectorumfrageeintrag;
+
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 	/**
 	 * Einfügen eines Umfrageeintrags in die Datenbank.
 	 * @return Ein Objekt der Klasse <Umfrageeintrag>
 	 */
-	
+
 	public Umfrageeintrag insert (Umfrageeintrag umfrageeintrag) {
-		 
+
 		//Verbindung zur Datenbank aufbauen.
-		
+
 		Connection con = DBConnection.connection();
-		
+
 		try {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
@@ -294,85 +294,75 @@ public class UmfrageeintragMapper {
 			if (rs.next()) {
 				umfrageeintrag.setID(rs.getInt("maxid") + 1);
 			}	
-			
+
 			PreparedStatement pstmt = con.prepareStatement("INSERT INTO umfrageeintrag(umfrageeintrag_id, erstellungszeitpunkt"
 					+ "kino_id, umfrage_id VALUES (?, ?, ?, ?) ");
 			pstmt.setInt(1, umfrageeintrag.getID());
 			pstmt.setTimestamp(2, dc.aktuellerTimestamp());
 			umfrageeintrag.setErstellungszeitpunkt(dc.convertTimestampToDate(dc.aktuellerTimestamp()));
 			pstmt.setInt(3, umfrageeintrag.getKinoID());
-			pstmt.setInt(4, umfrageeintrag.getKinoID());
+			pstmt.setInt(4, umfrageeintrag.getUmfrageID());
 			pstmt.executeUpdate();
 			return umfrageeintrag;
-			
+
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
-		
-		
+
+
 	}
 	/**
-	 * Aktualisieren eines Umfrageeintrags in der Datenbank.
+	 * Aktualisieren eines Umfrageeintrags in der Datenbank.Achtung: Es können nicht alle Attribute aktualisiert werden.
+	 * Es wurde auf weniger sinnvolle Möglichkeiten verzichtet.
 	 * @return Ein (überarbeitetes) Objekt der Klasse <Umfrageeintrag>
 	 */
-	
-	public Umfrageeintrag update (Umfrageeintrag umfrageeintrag) {
-		 
-		//Verbindung zur Datenbank aufbauen.
-		
-		Connection con = DBConnection.connection();
-		
-		try {
-			// Leeres SQL-Statement (JDBC) anlegen
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT MAX(umfrageeintrag_id) AS maxid FROM umfrageintrag");
 
-			if (rs.next()) {
-				umfrageeintrag.setID(rs.getInt("maxid") + 1);
-			}	
-			
-			PreparedStatement pstmt = con.prepareStatement("INSERT INTO umfrageeintrag(umfrageeintrag_id, erstellungszeitpunkt"
-					+ "kino_id, umfrage_id VALUES (?, ?, ?, ?) ");
-			pstmt.setInt(1, umfrageeintrag.getID());
-			pstmt.setTimestamp(2, dc.aktuellerTimestamp());
-			umfrageeintrag.setErstellungszeitpunkt(dc.convertTimestampToDate(dc.aktuellerTimestamp()));
+	public Umfrageeintrag update (Umfrageeintrag umfrageeintrag) {
+
+		//Verbindung zur Datenbank aufbauen.
+
+		Connection con = DBConnection.connection();
+
+		try {
+
+			PreparedStatement pstmt = con.prepareStatement("UPDATE umfrageeintrag SET kino_id= ?, umfrage_id=? WHERE umfrageeintrag_id=?");
 			pstmt.setInt(3, umfrageeintrag.getKinoID());
-			pstmt.setInt(4, umfrageeintrag.getKinoID());
+			pstmt.setInt(4, umfrageeintrag.getUmfrageID());
 			pstmt.executeUpdate();
 			return umfrageeintrag;
-			
+
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
-		
-		
+
+
 	}
 	/**
 	 * Löschen eines Umfrageeintrags in der Datenbank.
 	 */
-	
+
 	public void delete (Umfrageeintrag umfrageeintrag) {
-		 
+
 		//Verbindung zur Datenbank aufbauen.
-		
+
 		Connection con = DBConnection.connection();
-		
+
 		try {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("DELET FROM umfrageeintrag WHERE umfrageeintrag_id=" + umfrageeintrag.getID());
 
-		
-			
+
+
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
 		}
-		
-		
+
+
 	}
 }

@@ -9,7 +9,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
+import de.hdm.swprakt.cinemates.shared.bo.Kino;
 import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
+import de.hdm.swprakt.cinemates.shared.bo.Spielzeit;
+import de.hdm.swprakt.cinemates.shared.bo.Umfrage;
 import de.hdm.swprakt.cinemates.shared.bo.Umfrageeintrag;
 
 /**
@@ -98,6 +101,12 @@ public class UmfrageeintragMapper {
 
 		return null;
 	}
+	
+	/**
+	 * Suchen aller Objekte der Klasse <code> Umfrageeintrag </code>
+	 * @return Vector <Umfrageeintrag>, welcher alle Umfrageeinträge beinhaltet
+	 */
+
 
 	public Vector <Umfrageeintrag> findAll(){
 		//Verbindung zur Datenbank aufbauen.
@@ -132,4 +141,137 @@ public class UmfrageeintragMapper {
 
 		return null;
 	}
+
+	/**
+	 * Suchen aller Objekte der Klasse <code> Umfrageeintrag </code>, welche zu der übergebenen Umfrage gehören
+	 * @param Objekt der Klasse <Umfrage>
+	 * @return Vector <Umfrageeintrag>, welcher alle Umfrageeinträge beinhaltet, welche der übergebenen Umfrage gehören
+	 */
+
+
+	public Vector <Umfrageeintrag> findUmfrageeinträgeByUmfrage(Umfrage umfrage) {
+
+		//Verbindung zur Datenbank aufbauen.
+		
+		Connection con = DBConnection.connection();
+		//Neuen Vector instantiieren, in welchem Umfrageeintrag-Objekte gespeichert werden.
+
+		Vector <Umfrageeintrag> vectorumfrageeintrag = new Vector <Umfrageeintrag>();
+		try {
+			
+		
+		// Leeres SQL-Statement (JDBC) anlegen
+					Statement stmt = con.createStatement();
+					ResultSet rs = stmt.executeQuery("SELECT * FROM umfrageeintrag LEFT JOIN umfrage WHERE umfrageeintrag.umfrage_id=" +umfrage.getID() + "ORDER BY umfrageeintrag_id");
+
+					/* Befüllen des result sets
+					 */
+					if (rs.next()) {
+						// Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt
+						Umfrageeintrag umfrageeintrag = new Umfrageeintrag();
+						umfrageeintrag.setErstellungszeitpunkt(tsm.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+						umfrageeintrag.setID(rs.getInt("umfrageeintrag_id"));
+						umfrageeintrag.setKinoID(rs.getInt("kino_id"));
+						umfrageeintrag.setUmfrageID(rs.getInt("umfrage_id"));
+						vectorumfrageeintrag.add(umfrageeintrag);
+
+						return vectorumfrageeintrag;
+
+					}
+				}
+				catch (SQLException e) {
+					e.printStackTrace();
+				}
+
+				return null;
+	}
+	
+	/**
+	 * Suchen aller Objekte der Klasse <code> Umfrageeintrag </code>, welche die übergebene Spielzeit enthalten
+	 * @param Objekt der Klasse <Spielzeit>
+	 * @return Vector <Umfrageeintrag>, welcher alle Umfrageeinträge beinhaltet, welche die übergebene Spielzeit beinhalten
+	 */
+
+
+	public Vector <Umfrageeintrag> findUmfrageeinträgeBySpielzeit(Spielzeit spielzeit) {
+
+		//Verbindung zur Datenbank aufbauen.
+		
+		Connection con = DBConnection.connection();
+		//Neuen Vector instantiieren, in welchem Umfrageeintrag-Objekte gespeichert werden.
+
+		Vector <Umfrageeintrag> vectorumfrageeintrag = new Vector <Umfrageeintrag>();
+		try {
+			
+		
+		// Leeres SQL-Statement (JDBC) anlegen
+					Statement stmt = con.createStatement();
+					ResultSet rs = stmt.executeQuery("SELECT * FROM umfrageeintrag LEFT JOIN spielzeit WHERE umfrageeintrag.spielzeit_id=" +spielzeit.getID() + "ORDER BY umfrageeintrag_id");
+
+					/* Befüllen des result sets
+					 */
+					if (rs.next()) {
+						// Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt
+						Umfrageeintrag umfrageeintrag = new Umfrageeintrag();
+						umfrageeintrag.setErstellungszeitpunkt(tsm.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+						umfrageeintrag.setID(rs.getInt("umfrageeintrag_id"));
+						umfrageeintrag.setKinoID(rs.getInt("kino_id"));
+						umfrageeintrag.setUmfrageID(rs.getInt("umfrage_id"));
+						vectorumfrageeintrag.add(umfrageeintrag);
+
+						return vectorumfrageeintrag;
+
+					}
+				}
+				catch (SQLException e) {
+					e.printStackTrace();
+				}
+
+				return null;
+	}
+	
+	/**
+	 * Suchen aller Objekte der Klasse <code> Umfrageeintrag </code>, welche ein übergebenes Kino enthalten
+	 * @param Objekt der Klasse <Spielzeit>
+	 * @return Vector <Umfrageeintrag>, welcher alle Umfrageeinträge beinhaltet, welche die übergebene Spielzeit beinhalten
+	 */
+
+
+	public Vector <Umfrageeintrag> findUmfrageeinträgeByKino(Kino kino) {
+
+		//Verbindung zur Datenbank aufbauen.
+		
+		Connection con = DBConnection.connection();
+		//Neuen Vector instantiieren, in welchem Umfrageeintrag-Objekte gespeichert werden.
+
+		Vector <Umfrageeintrag> vectorumfrageeintrag = new Vector <Umfrageeintrag>();
+		try {
+			
+		
+		// Leeres SQL-Statement (JDBC) anlegen
+					Statement stmt = con.createStatement();
+					ResultSet rs = stmt.executeQuery("SELECT * FROM umfrageeintrag LEFT JOIN kino WHERE umfrageeintrag.kino_id=" + kino.getID() + "ORDER BY umfrageeintrag_id");
+
+					/* Befüllen des result sets
+					 */
+					if (rs.next()) {
+						// Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt
+						Umfrageeintrag umfrageeintrag = new Umfrageeintrag();
+						umfrageeintrag.setErstellungszeitpunkt(tsm.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+						umfrageeintrag.setID(rs.getInt("umfrageeintrag_id"));
+						umfrageeintrag.setKinoID(rs.getInt("kino_id"));
+						umfrageeintrag.setUmfrageID(rs.getInt("umfrage_id"));
+						vectorumfrageeintrag.add(umfrageeintrag);
+
+						return vectorumfrageeintrag;
+
+					}
+				}
+				catch (SQLException e) {
+					e.printStackTrace();
+				}
+
+				return null;
+	}
+	
 }

@@ -66,6 +66,20 @@ public class Spielzeit extends BusinessObject{
 	
 	
 	
+	
+	/**
+	 * Erzeugen einer textuellen Darstellung der jeweiligen Instanz der Klasse
+	 * <code> Spielzeit </code>. Diese besteht aus dem Text, der durch die
+	 * <code>toString()</code>-Methode der Superklasse <code> OwnedBusinessObject </code>
+	 * erzeugt wird. 
+	 */
+	@Override
+	public String toString() {
+		return super.toString() + "Zeitpunkt: " + this.zeitpunkt 
+				+ "Film" + this.filmID;
+	}
+
+	
 	/**
 	 * Diese Methode erzeugt eine ganze Zahl, die für die Instanz von
 	 * <code>Spielzeit</code> charakteristisch ist.

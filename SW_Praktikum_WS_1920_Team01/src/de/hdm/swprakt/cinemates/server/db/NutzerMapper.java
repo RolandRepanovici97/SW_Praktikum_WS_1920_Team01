@@ -149,6 +149,8 @@ public class NutzerMapper {
 			pstmt.setString(3, nutzer.getEmail());
 			pstmt.setString(4, nutzer.getNutzername());
 			pstmt.executeUpdate();
+			nutzer.setErstellungszeitpunkt(obo.getErstellungszeitpunkt());
+			nutzer.setOwnerID(obo.getOwnerID());
 			return nutzer;
 			
 		}
@@ -217,11 +219,13 @@ public class NutzerMapper {
 		try {
 			
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * from `gruppe_mitglied` LEFT JOIN `nutzer` ON `gruppe_mitglied`.`user_id` = `nutzer`.`user_id` WHERE (`gruppen_id` = " + gruppe.getID() + ")");
+			ResultSet rs = stmt.executeQuery("SELECT * from `gruppe_mitglied` LEFT JOIN `nutzer` ON `gruppe_mitglied`.`user_id` = `nutzer`.`user_id` LEFT JOIN `ownedbusinessobject` ON `nutzer`.`bo_id` = `ownedbusinessobject`.`bo_id` WHERE (`gruppen_id` = " + gruppe.getID() + ")");
 			
 			while (rs.next()) {
 				Nutzer n = new Nutzer();
+				n.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 				n.setID(rs.getInt("user_id"));
+				n.setOwnerID(rs.getInt("owner_id"));
 				n.setEmail(rs.getString("Email"));
 				n.setNutzername(rs.getString("Nutzername"));
 				nutzer.add(n);

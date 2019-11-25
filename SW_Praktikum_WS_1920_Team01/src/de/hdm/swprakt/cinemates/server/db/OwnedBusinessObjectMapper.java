@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Vector;
 
 import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 import de.hdm.swprakt.cinemates.shared.bo.OwnedBusinessObject;
@@ -30,6 +31,63 @@ public class OwnedBusinessObjectMapper {
 		
 	}
 	
+	public Vector<OwnedBusinessObject> findAll() {
+		
+		Connection con = DBConnection.connection();
+		Vector<OwnedBusinessObject> obos = new Vector<OwnedBusinessObject>();
+		
+		
+		try {
+			
+		Statement stmt = con.createStatement();
+		ResultSet rs = stmt.executeQuery("SELECT * FROM `ownedbusinessobject`");
+		
+		
+		while(rs.next()) {
+			OwnedBusinessObject obo = new OwnedBusinessObject();
+			obo.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+			obo.setID(rs.getInt("bo_id"));
+			obo.setOwnerID(rs.getInt("owner_id"));
+			obos.add(obo);
+		}
+		}
+		
+		catch (Exception exc) {
+			exc.printStackTrace();
+		}
+		
+		return obos;
+	}
+	
+	public OwnedBusinessObject findByID(int id) {
+		
+		Connection con = DBConnection.connection();
+		
+		
+		try {
+			
+		Statement stmt = con.createStatement();
+		ResultSet rs = stmt.executeQuery("SELECT * FROM `ownedbusinessobject` WHERE `bo_id` = + " + id + " ORDER BY `bo_id`");
+		
+		
+		if(rs.next()) {
+			OwnedBusinessObject obo = new OwnedBusinessObject();
+			obo.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+			obo.setID(rs.getInt("bo_id"));
+			obo.setOwnerID(rs.getInt("owner_id"));
+		
+			return obo;
+		}
+		}
+		
+		catch (Exception exc) {
+			exc.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	//als Übergabeparameter wird eigentlich nur die ID des eingeloggten Nutzers gebraucht, diese wird dann als owner_id hinzugefügt
 	public OwnedBusinessObject insert (OwnedBusinessObject obo) {
 		
 		Connection con = DBConnection.connection();

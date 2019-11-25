@@ -35,6 +35,12 @@ public class Gruppe extends OwnedBusinessObject{
 	public void setGruppenmitglieder(Vector<Integer> gruppenmitglieder) {
 		this.gruppenmitglieder = gruppenmitglieder;
 	}
+
+	@Override
+	public String toString() {
+		return super.toString() + " Gruppenname: " + this.gruppenname;
+	}
+	
 	
 	
 		

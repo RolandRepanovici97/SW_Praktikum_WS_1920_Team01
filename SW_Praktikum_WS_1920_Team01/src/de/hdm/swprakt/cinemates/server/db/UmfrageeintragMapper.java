@@ -4,6 +4,7 @@
 package de.hdm.swprakt.cinemates.server.db;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -11,6 +12,7 @@ import java.util.Vector;
 
 import de.hdm.swprakt.cinemates.shared.bo.Kino;
 import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
+import de.hdm.swprakt.cinemates.shared.bo.OwnedBusinessObject;
 import de.hdm.swprakt.cinemates.shared.bo.Spielzeit;
 import de.hdm.swprakt.cinemates.shared.bo.Umfrage;
 import de.hdm.swprakt.cinemates.shared.bo.Umfrageeintrag;
@@ -273,5 +275,104 @@ public class UmfrageeintragMapper {
 
 				return null;
 	}
+	/**
+	 * Einfügen eines Umfrageeintrags in die Datenbank.
+	 * @return Ein Objekt der Klasse <Umfrageeintrag>
+	 */
 	
+	public Umfrageeintrag insert (Umfrageeintrag umfrageeintrag) {
+		 
+		//Verbindung zur Datenbank aufbauen.
+		
+		Connection con = DBConnection.connection();
+		
+		try {
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT MAX(umfrageeintrag_id) AS maxid FROM umfrageintrag");
+
+			if (rs.next()) {
+				umfrageeintrag.setID(rs.getInt("maxid") + 1);
+			}	
+			
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO umfrageeintrag(umfrageeintrag_id, erstellungszeitpunkt"
+					+ "kino_id, umfrage_id VALUES (?, ?, ?, ?) ");
+			pstmt.setInt(1, umfrageeintrag.getID());
+			pstmt.setTimestamp(2, tsm.aktuellerTimestamp());
+			umfrageeintrag.setErstellungszeitpunkt(tsm.convertTimestampToDate(tsm.aktuellerTimestamp()));
+			pstmt.setInt(3, umfrageeintrag.getKinoID());
+			pstmt.setInt(4, umfrageeintrag.getKinoID());
+			pstmt.executeUpdate();
+			return umfrageeintrag;
+			
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		
+	}
+	/**
+	 * Aktualisieren eines Umfrageeintrags in der Datenbank.
+	 * @return Ein (überarbeitetes) Objekt der Klasse <Umfrageeintrag>
+	 */
+	
+	public Umfrageeintrag update (Umfrageeintrag umfrageeintrag) {
+		 
+		//Verbindung zur Datenbank aufbauen.
+		
+		Connection con = DBConnection.connection();
+		
+		try {
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT MAX(umfrageeintrag_id) AS maxid FROM umfrageintrag");
+
+			if (rs.next()) {
+				umfrageeintrag.setID(rs.getInt("maxid") + 1);
+			}	
+			
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO umfrageeintrag(umfrageeintrag_id, erstellungszeitpunkt"
+					+ "kino_id, umfrage_id VALUES (?, ?, ?, ?) ");
+			pstmt.setInt(1, umfrageeintrag.getID());
+			pstmt.setTimestamp(2, tsm.aktuellerTimestamp());
+			umfrageeintrag.setErstellungszeitpunkt(tsm.convertTimestampToDate(tsm.aktuellerTimestamp()));
+			pstmt.setInt(3, umfrageeintrag.getKinoID());
+			pstmt.setInt(4, umfrageeintrag.getKinoID());
+			pstmt.executeUpdate();
+			return umfrageeintrag;
+			
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		
+	}
+	/**
+	 * Löschen eines Umfrageeintrags in der Datenbank.
+	 */
+	
+	public void delete (Umfrageeintrag umfrageeintrag) {
+		 
+		//Verbindung zur Datenbank aufbauen.
+		
+		Connection con = DBConnection.connection();
+		
+		try {
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("DELET FROM umfrageeintrag WHERE umfrageeintrag_id=" + umfrageeintrag.getID());
+
+		
+			
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
 }

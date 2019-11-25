@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.Vector;
 
 import de.hdm.swprakt.cinemates.shared.bo.OwnedBusinessObject;
-import de.hdm.swprakt.cinemates.shared.bo.Spielplan;
 import de.hdm.swprakt.cinemates.shared.bo.Spielzeit;
 
 /**
@@ -78,7 +77,7 @@ public class SpielzeitMapper {
 				sz.setErstellungszeitpunkt(tsm.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 				sz.setID(rs.getInt("spielzeit_id"));
 				sz.setOwnerID(rs.getInt("owner_id"));
-				sz.setZeitpunkt(rs.getDate("Uhrzeit"));
+				sz.setZeitpunkt(tsm.convertDatumUndUhrzeitToDate(rs.getDate("Datum"),rs.getTime("Uhrzeit")));
 				spielzeit.add(sz);
 			}
 		} catch (Exception exc) {
@@ -102,7 +101,7 @@ public class SpielzeitMapper {
 			sz.setErstellungszeitpunkt(tsm.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 			sz.setID(rs.getInt("user_id"));
 			sz.setOwnerID(rs.getInt("owner_id"));
-			sz.setZeitpunkt(rs.getDate("Uhrzeit"));
+			sz.setZeitpunkt(tsm.convertDatumUndUhrzeitToDate(rs.getDate("Datum"),rs.getTime("Uhrzeit")));
 			
 			return sz;
 		}
@@ -131,6 +130,7 @@ public class SpielzeitMapper {
 					"INSERT INTO `spielplan` (`spielzeit_id`, `bo_id`, `Datum` , `Uhrzeit`) VALUES (?, ?, ?, ?) ");
 			pstmt.setInt(1, spielzeit.getID());
 			pstmt.setInt(2, obo.getID());
+			pstmt.set
 			
 
 			pstmt.executeUpdate();

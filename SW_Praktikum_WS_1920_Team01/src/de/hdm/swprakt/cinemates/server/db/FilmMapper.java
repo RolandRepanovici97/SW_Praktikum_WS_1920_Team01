@@ -137,5 +137,24 @@ public class FilmMapper {
 		}
 
 	}
+	
+	public Film update (Film film) {
+		
+		Connection con = DBConnection.connection();
+		
+		try { 
+			
+			PreparedStatement pstmt = con.prepareStatement("UPDATE `film` SET `Filmtitel` = ?, `Beschreibung` = ?, `Details` = ? WHERE `film_id` = ?");
+			pstmt.setString(1, film.getFilmtitel());
+			pstmt.setString(2, film.getBeschreibung());
+			pstmt.setString(3, film.getDetails());
+			return film;
+		
+		}catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
 
 }

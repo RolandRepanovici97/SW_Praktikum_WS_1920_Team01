@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
+import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 import de.hdm.swprakt.cinemates.shared.bo.OwnedBusinessObject;
 import de.hdm.swprakt.cinemates.shared.bo.Spielzeit;
 
@@ -141,7 +142,27 @@ public class SpielzeitMapper {
 			e.printStackTrace();
 			return null;
 		}
+	}
+		
+	
+	public Spielzeit update(Spielzeit spielzeit) {
+
+		Connection con = DBConnection.connection();
+
+		try {
+
+			PreparedStatement pstmt = con
+					.prepareStatement("UPDATE `spielzeit` SET `Datum` = ?, `Uhrzeit` = ? WHERE `spielzeit_id` = ?");
+			pstmt.setDate(1, tsm.convertJavaDateToSQLDate(spielzeit.getZeitpunkt()));
+			pstmt.setTime(2, tsm.convertJavaDateToSQLTime(spielzeit.getZeitpunkt()));
+			pstmt.executeUpdate();
+			return spielzeit;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+
+		}
 
 	}
-
 }

@@ -20,7 +20,7 @@ public class OwnedBusinessObjectMapper {
 		
 	}
 	
-	public static OwnedBusinessObjectMapper nutzerMapper() {
+	public static OwnedBusinessObjectMapper ownedBusinessObjectMapper() {
 		
 		if(ownedBusinessObjectMapper == null) {
 			ownedBusinessObjectMapper = new OwnedBusinessObjectMapper();

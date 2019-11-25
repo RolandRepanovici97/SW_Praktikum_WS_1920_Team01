@@ -6,6 +6,7 @@ package de.hdm.swprakt.cinemates.server;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.swprakt.cinemates.server.db.NutzerMapper;
+import de.hdm.swprakt.cinemates.server.db.OwnedBusinessObjectMapper;
 import de.hdm.swprakt.cinemates.shared.LoginService;
 import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 import com.google.appengine.api.users.User;
@@ -72,7 +73,10 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
 			nutzer.setLoggedIn(true);
 			nutzer.setLogoutUrl(userService.createLogoutURL(requestUri));
 			nutzer.setEmail(googleUser.getEmail());
-			NutzerMapper.nutzerMapper().insert(nutzer);
+			
+			
+			
+	//		NutzerMapper.nutzerMapper().insert(nutzer));
 
 			return nutzer;
 		}

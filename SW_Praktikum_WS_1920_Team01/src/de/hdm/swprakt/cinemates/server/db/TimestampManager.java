@@ -21,4 +21,18 @@ public class TimestampManager {
 		return date;
 		
 	}
+	
+	public java.sql.Date convertJavaDateToSQLDate(java.util.Date date) {
+
+		java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+		return sqlDate;
+		
+	}
+	
+	public java.sql.Time convertJavaDateToSQLTime(java.util.Date date){
+		
+		java.sql.Time sqlTime = new java.sql.Time(date.getTime());
+		return sqlTime;
+		
+	}
 }

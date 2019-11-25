@@ -48,6 +48,7 @@ public class OwnedBusinessObjectMapper {
 			pstmt.setInt(1, obo.getID());
 			pstmt.setInt(2, obo.getOwnerID());
 			pstmt.setTimestamp(3, tsm.aktuellerTimestamp());
+			obo.setErstellungszeitpunkt(tsm.convertTimestampToDate(tsm.aktuellerTimestamp()));
 			pstmt.executeUpdate();
 			return obo;
 			

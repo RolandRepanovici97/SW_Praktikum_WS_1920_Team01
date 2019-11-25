@@ -10,7 +10,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Vector;
 
-import de.hdm.softwarepraktikum.server.db.DBConnection;
 import de.hdm.swprakt.cinemates.shared.bo.Gruppe;
 import de.hdm.swprakt.cinemates.shared.bo.Kinokette;
 import de.hdm.swprakt.cinemates.shared.bo.Nutzer;

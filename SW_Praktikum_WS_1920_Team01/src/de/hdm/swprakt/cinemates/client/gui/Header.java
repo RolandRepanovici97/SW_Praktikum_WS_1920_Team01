@@ -54,7 +54,9 @@ public class Header extends HorizontalPanel {
 		nutzerkontoAnzeigenButton = new Button("Nutzerkonto anzeigen");
 		nutzerkontoBearbeitenButton = new Button ("Nutzerkonto bearbeiten");
 		logoutButton = new Button("Logout");
-		logo = new Image("");
+		logo = new Image("images/CineMates Logo.jpg");
+		logo.setWidth("100px");
+
 		
 		nutzerBearbeitungspanel = new PopupPanel();
 		/**

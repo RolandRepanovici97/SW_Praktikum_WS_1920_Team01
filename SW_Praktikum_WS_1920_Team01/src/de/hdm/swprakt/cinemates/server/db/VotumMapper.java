@@ -3,6 +3,14 @@
  */
 package de.hdm.swprakt.cinemates.server.db;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Vector;
+
+import de.hdm.swprakt.cinemates.shared.bo.Votum;
+
 /**
  * Diese Mapperklasse bildet <code>Votum</code> Objekte auf eine
  * relationale Datenbank ab. 
@@ -21,6 +29,7 @@ public class VotumMapper {
 	 * 
 	 */
 	private static VotumMapper votumMapper = null;
+	private static DateConverter tsm = new DateConverter();
 
 	/** 
 	 * Ein geschützter Konstruktor verhindert die Möglichkeit, mit <code>new</code>
@@ -45,5 +54,84 @@ public class VotumMapper {
 		}
 
 		return votumMapper;
+	}
+
+	/**
+	 * Suchen eines Umfrageeintrags mithilfe seiner ID. Die ID ist eindeutig, es wird genau
+	 * ein Objekt der Klasse <code >Umfrageeintrag </code>zurückgegeben. 
+	 * 
+	 * @param id (Siehe Primärschlüsselattribut der Tabelle Votum in der DB)
+	 * @return Votum-Objekt, das dem übergebenen Schlüssel entspricht. 
+	 * Ist kein entsprechender Tupel in der DB vorhanden, so geben wir null zurück.
+	 */
+
+	public Votum findByID(int id) {
+
+		//Verbindung zur Datenbank aufbauen.
+		Connection con = DBConnection.connection();
+
+		try {
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM votum LEFT JOIN ownedbusinessobject ON nutzer.bo_id = ownedbusinessobject.bo_Id WHERE votum_id=" + id + "ORDER BY votum_id");
+
+			/* Da ID Primaerschlüssel ist, kann max. nur ein Tupel zurückgegeben werden.
+			 * Prüfe, ob ein Ergebnis vorliegt.
+			 */
+			if (rs.next()) {
+				// Ergebnis-Tupel in Objekt umwandeln
+				Votum votum = new Votum();
+				votum.setID(rs.getInt("votum_id"));
+				votum.setErstellungszeitpunkt(tsm.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+				votum.setOwnerID(rs.getInt("bo_id"));
+				votum.setIstMöglicherTermin(rs.getBoolean("istMöglicherTermin"));
+				votum.setUmfrageeintragID(rs.getInt("umfrageeintrag_id"));
+
+
+
+				return votum;
+			}
+
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+	public Vector <Votum> findAll() {
+		//Verbindung zur Datenbank aufbauen.
+		Connection con = DBConnection.connection();
+		// Neuen Vector instantiieren, in welchem unsere Votum-Objekte gespeichert werden
+		Vector <Votum> vectorvotum = new Vector <Votum>();
+
+		try {
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM votum LEFT JOIN ownedbusinessobject ON nutzer.bo_id = ownedbusinessobject.bo_Id ORDER BY votum_id");
+
+			/* Befüllen des result sets
+			 */
+			if (rs.next()) {
+				// Es werden für jedes Votum-Objekt die nötigen Attribute gesetzt
+				Votum votum = new Votum();
+				votum.setID(rs.getInt("votum_id"));
+				votum.setErstellungszeitpunkt(tsm.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+				votum.setOwnerID(rs.getInt("bo_id"));
+				votum.setIstMöglicherTermin(rs.getBoolean("istMöglicherTermin"));
+				votum.setUmfrageeintragID(rs.getInt("umfrageeintrag_id"));
+				vectorvotum.add(votum);
+
+
+
+				return vectorvotum;
+			}
+
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 }

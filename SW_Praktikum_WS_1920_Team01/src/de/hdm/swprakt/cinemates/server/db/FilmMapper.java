@@ -1,12 +1,14 @@
 package de.hdm.swprakt.cinemates.server.db;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
 import de.hdm.swprakt.cinemates.shared.bo.Film;
+import de.hdm.swprakt.cinemates.shared.bo.OwnedBusinessObject;
 
 /**
  * Diese Mapperklasse bildet <code>Film</code> Objekte auf eine relationale
@@ -108,4 +110,51 @@ public class FilmMapper {
 		}
 		return null;
 	}
+
+	public Film insert(Film film) {
+
+		Connection con = DBConnection.connection();
+
+		try {
+
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT MAX(film_id) AS `maxid` FROM `film`");
+
+			if (rs.next()) {
+				film.setID(rs.getInt("maxid") + 1);
+			}
+
+			PreparedStatement pstmt = con.prepareStatement(
+					"INSERT INTO `film` (`film_id`, `bo_id`, `Filmtitel`, `Beschreibung` , `Details`) VALUES (?, ?, ?, ?) ");
+			pstmt.setInt(1, film.getID());
+			pstmt.setString(2, film.getFilmtitel());
+			pstmt.setString(3, film.getBeschreibung());
+			pstmt.setString(4, film.getDetails());
+			return film;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+	
+	public Film update (Film film) {
+		
+		Connection con = DBConnection.connection();
+		
+		try { 
+			
+			PreparedStatement pstmt = con.prepareStatement("UPDATE `film` SET `Filmtitel` = ?, `Beschreibung` = ?, `Details` = ? WHERE `film_id` = ?");
+			pstmt.setString(1, film.getFilmtitel());
+			pstmt.setString(2, film.getBeschreibung());
+			pstmt.setString(3, film.getDetails());
+			return film;
+		
+		}catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
+
 }

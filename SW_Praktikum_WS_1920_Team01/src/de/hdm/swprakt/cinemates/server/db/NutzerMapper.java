@@ -194,7 +194,7 @@ public class NutzerMapper {
 		}
 	}
 	
-	public void deleteGruppenzugehörigkeit(int nutzerid) {
+	public void deleteGruppenzugehörigkeiten(int nutzerid) {
 		
 		Connection con = DBConnection.connection();
 		
@@ -234,8 +234,5 @@ public class NutzerMapper {
 		return nutzer;
 		
 	}
-	
-
-	
 
  }

@@ -1,6 +1,6 @@
 package de.hdm.swprakt.cinemates.shared.bo;
 
-public class Kinokette extends BusinessObject {
+public class Kinokette extends OwnedBusinessObject {
 	
 	/*Diese Klasse dient der Darstellung der Kinoketten,
 	 *somit besitzt ein Kino beispielsweise mehrere Standorte. 

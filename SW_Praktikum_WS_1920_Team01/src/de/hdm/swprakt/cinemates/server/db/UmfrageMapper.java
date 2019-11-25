@@ -75,7 +75,7 @@ public class UmfrageMapper {
 		try {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM umfrage LEFT JOIN ownedbusinessobject ON nutzer.bo_id = ownedbusinessobject.bo_Id WHERE umfrage_id=" + id + "ORDER BY umfrage_id");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `umfrage` LEFT JOIN `ownedbusinessobject` ON `umfrage`.`bo_id` = `ownedbusinessobject`.`bo_id` WHERE umfrage_id= " + id + " ORDER BY umfrage_id");
 
 			/* Da ID Primaerschlüssel ist, kann max. nur ein Tupel zurückgegeben werden.
 			 * Prüfe, ob ein Ergebnis vorliegt.

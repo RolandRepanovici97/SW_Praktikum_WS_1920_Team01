@@ -8,7 +8,8 @@
 
   <!-- Default page to serve -->
   <welcome-file-list>
-    <welcome-file>SW_Praktikum_WS_1920_Team01.html</welcome-file>
+    <welcome-file>Kinobesuchsplanung.html</welcome-file>
+    <welcome-file>KinoAdministration.html</welcome-file>
   </welcome-file-list>
 
 </web-app>

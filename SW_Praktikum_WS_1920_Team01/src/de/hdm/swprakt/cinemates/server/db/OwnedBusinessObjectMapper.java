@@ -13,7 +13,7 @@ import de.hdm.swprakt.cinemates.shared.bo.OwnedBusinessObject;
 public class OwnedBusinessObjectMapper {
 	
 	private static OwnedBusinessObjectMapper ownedBusinessObjectMapper = null;
-	private static TimestampManager tsm = new TimestampManager();
+	private static DateConverter dc = new DateConverter();
 	
 	
 	protected OwnedBusinessObjectMapper() {
@@ -47,8 +47,8 @@ public class OwnedBusinessObjectMapper {
 			PreparedStatement pstmt = con.prepareStatement("INSERT INTO `ownedbusinessobject` (`bo_id`, `owner_id`, `Erstellungszeitpunkt`) VALUES (?, ?, ?) ");
 			pstmt.setInt(1, obo.getID());
 			pstmt.setInt(2, obo.getOwnerID());
-			pstmt.setTimestamp(3, tsm.aktuellerTimestamp());
-			obo.setErstellungszeitpunkt(tsm.convertTimestampToDate(tsm.aktuellerTimestamp()));
+			pstmt.setTimestamp(3, dc.aktuellerTimestamp());
+			obo.setErstellungszeitpunkt(dc.convertTimestampToDate(dc.aktuellerTimestamp()));
 			pstmt.executeUpdate();
 			return obo;
 			
@@ -69,7 +69,7 @@ public class OwnedBusinessObjectMapper {
 			
 			PreparedStatement pstmt = con.prepareStatement("UPDATE `ownedbusinessobject` SET `owner_id` = ?, `Erstellungszeitpunkt` = ? WHERE `bo_id` = ?");
 			pstmt.setInt(1, obo.getOwnerID());
-			pstmt.setTimestamp(2, tsm.aktuellerTimestamp() );
+			pstmt.setTimestamp(2, dc.aktuellerTimestamp() );
 			pstmt.setInt(3, obo.getID());
 			pstmt.executeUpdate();
 			return obo;

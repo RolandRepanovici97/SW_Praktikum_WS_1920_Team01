@@ -21,7 +21,7 @@ import de.hdm.swprakt.cinemates.shared.bo.Votum;
 public class NutzerMapper {
 	
 	private static NutzerMapper nutzerMapper = null;
-	private static TimestampManager tsm = new TimestampManager();
+	private static DateConverter dc = new DateConverter();
 	
 	
 	protected NutzerMapper() {
@@ -52,7 +52,7 @@ public class NutzerMapper {
 		
 		while(rs.next()) {
 			Nutzer n = new Nutzer();
-			n.setErstellungszeitpunkt(tsm.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+			n.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 			n.setID(rs.getInt("user_id"));
 			n.setOwnerID(rs.getInt("owner_id"));
 			n.setEmail(rs.getString("Email"));
@@ -80,7 +80,7 @@ public class NutzerMapper {
 
 			if (rs.next()) {
 				Nutzer n = new Nutzer();
-				n.setErstellungszeitpunkt(tsm.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+				n.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 				n.setID(rs.getInt("user_id"));
 				n.setOwnerID(rs.getInt("owner_id"));
 				n.setEmail(rs.getString("Email"));
@@ -109,7 +109,7 @@ public class NutzerMapper {
 
 			if (rs.next()) {
 				Nutzer n = new Nutzer();
-				n.setErstellungszeitpunkt(tsm.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+				n.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 				n.setID(rs.getInt("user_id"));
 				n.setOwnerID(rs.getInt("owner_id"));
 				n.setEmail(rs.getString("Email"));

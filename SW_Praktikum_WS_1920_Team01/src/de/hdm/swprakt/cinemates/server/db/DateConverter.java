@@ -1,7 +1,7 @@
 package de.hdm.swprakt.cinemates.server.db;
 
 
-public class TimestampManager {
+public class DateConverter {
 	
 	public java.sql.Timestamp aktuellerTimestamp() {
 		

@@ -28,7 +28,7 @@ public class SpielzeitMapper {
 	 */
 	
 	private static SpielzeitMapper spielzeitMapper = null;
-	private static TimestampManager tsm= new TimestampManager();
+	private static DateConverter dc = new DateConverter();
 
 	/**
 	 * Ein geschützter Konstruktor verhindert die Möglichkeit, mit <code>new</code>
@@ -73,7 +73,7 @@ public class SpielzeitMapper {
 			
 			while(rs.next()) {
 				Spielzeit sz = new Spielzeit();
-				sz.setErstellungszeitpunkt(tsm.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+				sz.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 				sz.setID(rs.getInt("spielzeit_id"));
 				sz.setZeitpunkt(rs.getDate("Uhrzeit"));
 				spielzeit.add(sz);

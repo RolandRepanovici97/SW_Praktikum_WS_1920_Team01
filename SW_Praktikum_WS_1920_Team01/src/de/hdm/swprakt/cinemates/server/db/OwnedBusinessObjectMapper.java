@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 import de.hdm.swprakt.cinemates.shared.bo.OwnedBusinessObject;
 
 
@@ -77,6 +78,46 @@ public class OwnedBusinessObjectMapper {
 			return null;
 		}
 	}
+	
+	public void delete (OwnedBusinessObject obo) {
+		
+		Connection con = DBConnection.connection();
+
+		try {
+
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate("DELETE FROM `ownedbusinessobject` WHERE `bo_id` = " + obo.getID());
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+		
+	
+	public int getOwnerOf (OwnedBusinessObject obo) {
+		
+		Connection con = DBConnection.connection();
+		
+		try {
+			
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * from `ownedbusinessobject` WHERE `bo_id` = " + obo.getID());
+			
+			if (rs.next()) {
+				return rs.getInt("owner_id");
+			}	
+			
+			
+		}
+		
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return 0;
+		
+	}
+	
 
 }
 

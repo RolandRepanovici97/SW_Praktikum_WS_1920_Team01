@@ -130,7 +130,8 @@ public class SpielzeitMapper {
 					"INSERT INTO `spielplan` (`spielzeit_id`, `bo_id`, `Datum` , `Uhrzeit`) VALUES (?, ?, ?, ?) ");
 			pstmt.setInt(1, spielzeit.getID());
 			pstmt.setInt(2, obo.getID());
-			pstmt.set
+			pstmt.setDate(3,tsm.convertJavaDateToSQLDate(spielzeit.getZeitpunkt()));
+			pstmt.setTime(4, tsm.convertJavaDateToSQLTime(spielzeit.getZeitpunkt()));
 			
 
 			pstmt.executeUpdate();

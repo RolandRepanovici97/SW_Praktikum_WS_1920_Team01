@@ -298,8 +298,8 @@ public class UmfrageeintragMapper {
 			PreparedStatement pstmt = con.prepareStatement("INSERT INTO umfrageeintrag(umfrageeintrag_id, erstellungszeitpunkt"
 					+ "kino_id, umfrage_id VALUES (?, ?, ?, ?) ");
 			pstmt.setInt(1, umfrageeintrag.getID());
-			pstmt.setTimestamp(2, tsm.aktuellerTimestamp());
-			umfrageeintrag.setErstellungszeitpunkt(tsm.convertTimestampToDate(tsm.aktuellerTimestamp()));
+			pstmt.setTimestamp(2, dc.aktuellerTimestamp());
+			umfrageeintrag.setErstellungszeitpunkt(dc.convertTimestampToDate(dc.aktuellerTimestamp()));
 			pstmt.setInt(3, umfrageeintrag.getKinoID());
 			pstmt.setInt(4, umfrageeintrag.getKinoID());
 			pstmt.executeUpdate();
@@ -336,8 +336,8 @@ public class UmfrageeintragMapper {
 			PreparedStatement pstmt = con.prepareStatement("INSERT INTO umfrageeintrag(umfrageeintrag_id, erstellungszeitpunkt"
 					+ "kino_id, umfrage_id VALUES (?, ?, ?, ?) ");
 			pstmt.setInt(1, umfrageeintrag.getID());
-			pstmt.setTimestamp(2, tsm.aktuellerTimestamp());
-			umfrageeintrag.setErstellungszeitpunkt(tsm.convertTimestampToDate(tsm.aktuellerTimestamp()));
+			pstmt.setTimestamp(2, dc.aktuellerTimestamp());
+			umfrageeintrag.setErstellungszeitpunkt(dc.convertTimestampToDate(dc.aktuellerTimestamp()));
 			pstmt.setInt(3, umfrageeintrag.getKinoID());
 			pstmt.setInt(4, umfrageeintrag.getKinoID());
 			pstmt.executeUpdate();

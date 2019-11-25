@@ -1,11 +1,14 @@
 package de.hdm.swprakt.cinemates.server.db;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
+import de.hdm.swprakt.cinemates.shared.bo.OwnedBusinessObject;
+import de.hdm.swprakt.cinemates.shared.bo.Spielplan;
 import de.hdm.swprakt.cinemates.shared.bo.Spielzeit;
 
 /**
@@ -110,4 +113,34 @@ public class SpielzeitMapper {
 		return null;
 	
 }
+	
+	public Spielzeit insert(Spielzeit spielzeit, OwnedBusinessObject obo) {
+
+		Connection con = DBConnection.connection();
+
+		try {
+
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT MAX(spielzeit_id) AS `maxid` FROM `spielzeit`");
+
+			if (rs.next()) {
+				spielzeit.setID(rs.getInt("maxid") + 1);
+			}
+
+			PreparedStatement pstmt = con.prepareStatement(
+					"INSERT INTO `spielplan` (`spielzeit_id`, `bo_id`, `Datum` , `Uhrzeit`) VALUES (?, ?, ?, ?) ");
+			pstmt.setInt(1, spielzeit.getID());
+			pstmt.setInt(2, obo.getID());
+			
+
+			pstmt.executeUpdate();
+			return spielzeit;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+
 }

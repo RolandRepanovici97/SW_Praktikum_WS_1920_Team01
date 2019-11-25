@@ -9,7 +9,6 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Vector;
-
 import de.hdm.swprakt.cinemates.shared.bo.Gruppe;
 import de.hdm.swprakt.cinemates.shared.bo.Kinokette;
 import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
@@ -188,7 +187,7 @@ public class NutzerMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM `nutzer` WHERE id = " + nutzer.getID());
+			stmt.executeUpdate("DELETE FROM `nutzer` WHERE `user_id` = " + nutzer.getID());
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -197,56 +196,46 @@ public class NutzerMapper {
 	
 	public void deleteGruppenzugehörigkeit(int nutzerid) {
 		
+		Connection con = DBConnection.connection();
+		
+		try {
+			
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate("DELETE FROM `gruppe_mitglied` WHERE `user_id` = " + nutzerid);
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public Vector<Nutzer> getGruppenmitgliederOf (Gruppe gruppe){
 		
-		return null;
+		Connection con = DBConnection.connection();
+		Vector<Nutzer> nutzer = new Vector<Nutzer>();
+		
+		try {
+			
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * from `gruppe_mitglied` LEFT JOIN `nutzer` ON `gruppe_mitglied`.`user_id` = `nutzer`.`user_id` WHERE (`gruppen_id` = " + gruppe.getID() + ")");
+			
+			while (rs.next()) {
+				Nutzer n = new Nutzer();
+				n.setID(rs.getInt("user_id"));
+				n.setEmail(rs.getString("Email"));
+				n.setNutzername(rs.getString("Nutzername"));
+				nutzer.add(n);
+			}
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return nutzer;
 		
 	}
 	
-	public Vector<Nutzer> getUmfragemitgliederOf (Umfrage umfrage){
-		
-		return null;
-		
-	}
-	
-	public Nutzer getKinobetreiberOf (Kinokette kinokette) {
-		return null;
-		
-	}
-	
-	public Nutzer getGruppenadminOf (Gruppe gruppe) {
-		
-		return null;
-		
-	}
-	
-	public Nutzer getUmfrageerstellerOf (Umfrage umfrage) {
-		
-		return null;
-		
-	}
-	
-	public Nutzer getVotumgeberOf (Votum votum) {
-		
-		return null;
-		
-	}
-	
-	public Nutzer getSpielplanerstellerOf (Spielplan spielplan) {
-		
-		return null;
-		
-	}
-	
-	
-	public Nutzer getSpielzeiterstellerOf (Spielzeit spielzeit) {
-		
-		return null;
-		
-	}
-	
+
 	
 
  }

@@ -73,12 +73,12 @@ public class Film extends BusinessObject {
 	 */
 	@Override
 	public String toString() {
-		return super.toString() + "Film: " + this.filmtitel 
-				+ "Beschreibung " + this.beschreibung + "Details:" + this.details;
+		/*
+		 * Wir geben den Klassennamen gefolgt von der Beschreibung und Detail des Objekts zurück.
+		 */
+		return super.toString() + " Film: " + this.filmtitel + "; Beschreibung: " + this.beschreibung + "; Details: " + this.details;
 	}
-
-
-	
+  
 	
 	/**
 	 * Diese Methode erzeugt eine ganze Zahl, die für die Instanz von

@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.Vector;
 
 import de.hdm.swprakt.cinemates.shared.bo.Film;
+import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 import de.hdm.swprakt.cinemates.shared.bo.OwnedBusinessObject;
 import de.hdm.swprakt.cinemates.shared.bo.Spielplan;
 
@@ -166,5 +167,19 @@ public class SpielplanMapper {
 			return null;
 		}
 
+	}
+
+	public void delete (Spielplan spielplan) {
+		
+		Connection con = DBConnection.connection();
+
+		try {
+
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate("DELETE FROM `spielplan` WHERE (`spielplan_id` = " + spielplan.getID() + ")");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

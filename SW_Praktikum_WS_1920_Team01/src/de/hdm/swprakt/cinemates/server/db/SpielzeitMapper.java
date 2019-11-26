@@ -164,6 +164,19 @@ public class SpielzeitMapper {
 
 		}
 
+public void delete (Spielzeit spielzeit) {
+		
+		Connection con = DBConnection.connection();
+
+		try {
+
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate("DELETE FROM `spielzeit` WHERE (`spielzeit_id` = " + spielzeit.getID() + ")");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }
 
 

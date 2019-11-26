@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.Vector;
 
 import de.hdm.swprakt.cinemates.shared.bo.Film;
+import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 import de.hdm.swprakt.cinemates.shared.bo.OwnedBusinessObject;
 
 /**
@@ -155,6 +156,20 @@ public class FilmMapper {
 			return null;
 		}
 		
+	}
+	
+	public void delete (Film film) {
+		
+		Connection con = DBConnection.connection();
+
+		try {
+
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate("DELETE FROM `film` WHERE (`film_id` = " + film.getID() + ")");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

@@ -7,9 +7,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
-import de.hdm.swprakt.cinemates.shared.bo.Kino;
+
 import de.hdm.swprakt.cinemates.shared.bo.Kinokette;
-import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
+
 import de.hdm.swprakt.cinemates.shared.bo.OwnedBusinessObject;
 
 /**

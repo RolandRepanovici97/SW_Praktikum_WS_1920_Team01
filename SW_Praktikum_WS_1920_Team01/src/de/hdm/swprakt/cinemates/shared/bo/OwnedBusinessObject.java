@@ -14,7 +14,7 @@ package de.hdm.swprakt.cinemates.shared.bo;
  * @version 1.0
  *
  */
-public abstract class OwnedBusinessObject extends BusinessObject {
+public class OwnedBusinessObject extends BusinessObject {
 
 	/**
 	 * 
@@ -44,6 +44,12 @@ public abstract class OwnedBusinessObject extends BusinessObject {
 	public void setOwnerID(int ownerID) {
 		this.ownerID = ownerID;
 	}	
+	
+	
+	public String toString() {
+		
+		return super.toString() + " Owner-ID: " + this.ownerID;
+	}
 	
 
 

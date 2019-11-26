@@ -38,7 +38,7 @@ public class Gruppe extends OwnedBusinessObject{
 
 	@Override
 	public String toString() {
-		return super.toString() + " Gruppenname: " + this.gruppenname;
+		return super.toString() + "; Gruppenname: " + this.gruppenname;
 	}
 	
 	

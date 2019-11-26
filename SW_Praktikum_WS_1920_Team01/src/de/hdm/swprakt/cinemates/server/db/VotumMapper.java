@@ -84,7 +84,7 @@ public class VotumMapper {
 				// Ergebnis-Tupel in Objekt umwandeln
 				Votum votum = new Votum();
 				votum.setID(rs.getInt("votum_id"));
-				votum.setErstellungszeitpunkt(tsm.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+				votum.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 				votum.setOwnerID(rs.getInt("bo_id"));
 				votum.setIstMöglicherTermin(rs.getBoolean("istMöglicherTermin"));
 				votum.setUmfrageeintragID(rs.getInt("umfrageeintrag_id"));
@@ -164,7 +164,7 @@ public class VotumMapper {
 				// Es werden für jedes Votum-Objekt die nötigen Attribute gesetzt
 				Votum votum = new Votum();
 				votum.setID(rs.getInt("votum_id"));
-				votum.setErstellungszeitpunkt(d.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+				votum.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 				votum.setOwnerID(rs.getInt("bo_id"));
 				votum.setIstMöglicherTermin(rs.getBoolean("istMöglicherTermin"));
 				votum.setUmfrageeintragID(rs.getInt("umfrageeintrag_id"));

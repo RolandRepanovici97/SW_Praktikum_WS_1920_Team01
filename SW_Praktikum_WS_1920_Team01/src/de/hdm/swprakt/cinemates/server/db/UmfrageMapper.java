@@ -75,7 +75,7 @@ public class UmfrageMapper {
 		try {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM `umfrage` LEFT JOIN `ownedbusinessobject` ON `umfrage`.`bo_id` = `ownedbusinessobject`.`bo_id` WHERE umfrage_id= " + id + " ORDER BY umfrage_id");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `umfrage` LEFT JOIN `ownedbusinessobject` ON `umfrage`.`bo_id` = `ownedbusinessobject`.`bo_id` WHERE (`umfrage_id`= " + id + ") ORDER BY `umfrage_id`");
 
 			/* Da ID Primaerschlüssel ist, kann max. nur ein Tupel zurückgegeben werden.
 			 * Prüfe, ob ein Ergebnis vorliegt.
@@ -84,12 +84,12 @@ public class UmfrageMapper {
 				// Ergebnis-Tupel in Objekt umwandeln
 				Umfrage umfrage = new Umfrage();
 				umfrage.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
-				umfrage.setOwnerID(rs.getInt("bo_id"));
+				umfrage.setOwnerID(rs.getInt("owner_id"));
 				umfrage.setID(rs.getInt("umfrage_id"));
 				umfrage.setBeschreibung(rs.getString("beschreibung"));
 				umfrage.setFilmID(rs.getInt("film_id"));
-
-
+				umfrage.setUmfragenname(rs.getString("Umfragename"));
+				umfrage.setDatum(dc.convertSQLDateToJavaDate(rs.getDate("Datum")));
 
 				return umfrage;
 			}
@@ -100,7 +100,7 @@ public class UmfrageMapper {
 
 		return null;
 	}
-	public Vector <Umfrage> findAll() {
+	public Vector<Umfrage> findAll() {
 		//Verbindung zur Datenbank aufbauen.
 		Connection con = DBConnection.connection();
 		Vector <Umfrage> vectorumfrage = new Vector <Umfrage>();
@@ -111,23 +111,25 @@ public class UmfrageMapper {
 
 			/* Befüllen des result sets
 			 */
-			if (rs.next()) {
+			while (rs.next()) {
 				// Es werden für jedes Umfrage-Objekt die nötigen Attribute gesetzt
 				Umfrage umfrage = new Umfrage();
 				umfrage.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
-				umfrage.setOwnerID(rs.getInt("bo_id"));
+				umfrage.setOwnerID(rs.getInt("owner_id"));
 				umfrage.setID(rs.getInt("umfrage_id"));
 				umfrage.setBeschreibung(rs.getString("beschreibung"));
 				umfrage.setFilmID(rs.getInt("film_id"));
+				umfrage.setUmfragenname(rs.getString("Umfragename"));
+				umfrage.setDatum(dc.convertSQLDateToJavaDate(rs.getDate("Datum")));
 				vectorumfrage.add(umfrage);
-				return vectorumfrage;
+				
 			}
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		return null;
+		return vectorumfrage;
 	}
 
 }

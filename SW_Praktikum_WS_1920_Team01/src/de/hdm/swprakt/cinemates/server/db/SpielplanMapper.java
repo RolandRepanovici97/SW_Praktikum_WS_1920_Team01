@@ -34,7 +34,7 @@ public class SpielplanMapper {
 	 */
 
 	private static SpielplanMapper spielplanMapper = null;
-	private static TimestampManager tsm = new TimestampManager();
+	private static DateConverter dc = new DateConverter();
 
 	/**
 	 * Ein geschützter Konstruktor verhindert die Möglichkeit, mit <code>new</code>
@@ -77,7 +77,7 @@ public class SpielplanMapper {
 
 			while (rs.next()) {
 				Spielplan sp = new Spielplan();
-				sp.setErstellungszeitpunkt(tsm.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+				sp.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 				sp.setID(rs.getInt("spielplan_id"));
 				sp.setOwnerID(rs.getInt("owner_id"));
 				sp.setSpielplanname(rs.getString("Spielplanname"));
@@ -103,7 +103,7 @@ public class SpielplanMapper {
 
 			if (rs.next()) {
 				Spielplan sp = new Spielplan();
-				sp.setErstellungszeitpunkt(tsm.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+				sp.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 				sp.setID(rs.getInt("spielplan_id"));
 				sp.setOwnerID(rs.getInt("owner_id"));
 				sp.setSpielplanname(rs.getString("Spielplanname"));

@@ -1,5 +1,17 @@
 package de.hdm.swprakt.cinemates.server.db;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Vector;
+
+import de.hdm.swprakt.cinemates.shared.bo.Kino;
+import de.hdm.swprakt.cinemates.shared.bo.Kinokette;
+import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
+import de.hdm.swprakt.cinemates.shared.bo.OwnedBusinessObject;
+
 /**
  * Diese Mapperklasse bildet <code>Kinokette</code> Objekte auf eine
  * relationale Datenbank ab. 
@@ -48,5 +60,190 @@ public class KinoketteMapper {
 
 		return kinoketteMapper;
 	}
+	
+/**
+ * Suchen aller Objekte der Klasse <code> Kinokette </code>
+ * @return Vector <Kinokette>, welche alle Kinos unterschiedlicher Standorte beinhaltet
+ */
+		
+				public Vector<Kinokette> findAll(){
+					
+					Connection con = DBConnection.connection();
+					Vector<Kinokette> kinokette = new Vector<Kinokette>();
+					
+					
+					try {
+						
+					Statement stmt = con.createStatement();
+					ResultSet rs = stmt.executeQuery("SELECT * FROM kinokette LEFT JOIN ownedbusinessobject ON kinokette.bo_id = ownedbusinessobject.bo_id ORDER BY kinokette_id;");
+		//Erstellungszeitpunkt?			
+					
+					while(rs.next()) {
+						Kinokette k = new Kinokette();
+						k.setID(rs.getInt("kinokette_id"));
+						k.setOwnerID(rs.getInt("owner_id"));
+						k.setKinokettenname(rs.getString("Kinokette Name"));
+						k.setBeschreibung("Kinokette Beschreibung");
+						kinokette.add(k);
+					}
+					}
+					
+					catch (Exception exc) {
+						exc.printStackTrace();
+					}
+					
+					return kinokette;
+					
+				}
 
+	
+/**
+ * Suchen einer Kinokette mithilfe seiner ID. Die ID ist eindeutig, es wird genau
+ * ein Objekt der Klasse <code>Kinokette</code>zurückgegeben. 
+ * 
+ * @param id (Siehe Primärschlüsselattribut der Tabelle Kinokette in der DB)
+ * @return Kinokette-Objekt, das dem übergebenen Schlüssel entspricht. 
+ * Ist kein entsprechender Tupel in der DB vorhanden, so geben wir null zurück.
+ */
+
+			public Kinokette findByID(int id) {
+
+				Connection con = DBConnection.connection();
+
+				try {
+					Statement stmt = con.createStatement();
+					ResultSet rs = stmt.executeQuery("SELECT * FROM kinokette LEFT JOIN ownedbusinessobject ON kinokette.bo_id = ownedbusinessobject.bo_id WHERE kinokette_id= " + id + "ORDER BY kinokette_id ");
+	//Muss man alle Attribute angeben?
+					if (rs.next()) {
+						Kinokette k = new Kinokette();
+						k.setID(rs.getInt("kinokette_id"));
+						k.setOwnerID(rs.getInt("owner_id"));
+						k.setKinokettenname(rs.getString("Kinokette Name"));
+						k.setBeschreibung(rs.getString("Kinokette Beschreibung"));
+
+						return k;
+					}
+
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				return null;
+			}
+/**
+ * Suchen einer Kinokette mithilfe seines Names. Der Name ist eindeutig, es werden mehrere Kinos
+ * der Klasse <code>Kinokette</code>zurückgegeben. 
+ * 
+ * @return Kinokette-Objekt, das dem übergebenen Namen entspricht. 
+ * Ist kein entsprechender Tupel in der DB vorhanden, so geben wir null zurück.
+ */
+
+public Kinokette findByName(String name) {
+	
+	Connection con = DBConnection.connection();
+
+	try {
+
+		Statement stmt = con.createStatement();
+		ResultSet rs = stmt.executeQuery("SELECT * FROM kinokette LEFT JOIN ownedbusinessobject ON kinokette.bo_id = ownedbusinessobject.bo_id WHERE Kinokette Name = " + name + " ORDER BY Kinokette Name");
+
+		if (rs.next()) {
+			Kinokette k = new Kinokette();
+			k.setID(rs.getInt("kinokette_id"));
+			k.setOwnerID(rs.getInt("owner_id"));
+			k.setKinokettenname(rs.getString("Kinokette Name"));
+			k.setBeschreibung(rs.getString("Kinokette Beschreibung"));
+			
+			return k;
+		}
+
+	} catch (SQLException e) {
+		e.printStackTrace();
+		
+	}
+	
+	return null;
+	
+	
+}
+
+
+
+			
+/**
+ * Einfügen einer Kinokette in die Datenbank.
+ * @return Ein Objekt der Klasse <Kinokette>
+ */
+		
+		public Kinokette insert(Kinokette kinokette, OwnedBusinessObject obo) {
+
+			Connection con = DBConnection.connection();
+
+			try {
+
+				Statement stmt = con.createStatement();
+				ResultSet rs = stmt.executeQuery("SELECT MAX(kinokette_id) AS maxid FROM kinokette");
+
+				if (rs.next()) {
+					kinokette.setID(rs.getInt("maxid") + 1);
+				}
+//bo_id??
+				PreparedStatement pstmt = con.prepareStatement(
+						"INSERT INTO kino (kinokette_id, bo_id, Kinokette Name, Kinokette Beschreibung) VALUES (?, ?, ?, ?) ");
+				pstmt.setInt(1, kinokette.getID());
+				pstmt.setInt(2, obo.getID());
+				pstmt.setString(3, kinokette.getKinokettenname());
+				pstmt.setString(4, kinokette.getBeschreibung());
+				return kinokette;
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
+
+/**
+* Aktualisieren einer Kinokette in der Datenbank.
+* @return Ein (überarbeitetes) Objekt der Klasse <Kinokette>
+*/
+
+		public Kinokette update (Kinokette kinokette) {
+			
+			Connection con = DBConnection.connection();
+
+			try {
+				
+				PreparedStatement pstmt = con.prepareStatement("UPDATE kinokette SET Kinokette Name = ?, Kinokette Beschreibung = ? WHERE kinokette_id = ?");
+				pstmt.setString(1, kinokette.getKinokettenname());
+				pstmt.setString(2, kinokette.getBeschreibung());
+				pstmt.setInt(3, kinokette.getID());
+				pstmt.executeUpdate();
+				return kinokette;
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return null;
+			}
+		}		
+
+/**
+* Löschen einer Kinokette in der Datenbank.
+*/
+		public void delete (Kinokette kinokette) {
+			 
+			//Verbindung zur Datenbank aufbauen.
+			
+			Connection con = DBConnection.connection();
+			
+			try {
+				// Leeres SQL-Statement (JDBC) anlegen
+				Statement stmt = con.createStatement();
+				ResultSet rs = stmt.executeQuery("DELET FROM kinokette WHERE kinokette_id=" + kinokette.getID());
+				
+			}
+			catch(SQLException e) {
+				e.printStackTrace();
+			}
+			
+		}
+			
+		
 }

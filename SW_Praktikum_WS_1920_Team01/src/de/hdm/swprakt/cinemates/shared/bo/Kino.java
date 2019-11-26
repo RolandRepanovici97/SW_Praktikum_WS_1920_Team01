@@ -23,19 +23,21 @@ public class Kino extends BusinessObject{
 	/**
 	 *  Name des Kinos
 	 */
-	private String name;
+	private String kinoname;
 
 	/**
 	 *  Ort des Kinos
 	 */
-	private String ort;
+	private String adresse;
 
 	/**
 	 * Jedes Kino besitzt einen speziellen Spielplan. Ein Spielplan besteht aus den
 	 * einzelnen Spielzeiten.
 	 */
 
-//	private Spielplan spielplanID;
+	private int spielplanID;
+	
+	private int kinoketteID;
 
 	/**
 	 * Auslesen der Kinobeschreibung
@@ -57,32 +59,32 @@ public class Kino extends BusinessObject{
 	 * Auslesen des Kinonamens
 	 */
 
-	public String getName() {
-		return name;
+	public String getKinoname() {
+		return kinoname;
 	}
 
 	/**
 	 * Setzen des Kinonamens
 	 */
 
-	public void setName(String name) {
-		this.name = name;
+	public void setKinon( String name) {
+		this.kinoname = name;
 	}
 
 	/**
 	 * Auslesen des Kinoortes
 	 */
 
-	public String getOrt() {
-		return ort;
+	public String getAdresse() {
+		return adresse;
 	}
 
 	/**
 	 * Setzen des Kinoortes
 	 */
 
-	public void setOrt(String ort) {
-		this.ort = ort;
+	public void setAdresse(String adresse) {
+		this.adresse = adresse;
 	}
 
 	/**
@@ -102,6 +104,10 @@ public class Kino extends BusinessObject{
 	 * spielplanID; }
 	 */
 
+	public String toString() {
+		
+		return this.getClass().getName() + " #" + this.getID() + "; Kinoname: " + this.kinoname + "; Beschreibung: " + this.beschreibung + "; Adresse: " + this.adresse + "; Spielplan-ID: " + this.spielplanID + "; Kinokette-ID: " + this.kinoketteID;
+	}
 }
 
 

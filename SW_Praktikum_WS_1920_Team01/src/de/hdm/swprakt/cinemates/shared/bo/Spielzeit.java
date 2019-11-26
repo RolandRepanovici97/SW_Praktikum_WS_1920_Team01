@@ -75,8 +75,8 @@ public class Spielzeit extends OwnedBusinessObject{
 	 */
 	@Override
 	public String toString() {
-		return super.toString() + "Zeitpunkt: " + this.zeitpunkt 
-				+ "Film" + this.filmID;
+		return super.toString() + "; Zeitpunkt: " + this.zeitpunkt 
+				+ "; Film-ID: " + this.filmID;
 	}
 
 	

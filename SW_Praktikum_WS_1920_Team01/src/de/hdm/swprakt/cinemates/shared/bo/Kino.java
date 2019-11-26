@@ -67,7 +67,7 @@ public class Kino extends BusinessObject{
 	 * Setzen des Kinonamens
 	 */
 
-	public void setKinon( String name) {
+	public void setKinoname( String name) {
 		this.kinoname = name;
 	}
 

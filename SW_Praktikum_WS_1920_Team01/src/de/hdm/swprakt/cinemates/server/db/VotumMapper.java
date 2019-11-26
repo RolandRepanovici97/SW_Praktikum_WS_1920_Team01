@@ -210,7 +210,7 @@ public class VotumMapper {
 			pstmt.setTimestamp(2, dc.aktuellerTimestamp());
 			votum.setErstellungszeitpunkt(dc.convertTimestampToDate(dc.aktuellerTimestamp()));
 			pstmt.setInt(3, votum.getOwnerID());
-			pstmt.setBoolean(4, votum.getisIstMölicherTermin());
+			pstmt.setBoolean(4, votum.getisIstMöglicherTermin());
 			pstmt.setInt(5, votum.getUmfrageeintragID());
 			pstmt.executeUpdate();
 			return votum;
@@ -239,7 +239,7 @@ public class VotumMapper {
 			PreparedStatement pstmt = con.prepareStatement("UPDATE votum SET istMöglicherTermin =?");
 
 
-			pstmt.setBoolean(4, votum.getisIstMölicherTermin());
+			pstmt.setBoolean(4, votum.getisIstMöglicherTermin());
 
 			pstmt.executeUpdate();
 			return votum;

@@ -14,9 +14,6 @@ import de.hdm.swprakt.cinemates.server.db.VotumMapper;
 import de.hdm.swprakt.cinemates.shared.KinoAdministration;
 import de.hdm.swprakt.cinemates.shared.KinoBesuchsplanung;
 import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
-import de.hdm.thies.bankProjekt.server.db.AccountMapper;
-import de.hdm.thies.bankProjekt.server.db.CustomerMapper;
-import de.hdm.thies.bankProjekt.server.db.TransactionMapper;
 
 /**
  * Diese Klasse stellt die Implementierungsklasse des Interface {@link KinoBesuchsplanung} dar. 

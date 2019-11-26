@@ -10,7 +10,7 @@ import de.hdm.swprakt.cinemates.server.db.OwnedBusinessObjectMapper;
 import de.hdm.swprakt.cinemates.shared.KinoBesuchsplanung;
 import de.hdm.swprakt.cinemates.shared.LoginService;
 import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
-import de.hdm.thies.bankProjekt.server.BankAdministrationImpl;
+
 
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;

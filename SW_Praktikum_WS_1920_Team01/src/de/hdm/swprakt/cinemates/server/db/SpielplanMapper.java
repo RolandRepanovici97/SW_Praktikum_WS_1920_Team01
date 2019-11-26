@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
-
+import de.hdm.swprakt.cinemates.shared.bo.Film;
 import de.hdm.swprakt.cinemates.shared.bo.OwnedBusinessObject;
 import de.hdm.swprakt.cinemates.shared.bo.Spielplan;
 
@@ -138,6 +138,27 @@ public class SpielplanMapper {
 			pstmt.setString(3, spielplan.getSpielplanname());
 
 			pstmt.executeUpdate();
+			return spielplan;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+
+	public Spielplan update(Spielplan spielplan) {
+
+		Connection con = DBConnection.connection();
+
+		try {
+
+			PreparedStatement pstmt = con.prepareStatement(
+					"UPDATE `spielplan` SET `spielplan_id` = ?, `bo_id` = ?, `Spielplanname` = ? WHERE `spielplan_id` = ?");
+
+			pstmt.setInt(1, spielplan.getID());
+			// pstmt.setInt(2, obo.getID();
+			pstmt.setString(3, spielplan.getSpielplanname());
 			return spielplan;
 
 		} catch (SQLException e) {

@@ -140,8 +140,29 @@ public class SpielzeitMapper {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
+		}}
+	
+	
+	public Spielzeit update(Spielzeit spielzeit) {
+
+			Connection con = DBConnection.connection();
+
+			try {
+
+				PreparedStatement pstmt = con
+						.prepareStatement("UPDATE `spielzeit` SET `Datum` = ?, `Uhrzeit` = ? WHERE `spielzeit_id` = ?");
+				pstmt.setDate(1, dc.convertJavaDateToSQLDate(spielzeit.getZeitpunkt()));
+				pstmt.setTime(2, dc.convertJavaDateToSQLTime(spielzeit.getZeitpunkt()));
+				pstmt.executeUpdate();
+				return spielzeit;
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return null;
+
+			}
+
 		}
-	}
 
 }
 

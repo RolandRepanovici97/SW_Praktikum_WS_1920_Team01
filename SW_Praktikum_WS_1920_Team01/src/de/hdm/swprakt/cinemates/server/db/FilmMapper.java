@@ -8,8 +8,9 @@ import java.sql.Statement;
 import java.util.Vector;
 
 import de.hdm.swprakt.cinemates.shared.bo.Film;
-import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
-import de.hdm.swprakt.cinemates.shared.bo.OwnedBusinessObject;
+import de.hdm.swprakt.cinemates.shared.bo.Kinokette;
+
+
 
 /**
  * Diese Mapperklasse bildet <code>Film</code> Objekte auf eine relationale
@@ -138,28 +139,29 @@ public class FilmMapper {
 		}
 
 	}
-	
-	public Film update (Film film) {
-		
+
+	public Film update(Film film) {
+
 		Connection con = DBConnection.connection();
-		
-		try { 
-			
-			PreparedStatement pstmt = con.prepareStatement("UPDATE `film` SET `Filmtitel` = ?, `Beschreibung` = ?, `Details` = ? WHERE `film_id` = ?");
+
+		try {
+
+			PreparedStatement pstmt = con.prepareStatement(
+					"UPDATE `film` SET `Filmtitel` = ?, `Beschreibung` = ?, `Details` = ? WHERE `film_id` = ?");
 			pstmt.setString(1, film.getFilmtitel());
 			pstmt.setString(2, film.getBeschreibung());
 			pstmt.setString(3, film.getDetails());
 			return film;
-		
-		}catch (SQLException e) {
+
+		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
-		
+
 	}
-	
-	public void delete (Film film) {
-		
+
+	public void delete(Film film) {
+
 		Connection con = DBConnection.connection();
 
 		try {
@@ -170,6 +172,41 @@ public class FilmMapper {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public Vector<Film> findFilmeByKinokette(Kinokette kinokette) {
+
+		// Verbindung zur Datenbank aufbauen.
+
+		Connection con = DBConnection.connection();
+		// Neuen Vector instantiieren, in welchem Film-Objekte gespeichert werden.
+
+		Vector<Film> vectorfilm = new Vector<Film>();
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(
+					"SELECT * FROM `film` WHERE (`kinokette_id` = " + kinokette.getID() + " )ORDER BY `film_id`");
+
+			/*
+			 * Befüllen des result sets
+			 */
+			while (rs.next()) {
+				// Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt
+				Film f = new Film();
+				f.setID(rs.getInt("film_id"));
+				f.setFilmtitel(rs.getString("Filmtitel"));
+				f.setBeschreibung(rs.getString("Beschreibung"));
+				f.setDetails(rs.getString("Details"));
+				vectorfilm.add(f);
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return vectorfilm;
 	}
 
 }

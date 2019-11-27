@@ -6,6 +6,7 @@ package de.hdm.swprakt.cinemates.shared;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
+import de.hdm.swprakt.cinemates.shared.bo.Gruppe;
 import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 
 /**
@@ -21,6 +22,8 @@ public interface KinoBesuchsplanung extends RemoteService {
 
 	public Nutzer findNutzerByEmail(String email);
 
-	public Nutzer insertNutzer(Nutzer nutzer);
+	public Nutzer createNutzer(Nutzer nutzer);
+	
+	public Gruppe createGruppe(Gruppe gruppe);
 
 }

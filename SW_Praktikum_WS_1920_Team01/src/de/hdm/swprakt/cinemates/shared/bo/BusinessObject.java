@@ -44,6 +44,12 @@ public abstract class BusinessObject implements Serializable {
 
 	private Date erstellungszeitpunkt;
 
+	
+	public BusinessObject() {
+		
+		this.setErstellungszeitpunkt(new Date());
+	}
+	
 	/*
 	 * Aulesen des Attributs id
 	 * 

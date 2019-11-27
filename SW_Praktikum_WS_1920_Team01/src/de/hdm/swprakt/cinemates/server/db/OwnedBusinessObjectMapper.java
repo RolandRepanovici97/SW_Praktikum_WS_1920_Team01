@@ -36,11 +36,37 @@ public class OwnedBusinessObjectMapper {
 		Connection con = DBConnection.connection();
 		Vector<OwnedBusinessObject> obos = new Vector<OwnedBusinessObject>();
 		
-		
 		try {
 			
 		Statement stmt = con.createStatement();
 		ResultSet rs = stmt.executeQuery("SELECT * FROM `ownedbusinessobject`");
+		
+		
+		while(rs.next()) {
+			OwnedBusinessObject obo = new OwnedBusinessObject();
+			obo.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+			obo.setID(rs.getInt("bo_id"));
+			obo.setOwnerID(rs.getInt("owner_id"));
+			obos.add(obo);
+		}
+		}
+		
+		catch (Exception exc) {
+			exc.printStackTrace();
+		}
+		
+		return obos;
+	}
+	
+	public Vector<OwnedBusinessObject> findByOwner(Nutzer nutzer){
+		
+		Connection con = DBConnection.connection();
+		Vector<OwnedBusinessObject> obos = new Vector<OwnedBusinessObject>();
+		
+		try {
+			
+		Statement stmt = con.createStatement();
+		ResultSet rs = stmt.executeQuery("SELECT * FROM `ownedbusinessobject` WHERE (`owner_id` ) " + nutzer.getID() + ")");
 		
 		
 		while(rs.next()) {
@@ -87,11 +113,10 @@ public class OwnedBusinessObjectMapper {
 		return null;
 	}
 	
-	//als Übergabeparameter wird eigentlich nur die ID des eingeloggten Nutzers gebraucht, diese wird dann als owner_id hinzugefügt
-	public OwnedBusinessObject insert (OwnedBusinessObject obo) {
+	public int insert (OwnedBusinessObject obo) {
 		
 		Connection con = DBConnection.connection();
-		
+		int bo_id = 0;
 		try {
 			
 			
@@ -105,17 +130,16 @@ public class OwnedBusinessObjectMapper {
 			PreparedStatement pstmt = con.prepareStatement("INSERT INTO `ownedbusinessobject` (`bo_id`, `owner_id`, `Erstellungszeitpunkt`) VALUES (?, ?, ?) ");
 			pstmt.setInt(1, obo.getID());
 			pstmt.setInt(2, obo.getOwnerID());
-			pstmt.setTimestamp(3, dc.aktuellerTimestamp());
-			obo.setErstellungszeitpunkt(dc.convertTimestampToDate(dc.aktuellerTimestamp()));
+			pstmt.setTimestamp(3, dc.convertJavaDateToSqlTimestamp(obo.getErstellungszeitpunkt()));
 			pstmt.executeUpdate();
-			return obo;
+			return obo.getID();
 			
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
 		}
 		
-		return obo;
+		return bo_id;
 	
 	}
 	

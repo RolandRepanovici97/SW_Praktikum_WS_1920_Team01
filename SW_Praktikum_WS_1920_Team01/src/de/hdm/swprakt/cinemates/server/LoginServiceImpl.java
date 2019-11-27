@@ -94,7 +94,7 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
 			
 			//Einfügen des neuen Nutzers in die Datenbank
 			
-			nutzer = kinobesuchsplanung.insertNutzer(nutzer);
+			nutzer = kinobesuchsplanung.createNutzer(nutzer);
 			}
 
 		}

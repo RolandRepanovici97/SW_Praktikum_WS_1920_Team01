@@ -112,12 +112,12 @@ public class KinoketteMapper {
 
 				try {
 					Statement stmt = con.createStatement();
-					ResultSet rs = stmt.executeQuery("SELECT * FROM kinokette LEFT JOIN ownedbusinessobject ON kinokette.bo_id = ownedbusinessobject.bo_id WHERE kinokette_id= " + id + "ORDER BY kinokette_id ");
+					ResultSet rs = stmt.executeQuery("SELECT * FROM `kinokette` LEFT JOIN `ownedbusinessobject` ON `kinokette`.`bo_id` = `ownedbusinessobject`.`bo_id` WHERE (`kinokette_id` = " + id + ") ORDER BY `kinokette_id`");
 	//Muss man alle Attribute angeben?
 					if (rs.next()) {
 						Kinokette k = new Kinokette();
 						k.setID(rs.getInt("kinokette_id"));
-						k.setOwnerID(rs.getInt("bo_id"));
+						k.setOwnerID(rs.getInt("owner_id"));
 						k.setKinokettenname(rs.getString("Kinokettenname"));
 						k.setBeschreibung(rs.getString("Beschreibung"));
 

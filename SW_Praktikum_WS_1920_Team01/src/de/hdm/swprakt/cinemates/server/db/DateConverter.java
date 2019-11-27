@@ -8,6 +8,12 @@ public class DateConverter {
 		java.util.Date aktuellerZeitpunkt = new java.util.Date();
 		return new java.sql.Timestamp(aktuellerZeitpunkt.getTime());
 	}
+	
+	public java.sql.Timestamp convertJavaDateToSqlTimestamp(java.util.Date date){
+		
+		java.sql.Timestamp timestamp = new java.sql.Timestamp(date.getTime());
+		return timestamp;
+	}
 
 	
 	public java.util.Date convertTimestampToDate(java.sql.Timestamp timestamp) {

@@ -58,6 +58,33 @@ public class OwnedBusinessObjectMapper {
 		return obos;
 	}
 	
+	public Vector<OwnedBusinessObject> findByOwner(Nutzer nutzer){
+		
+		Connection con = DBConnection.connection();
+		Vector<OwnedBusinessObject> obos = new Vector<OwnedBusinessObject>();
+		
+		try {
+			
+		Statement stmt = con.createStatement();
+		ResultSet rs = stmt.executeQuery("SELECT * FROM `ownedbusinessobject` WHERE (`owner_id` ) " + nutzer.getID() + ")");
+		
+		
+		while(rs.next()) {
+			OwnedBusinessObject obo = new OwnedBusinessObject();
+			obo.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+			obo.setID(rs.getInt("bo_id"));
+			obo.setOwnerID(rs.getInt("owner_id"));
+			obos.add(obo);
+		}
+		}
+		
+		catch (Exception exc) {
+			exc.printStackTrace();
+		}
+		
+		return obos;
+	}
+	
 	public OwnedBusinessObject findByID(int id) {
 		
 		Connection con = DBConnection.connection();

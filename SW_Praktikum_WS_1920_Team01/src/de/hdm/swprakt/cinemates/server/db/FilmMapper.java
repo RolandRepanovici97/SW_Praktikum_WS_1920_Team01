@@ -187,7 +187,7 @@ public class FilmMapper {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(
-					"SELECT * FROM `film` WHERE (`kinokette_id` = " + kinokette.getID() + " )ORDER BY `film_id`");
+					"SELECT * FROM `Kinokette_Film`LEFT JOIN `Film` ON `Kinokette_Film`.`film_id`=`Film`.`film_id` WHERE (`kinokette_id` = " + kinokette.getID() + " ) ORDER BY `film_id`");
 
 			/*
 			 * Befüllen des result sets

@@ -92,5 +92,91 @@ public class SpielzeitMapper {
 		
 		
 	}
+	public Spielzeit findByID(int id) {
+
+		Connection con = DBConnection.connection();
+
+		try {
+
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(
+					"SELECT * FROM `spielzeit` LEFT JOIN `ownedbusinessobject` ON `spielzeit`.`bo_id` = `ownedbusinessobject`.`bo_id` WHERE spielzeit_id = \" + id + \" ORDER BY `spielzeit_id`");
+
+			if (rs.next()) {
+				Spielzeit sz = new Spielzeit();
+				sz.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+				sz.setID(rs.getInt("spielzeit_id"));
+				sz.setOwnerID(rs.getInt("owner_id"));
+				sz.setZeitpunkt(rs.getDate("Uhrzeit"));
+
+				return sz;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+
+	}
+	
+	public Spielzeit insert(Spielzeit spielzeit, OwnedBusinessObject obo) {
+		Connection con = DBConnection.connection();
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT MAX(spielzeit_id) AS `maxid` FROM `spielzeit`");
+			if (rs.next()) {
+				spielzeit.setID(rs.getInt("maxid") + 1);
+			}
+			PreparedStatement pstmt = con.prepareStatement(
+					"INSERT INTO `spielplan` (`spielzeit_id`, `bo_id`, `Datum` , `Uhrzeit`) VALUES (?, ?, ?, ?) ");
+			pstmt.setInt(1, spielzeit.getID());
+			pstmt.setInt(2, obo.getID());
+			pstmt.setDate(3,dc.convertJavaDateToSQLDate(spielzeit.getZeitpunkt()));
+			pstmt.setTime(4, dc.convertJavaDateToSQLTime(spielzeit.getZeitpunkt()));
+
+
+			pstmt.executeUpdate();
+			return spielzeit;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}}
+	
+	
+	public Spielzeit update(Spielzeit spielzeit) {
+
+			Connection con = DBConnection.connection();
+
+			try {
+
+				PreparedStatement pstmt = con
+						.prepareStatement("UPDATE `spielzeit` SET `Datum` = ?, `Uhrzeit` = ? WHERE `spielzeit_id` = ?");
+				pstmt.setDate(1, dc.convertJavaDateToSQLDate(spielzeit.getZeitpunkt()));
+				pstmt.setTime(2, dc.convertJavaDateToSQLTime(spielzeit.getZeitpunkt()));
+				pstmt.executeUpdate();
+				return spielzeit;
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return null;
+
+			}
+
+		}
+
+public void delete (Spielzeit spielzeit) {
+		
+		Connection con = DBConnection.connection();
+
+		try {
+
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate("DELETE FROM `spielzeit` WHERE (`spielzeit_id` = " + spielzeit.getID() + ")");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }
+
 

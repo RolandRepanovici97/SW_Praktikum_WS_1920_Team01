@@ -64,8 +64,7 @@ public class Spielplan extends OwnedBusinessObject {
 	 */
 	@Override
 	public String toString() {
-		return super.toString() + "Spielplanname: " + this.spielplanname 
-				+ "Spielzeit der FIlme " + this.spielzeitIDs;
+		return super.toString() + "; Spielplanname: " + this.spielplanname;
 	}
 	
 	

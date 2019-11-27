@@ -81,8 +81,8 @@ public class KinoMapper {
 					k.setID(rs.getInt("kino_id"));
 					k.setID(rs.getInt("kinokette_id"));
 					k.setID(rs.getInt("spielplan_id"));
-					k.setName(rs.getString("Kinoname"));
-					k.setOrt(rs.getString("Adresse")); 
+					k.setKinoname(rs.getString("Kinoname"));
+					k.setAdresse(rs.getString("Adresse")); 
 					k.setBeschreibung(rs.getString("Beschreibung"));
 					kino.add(k);
 				}
@@ -116,8 +116,8 @@ public class KinoMapper {
 					k.setID(rs.getInt("kino_id"));
 					k.setID(rs.getInt("kinokette_id"));
 					k.setID(rs.getInt("spielplan_id"));
-					k.setName(rs.getString("Kinoname"));
-					k.setOrt(rs.getString("Adresse"));
+					k.setKinoname(rs.getString("Kinoname"));
+					k.setAdresse(rs.getString("Adresse")); 
 					k.setBeschreibung(rs.getString("Beschreibung"));
 					k.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 					return k;
@@ -150,8 +150,8 @@ public class KinoMapper {
 				PreparedStatement pstmt = con.prepareStatement(
 						"INSERT INTO kino (kino_id, Kinoname, Adresse, Beschreibung) VALUES (?, ?, ?, ?,?) ");
 				pstmt.setInt(1, kino.getID());
-				pstmt.setString(2, kino.getName());
-				pstmt.setString(3, kino.getOrt());
+				pstmt.setString(2, kino.getKinoname());
+				pstmt.setString(3, kino.getAdresse());
 				pstmt.setString(4, kino.getBeschreibung());
 				return kino;
 			} catch (SQLException e) {
@@ -172,8 +172,8 @@ public class KinoMapper {
 			try { 
 //Name, Ort, Beschreibung ausreichend?
 				PreparedStatement pstmt = con.prepareStatement("UPDATE kino SET Kinoname = ?, Adresse = ?, Beschreibung = ? WHERE kino_id = ?");
-				pstmt.setString(1, kino.getName());
-				pstmt.setString(2, kino.getOrt());
+				pstmt.setString(1, kino.getKinoname());
+				pstmt.setString(2, kino.getAdresse());
 				pstmt.setString(3, kino.getBeschreibung());
 				pstmt.setInt(4, kino.getID());
 				

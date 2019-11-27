@@ -35,4 +35,10 @@ public class DateConverter {
 		return sqlTime;
 		
 	}
+	
+	public java.util.Date convertSQLDateToJavaDate(java.sql.Date date ){
+		
+		java.util.Date javaDate = new java.util.Date(date.getTime());
+		return javaDate;
+	}
 }

@@ -111,8 +111,8 @@ public class Umfrageeintrag extends BusinessObject {
 	 */
 	@Override
 	public String toString() {
-		return super.toString() + "Umfrage # " + this.umfrageID + "Spielzeit # " + this.spielzeitID 
-				+ "Kino # " +this.kinoID;
+		return super.toString() + "; Umfrage-ID: " + this.umfrageID + "; Spielzeit-ID: " + this.spielzeitID 
+				+ "; Kino-ID: " +this.kinoID;
 	}
 
 	/**

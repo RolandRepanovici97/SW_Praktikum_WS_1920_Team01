@@ -7,8 +7,11 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.swprakt.cinemates.server.db.NutzerMapper;
 import de.hdm.swprakt.cinemates.server.db.OwnedBusinessObjectMapper;
+import de.hdm.swprakt.cinemates.shared.KinoBesuchsplanung;
 import de.hdm.swprakt.cinemates.shared.LoginService;
 import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
+
+
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
@@ -25,6 +28,9 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
 	// wird zur Serialisierung benötigt.
 
 	private static final long serialVersionUID = 1L;
+	
+	//Zugriff auf die Methoden der Kinobesuchsplanung, e.g. für die Verwaltung des eingeloggten Nutzers
+	private KinoBesuchsplanung kinobesuchsplanung = null;
 
 	/**
 	 * Diese Methode realisiert den Login, es wird geprüft, ob ein <code>Nutzer</code> unserem System
@@ -37,7 +43,17 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
 	 * @return neues oder eingeloggtes Objekt der Klasse <code>Nutzer</code>
 	 */
 
-	@SuppressWarnings("null")
+	public LoginServiceImpl() throws IllegalArgumentException {
+	  }
+	
+	
+	public void init() throws IllegalArgumentException {
+	    KinoBesuchsplanungImpl kbi = new KinoBesuchsplanungImpl();
+	    kbi.init();
+	    this.kinobesuchsplanung = kbi;
+	  }
+	
+	
 	public Nutzer login(String requestUri) {
 		UserService userService = UserServiceFactory.getUserService();
 		User googleUser = userService.getCurrentUser();
@@ -49,39 +65,44 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
 		 */
 
 		if(googleUser != null) {
-			Nutzer bekannterNutzer = NutzerMapper.nutzerMapper().findByEmail(googleUser.getEmail());
+			Nutzer bekannterNutzer = kinobesuchsplanung.findNutzerByEmail(googleUser.getEmail());
 
 			/** Ist dieser Nutzer CineMates nun bekannt, so vermerken wir dass er eingeloggt ist. 
 			 *  
 			 */
 
 			if(bekannterNutzer!= null) {
-				bekannterNutzer.setLoggedIn(true);
-				bekannterNutzer.setLogoutUrl(userService.createLogoutURL(requestUri));
+				
+				nutzer = bekannterNutzer; 
+				
+				nutzer.setLoggedIn(true);
+				nutzer.setLogoutUrl(userService.createLogoutURL(requestUri));
 
-				return bekannterNutzer; 
-
-
+				
+			}
+			else {
+				
+				/**
+				 *Falls der Nutzer unserem System allerdings nicht bekannt ist, so wird er in unsere
+				 *Datenbank aufgenommen und ist nun auch Nutzer von CineMates.  
+				 */
+			
+			nutzer.setEmail(googleUser.getEmail());
+			nutzer.setNutzername(googleUser.getNickname());
+			nutzer.setLoggedIn(true);
+			nutzer.setLogoutUrl(userService.createLogoutURL(requestUri));
+			
+			//Einfügen des neuen Nutzers in die Datenbank
+			
+			nutzer = kinobesuchsplanung.insertNutzer(nutzer);
 			}
 
 		}
 		else {
-			/**
-			 *Falls der Nutzer unserem System allerdings nicht bekannt ist, so wird er in unsere
-			 *Datenbank aufgenommen und ist nun auch Nutzer von CineMates.  
-			 */
-			nutzer.setLoggedIn(true);
-			nutzer.setLogoutUrl(userService.createLogoutURL(requestUri));
-			nutzer.setEmail(googleUser.getEmail());
 			
-			
-			
-	//		NutzerMapper.nutzerMapper().insert(nutzer));
-
-			return nutzer;
+			nutzer.setLoggedIn(false);
+			nutzer.setLoginUrl(userService.createLoginURL(requestUri));
 		}
-
-		nutzer.setLoginUrl(userService.createLoginURL(requestUri));
 
 		return nutzer;
 	}

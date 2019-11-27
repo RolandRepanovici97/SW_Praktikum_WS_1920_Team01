@@ -13,11 +13,6 @@ public class Kinokette extends OwnedBusinessObject {
 
 	 private static final long serialVersionUID = 1L;
 
-	 /**
-	  * Jeder Kinobetreiber bekommt eine eindeutige ID
-	  */
-	 
-	 private int kinobetreiberID;
 	 
 	/**
 	 * Jede Kinokette besitzt eine eindeutige Beschreibung, 
@@ -32,22 +27,7 @@ public class Kinokette extends OwnedBusinessObject {
 	 
 	 private String kinokettenname;
 
-	/**
-	  * Auslesen der KinobetreiberID
-	  */
-	 
-	public int getKinobetreiberID() {
-		return kinobetreiberID;
-	}
-
-	/**
-	 * Setzen der KinobetreiberID
-	 */
-
-	public void setKinobetreiberID(int kinobetreiberID) {
-		this.kinobetreiberID = kinobetreiberID;
-	}
-
+	
 	/**
 	 * Auslesen der Kinobeschreibung
 	 */
@@ -78,6 +58,12 @@ public class Kinokette extends OwnedBusinessObject {
 
 	public void setKinokettenname(String kinokettenname) {
 		this.kinokettenname = kinokettenname;
+	}
+	
+	
+	public String toString() {
+		
+		return super.toString() +  "; Kinokettenname: " + this.kinokettenname + "; Beschreibung: " + this.beschreibung;
 	}
 	 
 }

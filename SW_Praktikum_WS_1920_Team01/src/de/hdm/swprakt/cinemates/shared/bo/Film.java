@@ -76,7 +76,7 @@ public class Film extends BusinessObject {
 		/*
 		 * Wir geben den Klassennamen gefolgt von der Beschreibung und Detail des Objekts zurück.
 		 */
-		return this.getClass().getName() + " #" + this.getID() + " Film: " + this.filmtitel + "; Beschreibung: " + this.beschreibung + "; Details: " + this.details;
+		return this.getClass().getName() + " #" + this.getID() + "; Film: " + this.filmtitel + "; Beschreibung: " + this.beschreibung + "; Details: " + this.details;
 	}
   
 	

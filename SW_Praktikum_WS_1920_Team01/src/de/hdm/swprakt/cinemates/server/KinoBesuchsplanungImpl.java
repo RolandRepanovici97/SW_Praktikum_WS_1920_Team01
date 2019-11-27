@@ -7,11 +7,13 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.swprakt.cinemates.server.db.GruppeMapper;
 import de.hdm.swprakt.cinemates.server.db.NutzerMapper;
+import de.hdm.swprakt.cinemates.server.db.OwnedBusinessObjectMapper;
 import de.hdm.swprakt.cinemates.server.db.UmfrageMapper;
 import de.hdm.swprakt.cinemates.server.db.UmfrageeintragMapper;
 import de.hdm.swprakt.cinemates.server.db.VotumMapper;
 import de.hdm.swprakt.cinemates.shared.KinoAdministration;
 import de.hdm.swprakt.cinemates.shared.KinoBesuchsplanung;
+import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 
 /**
  * Diese Klasse stellt die Implementierungsklasse des Interface {@link KinoBesuchsplanung} dar. 
@@ -38,5 +40,42 @@ private GruppeMapper gruppeMapper = null;
 private UmfrageMapper umfrageMapper = null;
 private UmfrageeintragMapper umfrageeintragMapper = null;
 private VotumMapper votumMapper = null;
+private OwnedBusinessObjectMapper ownedBusinessObjectMapper = null;
+
+
+public KinoBesuchsplanungImpl() throws IllegalArgumentException {
+    
+  }
+
+ 
+  @Override
+public void init() throws IllegalArgumentException {
+    
+    this.nutzerMapper = NutzerMapper.nutzerMapper();
+    this.gruppeMapper = GruppeMapper.gruppeMapper();
+    this.umfrageMapper = UmfrageMapper.umfrageMapper();
+    this.umfrageeintragMapper = UmfrageeintragMapper.umfrageeintragMapper();
+    this.votumMapper = VotumMapper.votumMapper();
+    this.ownedBusinessObjectMapper = OwnedBusinessObjectMapper.ownedBusinessObjectMapper();
+    
+    KinoAdministrationImpl kai = new KinoAdministrationImpl();
+    kai.init();
+    this.administration = kai;
+  }
+  
+@Override
+public Nutzer findNutzerByEmail(String email) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+@Override
+public Nutzer insertNutzer(Nutzer nutzer) {
+	
+	//Einfügen eines neuen OwnedBusinessObjects
+	//Einfügen des Nutzers in die Nutzerdatenbank mit zugehöriger OwnedBusinessObject Referenz
+	// TODO Auto-generated method stub
+	return null;
+}
 
 }

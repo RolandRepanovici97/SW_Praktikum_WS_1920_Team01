@@ -80,7 +80,7 @@ public class UmfrageeintragMapper {
 		try {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM umfrageeintrag = " + "WHERE id=" + id + "ORDER BY umfrageeintrag_id");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `umfrageeintrag` WHERE (`umfrageeintrag_id` = " + id + ")");
 
 			/* Da ID Primaerschlüssel ist, kann max. nur ein Tupel zurückgegeben werden.
 			 * Prüfe, ob ein Ergebnis vorliegt.
@@ -92,6 +92,7 @@ public class UmfrageeintragMapper {
 				umfrageeintrag.setID(rs.getInt("umfrageeintrag_id"));
 				umfrageeintrag.setKinoID(rs.getInt("kino_id"));
 				umfrageeintrag.setUmfrageID(rs.getInt("umfrage_id"));
+				umfrageeintrag.setSpielzeitID(rs.getInt("spielzeit_id"));
 
 
 				return umfrageeintrag;
@@ -120,20 +121,19 @@ public class UmfrageeintragMapper {
 		try {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM umfrageeintrag ORDER BY umfrageeintrag_id");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `umfrageeintrag` ORDER BY `umfrageeintrag_id`");
 
 			/* Befüllen des result sets
 			 */
-			if (rs.next()) {
+			while (rs.next()) {
 				// Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt
 				Umfrageeintrag umfrageeintrag = new Umfrageeintrag();
 				umfrageeintrag.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 				umfrageeintrag.setID(rs.getInt("umfrageeintrag_id"));
 				umfrageeintrag.setKinoID(rs.getInt("kino_id"));
 				umfrageeintrag.setUmfrageID(rs.getInt("umfrage_id"));
+				umfrageeintrag.setSpielzeitID(rs.getInt("spielzeit_id"));
 				vectorumfrageeintrag.add(umfrageeintrag);
-
-				return vectorumfrageeintrag;
 
 			}
 		}
@@ -141,7 +141,7 @@ public class UmfrageeintragMapper {
 			e.printStackTrace();
 		}
 
-		return null;
+		return vectorumfrageeintrag;
 	}
 
 	/**
@@ -151,7 +151,7 @@ public class UmfrageeintragMapper {
 	 */
 
 
-	public Vector <Umfrageeintrag> findUmfrageeinträgeByUmfrage(Umfrage umfrage) {
+	public Vector <Umfrageeintrag> findByUmfrage(Umfrage umfrage) {
 
 		//Verbindung zur Datenbank aufbauen.
 
@@ -164,28 +164,28 @@ public class UmfrageeintragMapper {
 
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM umfrageeintrag LEFT JOIN umfrage WHERE umfrageeintrag.umfrage_id=" +umfrage.getID() + "ORDER BY umfrageeintrag_id");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `umfrageeintrag` WHERE (`umfrage_id` = " + umfrage.getID() + " )ORDER BY `umfrageeintrag_id`");
 
 			/* Befüllen des result sets
 			 */
-			if (rs.next()) {
+			while (rs.next()) {
 				// Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt
 				Umfrageeintrag umfrageeintrag = new Umfrageeintrag();
 				umfrageeintrag.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 				umfrageeintrag.setID(rs.getInt("umfrageeintrag_id"));
 				umfrageeintrag.setKinoID(rs.getInt("kino_id"));
 				umfrageeintrag.setUmfrageID(rs.getInt("umfrage_id"));
+				umfrageeintrag.setSpielzeitID(rs.getInt("spielzeit_id"));
 				vectorumfrageeintrag.add(umfrageeintrag);
 
-				return vectorumfrageeintrag;
-
+				
 			}
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		return null;
+		return vectorumfrageeintrag;
 	}
 
 	/**
@@ -195,7 +195,7 @@ public class UmfrageeintragMapper {
 	 */
 
 
-	public Vector <Umfrageeintrag> findUmfrageeinträgeBySpielzeit(Spielzeit spielzeit) {
+	public Vector<Umfrageeintrag> findBySpielzeit(Spielzeit spielzeit) {
 
 		//Verbindung zur Datenbank aufbauen.
 
@@ -208,20 +208,19 @@ public class UmfrageeintragMapper {
 
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM umfrageeintrag LEFT JOIN spielzeit WHERE umfrageeintrag.spielzeit_id=" +spielzeit.getID() + "ORDER BY umfrageeintrag_id");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `umfrageeintrag` WHERE (`spielzeit_id` =" + spielzeit.getID() + " )ORDER BY `umfrageeintrag_id`");
 
 			/* Befüllen des result sets
 			 */
-			if (rs.next()) {
+			while (rs.next()) {
 				// Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt
 				Umfrageeintrag umfrageeintrag = new Umfrageeintrag();
 				umfrageeintrag.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 				umfrageeintrag.setID(rs.getInt("umfrageeintrag_id"));
 				umfrageeintrag.setKinoID(rs.getInt("kino_id"));
 				umfrageeintrag.setUmfrageID(rs.getInt("umfrage_id"));
+				umfrageeintrag.setSpielzeitID(rs.getInt("spielzeit_id"));
 				vectorumfrageeintrag.add(umfrageeintrag);
-
-				return vectorumfrageeintrag;
 
 			}
 		}
@@ -229,7 +228,7 @@ public class UmfrageeintragMapper {
 			e.printStackTrace();
 		}
 
-		return null;
+		return vectorumfrageeintrag;
 	}
 
 	/**
@@ -239,41 +238,40 @@ public class UmfrageeintragMapper {
 	 */
 
 
-	public Vector <Umfrageeintrag> findUmfrageeinträgeByKino(Kino kino) {
+	public Vector<Umfrageeintrag> findByKino(Kino kino) {
 
 		//Verbindung zur Datenbank aufbauen.
 
-		Connection con = DBConnection.connection();
-		//Neuen Vector instantiieren, in welchem Umfrageeintrag-Objekte gespeichert werden.
+				Connection con = DBConnection.connection();
+				//Neuen Vector instantiieren, in welchem Umfrageeintrag-Objekte gespeichert werden.
 
-		Vector <Umfrageeintrag> vectorumfrageeintrag = new Vector <Umfrageeintrag>();
-		try {
+				Vector <Umfrageeintrag> vectorumfrageeintrag = new Vector <Umfrageeintrag>();
+				try {
 
 
-			// Leeres SQL-Statement (JDBC) anlegen
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM umfrageeintrag LEFT JOIN kino WHERE umfrageeintrag.kino_id=" + kino.getID() + "ORDER BY umfrageeintrag_id");
+					// Leeres SQL-Statement (JDBC) anlegen
+					Statement stmt = con.createStatement();
+					ResultSet rs = stmt.executeQuery("SELECT * FROM `umfrageeintrag` WHERE (`kino_id` =" + kino.getID() + " )ORDER BY `umfrageeintrag_id`");
 
-			/* Befüllen des result sets
-			 */
-			if (rs.next()) {
-				// Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt
-				Umfrageeintrag umfrageeintrag = new Umfrageeintrag();
-				umfrageeintrag.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
-				umfrageeintrag.setID(rs.getInt("umfrageeintrag_id"));
-				umfrageeintrag.setKinoID(rs.getInt("kino_id"));
-				umfrageeintrag.setUmfrageID(rs.getInt("umfrage_id"));
-				vectorumfrageeintrag.add(umfrageeintrag);
+					/* Befüllen des result sets
+					 */
+					while (rs.next()) {
+						// Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt
+						Umfrageeintrag umfrageeintrag = new Umfrageeintrag();
+						umfrageeintrag.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+						umfrageeintrag.setID(rs.getInt("umfrageeintrag_id"));
+						umfrageeintrag.setKinoID(rs.getInt("kino_id"));
+						umfrageeintrag.setUmfrageID(rs.getInt("umfrage_id"));
+						umfrageeintrag.setSpielzeitID(rs.getInt("spielzeit_id"));
+						vectorumfrageeintrag.add(umfrageeintrag);
+
+					}
+				}
+				catch (SQLException e) {
+					e.printStackTrace();
+				}
 
 				return vectorumfrageeintrag;
-
-			}
-		}
-		catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return null;
 	}
 	/**
 	 * Einfügen eines Umfrageeintrags in die Datenbank.
@@ -289,19 +287,19 @@ public class UmfrageeintragMapper {
 		try {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT MAX(umfrageeintrag_id) AS maxid FROM umfrageintrag");
+			ResultSet rs = stmt.executeQuery("SELECT MAX(umfrageeintrag_id) AS `maxid` FROM `umfrageeintrag`");
 
 			if (rs.next()) {
 				umfrageeintrag.setID(rs.getInt("maxid") + 1);
 			}	
 
-			PreparedStatement pstmt = con.prepareStatement("INSERT INTO umfrageeintrag(umfrageeintrag_id, erstellungszeitpunkt"
-					+ "kino_id, umfrage_id VALUES (?, ?, ?, ?) ");
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO `umfrageeintrag` (`umfrageeintrag_id`, `umfrage_id`, `spielzeit_id`, `kino_id`, `Erstellungszeitpunkt`) VALUES (?, ?, ?, ?, ?) ");
 			pstmt.setInt(1, umfrageeintrag.getID());
-			pstmt.setTimestamp(2, dc.aktuellerTimestamp());
+			pstmt.setInt(2, umfrageeintrag.getUmfrageID());
+			pstmt.setInt(3, umfrageeintrag.getSpielzeitID());
+			pstmt.setInt(4, umfrageeintrag.getKinoID());
+			pstmt.setTimestamp(5, dc.aktuellerTimestamp());
 			umfrageeintrag.setErstellungszeitpunkt(dc.convertTimestampToDate(dc.aktuellerTimestamp()));
-			pstmt.setInt(3, umfrageeintrag.getKinoID());
-			pstmt.setInt(4, umfrageeintrag.getUmfrageID());
 			pstmt.executeUpdate();
 			return umfrageeintrag;
 
@@ -327,9 +325,11 @@ public class UmfrageeintragMapper {
 
 		try {
 
-			PreparedStatement pstmt = con.prepareStatement("UPDATE umfrageeintrag SET kino_id= ?, umfrage_id=? WHERE umfrageeintrag_id=?");
+			PreparedStatement pstmt = con.prepareStatement("UPDATE `umfrageeintrag` SET `umfrage_id` = ?, `spielzeit_id` = ?, `kino_id` = ?  WHERE (`umfrageeintrag_id` = ? )");
+			pstmt.setInt(1, umfrageeintrag.getUmfrageID());
+			pstmt.setInt(2, umfrageeintrag.getSpielzeitID());
 			pstmt.setInt(3, umfrageeintrag.getKinoID());
-			pstmt.setInt(4, umfrageeintrag.getUmfrageID());
+			pstmt.setInt(4, umfrageeintrag.getID());
 			pstmt.executeUpdate();
 			return umfrageeintrag;
 
@@ -354,7 +354,7 @@ public class UmfrageeintragMapper {
 		try {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("DELET FROM umfrageeintrag WHERE umfrageeintrag_id=" + umfrageeintrag.getID());
+			stmt.executeUpdate("DELETE FROM `umfrageeintrag` WHERE (`umfrageeintrag_id` =" + umfrageeintrag.getID() + ")");
 
 
 

@@ -96,11 +96,12 @@ public class FilmMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM `film` WHERE film_id = " + id + "ORDER BY `film_id`");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `film` WHERE (`film_id` = " + id + ") ORDER BY `film_id`");
 
 			if (rs.next()) {
 				Film f = new Film();
-				f.setFilmtitel(rs.getString("film_id"));
+				f.setID(rs.getInt("film_id"));
+				f.setFilmtitel(rs.getString("filmtitel"));
 				f.setBeschreibung(rs.getString("Beschreibung"));
 				f.setDetails(rs.getString("Details"));
 
@@ -113,6 +114,8 @@ public class FilmMapper {
 		return null;
 	}
 
+	//Diese Methode brauchen wir eigentlich nicht, da wir für Cinemates eine "externe" Filmdatenbank verwenden
+	// Für die Pflege der externen Filmdatenbank ist der Admin von Cinemates verantwortlich
 	public Film insert(Film film) {
 
 		Connection con = DBConnection.connection();
@@ -127,11 +130,13 @@ public class FilmMapper {
 			}
 
 			PreparedStatement pstmt = con.prepareStatement(
-					"INSERT INTO `film` (`film_id`, `bo_id`, `Filmtitel`, `Beschreibung` , `Details`) VALUES (?, ?, ?, ?) ");
+					"INSERT INTO `film` (`film_id`, `Filmtitel`, `Beschreibung` , `Details`) VALUES (?, ?, ?, ?) ");
 			pstmt.setInt(1, film.getID());
 			pstmt.setString(2, film.getFilmtitel());
 			pstmt.setString(3, film.getBeschreibung());
 			pstmt.setString(4, film.getDetails());
+			pstmt.executeUpdate();
+			
 			return film;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -151,6 +156,8 @@ public class FilmMapper {
 			pstmt.setString(1, film.getFilmtitel());
 			pstmt.setString(2, film.getBeschreibung());
 			pstmt.setString(3, film.getDetails());
+			pstmt.setInt(4, film.getID());
+			pstmt.executeUpdate();
 			return film;
 
 		} catch (SQLException e) {
@@ -187,7 +194,7 @@ public class FilmMapper {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(
-					"SELECT * FROM `Kinokette_Film`LEFT JOIN `Film` ON `Kinokette_Film`.`film_id`=`Film`.`film_id` WHERE (`kinokette_id` = " + kinokette.getID() + " ) ORDER BY `film_id`");
+					"SELECT * FROM `Kinokette_Film`LEFT JOIN `Film` ON `Kinokette_Film`.`film_id`=`Film`.`film_id` WHERE (`kinokette_id` = " + kinokette.getID() + " ) ORDER BY `Film`.`film_id`");
 
 			/*
 			 * Befüllen des result sets

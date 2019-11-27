@@ -137,14 +137,14 @@ public class KinoketteMapper {
  * Ist kein entsprechender Tupel in der DB vorhanden, so geben wir null zurück.
  */
 
-public Kinokette findByName(String name) {
+public Kinokette findByKinokettename(String kinokettenname) {
 	
 	Connection con = DBConnection.connection();
 
 	try {
 
 		Statement stmt = con.createStatement();
-		ResultSet rs = stmt.executeQuery("SELECT * FROM kinokette LEFT JOIN ownedbusinessobject ON kinokette.bo_id = ownedbusinessobject.bo_id WHERE kinokette Kinokettenname = " + name + " ORDER BY Kinokettenname");
+		ResultSet rs = stmt.executeQuery("SELECT * FROM kinokette LEFT JOIN ownedbusinessobject ON kinokette.bo_id = ownedbusinessobject.bo_id WHERE kinokette Kinokettenname = " + kinokettenname + " ORDER BY Kinokettenname");
 
 		if (rs.next()) {
 			Kinokette k = new Kinokette();

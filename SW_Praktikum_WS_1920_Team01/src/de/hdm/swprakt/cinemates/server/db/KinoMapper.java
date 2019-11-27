@@ -7,8 +7,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
-
+import de.hdm.swprakt.cinemates.shared.bo.Gruppe;
 import de.hdm.swprakt.cinemates.shared.bo.Kino;
+import de.hdm.swprakt.cinemates.shared.bo.Kinokette;
+import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
+import de.hdm.swprakt.cinemates.shared.bo.Spielplan;
 
 
 /**
@@ -110,7 +113,7 @@ public class KinoMapper {
 			try {
 				Statement stmt = con.createStatement();
 				ResultSet rs = stmt.executeQuery("SELECT * FROM kino WHERE kino_id = " + id + "ORDER BY kino_id ");
-//Muss man alle Attribute angeben?
+
 				if (rs.next()) {
 					Kino k = new Kino();
 					k.setID(rs.getInt("kino_id"));
@@ -128,6 +131,99 @@ public class KinoMapper {
 			}
 			return null;
 		}	
+		
+/**
+ * Suchen eines Kinos mithilfe seines Namens. 
+ * Ist kein entsprechender Tupel in der DB vorhanden, so geben wir null zurück.
+ */	
+		public Kino findByKinoname(String kinoname) {
+
+			Connection con = DBConnection.connection();
+
+			try {
+				Statement stmt = con.createStatement();
+				ResultSet rs = stmt.executeQuery("SELECT * FROM kino WHERE kinoname = " + kinoname + "ORDER BY kinoname ");
+
+				if (rs.next()) {
+					Kino k = new Kino();
+					k.setID(rs.getInt("kino_id"));
+					k.setID(rs.getInt("kinokette_id"));
+					k.setID(rs.getInt("spielplan_id"));
+					k.setKinoname(rs.getString("Kinoname"));
+					k.setAdresse(rs.getString("Adresse")); 
+					k.setBeschreibung(rs.getString("Beschreibung"));
+					k.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+					return k;
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}	
+		
+		
+/**
+ * Suchen eines Kinos innerhalb der Kinokette
+ */
+
+		public Vector<Kino> findByKinokette (Kinokette kinoketteID){
+			
+			Connection con = DBConnection.connection();
+			Vector<Kino> kino = new Vector<Kino>();
+			try {
+				
+				Statement stmt = con.createStatement();
+				ResultSet rs = stmt.executeQuery("SELECT * from kinokette WHERE (kinokette_id = " + kinoketteID.getID() + ")");
+				
+				while (rs.next()) {
+					Kino k = new Kino();
+					k.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+					k.setID(rs.getInt("kino_id"));
+					k.setID(rs.getInt("kinokette_id"));
+					k.setKinoname(rs.getString("Kinoname"));
+					k.setAdresse(rs.getString("Adresse"));
+					k.setBeschreibung(rs.getString("Beschreibung"));
+					kino.add(k);
+				}
+			}
+			catch(SQLException e) {
+				e.printStackTrace();
+			}
+			
+			return kino;	
+		}
+
+/**
+ * Suchen eines Kinos innerhalb des Spielplans
+ */
+
+		public Vector<Kino> findBySpielplan (Spielplan spielplanID){
+			
+			Connection con = DBConnection.connection();
+			Vector<Kino> kino = new Vector<Kino>();
+			try {
+				
+				Statement stmt = con.createStatement();
+				ResultSet rs = stmt.executeQuery("SELECT * from spielplan WHERE (spielplan_id = " + spielplanID.getID() + ")");
+				
+				while (rs.next()) {
+					Kino k = new Kino();
+					k.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+					k.setID(rs.getInt("kino_id"));
+					k.setID(rs.getInt("spielplan_id"));
+					k.setKinoname(rs.getString("Kinoname"));
+					k.setAdresse(rs.getString("Adresse"));
+					k.setBeschreibung(rs.getString("Beschreibung"));
+					kino.add(k);
+				}
+			}
+			catch(SQLException e) {
+				e.printStackTrace();
+			}
+			
+			return kino;	
+		}
 		
 /**
  * Einfügen eines Kinos in die Datenbank.
@@ -204,6 +300,25 @@ public class KinoMapper {
 				e.printStackTrace();
 			}
 			
+		}
+/**
+ * Löschen eines Kinos in der Kinokette	
+ */
+		public void deleteKinoOf(Kinokette kinokette) {
+			
+			//Verbindung zur Datenbank aufbauen.
+			
+			Connection con = DBConnection.connection();
+			
+			try {
+				// Leeres SQL-Statement (JDBC) anlegen
+				Statement stmt = con.createStatement();
+				ResultSet rs = stmt.executeQuery("DELET FROM kinokette WHERE kinokette_id=" + kinokette.getID());
+				
+			}
+			catch(SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		
 }

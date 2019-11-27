@@ -81,9 +81,9 @@ public class KinoketteMapper {
 					while(rs.next()) {
 						Kinokette k = new Kinokette();
 						k.setID(rs.getInt("kinokette_id"));
-						k.setOwnerID(rs.getInt("owner_id"));
-						k.setKinokettenname(rs.getString("Kinokette Name"));
-						k.setBeschreibung("Kinokette Beschreibung");
+						k.setOwnerID(rs.getInt("bo_id"));
+						k.setKinokettenname(rs.getString("Kinokettenname"));
+						k.setBeschreibung("Beschreibung");
 						kinokette.add(k);
 					}
 					}
@@ -117,9 +117,9 @@ public class KinoketteMapper {
 					if (rs.next()) {
 						Kinokette k = new Kinokette();
 						k.setID(rs.getInt("kinokette_id"));
-						k.setOwnerID(rs.getInt("owner_id"));
-						k.setKinokettenname(rs.getString("Kinokette Name"));
-						k.setBeschreibung(rs.getString("Kinokette Beschreibung"));
+						k.setOwnerID(rs.getInt("bo_id"));
+						k.setKinokettenname(rs.getString("Kinokettenname"));
+						k.setBeschreibung(rs.getString("Beschreibung"));
 
 						return k;
 					}
@@ -144,14 +144,14 @@ public Kinokette findByName(String name) {
 	try {
 
 		Statement stmt = con.createStatement();
-		ResultSet rs = stmt.executeQuery("SELECT * FROM kinokette LEFT JOIN ownedbusinessobject ON kinokette.bo_id = ownedbusinessobject.bo_id WHERE Kinokette Name = " + name + " ORDER BY Kinokette Name");
+		ResultSet rs = stmt.executeQuery("SELECT * FROM kinokette LEFT JOIN ownedbusinessobject ON kinokette.bo_id = ownedbusinessobject.bo_id WHERE kinokette Kinokettenname = " + name + " ORDER BY Kinokettenname");
 
 		if (rs.next()) {
 			Kinokette k = new Kinokette();
 			k.setID(rs.getInt("kinokette_id"));
 			k.setOwnerID(rs.getInt("owner_id"));
-			k.setKinokettenname(rs.getString("Kinokette Name"));
-			k.setBeschreibung(rs.getString("Kinokette Beschreibung"));
+			k.setKinokettenname(rs.getString("Kinokettenname"));
+			k.setBeschreibung(rs.getString("Beschreibung"));
 			
 			return k;
 		}
@@ -188,7 +188,7 @@ public Kinokette findByName(String name) {
 				}
 //bo_id??
 				PreparedStatement pstmt = con.prepareStatement(
-						"INSERT INTO kino (kinokette_id, bo_id, Kinokette Name, Kinokette Beschreibung) VALUES (?, ?, ?, ?) ");
+						"INSERT INTO kino (kinokette_id, bo_id, Kinokettenname, Beschreibung) VALUES (?, ?, ?, ?) ");
 				pstmt.setInt(1, kinokette.getID());
 				pstmt.setInt(2, obo.getID());
 				pstmt.setString(3, kinokette.getKinokettenname());
@@ -211,7 +211,7 @@ public Kinokette findByName(String name) {
 
 			try {
 				
-				PreparedStatement pstmt = con.prepareStatement("UPDATE kinokette SET Kinokette Name = ?, Kinokette Beschreibung = ? WHERE kinokette_id = ?");
+				PreparedStatement pstmt = con.prepareStatement("UPDATE kinokette SET Kinokettenname = ?, Beschreibung = ? WHERE kinokette_id = ?");
 				pstmt.setString(1, kinokette.getKinokettenname());
 				pstmt.setString(2, kinokette.getBeschreibung());
 				pstmt.setInt(3, kinokette.getID());

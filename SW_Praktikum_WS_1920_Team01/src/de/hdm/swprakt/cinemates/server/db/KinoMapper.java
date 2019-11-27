@@ -33,6 +33,7 @@ public class KinoMapper {
  */
 		private static KinoMapper kinoMapper = null;
 		
+		private static DateConverter dc = new DateConverter();
 /** 
  * Ein geschützter Konstruktor verhindert die Möglichkeit, mit <code>new</code>
  * neue Instanzen der Klasse <code>KinoMapper</code> zu erzeugen.
@@ -78,9 +79,11 @@ public class KinoMapper {
 				while (rs.next()) {
 					Kino k = new Kino();
 					k.setID(rs.getInt("kino_id"));
-					k.setBeschreibung(rs.getString("Kino Beschreibung"));
+					k.setID(rs.getInt("kinokette_id"));
+					k.setID(rs.getInt("spielplan_id"));
 					k.setName(rs.getString("Kinoname"));
-					k.setOrt(rs.getString("Adresse"));
+					k.setOrt(rs.getString("Adresse")); 
+					k.setBeschreibung(rs.getString("Beschreibung"));
 					kino.add(k);
 				}
 			}
@@ -115,8 +118,8 @@ public class KinoMapper {
 					k.setID(rs.getInt("spielplan_id"));
 					k.setName(rs.getString("Kinoname"));
 					k.setOrt(rs.getString("Adresse"));
-					k.setBeschreibung(rs.getString("Kino Beschreibung"));
-				
+					k.setBeschreibung(rs.getString("Beschreibung"));
+					k.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 					return k;
 				}
 
@@ -145,9 +148,9 @@ public class KinoMapper {
 				}
 //bo_id??
 				PreparedStatement pstmt = con.prepareStatement(
-						"INSERT INTO kino (kino_id, bo_id, Kinoname, Adresse, Kino Beschreibung) VALUES (?, ?, ?, ?,?) ");
+						"INSERT INTO kino (kino_id, Kinoname, Adresse, Beschreibung) VALUES (?, ?, ?, ?,?) ");
 				pstmt.setInt(1, kino.getID());
-				pstmt.setString(2, kino.getName() );
+				pstmt.setString(2, kino.getName());
 				pstmt.setString(3, kino.getOrt());
 				pstmt.setString(4, kino.getBeschreibung());
 				return kino;
@@ -168,7 +171,7 @@ public class KinoMapper {
 			
 			try { 
 //Name, Ort, Beschreibung ausreichend?
-				PreparedStatement pstmt = con.prepareStatement("UPDATE kino SET Kinoname = ?, Adresse = ?, Kino Beschreibung = ? WHERE kino_id = ?");
+				PreparedStatement pstmt = con.prepareStatement("UPDATE kino SET Kinoname = ?, Adresse = ?, Beschreibung = ? WHERE kino_id = ?");
 				pstmt.setString(1, kino.getName());
 				pstmt.setString(2, kino.getOrt());
 				pstmt.setString(3, kino.getBeschreibung());

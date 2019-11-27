@@ -7,8 +7,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
+import de.hdm.swprakt.cinemates.shared.bo.Film;
+import de.hdm.swprakt.cinemates.shared.bo.Kinokette;
 import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 import de.hdm.swprakt.cinemates.shared.bo.OwnedBusinessObject;
+import de.hdm.swprakt.cinemates.shared.bo.Spielplan;
 import de.hdm.swprakt.cinemates.shared.bo.Spielzeit;
 
 /**
@@ -176,7 +179,47 @@ public void delete (Spielzeit spielzeit) {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
+}
+		
+		public Vector<Spielzeit> findSpielzeitenBySpielplan (Spielplan spielplan) {
+
+			// Verbindung zur Datenbank aufbauen.
+
+			Connection con = DBConnection.connection();
+			// Neuen Vector instantiieren, in welchem Film-Objekte gespeichert werden.
+
+			Vector<Spielzeit> vectorspielzeit = new Vector<Spielzeit>();
+			try {
+
+				// Leeres SQL-Statement (JDBC) anlegen
+				Statement stmt = con.createStatement();
+				ResultSet rs = stmt.executeQuery(
+						"SELECT * FROM `Spielplan_Spielzeit`LEFT JOIN `spielzeit`ON `Spielplan_Spielzeit`.`spielzeit_id`= `Spielzeit`.`spielzeit_id` LEFT JOIN `ownedbusinessobject` ON `spielzeit`.`bo_id` = `ownedbusinessobject`.`bo_id`  WHERE (`spielplan_id` = " + spielplan.getID() + " ) ORDER BY `spielzeit_id`");
+
+				/*
+				 * Befüllen des result sets
+				 */
+				while (rs.next()) {
+					// Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt
+					Spielzeit sz = new Spielzeit();
+					sz.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+					sz.setID(rs.getInt("spielzeit_id"));
+					sz.setID(rs.getInt("film_id"));
+					sz.setID(rs.getInt("bo_id"));
+					sz.setZeitpunkt( dc.convertDatumUndUhrzeitToDate(rs.getDate("Datum"),rs.getTime("Uhrzeit")));
+			
+					vectorspielzeit.add(sz);
+
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			return vectorspielzeit;
+		}
+
+
+
 }
 
 

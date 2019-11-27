@@ -8,7 +8,9 @@ import java.sql.Statement;
 import java.util.Vector;
 
 import de.hdm.swprakt.cinemates.shared.bo.Film;
-import de.hdm.swprakt.cinemates.shared.bo.OwnedBusinessObject;
+import de.hdm.swprakt.cinemates.shared.bo.Kinokette;
+
+
 
 /**
  * Diese Mapperklasse bildet <code>Film</code> Objekte auf eine relationale
@@ -94,11 +96,12 @@ public class FilmMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM `film` WHERE film_id = " + id + "ORDER BY `film_id`");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `film` WHERE (`film_id` = " + id + ") ORDER BY `film_id`");
 
 			if (rs.next()) {
 				Film f = new Film();
-				f.setFilmtitel(rs.getString("film_id"));
+				f.setID(rs.getInt("film_id"));
+				f.setFilmtitel(rs.getString("filmtitel"));
 				f.setBeschreibung(rs.getString("Beschreibung"));
 				f.setDetails(rs.getString("Details"));
 
@@ -111,6 +114,8 @@ public class FilmMapper {
 		return null;
 	}
 
+	//Diese Methode brauchen wir eigentlich nicht, da wir für Cinemates eine "externe" Filmdatenbank verwenden
+	// Für die Pflege der externen Filmdatenbank ist der Admin von Cinemates verantwortlich
 	public Film insert(Film film) {
 
 		Connection con = DBConnection.connection();
@@ -125,11 +130,13 @@ public class FilmMapper {
 			}
 
 			PreparedStatement pstmt = con.prepareStatement(
-					"INSERT INTO `film` (`film_id`, `bo_id`, `Filmtitel`, `Beschreibung` , `Details`) VALUES (?, ?, ?, ?) ");
+					"INSERT INTO `film` (`film_id`, `Filmtitel`, `Beschreibung` , `Details`) VALUES (?, ?, ?, ?) ");
 			pstmt.setInt(1, film.getID());
 			pstmt.setString(2, film.getFilmtitel());
 			pstmt.setString(3, film.getBeschreibung());
 			pstmt.setString(4, film.getDetails());
+			pstmt.executeUpdate();
+			
 			return film;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -137,24 +144,76 @@ public class FilmMapper {
 		}
 
 	}
-	
-	public Film update (Film film) {
-		
+
+	public Film update(Film film) {
+
 		Connection con = DBConnection.connection();
-		
-		try { 
-			
-			PreparedStatement pstmt = con.prepareStatement("UPDATE `film` SET `Filmtitel` = ?, `Beschreibung` = ?, `Details` = ? WHERE `film_id` = ?");
+
+		try {
+
+			PreparedStatement pstmt = con.prepareStatement(
+					"UPDATE `film` SET `Filmtitel` = ?, `Beschreibung` = ?, `Details` = ? WHERE `film_id` = ?");
 			pstmt.setString(1, film.getFilmtitel());
 			pstmt.setString(2, film.getBeschreibung());
 			pstmt.setString(3, film.getDetails());
+			pstmt.setInt(4, film.getID());
+			pstmt.executeUpdate();
 			return film;
-		
-		}catch (SQLException e) {
+
+		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
-		
+
+	}
+
+	public void delete(Film film) {
+
+		Connection con = DBConnection.connection();
+
+		try {
+
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate("DELETE FROM `film` WHERE (`film_id` = " + film.getID() + ")");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public Vector<Film> findFilmeByKinokette(Kinokette kinokette) {
+
+		// Verbindung zur Datenbank aufbauen.
+
+		Connection con = DBConnection.connection();
+		// Neuen Vector instantiieren, in welchem Film-Objekte gespeichert werden.
+
+		Vector<Film> vectorfilm = new Vector<Film>();
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(
+					"SELECT * FROM `Kinokette_Film`LEFT JOIN `Film` ON `Kinokette_Film`.`film_id`=`Film`.`film_id` WHERE (`kinokette_id` = " + kinokette.getID() + " ) ORDER BY `Film`.`film_id`");
+
+			/*
+			 * Befüllen des result sets
+			 */
+			while (rs.next()) {
+				// Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt
+				Film f = new Film();
+				f.setID(rs.getInt("film_id"));
+				f.setFilmtitel(rs.getString("Filmtitel"));
+				f.setBeschreibung(rs.getString("Beschreibung"));
+				f.setDetails(rs.getString("Details"));
+				vectorfilm.add(f);
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return vectorfilm;
 	}
 
 }

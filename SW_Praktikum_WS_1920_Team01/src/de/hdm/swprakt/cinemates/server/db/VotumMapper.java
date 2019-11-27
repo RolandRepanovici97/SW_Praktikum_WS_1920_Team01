@@ -84,7 +84,7 @@ public class VotumMapper {
 				// Ergebnis-Tupel in Objekt umwandeln
 				Votum votum = new Votum();
 				votum.setID(rs.getInt("votum_id"));
-				votum.setErstellungszeitpunkt(tsm.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+				votum.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 				votum.setOwnerID(rs.getInt("bo_id"));
 				votum.setIstMöglicherTermin(rs.getBoolean("istMöglicherTermin"));
 				votum.setUmfrageeintragID(rs.getInt("umfrageeintrag_id"));
@@ -164,7 +164,7 @@ public class VotumMapper {
 				// Es werden für jedes Votum-Objekt die nötigen Attribute gesetzt
 				Votum votum = new Votum();
 				votum.setID(rs.getInt("votum_id"));
-				votum.setErstellungszeitpunkt(d.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+				votum.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 				votum.setOwnerID(rs.getInt("bo_id"));
 				votum.setIstMöglicherTermin(rs.getBoolean("istMöglicherTermin"));
 				votum.setUmfrageeintragID(rs.getInt("umfrageeintrag_id"));
@@ -210,7 +210,7 @@ public class VotumMapper {
 			pstmt.setTimestamp(2, dc.aktuellerTimestamp());
 			votum.setErstellungszeitpunkt(dc.convertTimestampToDate(dc.aktuellerTimestamp()));
 			pstmt.setInt(3, votum.getOwnerID());
-			pstmt.setBoolean(4, votum.getisIstMölicherTermin());
+			pstmt.setBoolean(4, votum.getisIstMöglicherTermin());
 			pstmt.setInt(5, votum.getUmfrageeintragID());
 			pstmt.executeUpdate();
 			return votum;
@@ -239,7 +239,7 @@ public class VotumMapper {
 			PreparedStatement pstmt = con.prepareStatement("UPDATE votum SET istMöglicherTermin =?");
 
 
-			pstmt.setBoolean(4, votum.getisIstMölicherTermin());
+			pstmt.setBoolean(4, votum.getisIstMöglicherTermin());
 
 			pstmt.executeUpdate();
 			return votum;

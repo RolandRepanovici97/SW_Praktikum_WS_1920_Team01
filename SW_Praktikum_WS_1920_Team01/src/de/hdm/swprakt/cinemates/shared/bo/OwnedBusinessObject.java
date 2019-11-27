@@ -48,7 +48,7 @@ public abstract class OwnedBusinessObject extends BusinessObject {
 	
 	public String toString() {
 		
-		return super.toString() + " Owner-ID: " + this.ownerID;
+		return super.toString() + "; Owner-ID: " + this.ownerID;
 	}
 	
 

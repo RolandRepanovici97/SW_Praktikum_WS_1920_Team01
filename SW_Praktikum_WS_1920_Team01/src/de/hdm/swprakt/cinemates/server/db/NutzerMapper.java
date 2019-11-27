@@ -76,7 +76,7 @@ public class NutzerMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM `nutzer` LEFT JOIN `ownedbusinessobject` ON `nutzer`.`bo_id` = `ownedbusinessobject`.`bo_id` WHERE user_id = " + id + " ORDER BY `user_id`");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `nutzer` LEFT JOIN `ownedbusinessobject` ON `nutzer`.`bo_id` = `ownedbusinessobject`.`bo_id` WHERE (`user_id` = " + id + ")ORDER BY `user_id`");
 
 			if (rs.next()) {
 				Nutzer n = new Nutzer();
@@ -105,7 +105,7 @@ public class NutzerMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM `nutzer` LEFT JOIN `ownedbusinessobject` ON `nutzer`.`bo_id` = `ownedbusinessobject`.`bo_id` WHERE Email = '" + email + "' ORDER BY `email`");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `nutzer` LEFT JOIN `ownedbusinessobject` ON `nutzer`.`bo_id` = `ownedbusinessobject`.`bo_id` WHERE (`Email` = '" + email + "') ORDER BY `email`");
 
 			if (rs.next()) {
 				Nutzer n = new Nutzer();
@@ -130,7 +130,7 @@ public class NutzerMapper {
 	}
 	
 
-	public Nutzer insert (Nutzer nutzer, OwnedBusinessObject obo) {
+	public Nutzer insert (Nutzer nutzer, int bo_id) {
 	
 		Connection con = DBConnection.connection();
 		
@@ -145,12 +145,11 @@ public class NutzerMapper {
 			
 			PreparedStatement pstmt = con.prepareStatement("INSERT INTO `nutzer` (`user_id`, `bo_id`, `Email`, `Nutzername`) VALUES (?, ?, ?, ?) ");
 			pstmt.setInt(1, nutzer.getID());
-			pstmt.setInt(2, obo.getID());
+			pstmt.setInt(2, bo_id);
 			pstmt.setString(3, nutzer.getEmail());
 			pstmt.setString(4, nutzer.getNutzername());
 			pstmt.executeUpdate();
-			nutzer.setErstellungszeitpunkt(obo.getErstellungszeitpunkt());
-			nutzer.setOwnerID(obo.getOwnerID());
+
 			return nutzer;
 			
 		}
@@ -169,7 +168,7 @@ public class NutzerMapper {
 
 		try {
 			
-			PreparedStatement pstmt = con.prepareStatement("UPDATE `nutzer` SET `Email` = ?, `Nutzername` = ? WHERE `user_id` = ?");
+			PreparedStatement pstmt = con.prepareStatement("UPDATE `nutzer` SET `Email` = ?, `Nutzername` = ? WHERE (`user_id` = ?)");
 			pstmt.setString(1, nutzer.getEmail());
 			pstmt.setString(2, nutzer.getNutzername());
 			pstmt.setInt(3, nutzer.getID());
@@ -189,7 +188,7 @@ public class NutzerMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM `nutzer` WHERE `user_id` = " + nutzer.getID());
+			stmt.executeUpdate("DELETE FROM `nutzer` WHERE (`user_id` = " + nutzer.getID() + ")");
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -203,7 +202,7 @@ public class NutzerMapper {
 		try {
 			
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM `gruppe_mitglied` WHERE `user_id` = " + nutzerid);
+			stmt.executeUpdate("DELETE FROM `gruppe_mitglied` WHERE (`user_id` = " + nutzerid + ")");
 			
 		} catch(SQLException e) {
 			e.printStackTrace();

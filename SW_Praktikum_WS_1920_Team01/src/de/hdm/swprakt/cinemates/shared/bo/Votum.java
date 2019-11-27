@@ -71,7 +71,7 @@ public class Votum extends OwnedBusinessObject{
 	 * Auslesen des Attributs istMöglicherTermin
 	 * @return the istMöglicherTermin
 	 */
-	public boolean getisIstMölicherTermin() {
+	public boolean getIstMöglicherTermin() {
 		return istMöglicherTermin;
 	}
 
@@ -92,8 +92,8 @@ public class Votum extends OwnedBusinessObject{
 	 */
 	@Override
 	public String toString() {
-		return super.toString() + "Votum zu Umfrageeintrag # " + this.umfrageeintragID 
-				+ "Abgegeben von # " + super.getOwnerID() + "Ist der Termin möglich?" + this.istMöglicherTermin;
+		return super.toString() + "; Umfrageeintrag-ID: " + this.umfrageeintragID 
+				 + "; möglicherTermin: " + this.istMöglicherTermin;
 	}
 
 

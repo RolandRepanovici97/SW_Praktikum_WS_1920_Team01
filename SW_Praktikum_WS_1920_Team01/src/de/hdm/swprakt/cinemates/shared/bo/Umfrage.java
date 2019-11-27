@@ -144,8 +144,7 @@ public class Umfrage extends OwnedBusinessObject {
 	 */
 	@Override
 	public String toString() {
-		return super.toString() + "Name von der Umfrage oder sowas: " + this.umfragenname + "Umfrage ErstellerID "
-				+ super.getOwnerID();
+		return super.toString() + "; Umfragename: " + this.umfragenname + "; Beschreibung: " + this.beschreibung + "; Datum: " + this.datum + "; Film-ID: " + this.filmID;
 	}
 
 	/**

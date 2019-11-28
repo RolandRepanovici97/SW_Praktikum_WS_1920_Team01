@@ -123,7 +123,7 @@ public class GruppeMapper {
 	}
 	
 	
-	public Gruppe insert (Gruppe gruppe, OwnedBusinessObject obo) {
+	public Gruppe insert (Gruppe gruppe) {
 		
 		Connection con = DBConnection.connection();
 		
@@ -138,11 +138,9 @@ public class GruppeMapper {
 			
 			PreparedStatement pstmt = con.prepareStatement("INSERT INTO `gruppe` (`gruppen_id`, `bo_id`, `Gruppenname`) VALUES (?, ?, ?) ");
 			pstmt.setInt(1, gruppe.getID());
-			pstmt.setInt(2, obo.getID());
+			pstmt.setInt(2, bo_id);
 			pstmt.setString(3, gruppe.getGruppenname());
 			pstmt.executeUpdate();
-			gruppe.setErstellungszeitpunkt(obo.getErstellungszeitpunkt());
-			gruppe.setOwnerID(obo.getOwnerID());
 			return gruppe;
 			
 		}

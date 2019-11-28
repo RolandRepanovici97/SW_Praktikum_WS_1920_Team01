@@ -13,6 +13,7 @@ import de.hdm.swprakt.cinemates.server.db.UmfrageeintragMapper;
 import de.hdm.swprakt.cinemates.server.db.VotumMapper;
 import de.hdm.swprakt.cinemates.shared.KinoAdministration;
 import de.hdm.swprakt.cinemates.shared.KinoBesuchsplanung;
+import de.hdm.swprakt.cinemates.shared.bo.Gruppe;
 import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 
 /**
@@ -70,12 +71,27 @@ public Nutzer findNutzerByEmail(String email) {
 }
 
 @Override
-public Nutzer insertNutzer(Nutzer nutzer) {
+public Nutzer createNutzer(Nutzer nutzer) {
 	
 	//Einfügen eines neuen OwnedBusinessObjects
 	//Einfügen des Nutzers in die Nutzerdatenbank mit zugehöriger OwnedBusinessObject Referenz
-	// TODO Auto-generated method stub
+	// zurückgeben des Nutzerobjektes
+	
 	return null;
 }
+
+
+@Override
+public Gruppe createGruppe(Gruppe gruppe) {
+
+	
+	int bo_id = ownedBusinessObjectMapper.insert(gruppe);
+	gruppe = gruppeMapper.insert(gruppe, bo_id);
+	
+	return gruppe;
+}
+
+
+
 
 }

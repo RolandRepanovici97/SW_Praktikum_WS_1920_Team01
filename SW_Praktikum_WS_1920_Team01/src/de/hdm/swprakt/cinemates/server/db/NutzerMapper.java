@@ -130,7 +130,7 @@ public class NutzerMapper {
 	}
 	
 
-	public Nutzer insert (Nutzer nutzer, OwnedBusinessObject obo) {
+	public Nutzer insert (Nutzer nutzer, int bo_id) {
 	
 		Connection con = DBConnection.connection();
 		
@@ -145,12 +145,11 @@ public class NutzerMapper {
 			
 			PreparedStatement pstmt = con.prepareStatement("INSERT INTO `nutzer` (`user_id`, `bo_id`, `Email`, `Nutzername`) VALUES (?, ?, ?, ?) ");
 			pstmt.setInt(1, nutzer.getID());
-			pstmt.setInt(2, obo.getID());
+			pstmt.setInt(2, bo_id);
 			pstmt.setString(3, nutzer.getEmail());
 			pstmt.setString(4, nutzer.getNutzername());
 			pstmt.executeUpdate();
-			nutzer.setErstellungszeitpunkt(obo.getErstellungszeitpunkt());
-			nutzer.setOwnerID(obo.getOwnerID());
+
 			return nutzer;
 			
 		}

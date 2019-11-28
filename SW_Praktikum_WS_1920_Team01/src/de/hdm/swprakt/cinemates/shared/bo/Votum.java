@@ -71,7 +71,7 @@ public class Votum extends OwnedBusinessObject{
 	 * Auslesen des Attributs istMöglicherTermin
 	 * @return the istMöglicherTermin
 	 */
-	public boolean getisIstMöglicherTermin() {
+	public boolean getIstMöglicherTermin() {
 		return istMöglicherTermin;
 	}
 

@@ -123,7 +123,7 @@ public class GruppeMapper {
 	}
 	
 	
-	public Gruppe insert (Gruppe gruppe, int bo_id) {
+	public Gruppe insert (Gruppe gruppe) {
 		
 		Connection con = DBConnection.connection();
 		

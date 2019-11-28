@@ -14,7 +14,7 @@ package de.hdm.swprakt.cinemates.shared.bo;
  * @version 1.0
  *
  */
-public class OwnedBusinessObject extends BusinessObject {
+public abstract class OwnedBusinessObject extends BusinessObject {
 
 	/**
 	 * 

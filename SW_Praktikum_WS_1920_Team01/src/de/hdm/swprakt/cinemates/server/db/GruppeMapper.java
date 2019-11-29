@@ -19,7 +19,7 @@ import de.hdm.swprakt.cinemates.shared.bo.Umfrage;
  * @author
  *
  */
-public class GruppeMapper {
+public class GruppeMapper extends OwnedBusinessObjectMapper{
 
 	private static GruppeMapper gruppeMapper = null;
 	private static DateConverter dc = new DateConverter();

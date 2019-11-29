@@ -24,7 +24,7 @@ import de.hdm.swprakt.cinemates.shared.bo.Votum;
  * @version 1.0
  *
  */
-public class VotumMapper {
+public class VotumMapper extends OwnedBusinessObjectMapper {
 	/**Die Klasse <code>VotumMapper</code> wird wie jede andere Mapperklasse 
 	 * nur ein einziges mal instantiiert. Die Variable votumMapper speichert diese Instanz.
 	 * Wir stellen die einmalige Initalisierung durch den Bezeichner <code>static</code> sicher. 

@@ -24,7 +24,7 @@ import de.hdm.swprakt.cinemates.shared.bo.OwnedBusinessObject;
  *
  */
 
-public class KinoketteMapper {
+public class KinoketteMapper extends OwnedBusinessObjectMapper {
 
 /**Die Klasse <code>KinoketteMapper</code> wird wie jede andere Mapperklasse 
  * nur ein einziges mal instantiiert. 

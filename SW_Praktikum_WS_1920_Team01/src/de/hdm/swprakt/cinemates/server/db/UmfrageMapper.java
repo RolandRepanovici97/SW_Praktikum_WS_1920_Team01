@@ -25,7 +25,7 @@ import de.hdm.swprakt.cinemates.shared.bo.Umfrageeintrag;
  * @version 1.0
  *
  */
-public class UmfrageMapper {
+public class UmfrageMapper extends OwnedBusinessObjectMapper {
 
 	/**Die Klasse <code>Umfrage</code> wird wie jede andere Mapperklasse 
 	 * nur ein einziges mal instantiiert. Die Variable umfrageMapper speichert diese Instanz.

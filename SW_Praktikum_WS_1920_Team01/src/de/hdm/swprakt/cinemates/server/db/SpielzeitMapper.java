@@ -25,7 +25,7 @@ import de.hdm.swprakt.cinemates.shared.bo.Spielzeit;
  * @version 1.0
  *
  */
-public class SpielzeitMapper {
+public class SpielzeitMapper extends OwnedBusinessObjectMapper {
 	
 	/**
 	 * Die Klasse <code>SpielzeitMapper</code> wird wie jede andere Mapperklasse nur ein

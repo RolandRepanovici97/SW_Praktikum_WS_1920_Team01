@@ -18,7 +18,7 @@ import de.hdm.swprakt.cinemates.shared.bo.Spielzeit;
 import de.hdm.swprakt.cinemates.shared.bo.Umfrage;
 import de.hdm.swprakt.cinemates.shared.bo.Votum;
 
-public class NutzerMapper {
+public class NutzerMapper extends OwnedBusinessObjectMapper{
 	
 	private static NutzerMapper nutzerMapper = null;
 	private static DateConverter dc = new DateConverter();
@@ -38,7 +38,9 @@ public class NutzerMapper {
 		
 	}
 	
-	public Vector<Nutzer> findAll(){
+	@Override
+	
+	public Vector <Nutzer> findAll(){
 		
 		Connection con = DBConnection.connection();
 		Vector<Nutzer> nutzer = new Vector<Nutzer>();

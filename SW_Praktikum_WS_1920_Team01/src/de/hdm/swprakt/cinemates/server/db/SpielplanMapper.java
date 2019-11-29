@@ -25,7 +25,7 @@ import de.hdm.swprakt.cinemates.shared.bo.Spielplan;
  *
  */
 
-public class SpielplanMapper {
+public class SpielplanMapper extends OwnedBusinessObjectMapper {
 
 	/**
 	 * Die Klasse <code>SpielplanMapper</code> wird wie jede andere Mapperklasse nur

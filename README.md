@@ -14,7 +14,7 @@ Ein Projekt aus dem 4. Semester des Studiengangs Wirtschaftsinformatik und digit
 
 * Sinan Tayar
 
-Aus urheberrechtlichen Gründen sollte noch erwähnt werden, dass viele der verwendeten Ideen von @PeterThies und @ChristianRathke (Siehe "Bankprojekt") stammen. 
+Aus urheberrechtlichen Gründen sollte noch erwähnt werden, dass viele der verwendeten Ideen und Realisierungsansätze von @PeterThies und @ChristianRathke (Siehe "Bankprojekt") stammen. 
 
 ### <h1> <b> Systemidee CineMates 🎬 </b> </h1>
 

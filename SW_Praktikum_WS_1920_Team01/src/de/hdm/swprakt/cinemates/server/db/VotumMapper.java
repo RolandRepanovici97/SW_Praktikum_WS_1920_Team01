@@ -75,7 +75,7 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 		try {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM votum LEFT JOIN ownedbusinessobject ON nutzer.bo_id = ownedbusinessobject.bo_Id WHERE votum_id=" + id + "ORDER BY votum_id");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM votum WHERE votum_id=" + id + "ORDER BY votum_id");
 
 			/* Da ID Primaerschlüssel ist, kann max. nur ein Tupel zurückgegeben werden.
 			 * Prüfe, ob ein Ergebnis vorliegt.
@@ -85,7 +85,7 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 				Votum votum = new Votum();
 				votum.setID(rs.getInt("votum_id"));
 				votum.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
-				votum.setOwnerID(rs.getInt("bo_id"));
+				votum.setOwnerID(rs.getInt("owner_id"));
 				votum.setIstMöglicherTermin(rs.getBoolean("istMöglicherTermin"));
 				votum.setUmfrageeintragID(rs.getInt("umfrageeintrag_id"));
 
@@ -108,6 +108,7 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 
 	public Vector <Votum> findAll() {
 		//Verbindung zur Datenbank aufbauen.
+		
 		Connection con = DBConnection.connection();
 		// Neuen Vector instantiieren, in welchem unsere Votum-Objekte gespeichert werden
 		Vector <Votum> vectorvotum = new Vector <Votum>();
@@ -115,12 +116,14 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 		try {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM votum LEFT JOIN ownedbusinessobject ON nutzer.bo_id = ownedbusinessobject.bo_Id ORDER BY votum_id");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM votum ORDER BY votum_id");
 
 			/* Befüllen des result sets
 			 */
 			if (rs.next()) {
-				// Es werden für jedes Votum-Objekt die nötigen Attribute gesetzt
+				/**Es werden für jedes Votum-Objekt die nötigen Attribute gesetzt. Dazu wird ein Objekt der Klasse <code>Votum</code> angelegt und dessen Attribute werden gesetzt. 
+				Dies wird wiederholt. Das Ergebnis wird jeweils einem Vector hinzugefügt, welchen wir am Ende zurückgeben.
+			*/
 				Votum votum = new Votum();
 				votum.setID(rs.getInt("votum_id"));
 				votum.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
@@ -157,11 +160,13 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 		try {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM votum LEFT JOIN ownedbusinessobject ON nutzer.bo_id = ownedbusinessobject.bo_Id WHERE votum.umfrageeintrag_id="+
+			ResultSet rs = stmt.executeQuery("SELECT * FROM votum WHERE votum.umfrageeintrag_id="+
 					umfrageeintrag.getID()+ "ORDER BY umfrageeintrag_id");
 
 			if (rs.next()) {
-				// Es werden für jedes Votum-Objekt die nötigen Attribute gesetzt
+				/** Es werden für jedes Votum-Objekt die nötigen Attribute gesetzt.Dazu wird ein Objekt der Klasse <code>Votum</code> angelegt und dessen Attribute werden gesetzt. 
+				Dies wird wiederholt. Das Ergebnis wird jeweils einem Vector hinzugefügt, welchen wir am Ende zurückgeben. */
+				
 				Votum votum = new Votum();
 				votum.setID(rs.getInt("votum_id"));
 				votum.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
@@ -204,15 +209,18 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 				votum.setID(rs.getInt("maxid") + 1);
 			}	
 
-			PreparedStatement pstmt = con.prepareStatement("INSERT INTO votum(votum_id, erstellungszeitpunkt"
-					+ "owner_id, istMöglicherTermin,umfrageeintrag_id VALUES (?, ?, ?, ?,?) ");
-			pstmt.setInt(1,votum.getID());
-			pstmt.setTimestamp(2, dc.aktuellerTimestamp());
+			PreparedStatement pstmt1 = con.prepareStatement("INSERT INTO votum(votum_id,istMöglicherTermin,umfrageeintrag_id VALUES (?, ?, ?, ?,?) ");
+			pstmt1.setInt(1,votum.getID());
+			pstmt1.setBoolean(2, votum.getIstMöglicherTermin());
+			pstmt1.setInt(3, votum.getUmfrageeintragID());
+			pstmt1.executeUpdate();
+			
+			PreparedStatement pstmt2 = con.prepareStatement("INSERT INTO OwnedBusinessObject(erstellungszeitpunkt, owner_id");
+			pstmt2.setTimestamp(1, dc.aktuellerTimestamp());
 			votum.setErstellungszeitpunkt(dc.convertTimestampToDate(dc.aktuellerTimestamp()));
-			pstmt.setInt(3, votum.getOwnerID());
-			pstmt.setBoolean(4, votum.getIstMöglicherTermin());
-			pstmt.setInt(5, votum.getUmfrageeintragID());
-			pstmt.executeUpdate();
+			pstmt2.setInt(2,votum.getOwnerID());
+			pstmt2.executeUpdate();
+			
 			return votum;
 
 		}

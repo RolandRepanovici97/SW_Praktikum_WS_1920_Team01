@@ -80,7 +80,7 @@ public class UmfrageeintragMapper {
 		try {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM `umfrageeintrag` WHERE (`umfrageeintrag_id` = " + id + ")");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM umfrageeintrag WHERE umfrageeintrag_id = " + id);
 
 			/* Da ID Primaerschlüssel ist, kann max. nur ein Tupel zurückgegeben werden.
 			 * Prüfe, ob ein Ergebnis vorliegt.
@@ -88,7 +88,6 @@ public class UmfrageeintragMapper {
 			if (rs.next()) {
 				// Ergebnis-Tupel in Objekt umwandeln
 				Umfrageeintrag umfrageeintrag = new Umfrageeintrag();
-				umfrageeintrag.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 				umfrageeintrag.setID(rs.getInt("umfrageeintrag_id"));
 				umfrageeintrag.setKinoID(rs.getInt("kino_id"));
 				umfrageeintrag.setUmfrageID(rs.getInt("umfrage_id"));
@@ -128,7 +127,6 @@ public class UmfrageeintragMapper {
 			while (rs.next()) {
 				// Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt
 				Umfrageeintrag umfrageeintrag = new Umfrageeintrag();
-				umfrageeintrag.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 				umfrageeintrag.setID(rs.getInt("umfrageeintrag_id"));
 				umfrageeintrag.setKinoID(rs.getInt("kino_id"));
 				umfrageeintrag.setUmfrageID(rs.getInt("umfrage_id"));
@@ -169,7 +167,9 @@ public class UmfrageeintragMapper {
 			/* Befüllen des result sets
 			 */
 			while (rs.next()) {
-				// Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt
+				/** Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt.  Dazu wird ein Objekt der Klasse <code>Umfrageeintrag</code> angelegt und dessen Attribute werden gesetzt. 
+				Dies wird wiederholt. Das Ergebnis wird jeweils einem Vector hinzugefügt, welchen wir am Ende zurückgeben.
+				*/
 				Umfrageeintrag umfrageeintrag = new Umfrageeintrag();
 				umfrageeintrag.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 				umfrageeintrag.setID(rs.getInt("umfrageeintrag_id"));
@@ -213,7 +213,7 @@ public class UmfrageeintragMapper {
 			/* Befüllen des result sets
 			 */
 			while (rs.next()) {
-				// Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt
+				// Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt. 
 				Umfrageeintrag umfrageeintrag = new Umfrageeintrag();
 				umfrageeintrag.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 				umfrageeintrag.setID(rs.getInt("umfrageeintrag_id"));
@@ -256,7 +256,10 @@ public class UmfrageeintragMapper {
 					/* Befüllen des result sets
 					 */
 					while (rs.next()) {
-						// Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt
+						/** Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt.  Dazu wird ein Objekt der Klasse <code>Umfrageeintrag</code> angelegt und dessen Attribute werden gesetzt. 
+						Dies wird wiederholt. Das Ergebnis wird jeweils einem Vector hinzugefügt, welchen wir am Ende zurückgeben.
+						*/
+						
 						Umfrageeintrag umfrageeintrag = new Umfrageeintrag();
 						umfrageeintrag.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 						umfrageeintrag.setID(rs.getInt("umfrageeintrag_id"));
@@ -342,7 +345,7 @@ public class UmfrageeintragMapper {
 
 	}
 	/**
-	 * Löschen eines Umfrageeintrags in der Datenbank.
+	 * Löschen eines Umfrageeintrags aus der Datenbank.
 	 */
 
 	public void delete (Umfrageeintrag umfrageeintrag) {

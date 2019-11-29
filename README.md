@@ -14,6 +14,8 @@ Ein Projekt aus dem 4. Semester des Studiengangs Wirtschaftsinformatik und digit
 
 * Sinan Tayar
 
+Aus urheberrechtlichen Gründen sollte noch erwähnt werden, dass viele der verwendeten Ideen von @PeterThies und @ChristianRathke (Siehe "Bankprojekt") stammen. 
+
 ### <h1> <b> Systemidee CineMates 🎬 </b> </h1>
 
 Durch CineMates wird die Planung eines Kinobesuchs erheblich erleichtert. CineMates bietet hierbei nicht nur Lösungen für potentielle Kinobesucher, sondern auch für Kinobetreibende.
@@ -23,3 +25,4 @@ CineMates ist aus dem Web aufrufbar, anmelden können Sie sich mit Ihrem Google-
 ## Built With
 
 * [GWT] http://www.gwtproject.org - The web framework used
+

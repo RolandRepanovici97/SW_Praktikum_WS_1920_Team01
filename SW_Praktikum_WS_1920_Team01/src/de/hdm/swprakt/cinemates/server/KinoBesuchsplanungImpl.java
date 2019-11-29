@@ -59,9 +59,9 @@ public void init() throws IllegalArgumentException {
     this.votumMapper = VotumMapper.votumMapper();
     this.ownedBusinessObjectMapper = OwnedBusinessObjectMapper.ownedBusinessObjectMapper();
     
-    KinoAdministrationImpl kai = new KinoAdministrationImpl();
-    kai.init();
-    this.administration = kai;
+    KinoAdministrationImpl kinoAdministrationImpl = new KinoAdministrationImpl();
+    kinoAdministrationImpl.init();
+    this.administration = kinoAdministrationImpl;
   }
   
 @Override
@@ -73,9 +73,10 @@ public Nutzer findNutzerByEmail(String email) {
 @Override
 public Nutzer createNutzer(Nutzer nutzer) {
 	
-	//Einfügen eines neuen OwnedBusinessObjects
-	//Einfügen des Nutzers in die Nutzerdatenbank mit zugehöriger OwnedBusinessObject Referenz
-	// zurückgeben des Nutzerobjektes
+	/**
+	 Einfügen eines Nutzers in die Nutzertabelle mit zugehöriger OwnedBusinessObject Referenz
+	 Zurückgeben des Nutzerobjektes
+	 */
 	
 	return null;
 }
@@ -85,8 +86,7 @@ public Nutzer createNutzer(Nutzer nutzer) {
 public Gruppe createGruppe(Gruppe gruppe) {
 
 	
-	int bo_id = ownedBusinessObjectMapper.insert(gruppe);
-	gruppe = gruppeMapper.insert(gruppe, bo_id);
+	gruppe = gruppeMapper.insert(gruppe);
 	
 	return gruppe;
 }

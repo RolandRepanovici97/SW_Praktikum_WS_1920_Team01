@@ -106,9 +106,9 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 	 * @return Vector <Votum>, welcher alle Votum-Objekte beinhaltet
 	 */
 
-	public Vector <Votum> findAll() {
+	public Vector <Votum> findAllVotum() {
 		//Verbindung zur Datenbank aufbauen.
-		
+
 		Connection con = DBConnection.connection();
 		// Neuen Vector instantiieren, in welchem unsere Votum-Objekte gespeichert werden
 		Vector <Votum> vectorvotum = new Vector <Votum>();
@@ -123,7 +123,7 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 			if (rs.next()) {
 				/**Es werden für jedes Votum-Objekt die nötigen Attribute gesetzt. Dazu wird ein Objekt der Klasse <code>Votum</code> angelegt und dessen Attribute werden gesetzt. 
 				Dies wird wiederholt. Das Ergebnis wird jeweils einem Vector hinzugefügt, welchen wir am Ende zurückgeben.
-			*/
+				 */
 				Votum votum = new Votum();
 				votum.setID(rs.getInt("votum_id"));
 				votum.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
@@ -166,7 +166,7 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 			if (rs.next()) {
 				/** Es werden für jedes Votum-Objekt die nötigen Attribute gesetzt.Dazu wird ein Objekt der Klasse <code>Votum</code> angelegt und dessen Attribute werden gesetzt. 
 				Dies wird wiederholt. Das Ergebnis wird jeweils einem Vector hinzugefügt, welchen wir am Ende zurückgeben. */
-				
+
 				Votum votum = new Votum();
 				votum.setID(rs.getInt("votum_id"));
 				votum.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
@@ -214,13 +214,9 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 			pstmt1.setBoolean(2, votum.getIstMöglicherTermin());
 			pstmt1.setInt(3, votum.getUmfrageeintragID());
 			pstmt1.executeUpdate();
-			
-			PreparedStatement pstmt2 = con.prepareStatement("INSERT INTO OwnedBusinessObject(erstellungszeitpunkt, owner_id");
-			pstmt2.setTimestamp(1, dc.aktuellerTimestamp());
-			votum.setErstellungszeitpunkt(dc.convertTimestampToDate(dc.aktuellerTimestamp()));
-			pstmt2.setInt(2,votum.getOwnerID());
-			pstmt2.executeUpdate();
-			
+
+			super.insert(votum);
+
 			return votum;
 
 		}
@@ -274,6 +270,8 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("DELETE FROM votum WHERE votum_id=" + votum.getID());
+			
+			super.delete(votum);
 
 
 

@@ -38,7 +38,7 @@ public class GruppeMapper extends OwnedBusinessObjectMapper{
 		
 	}
 	
-	public Vector<Gruppe> findAll(){
+	public Vector<Gruppe> findAllGruppe(){
 		
 		Connection con = DBConnection.connection();
 		Vector<Gruppe> gruppen = new Vector<Gruppe>();
@@ -136,11 +136,12 @@ public class GruppeMapper extends OwnedBusinessObjectMapper{
 				gruppe.setID(rs.getInt("maxid") + 1);
 			}	
 			
-			PreparedStatement pstmt = con.prepareStatement("INSERT INTO `gruppe` (`gruppen_id`, `bo_id`, `Gruppenname`) VALUES (?, ?, ?) ");
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO `gruppe` (`gruppen_id`, `Gruppenname`) VALUES (?, ?) ");
 			pstmt.setInt(1, gruppe.getID());
-			pstmt.setInt(2, bo_id);
-			pstmt.setString(3, gruppe.getGruppenname());
+			pstmt.setString(2, gruppe.getGruppenname());
 			pstmt.executeUpdate();
+			
+			super.insert(gruppe);
 			return gruppe;
 			
 		}
@@ -179,6 +180,7 @@ public class GruppeMapper extends OwnedBusinessObjectMapper{
 
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate("DELETE FROM `gruppe` WHERE `gruppen_id` = " + gruppe.getID());
+			super.delete(gruppe);
 
 		} catch (SQLException e) {
 			e.printStackTrace();

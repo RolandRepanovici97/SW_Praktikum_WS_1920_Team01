@@ -43,7 +43,7 @@ public class OwnedBusinessObjectMapper {
 		
 		
 		while(rs.next()) {
-			OwnedBusinessObject obo = new OwnedBusinessObject();
+			OwnedBusinessObject obo = new OwnedBusinessObject ();
 			obo.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 			obo.setID(rs.getInt("bo_id"));
 			obo.setOwnerID(rs.getInt("owner_id"));
@@ -143,6 +143,8 @@ public class OwnedBusinessObjectMapper {
 	
 	}
 	
+	/** Bin unsicher, ob diese Methode benötigt wird
+	 * 
 	public OwnedBusinessObject update (OwnedBusinessObject obo) {
 		
 		Connection con = DBConnection.connection();
@@ -162,6 +164,7 @@ public class OwnedBusinessObjectMapper {
 		}
 	}
 	
+	*/
 	public void delete (OwnedBusinessObject obo) {
 		
 		Connection con = DBConnection.connection();
@@ -175,6 +178,7 @@ public class OwnedBusinessObjectMapper {
 			e.printStackTrace();
 		}
 	}
+		
 		
 	
 	public int getOwnerOf (OwnedBusinessObject obo) {

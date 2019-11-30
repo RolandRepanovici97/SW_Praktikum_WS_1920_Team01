@@ -65,7 +65,7 @@ public class SpielplanMapper extends OwnedBusinessObjectMapper {
 		return spielplanMapper;
 	}
 
-	public Vector<Spielplan> findAll() {
+	public Vector<Spielplan> findAllSpielplan() {
 
 		Connection con = DBConnection.connection();
 		Vector<Spielplan> spielplan = new Vector<Spielplan>();
@@ -100,7 +100,7 @@ public class SpielplanMapper extends OwnedBusinessObjectMapper {
 
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(
-					"SELECT * FROM `spielplan` LEFT JOIN `ownedbusinessobject` ON `spielplan`.`bo_id` = `ownedbusinessobject`.`bo_id` WHERE spielplan_id = \" + id + \" ORDER BY `spielplan_id`");
+					"SELECT * FROM `spielplan` WHERE spielplan_id =" + id + "ORDER BY `spielplan_id`");
 
 			if (rs.next()) {
 				Spielplan sp = new Spielplan();
@@ -119,7 +119,7 @@ public class SpielplanMapper extends OwnedBusinessObjectMapper {
 
 	}
 
-	public Spielplan insert(Spielplan spielplan, OwnedBusinessObject obo) {
+	public Spielplan insert(Spielplan spielplan) {
 
 		Connection con = DBConnection.connection();
 
@@ -135,10 +135,12 @@ public class SpielplanMapper extends OwnedBusinessObjectMapper {
 			PreparedStatement pstmt = con.prepareStatement(
 					"INSERT INTO `spielplan` (`spielplan_id`, `bo_id`, `Spielplanname`) VALUES (?, ?, ?) ");
 			pstmt.setInt(1, spielplan.getID());
-			pstmt.setInt(2, obo.getID());
+			pstmt.setInt(2, spielplan.getID();
 			pstmt.setString(3, spielplan.getSpielplanname());
 
 			pstmt.executeUpdate();
+			
+			super.insert(spielplan);
 			return spielplan;
 
 		} catch (SQLException e) {
@@ -177,6 +179,7 @@ public class SpielplanMapper extends OwnedBusinessObjectMapper {
 
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate("DELETE FROM `spielplan` WHERE (`spielplan_id` = " + spielplan.getID() + ")");
+			super.delete(spielplan);
 
 		} catch (SQLException e) {
 			e.printStackTrace();

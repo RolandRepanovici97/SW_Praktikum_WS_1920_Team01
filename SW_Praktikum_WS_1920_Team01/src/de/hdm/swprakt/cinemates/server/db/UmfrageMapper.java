@@ -104,7 +104,7 @@ public class UmfrageMapper extends OwnedBusinessObjectMapper {
 		return null;
 	}
 
-	public Vector<Umfrage> findAll() {
+	public Vector<Umfrage> findAllUmfrage() {
 		//Verbindung zur Datenbank aufbauen.
 		Connection con = DBConnection.connection();
 		Vector <Umfrage> vectorumfrage = new Vector <Umfrage>();
@@ -225,7 +225,7 @@ public class UmfrageMapper extends OwnedBusinessObjectMapper {
 			 */
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate("DELETE FROM `umfrage` WHERE (`umfrage_id` =" + umfrage.getID() + ")" );
-
+			super.delete(umfrage);
 
 
 		}
@@ -257,6 +257,8 @@ public class UmfrageMapper extends OwnedBusinessObjectMapper {
 			pstmt.setTimestamp(2, dc.aktuellerTimestamp());
 			umfrage.setErstellungszeitpunkt(dc.convertTimestampToDate(dc.aktuellerTimestamp()));
 			pstmt.executeUpdate();
+			
+			super.insert(umfrage);
 			return umfrage;
 
 		}
@@ -282,7 +284,7 @@ public class UmfrageMapper extends OwnedBusinessObjectMapper {
 			 * Leeres SQL-Statement (JDBC) anelgen
 			 */
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery(" SELECT * FROM 'umfrage' JOIN 'umfrageeintrag' WHERE 'umfrage.umfrage_id' = 'umfrageeintrah.umfrage_id' ORDER BY 'umfrage_id' " );
+			ResultSet rs = stmt.executeQuery(" SELECT * FROM 'umfrage' JOIN 'umfrageeintrag' WHERE 'umfrage.umfrage_id' = 'umfrageeintrag.umfrage_id' ORDER BY 'umfrage_id' " );
 
 			if (rs.next()) {
 				Umfrage umfrage = new Umfrage();

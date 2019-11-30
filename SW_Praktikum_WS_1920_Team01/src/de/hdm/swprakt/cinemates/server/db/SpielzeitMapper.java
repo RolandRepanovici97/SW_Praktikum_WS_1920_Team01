@@ -26,14 +26,14 @@ import de.hdm.swprakt.cinemates.shared.bo.Spielzeit;
  *
  */
 public class SpielzeitMapper extends OwnedBusinessObjectMapper {
-	
+
 	/**
 	 * Die Klasse <code>SpielzeitMapper</code> wird wie jede andere Mapperklasse nur ein
 	 * einziges mal instantiiert. Die Variable spielzeitMapper speichert diese Instanz.
 	 * Wir stellen die einmalige Initalisierung durch den Bezeichner
 	 * <code>static</code> sicher.
 	 */
-	
+
 	private static SpielzeitMapper spielzeitMapper = null;
 	private static DateConverter dc = new DateConverter();
 
@@ -45,7 +45,7 @@ public class SpielzeitMapper extends OwnedBusinessObjectMapper {
 	protected SpielzeitMapper() {
 
 	}
-	
+
 	/**
 	 * Mithilfe dieser statischen Methode kann die einzige Instanz der Klasse
 	 * <code>SpielzeitMapper</code> erzeugt werden. Die Methode beinhaltet die Prüfung,
@@ -64,20 +64,20 @@ public class SpielzeitMapper extends OwnedBusinessObjectMapper {
 
 		return spielzeitMapper;
 	}
-	
-	
-	
-	public Vector<Spielzeit> findAll() {
-		
+
+
+
+	public Vector<Spielzeit> findAllSpielzeit() {
+
 		Connection con = DBConnection.connection();
 		Vector<Spielzeit> spielzeit = new Vector<Spielzeit>();
-		
-		
+
+
 		try {
-			
+
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM `spielzeit`LEFT JOIN `ownedbusinessobject` ON `spielzeit`.`bo_id` = `ownedbusinessobject`.`bo_id` ORDER BY `spielzeit_id`;");
-			
+
 			while(rs.next()) {
 				Spielzeit sz = new Spielzeit();
 				sz.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
@@ -89,11 +89,11 @@ public class SpielzeitMapper extends OwnedBusinessObjectMapper {
 		catch (Exception exc) {
 			exc.printStackTrace();
 		}
-		
+
 		return spielzeit;
-		
-		
-		
+
+
+
 	}
 	public Spielzeit findByID(int id) {
 
@@ -121,8 +121,8 @@ public class SpielzeitMapper extends OwnedBusinessObjectMapper {
 		return null;
 
 	}
-	
-	public Spielzeit insert(Spielzeit spielzeit, OwnedBusinessObject obo) {
+
+	public Spielzeit insert(Spielzeit spielzeit) {
 		Connection con = DBConnection.connection();
 		try {
 			Statement stmt = con.createStatement();
@@ -136,87 +136,87 @@ public class SpielzeitMapper extends OwnedBusinessObjectMapper {
 			pstmt.setInt(2, obo.getID());
 			pstmt.setDate(3,dc.convertJavaDateToSQLDate(spielzeit.getZeitpunkt()));
 			pstmt.setTime(4, dc.convertJavaDateToSQLTime(spielzeit.getZeitpunkt()));
-
-
 			pstmt.executeUpdate();
+			super.insert(spielzeit);
 			return spielzeit;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}}
-	
-	
+
+
 	public Spielzeit update(Spielzeit spielzeit) {
 
-			Connection con = DBConnection.connection();
+		Connection con = DBConnection.connection();
 
-			try {
+		try {
 
-				PreparedStatement pstmt = con
-						.prepareStatement("UPDATE `spielzeit` SET `Datum` = ?, `Uhrzeit` = ? WHERE `spielzeit_id` = ?");
-				pstmt.setDate(1, dc.convertJavaDateToSQLDate(spielzeit.getZeitpunkt()));
-				pstmt.setTime(2, dc.convertJavaDateToSQLTime(spielzeit.getZeitpunkt()));
-				pstmt.executeUpdate();
-				return spielzeit;
+			PreparedStatement pstmt = con
+					.prepareStatement("UPDATE `spielzeit` SET `Datum` = ?, `Uhrzeit` = ? WHERE `spielzeit_id` = ?");
+			pstmt.setDate(1, dc.convertJavaDateToSQLDate(spielzeit.getZeitpunkt()));
+			pstmt.setTime(2, dc.convertJavaDateToSQLTime(spielzeit.getZeitpunkt()));
+			pstmt.executeUpdate();
+			return spielzeit;
 
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return null;
-
-			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
 
 		}
 
-public void delete (Spielzeit spielzeit) {
-		
+	}
+
+	public void delete (Spielzeit spielzeit) {
+
 		Connection con = DBConnection.connection();
 
 		try {
 
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate("DELETE FROM `spielzeit` WHERE (`spielzeit_id` = " + spielzeit.getID() + ")");
+			super.delete(spielzeit);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-}
-		
-		public Vector<Spielzeit> findSpielzeitenBySpielplan (Spielplan spielplan) {
+	}
 
-			// Verbindung zur Datenbank aufbauen.
+	public Vector<Spielzeit> findSpielzeitenBySpielplan (Spielplan spielplan) {
 
-			Connection con = DBConnection.connection();
-			// Neuen Vector instantiieren, in welchem Film-Objekte gespeichert werden.
+		// Verbindung zur Datenbank aufbauen.
 
-			Vector<Spielzeit> vectorspielzeit = new Vector<Spielzeit>();
-			try {
+		Connection con = DBConnection.connection();
+		// Neuen Vector instantiieren, in welchem Film-Objekte gespeichert werden.
 
-				// Leeres SQL-Statement (JDBC) anlegen
-				Statement stmt = con.createStatement();
-				ResultSet rs = stmt.executeQuery(
-						"SELECT * FROM `Spielplan_Spielzeit`LEFT JOIN `spielzeit`ON `Spielplan_Spielzeit`.`spielzeit_id`= `Spielzeit`.`spielzeit_id` LEFT JOIN `ownedbusinessobject` ON `spielzeit`.`bo_id` = `ownedbusinessobject`.`bo_id`  WHERE (`spielplan_id` = " + spielplan.getID() + " ) ORDER BY `spielzeit_id`");
+		Vector<Spielzeit> vectorspielzeit = new Vector<Spielzeit>();
+		try {
 
-				/*
-				 * Befüllen des result sets
-				 */
-				while (rs.next()) {
-					// Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt
-					Spielzeit sz = new Spielzeit();
-					sz.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
-					sz.setID(rs.getInt("spielzeit_id"));
-					sz.setID(rs.getInt("film_id"));
-					sz.setID(rs.getInt("bo_id"));
-					sz.setZeitpunkt( dc.convertDatumUndUhrzeitToDate(rs.getDate("Datum"),rs.getTime("Uhrzeit")));
-			
-					vectorspielzeit.add(sz);
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(
+					"SELECT * FROM `Spielplan_Spielzeit`LEFT JOIN `spielzeit`ON `Spielplan_Spielzeit`.`spielzeit_id`= `Spielzeit`.`spielzeit_id` LEFT JOIN `ownedbusinessobject` ON `spielzeit`.`bo_id` = `ownedbusinessobject`.`bo_id`  WHERE (`spielplan_id` = " + spielplan.getID() + " ) ORDER BY `spielzeit_id`");
 
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
+			/*
+			 * Befüllen des result sets
+			 */
+			while (rs.next()) {
+				// Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt
+				Spielzeit sz = new Spielzeit();
+				sz.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+				sz.setID(rs.getInt("spielzeit_id"));
+				sz.setID(rs.getInt("film_id"));
+				sz.setID(rs.getInt("bo_id"));
+				sz.setZeitpunkt( dc.convertDatumUndUhrzeitToDate(rs.getDate("Datum"),rs.getTime("Uhrzeit")));
+
+				vectorspielzeit.add(sz);
+
 			}
-
-			return vectorspielzeit;
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
+
+		return vectorspielzeit;
+	}
 
 
 

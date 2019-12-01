@@ -98,6 +98,34 @@ public interface KinoAdministrationAsync {
 	void findUmfrageByID(int id, AsyncCallback<Umfrage> callback);
 
 	void findVotumByID(int id, AsyncCallback<Votum> callback);
+
+	void create(Gruppe gruppe, AsyncCallback<Void> callback);
+
+	void create(Film film, AsyncCallback<Void> callback);
+
+	void create(Kinokette kinokette, AsyncCallback<Void> callback);
+
+	void create(Kino kino, AsyncCallback<Void> callback);
+
+	void create(Nutzer nutzer, AsyncCallback<Void> callback);
+
+	void create(Spielplan spielplan, AsyncCallback<Void> callback);
+
+	void create(Spielzeit spielzeit, AsyncCallback<Void> callback);
+
+	void save(Film film, AsyncCallback<Void> callback);
+
+	void save(Gruppe gruppe, AsyncCallback<Void> callback);
+
+	void save(Kinokette kinokette, AsyncCallback<Void> callback);
+
+	void save(Kino kino, AsyncCallback<Void> callback);
+
+	void save(Nutzer Nutzer, AsyncCallback<Void> callback);
+
+	void save(Spielplan spielplan, AsyncCallback<Void> callback);
+
+	void save(Spielzeit spielzeit, AsyncCallback<Void> callback);
 	
 	
 	

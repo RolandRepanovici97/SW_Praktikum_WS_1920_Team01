@@ -41,13 +41,133 @@ public interface KinoAdministration extends RemoteService {
 public void init() throws IllegalArgumentException;	
 
 /**
- * Abschnitt aller create-Methoden (MUSS NOCH GEMACHT WERDEN!)
+ * Abschnitt aller create-Methoden (Ömer)
  */
 
 /**
- * Abschnitt aller save-Methoden (MUSS NOCH GEMACHT WERDEN!)
+ * Abschnitt aller create-Methoden
+ * Erstellen des uebergebenen Film-Objekts
+ * @param film Film-Objekt, welches in der Datenbank erstellt werden soll
+ * @throws IllegalArgumentException
+ */
+public void create(Film film)  throws IllegalArgumentException;
+
+
+/**
+ * Abschnitt aller create-Methoden
+ * Erstellen des uebergebenen Gruppe-Objekts
+ * @param gruppe Gruppe-Objekt, welches in der Datenbank erstellt werden soll
+ * @throws IllegalArgumentException
+ */
+public void create(Gruppe gruppe) throws IllegalArgumentException;
+
+
+/**
+ * Abschnitt aller create-Methoden
+ * Erstellen des uebergebenen Kinokette-Objekts
+ * @param kinokette Kinokette-Objekt, welches in der Datenbank erstellt werden soll
+ * @throws IllegalArgumentException
+ */
+public void create(Kinokette kinokette) throws IllegalArgumentException;
+
+/**
+ * Abschnitt aller create-Methoden
+ * Erstellen des uebergebenen Kino-Objekts
+ * @param kino Kino-Objekt, welches in der Datenbank erstellt werden soll
+ * @throws IllegalArgumentException
+ */
+public void create(Kino kino) throws IllegalArgumentException;
+
+/**
+ * Abschnitt aller create-Methoden
+ * Erstellen des uebergebenen Nutzer-Objekts
+ * @param nutzer Nutzer-Objekt, welches in der Datenbank erstellt werden soll
+ * @throws IllegalArgumentException
+ */
+public void create(Nutzer Nutzer) throws IllegalArgumentException;
+
+/**
+ * Abschnitt aller create-Methoden
+ * Erstellen des uebergebenen Spielplan-Objekts
+ * @param spielplan Spielplan-Objekt, welches in der Datenbank erstellt werden soll
+ * @throws IllegalArgumentException
+ */
+public void create(Spielplan spielplan) throws IllegalArgumentException;
+
+
+/**
+ * Abschnitt aller create-Methoden
+ * Erstellen des uebergebenen Spielzeit-Objekts
+ * @param spielzeit Spielzeit-Objekt, welches in der Datenbank erstellt werden soll
+ * @throws IllegalArgumentException
+ */
+public void create(Spielzeit spielzeit) throws IllegalArgumentException;
+
+
+
+/**
+ * Abschnitt aller save/update-Methoden (Ömer)
  */
 
+
+/**
+ * Abschnitt aller save/update-Methoden
+ * Speichern des uebergebenen Film-Objekts
+ * @param film Film-Objekt, welches in der Datenbank gespeichert werden soll
+ * @throws IllegalArgumentException
+ */
+public void save(Film film)  throws IllegalArgumentException;
+
+/**
+ * Abschnitt aller save/update-Methoden
+ * Speichern des uebergebenen Gruppen-Objekts
+ * @param gruppe Gruppe-Objekt, welches in der Datenbank gespeichert werden soll
+ * @throws IllegalArgumentException
+ */
+public void save(Gruppe gruppe) throws IllegalArgumentException;
+
+/**
+ * Abschnitt aller save/update-Methoden
+ * Speichern des uebergebenen Kinokette-Objekts
+ * @param kinokette Kinokette-Objekt, welches in der Datenbank gespeichert werden soll
+ * @throws IllegalArgumentException
+ */
+public void save(Kinokette kinokette) throws IllegalArgumentException;
+
+
+/**
+ * Abschnitt aller save/update-Methoden
+ * Speichern des uebergebenen Kino-Objekts
+ * @param kino Kino-Objekt, welches in der Datenbank gespeichert werden soll
+ * @throws IllegalArgumentException
+ */
+public void save(Kino kino) throws IllegalArgumentException;
+
+
+/**
+ * Abschnitt aller save/update-Methoden
+ * Speichern des uebergebenen Nutzer-Objekts
+ * @param nutzer Nutzer-Objekt, welches in der Datenbank gespeichert werden soll
+ * @throws IllegalArgumentException
+ */
+public void save(Nutzer nutzer) throws IllegalArgumentException;
+
+
+/**
+ * Abschnitt aller save/update-Methoden
+ * Speichern des uebergebenen Spielplan-Objekts
+ * @param spielplan Spielplan-Objekt, welches in der Datenbank gespeichert werden soll
+ * @throws IllegalArgumentException
+ */
+public void save(Spielplan spielplan) throws IllegalArgumentException;
+
+/**
+ * Abschnitt aller save/update-Methoden
+ * Speichern des uebergebenen Spielzeit-Objekts
+ * @param spielzeit Spielzeit-Objekt, welches in der Datenbank gespeichert werden soll
+ * @throws IllegalArgumentException
+ */
+public void save(Spielzeit spielzeit) throws IllegalArgumentException;
 
 /**
  * Abschnitt aller delete-Methoden

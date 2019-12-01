@@ -188,11 +188,10 @@ public class KinoketteMapper extends OwnedBusinessObjectMapper {
 			}
 			//bo_id??
 			PreparedStatement pstmt = con.prepareStatement(
-					"INSERT INTO kino (kinokette_id, bo_id, Kinokettenname, Beschreibung) VALUES (?, ?, ?, ?) ");
+					"INSERT INTO kino (kinokette_id, kinokettenname, beschreibung) VALUES (?, ?, ?) ");
 			pstmt.setInt(1, kinokette.getID());
-			pstmt.setInt(2, obo.getID());
-			pstmt.setString(3, kinokette.getKinokettenname());
-			pstmt.setString(4, kinokette.getBeschreibung());
+			pstmt.setString(2, kinokette.getKinokettenname());
+			pstmt.setString(3, kinokette.getBeschreibung());
 			super.insert(kinokette);
 			return kinokette;
 		} catch (SQLException e) {
@@ -212,7 +211,7 @@ public class KinoketteMapper extends OwnedBusinessObjectMapper {
 
 		try {
 
-			PreparedStatement pstmt = con.prepareStatement("UPDATE kinokette SET Kinokettenname = ?, Beschreibung = ? WHERE kinokette_id = ?");
+			PreparedStatement pstmt = con.prepareStatement("UPDATE kinokette SET kinokettenname = ?, beschreibung = ? WHERE kinokette_id = ?");
 			pstmt.setString(1, kinokette.getKinokettenname());
 			pstmt.setString(2, kinokette.getBeschreibung());
 			pstmt.setInt(3, kinokette.getID());
@@ -237,7 +236,7 @@ public class KinoketteMapper extends OwnedBusinessObjectMapper {
 		try {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("DELET FROM kinokette WHERE kinokette_id=" + kinokette.getID());
+			ResultSet rs = stmt.executeQuery("DELETE FROM kinokette WHERE kinokette_id=" + kinokette.getID());
 			super.delete(kinokette);
 
 		}

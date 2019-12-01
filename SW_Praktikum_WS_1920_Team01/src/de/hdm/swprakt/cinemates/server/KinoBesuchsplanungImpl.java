@@ -49,7 +49,10 @@ public KinoBesuchsplanungImpl() throws IllegalArgumentException {
   }
 
  
-  @Override
+/* Initalisierung der Variablen, welche die Referenzen auf die Mapeprklassen darstellen. 
+ * Wir initialisieren diese durch den Aufruf des protected-Konstruktors. Dieser 
+ * ermöglicht uns, dass jeweils nur eine Instanz dieser Klasse erzeugt werden kann.
+ * */
 public void init() throws IllegalArgumentException {
     
     this.nutzerMapper = NutzerMapper.nutzerMapper();
@@ -64,13 +67,17 @@ public void init() throws IllegalArgumentException {
     this.administration = kinoAdministrationImpl;
   }
   
-@Override
+/**
+ * Diese Methode...
+ */
 public Nutzer findNutzerByEmail(String email) {
 	// TODO Auto-generated method stub
 	return null;
 }
 
-@Override
+/**
+ * Diese Methode...
+ */
 public Nutzer createNutzer(Nutzer nutzer) {
 	
 	/**
@@ -82,11 +89,12 @@ public Nutzer createNutzer(Nutzer nutzer) {
 }
 
 
-@Override
+/**
+ * Diese Methode...
+ */
 public Gruppe createGruppe(Gruppe gruppe) {
 
-	
-	gruppe = gruppeMapper.insert(gruppe);
+gruppe = gruppeMapper.insert(gruppe);
 	
 	return gruppe;
 }

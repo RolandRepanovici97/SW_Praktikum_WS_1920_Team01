@@ -33,8 +33,6 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
  * 
  */
 	
-private KinoBesuchsplanung kinobesuchsplanung = null;
-	
 private KinoMapper kinoMapper = null;
 private KinoketteMapper kinoketteMapper = null;
 private FilmMapper filmMapper = null;
@@ -54,9 +52,8 @@ public void init() throws IllegalArgumentException {
     this.filmMapper = FilmMapper.filmMapper();
     this.spielplanMapper = SpielplanMapper.spielplanMapper();
     
-    KinoBesuchsplanungImpl kbi = new KinoBesuchsplanungImpl();
-    kbi.init();
-    this.kinobesuchsplanung = kbi;
+    KinoBesuchsplanungImpl kinoBesuchsplanungImpl = new KinoBesuchsplanungImpl();
+    kinoBesuchsplanungImpl.init();
   }
 
 

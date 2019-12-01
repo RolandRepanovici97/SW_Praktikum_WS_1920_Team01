@@ -29,10 +29,20 @@ public class OwnedBusinessObject extends BusinessObject {
 
 	private int ownerID;
 
+
+	/**Default-Konstruktor
+	 * 
+	 */
+	public OwnedBusinessObject() {
+		super();
+	}
+
+
 	/**
 	 * Auslesen des Attributs ownerID
 	 * @return the ownerID
 	 */
+
 	public int getOwnerID() {
 		return ownerID;
 	}
@@ -44,13 +54,13 @@ public class OwnedBusinessObject extends BusinessObject {
 	public void setOwnerID(int ownerID) {
 		this.ownerID = ownerID;
 	}	
-	
-	
+
+
 	public String toString() {
-		
+
 		return super.toString() + "; Owner-ID: " + this.ownerID;
 	}
-	
+
 
 
 }

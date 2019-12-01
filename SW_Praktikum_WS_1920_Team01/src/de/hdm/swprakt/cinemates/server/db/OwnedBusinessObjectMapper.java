@@ -43,7 +43,7 @@ public class OwnedBusinessObjectMapper {
 		
 		
 		while(rs.next()) {
-			OwnedBusinessObject obo = new OwnedBusinessObject ();
+			OwnedBusinessObject obo = new OwnedBusinessObject();
 			obo.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 			obo.setID(rs.getInt("bo_id"));
 			obo.setOwnerID(rs.getInt("owner_id"));

@@ -130,24 +130,25 @@ public class SpielplanMapper extends OwnedBusinessObjectMapper {
 
 			if (rs.next()) {
 				spielplan.setID(rs.getInt("maxid") + 1);
-			}
 
-			PreparedStatement pstmt = con.prepareStatement(
-					"INSERT INTO `spielplan` (`spielplan_id`, `bo_id`, `Spielplanname`) VALUES (?, ?, ?) ");
-			pstmt.setInt(1, spielplan.getID());
-			pstmt.setInt(2, spielplan.getID();
-			pstmt.setString(3, spielplan.getSpielplanname());
 
-			pstmt.executeUpdate();
-			
-			super.insert(spielplan);
-			return spielplan;
+				PreparedStatement pstmt = con.prepareStatement(
+						"INSERT INTO `spielplan` (`spielplan_id`, `bo_id`, `Spielplanname`) VALUES (?, ?, ?) ");
+				pstmt.setInt(1, spielplan.getID());
+				pstmt.setString(3, spielplan.getSpielplanname());
 
-		} catch (SQLException e) {
+				pstmt.executeUpdate();
+
+				super.insert(spielplan);
+				
+
+
+			} }
+		catch (SQLException e) {
 			e.printStackTrace();
-			return null;
+	
 		}
-
+		return spielplan;
 	}
 
 	public Spielplan update(Spielplan spielplan) {
@@ -172,7 +173,7 @@ public class SpielplanMapper extends OwnedBusinessObjectMapper {
 	}
 
 	public void delete (Spielplan spielplan) {
-		
+
 		Connection con = DBConnection.connection();
 
 		try {

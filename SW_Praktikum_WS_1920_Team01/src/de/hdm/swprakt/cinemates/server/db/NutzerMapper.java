@@ -38,8 +38,7 @@ public class NutzerMapper extends OwnedBusinessObjectMapper{
 
 	}
 
-	@Override
-
+@Override
 	public Vector <Nutzer> findAllNutzer(){
 
 		Connection con = DBConnection.connection();

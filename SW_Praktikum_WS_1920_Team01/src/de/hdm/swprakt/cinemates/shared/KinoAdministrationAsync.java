@@ -27,6 +27,7 @@ import de.hdm.swprakt.cinemates.shared.bo.Votum;
  */
 public interface KinoAdministrationAsync {
 
+	/**
 	void init(AsyncCallback<Void> callback);
 
 	void delete(Film film, AsyncCallback<Void> callback);
@@ -130,6 +131,6 @@ public interface KinoAdministrationAsync {
 	
 	
 
-	
+	*/
 
 }

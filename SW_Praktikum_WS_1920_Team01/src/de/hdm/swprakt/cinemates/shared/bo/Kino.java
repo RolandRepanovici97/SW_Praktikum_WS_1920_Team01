@@ -86,6 +86,8 @@ public class Kino extends BusinessObject{
 	public void setAdresse(String adresse) {
 		this.adresse = adresse;
 	}
+	
+	
 
 	/**
 	 * Auslesen der Kinospielpläne
@@ -94,6 +96,22 @@ public class Kino extends BusinessObject{
 	/*
 	 * public Spielplan getSpielplanID() { return spielplanID; }
 	 */
+
+	public int getSpielplanID() {
+		return spielplanID;
+	}
+
+	public void setSpielplanID(int spielplanID) {
+		this.spielplanID = spielplanID;
+	}
+
+	public int getKinoketteID() {
+		return kinoketteID;
+	}
+
+	public void setKinoketteID(int kinoketteID) {
+		this.kinoketteID = kinoketteID;
+	}
 
 	/**
 	 * Auslesen der Kinobspielpläne
@@ -106,7 +124,7 @@ public class Kino extends BusinessObject{
 
 	public String toString() {
 		
-		return this.getClass().getName() + " #" + this.getID() + "; Kinoname: " + this.kinoname + "; Beschreibung: " + this.beschreibung + "; Adresse: " + this.adresse + "; Spielplan-ID: " + this.spielplanID + "; Kinokette-ID: " + this.kinoketteID;
+		return super.toString() +  "; Kinoname: " + this.kinoname + "; Beschreibung: " + this.beschreibung + "; Adresse: " + this.adresse + "; Spielplan-ID: " + this.spielplanID + "; Kinokette-ID: " + this.kinoketteID;
 	}
 }
 

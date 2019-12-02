@@ -77,13 +77,14 @@ public class KinoMapper {
 			try {
 
 				Statement stmt = con.createStatement();
-				ResultSet rs = stmt.executeQuery("SELECT * FROM kino");
+				ResultSet rs = stmt.executeQuery("SELECT * FROM `kino` ORDER BY `kino_id`");
 
 				while (rs.next()) {
 					Kino k = new Kino();
+					k.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 					k.setID(rs.getInt("kino_id"));
-					k.setID(rs.getInt("kinokette_id"));
-					k.setID(rs.getInt("spielplan_id"));
+					k.setKinoketteID(rs.getInt("kinokette_id"));
+					k.setSpielplanID(rs.getInt("spielplan_id"));
 					k.setKinoname(rs.getString("Kinoname"));
 					k.setAdresse(rs.getString("Adresse")); 
 					k.setBeschreibung(rs.getString("Beschreibung"));
@@ -112,17 +113,17 @@ public class KinoMapper {
 
 			try {
 				Statement stmt = con.createStatement();
-				ResultSet rs = stmt.executeQuery("SELECT * FROM kino WHERE kino_id = " + id + "ORDER BY kino_id ");
+				ResultSet rs = stmt.executeQuery("SELECT * FROM `kino` WHERE (`kino_id` = " + id + ")");
 
 				if (rs.next()) {
 					Kino k = new Kino();
+					k.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 					k.setID(rs.getInt("kino_id"));
-					k.setID(rs.getInt("kinokette_id"));
-					k.setID(rs.getInt("spielplan_id"));
+					k.setKinoketteID(rs.getInt("kinokette_id"));
+					k.setSpielplanID(rs.getInt("spielplan_id"));
 					k.setKinoname(rs.getString("Kinoname"));
 					k.setAdresse(rs.getString("Adresse")); 
 					k.setBeschreibung(rs.getString("Beschreibung"));
-					k.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 					return k;
 				}
 
@@ -142,17 +143,18 @@ public class KinoMapper {
 
 			try {
 				Statement stmt = con.createStatement();
-				ResultSet rs = stmt.executeQuery("SELECT * FROM kino WHERE kinoname = " + kinoname + "ORDER BY kinoname ");
+				ResultSet rs = stmt.executeQuery("SELECT * FROM `kino` WHERE (`Kinoname` = '" + kinoname + "')");
 
 				if (rs.next()) {
 					Kino k = new Kino();
+					k.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 					k.setID(rs.getInt("kino_id"));
-					k.setID(rs.getInt("kinokette_id"));
-					k.setID(rs.getInt("spielplan_id"));
+					k.setKinoketteID(rs.getInt("kinokette_id"));
+					k.setSpielplanID(rs.getInt("spielplan_id"));
 					k.setKinoname(rs.getString("Kinoname"));
 					k.setAdresse(rs.getString("Adresse")); 
 					k.setBeschreibung(rs.getString("Beschreibung"));
-					k.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+					
 					return k;
 				}
 
@@ -174,15 +176,16 @@ public class KinoMapper {
 			try {
 				
 				Statement stmt = con.createStatement();
-				ResultSet rs = stmt.executeQuery("SELECT * from kinokette WHERE (kinokette_id = " + kinoketteID.getID() + ")");
+				ResultSet rs = stmt.executeQuery("SELECT * from `kino` WHERE (`kinokette_id` = " + kinoketteID.getID() + ")");
 				
 				while (rs.next()) {
 					Kino k = new Kino();
 					k.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 					k.setID(rs.getInt("kino_id"));
-					k.setID(rs.getInt("kinokette_id"));
+					k.setKinoketteID(rs.getInt("kinokette_id"));
+					k.setSpielplanID(rs.getInt("spielplan_id"));
 					k.setKinoname(rs.getString("Kinoname"));
-					k.setAdresse(rs.getString("Adresse"));
+					k.setAdresse(rs.getString("Adresse")); 
 					k.setBeschreibung(rs.getString("Beschreibung"));
 					kino.add(k);
 				}
@@ -205,15 +208,16 @@ public class KinoMapper {
 			try {
 				
 				Statement stmt = con.createStatement();
-				ResultSet rs = stmt.executeQuery("SELECT * from spielplan WHERE (spielplan_id = " + spielplanID.getID() + ")");
+				ResultSet rs = stmt.executeQuery("SELECT * from `kino` WHERE (`spielplan_id` = " + spielplanID.getID() + ")");
 				
 				while (rs.next()) {
 					Kino k = new Kino();
 					k.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 					k.setID(rs.getInt("kino_id"));
-					k.setID(rs.getInt("spielplan_id"));
+					k.setKinoketteID(rs.getInt("kinokette_id"));
+					k.setSpielplanID(rs.getInt("spielplan_id"));
 					k.setKinoname(rs.getString("Kinoname"));
-					k.setAdresse(rs.getString("Adresse"));
+					k.setAdresse(rs.getString("Adresse")); 
 					k.setBeschreibung(rs.getString("Beschreibung"));
 					kino.add(k);
 				}
@@ -237,18 +241,22 @@ public class KinoMapper {
 			try {
 
 				Statement stmt = con.createStatement();
-				ResultSet rs = stmt.executeQuery("SELECT MAX(kino_id) AS maxid FROM kino");
+				ResultSet rs = stmt.executeQuery("SELECT MAX(kino_id) AS `maxid` FROM kino");
 
 				if (rs.next()) {
 					kino.setID(rs.getInt("maxid") + 1);
 				}
-//bo_id??
-				PreparedStatement pstmt = con.prepareStatement(
-						"INSERT INTO kino (kino_id, Kinoname, Adresse, Beschreibung) VALUES (?, ?, ?, ?,?) ");
+
+				PreparedStatement pstmt = con.prepareStatement("INSERT INTO `kino` (`kino_id`, `kinokette_id`, `spielplan_id`,  `Kinoname`, `Adresse`, `Beschreibung`, `Erstellungszeitpunkt`) VALUES (?, ?, ?, ?, ?, ?, ?) ");
 				pstmt.setInt(1, kino.getID());
-				pstmt.setString(2, kino.getKinoname());
-				pstmt.setString(3, kino.getAdresse());
-				pstmt.setString(4, kino.getBeschreibung());
+				pstmt.setInt(2, kino.getKinoketteID());
+				pstmt.setInt(3, kino.getSpielplanID());
+				pstmt.setString(4, kino.getKinoname());
+				pstmt.setString(5, kino.getAdresse());
+				pstmt.setString(6, kino.getBeschreibung());
+				pstmt.setTimestamp(7, dc.convertJavaDateToSqlTimestamp(kino.getErstellungszeitpunkt()));
+				
+				pstmt.executeUpdate();
 				return kino;
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -266,12 +274,15 @@ public class KinoMapper {
 			Connection con = DBConnection.connection();
 			
 			try { 
-//Name, Ort, Beschreibung ausreichend?
-				PreparedStatement pstmt = con.prepareStatement("UPDATE kino SET Kinoname = ?, Adresse = ?, Beschreibung = ? WHERE kino_id = ?");
-				pstmt.setString(1, kino.getKinoname());
-				pstmt.setString(2, kino.getAdresse());
-				pstmt.setString(3, kino.getBeschreibung());
-				pstmt.setInt(4, kino.getID());
+
+				PreparedStatement pstmt = con.prepareStatement("UPDATE `kino` SET `spielplan_id` = ?, `Kinoname` = ?, `Adresse` = ?, `Beschreibung` = ? WHERE (`kino_id` = ?)");
+				pstmt.setInt(1, kino.getSpielplanID());
+				pstmt.setString(2, kino.getKinoname());
+				pstmt.setString(3, kino.getAdresse());
+				pstmt.setString(4, kino.getBeschreibung());
+				pstmt.setInt(5, kino.getID());
+				
+				pstmt.executeUpdate();
 				
 				return kino;
 			
@@ -293,7 +304,7 @@ public class KinoMapper {
 			try {
 				// Leeres SQL-Statement (JDBC) anlegen
 				Statement stmt = con.createStatement();
-				ResultSet rs = stmt.executeQuery("DELET FROM kino WHERE kino_id=" + kino.getID());
+				stmt.executeUpdate("DELETE FROM `kino` WHERE (`kino_id`=" + kino.getID() + ")");
 				
 			}
 			catch(SQLException e) {
@@ -304,7 +315,7 @@ public class KinoMapper {
 /**
  * Löschen eines Kinos in der Kinokette	
  */
-		public void deleteKinoOf(Kinokette kinokette) {
+		public void deleteKinosOf(Kinokette kinokette) {
 			
 			//Verbindung zur Datenbank aufbauen.
 			
@@ -313,7 +324,7 @@ public class KinoMapper {
 			try {
 				// Leeres SQL-Statement (JDBC) anlegen
 				Statement stmt = con.createStatement();
-				ResultSet rs = stmt.executeQuery("DELET FROM kinokette WHERE kinokette_id=" + kinokette.getID());
+				stmt.executeUpdate("DELETE FROM `kino` WHERE (`kinokette_id` = " + kinokette.getID() + ")");
 				
 			}
 			catch(SQLException e) {

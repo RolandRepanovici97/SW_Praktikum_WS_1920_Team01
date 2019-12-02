@@ -7,7 +7,7 @@ import de.hdm.swprakt.cinemates.client.gui.Details;
 import de.hdm.swprakt.cinemates.client.gui.GruppenverwaltungForm;
 import de.hdm.swprakt.cinemates.client.gui.Header;
 import de.hdm.swprakt.cinemates.client.gui.Navigator;
-import de.hdm.thies.bankProjekt.client.VerticalPanel;
+
 
 
 /**
@@ -17,7 +17,7 @@ public class KinobesuchsplanungEntry implements EntryPoint {
 
 	@Override
 	public void onModuleLoad() {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub.
 		
 		/* Das ist nur ein Test!
 		 * 

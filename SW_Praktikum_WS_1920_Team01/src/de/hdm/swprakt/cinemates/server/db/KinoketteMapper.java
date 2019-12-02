@@ -33,6 +33,7 @@ public class KinoketteMapper extends OwnedBusinessObjectMapper {
 	 * 
 	 */
 	private static KinoketteMapper kinoketteMapper = null;
+	private static DateConverter dc = new DateConverter();
 
 	/** 
 	 * Ein geschützter Konstruktor verhindert die Möglichkeit, mit <code>new</code>
@@ -66,25 +67,25 @@ public class KinoketteMapper extends OwnedBusinessObjectMapper {
 	 * @return Vector <Kinokette>, welche alle Kinos unterschiedlicher Standorte beinhaltet
 	 */
 
-	public Vector<Kinokette> findAllKinokette(){
+	public Vector<Kinokette> findAllKinoketten(){
 
 		Connection con = DBConnection.connection();
-		Vector<Kinokette> kinokette = new Vector<Kinokette>();
+		Vector<Kinokette> kinoketten = new Vector<Kinokette>();
 
 
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM kinokette LEFT JOIN ownedbusinessobject ON kinokette.bo_id = ownedbusinessobject.bo_id ORDER BY kinokette_id;");
-			//Erstellungszeitpunkt?			
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `kinokette` LEFT JOIN `ownedbusinessobject` ON `kinokette`.`bo_id` = `ownedbusinessobject`.`bo_id` ORDER BY `kinokette_id`;");		
 
 			while(rs.next()) {
 				Kinokette k = new Kinokette();
+				k.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 				k.setID(rs.getInt("kinokette_id"));
-				k.setOwnerID(rs.getInt("bo_id"));
+				k.setOwnerID(rs.getInt("owner_id"));
 				k.setKinokettenname(rs.getString("Kinokettenname"));
-				k.setBeschreibung("Beschreibung");
-				kinokette.add(k);
+				k.setBeschreibung(rs.getString("Beschreibung"));
+				kinoketten.add(k);
 			}
 		}
 
@@ -92,7 +93,7 @@ public class KinoketteMapper extends OwnedBusinessObjectMapper {
 			exc.printStackTrace();
 		}
 
-		return kinokette;
+		return kinoketten;
 
 	}
 
@@ -112,10 +113,11 @@ public class KinoketteMapper extends OwnedBusinessObjectMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM `kinokette` LEFT JOIN `ownedbusinessobject` ON `kinokette`.`bo_id` = `ownedbusinessobject`.`bo_id` WHERE (`kinokette_id` = " + id + ") ORDER BY `kinokette_id`");
-			//Muss man alle Attribute angeben?
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `kinokette` LEFT JOIN `ownedbusinessobject` ON `kinokette`.`bo_id` = `ownedbusinessobject`.`bo_id` WHERE (`kinokette_id` = " + id + ")");
+	
 			if (rs.next()) {
 				Kinokette k = new Kinokette();
+				k.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 				k.setID(rs.getInt("kinokette_id"));
 				k.setOwnerID(rs.getInt("owner_id"));
 				k.setKinokettenname(rs.getString("Kinokettenname"));
@@ -137,17 +139,18 @@ public class KinoketteMapper extends OwnedBusinessObjectMapper {
 	 * Ist kein entsprechender Tupel in der DB vorhanden, so geben wir null zurück.
 	 */
 
-	public Kinokette findByKinokettename(String kinokettenname) {
+	public Kinokette findByKinokettenname(String kinokettenname) {
 
 		Connection con = DBConnection.connection();
 
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM kinokette LEFT JOIN ownedbusinessobject ON kinokette.bo_id = ownedbusinessobject.bo_id WHERE kinokette Kinokettenname = " + kinokettenname + " ORDER BY Kinokettenname");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `kinokette` LEFT JOIN `ownedbusinessobject` ON `kinokette`.`bo_id` = `ownedbusinessobject`.`bo_id` WHERE (`kinokette`.`Kinokettenname` = '" + kinokettenname + "');");
 
 			if (rs.next()) {
 				Kinokette k = new Kinokette();
+				k.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 				k.setID(rs.getInt("kinokette_id"));
 				k.setOwnerID(rs.getInt("owner_id"));
 				k.setKinokettenname(rs.getString("Kinokettenname"));
@@ -179,26 +182,52 @@ public class KinoketteMapper extends OwnedBusinessObjectMapper {
 		Connection con = DBConnection.connection();
 
 		try {
-
+			
+			con.setAutoCommit(false);
+			
+			int bo_id = super.insert(kinokette, con);
+			
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT MAX(kinokette_id) AS maxid FROM kinokette");
+			ResultSet rs = stmt.executeQuery("SELECT MAX(kinokette_id) AS `maxid` FROM `kinokette`");
 
 			if (rs.next()) {
 				kinokette.setID(rs.getInt("maxid") + 1);
 			}
-			//bo_id??
-			PreparedStatement pstmt = con.prepareStatement(
-					"INSERT INTO kino (kinokette_id, kinokettenname, beschreibung) VALUES (?, ?, ?) ");
+
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO `kinokette`(`kinokette_id`, `bo_id`, `Kinokettenname`, `Beschreibung`) VALUES (?, ?, ?, ?) ");
 			pstmt.setInt(1, kinokette.getID());
-			pstmt.setString(2, kinokette.getKinokettenname());
-			pstmt.setString(3, kinokette.getBeschreibung());
-			super.insert(kinokette);
-			return kinokette;
-		} catch (SQLException e) {
+			pstmt.setInt(2, bo_id);
+			pstmt.setString(3, kinokette.getKinokettenname());
+			pstmt.setString(4, kinokette.getBeschreibung());
+			pstmt.executeUpdate();
+
+			con.commit();
+			
+		} catch(SQLException e) {
 			e.printStackTrace();
+			if (con != null) {
+	            try {
+	               // System.err.print("Transaktion wird nicht ausgeführt");
+	                con.rollback();
+	            } catch(SQLException exc) {
+	            	exc.printStackTrace();
+	            }
+			
 			return null;
 		}
+			
+	} finally {
+		
+		try {
+			con.setAutoCommit(true);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 	}
+		return kinokette;
+	}
+	
 
 	/**
 	 * Aktualisieren einer Kinokette in der Datenbank.
@@ -211,7 +240,7 @@ public class KinoketteMapper extends OwnedBusinessObjectMapper {
 
 		try {
 
-			PreparedStatement pstmt = con.prepareStatement("UPDATE kinokette SET kinokettenname = ?, beschreibung = ? WHERE kinokette_id = ?");
+			PreparedStatement pstmt = con.prepareStatement("UPDATE `kinokette` SET `Kinokettenname` = ?, `Beschreibung` = ? WHERE (`kinokette_id` = ?)");
 			pstmt.setString(1, kinokette.getKinokettenname());
 			pstmt.setString(2, kinokette.getBeschreibung());
 			pstmt.setInt(3, kinokette.getID());
@@ -236,8 +265,7 @@ public class KinoketteMapper extends OwnedBusinessObjectMapper {
 		try {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("DELETE FROM kinokette WHERE kinokette_id=" + kinokette.getID());
-			super.delete(kinokette);
+			stmt.executeUpdate("DELETE FROM `kinokette` WHERE (`kinokette_id` =" + kinokette.getID() + ")");
 
 		}
 		catch(SQLException e) {

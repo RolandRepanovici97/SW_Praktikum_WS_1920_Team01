@@ -113,26 +113,23 @@ public class OwnedBusinessObjectMapper {
 		return null;
 	}
 	
-	public int insert (OwnedBusinessObject obo) {
+	public int insert (OwnedBusinessObject obo, Connection con) {
 		
-		Connection con = DBConnection.connection();
 		int bo_id = 0;
 		try {
-			
 			
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT MAX(bo_id) AS `maxid` FROM `ownedbusinessobject`");
 
 			if (rs.next()) {
-				obo.setID(rs.getInt("maxid") + 1);
+				bo_id = rs.getInt("maxid") + 1;
 			}	
 			
 			PreparedStatement pstmt = con.prepareStatement("INSERT INTO `ownedbusinessobject` (`bo_id`, `owner_id`, `Erstellungszeitpunkt`) VALUES (?, ?, ?) ");
-			pstmt.setInt(1, obo.getID());
+			pstmt.setInt(1, bo_id);
 			pstmt.setInt(2, obo.getOwnerID());
 			pstmt.setTimestamp(3, dc.convertJavaDateToSqlTimestamp(obo.getErstellungszeitpunkt()));
 			pstmt.executeUpdate();
-			return obo.getID();
 			
 		}
 		catch(SQLException e) {
@@ -165,14 +162,13 @@ public class OwnedBusinessObjectMapper {
 	}
 	
 	*/
-	public void delete (OwnedBusinessObject obo) {
+	public void delete (int bo_id, Connection con) {
 		
-		Connection con = DBConnection.connection();
 
 		try {
 
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM `ownedbusinessobject` WHERE `bo_id` = " + obo.getID());
+			stmt.executeUpdate("DELETE FROM `ownedbusinessobject` WHERE `bo_id` = " + bo_id);
 
 		} catch (SQLException e) {
 			e.printStackTrace();

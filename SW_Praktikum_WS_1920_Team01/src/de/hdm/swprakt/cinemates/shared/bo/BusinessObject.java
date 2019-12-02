@@ -35,7 +35,7 @@ public abstract class BusinessObject implements Serializable {
 	 * 
 	 */
 
-	private int id = 0;
+	private int id;
 
 	/*
 	 * Attribut erstellungszeitpunkt

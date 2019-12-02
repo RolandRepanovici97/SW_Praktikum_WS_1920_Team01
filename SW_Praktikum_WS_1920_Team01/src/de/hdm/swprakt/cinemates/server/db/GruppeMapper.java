@@ -123,11 +123,16 @@ public class GruppeMapper extends OwnedBusinessObjectMapper{
 	}
 	
 	
-	public Gruppe insert (Gruppe gruppe) {
+
+	public Gruppe insert (Gruppe gruppe){
 		
 		Connection con = DBConnection.connection();
+		 
 		
 		try {
+			con.setAutoCommit(false);
+
+			int bo_id = super.insert(gruppe, con);
 			
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT MAX(gruppen_id) AS `maxid` FROM `gruppe`");
@@ -136,22 +141,42 @@ public class GruppeMapper extends OwnedBusinessObjectMapper{
 				gruppe.setID(rs.getInt("maxid") + 1);
 			}	
 			
-			PreparedStatement pstmt = con.prepareStatement("INSERT INTO `gruppe` (`gruppen_id`, `Gruppenname`) VALUES (?, ?) ");
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO `gruppe` (`gruppen_id`, `bo_id`, `Gruppenname`) VALUES (?, ?, ?) ");
 			pstmt.setInt(1, gruppe.getID());
-			pstmt.setString(2, gruppe.getGruppenname());
+			pstmt.setInt(2, bo_id);
+			pstmt.setString(3, gruppe.getGruppenname());
 			pstmt.executeUpdate();
 			
-			super.insert(gruppe);
-			return gruppe;
+			con.commit();
+			
 			
 		}
+		
 		catch(SQLException e) {
 			e.printStackTrace();
+			if (con != null) {
+	            try {
+	               // System.err.print("Transaktion wird nicht ausgeführt");
+	                con.rollback();
+	            } catch(SQLException exc) {
+	            	exc.printStackTrace();
+	            }
+			
 			return null;
 		}
+			
+	} finally {
 		
+		try {
+			con.setAutoCommit(true);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 	}
+		return gruppe;
+	}
+	
 	
 	public Gruppe update (Gruppe gruppe) {
 		
@@ -177,14 +202,39 @@ public class GruppeMapper extends OwnedBusinessObjectMapper{
 		Connection con = DBConnection.connection();
 
 		try {
+			con.setAutoCommit(false);
+			
+			int bo_id = findBoIdOf(gruppe);
 
+			super.delete(bo_id, con);
+			
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate("DELETE FROM `gruppe` WHERE `gruppen_id` = " + gruppe.getID());
-			super.delete(gruppe);
+			
+			con.commit();
 
+		} 
+		catch(SQLException e) {
+			e.printStackTrace();
+			if (con != null) {
+	            try {
+	               // System.err.print("Transaktion wird nicht ausgeführt");
+	                con.rollback();
+	            } catch(SQLException exc) {
+	            	exc.printStackTrace();
+	            }
+			
+		}
+			
+	} finally {
+		
+		try {
+			con.setAutoCommit(true);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+	}
 	}
 	
 	public void insertGruppenzugehörigkeit (int userid, int gruppenid) {
@@ -287,5 +337,26 @@ public class GruppeMapper extends OwnedBusinessObjectMapper{
 		
 		return gruppen;
 		
+	}
+	
+	private int findBoIdOf (Gruppe gruppe) {
+		
+		Connection con = DBConnection.connection();
+		int bo_id = 0;
+		
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT `bo_id` FROM `gruppe` WHERE (`gruppen_id` = " +  gruppe.getID() + ")");
+			
+			if(rs.next()) {
+				bo_id = rs.getInt("bo_id");
+			}
+			
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return bo_id;
 	}
 }

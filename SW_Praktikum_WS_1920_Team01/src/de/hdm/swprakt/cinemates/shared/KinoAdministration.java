@@ -428,4 +428,4 @@ public interface KinoAdministration extends RemoteService {
 // * @throws IllegalArgumentException
 // */
 //public Votum findVotumByID(int id)throws IllegalArgumentException;
-//}
+}

@@ -38,7 +38,7 @@ public class NutzerMapper extends OwnedBusinessObjectMapper{
 
 	}
 
-@Override
+
 	public Vector <Nutzer> findAllNutzer(){
 
 		Connection con = DBConnection.connection();
@@ -136,32 +136,53 @@ public class NutzerMapper extends OwnedBusinessObjectMapper{
 		Connection con = DBConnection.connection();
 
 		try {
-
+			con.setAutoCommit(false);
+			
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT MAX(user_id) AS `maxid` FROM `nutzer`");
 
 			if (rs.next()) {
 				nutzer.setID(rs.getInt("maxid") + 1);
+				nutzer.setOwnerID(nutzer.getID());
 			}	
+			
+			int bo_id = super.insert(nutzer, con);
 
-			PreparedStatement pstmt = con.prepareStatement("INSERT INTO `nutzer` (`user_id`,`Email`, `Nutzername`) VALUES (?, ?, ?) ");
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO `nutzer` (`user_id`,  `bo_id`, `Email`, `Nutzername`) VALUES (?, ?, ?, ?) ");
 			pstmt.setInt(1, nutzer.getID());
-			pstmt.setString(2, nutzer.getEmail());
-			pstmt.setString(3, nutzer.getNutzername());
+			pstmt.setInt(2, bo_id);
+			pstmt.setString(3, nutzer.getEmail());
+			pstmt.setString(4, nutzer.getNutzername());
 			pstmt.executeUpdate();
-			super.insert(nutzer);
 
-			return nutzer;
+			con.commit();
 
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
+			if (con != null) {
+	            try {
+	               // System.err.print("Transaktion wird nicht ausgeführt");
+	                con.rollback();
+	            } catch(SQLException exc) {
+	            	exc.printStackTrace();
+	            }
+			
 			return null;
 		}
-
-
-
+			
+	} finally {
+		
+		try {
+			con.setAutoCommit(true);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 	}
+		return nutzer;
+	}
+	
 
 	public Nutzer update (Nutzer nutzer) {
 
@@ -187,15 +208,41 @@ public class NutzerMapper extends OwnedBusinessObjectMapper{
 		Connection con = DBConnection.connection();
 
 		try {
+			con.setAutoCommit(false);
+			
+			int bo_id = findBoIdOf(nutzer);
 
+			super.delete(bo_id, con);
+			
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate("DELETE FROM `nutzer` WHERE (`user_id` = " + nutzer.getID() + ")");
-			super.delete(nutzer);
+			
+			con.commit();
 
+
+		} catch(SQLException e) {
+			e.printStackTrace();
+			if (con != null) {
+	            try {
+	               // System.err.print("Transaktion wird nicht ausgeführt");
+	                con.rollback();
+	            } catch(SQLException exc) {
+	            	exc.printStackTrace();
+	            }
+			
+		}
+			
+	} finally {
+		
+		try {
+			con.setAutoCommit(true);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
 	}
+	}
+	
 
 	public void deleteGruppenzugehörigkeiten(int nutzerid) {
 
@@ -238,6 +285,27 @@ public class NutzerMapper extends OwnedBusinessObjectMapper{
 
 		return nutzer;
 
+	}
+	
+	private int findBoIdOf (Nutzer nutzer) {
+		
+		Connection con = DBConnection.connection();
+		int bo_id = 0;
+		
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT `bo_id` FROM `nutzer` WHERE (`user_id` = " +  nutzer.getID() + ")");
+			
+			if(rs.next()) {
+				bo_id = rs.getInt("bo_id");
+			}
+			
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return bo_id;
 	}
 
 }

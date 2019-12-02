@@ -46,13 +46,15 @@ public interface KinoAdministration extends RemoteService {
 // * Abschnitt aller create-Methoden (Ömer)
 // */
 //
-///**
-// * Abschnitt aller create-Methoden
-// * Erstellen des uebergebenen Film-Objekts
-// * @param film Film-Objekt, welches in der Datenbank erstellt werden soll
-// * @throws IllegalArgumentException
-// */
-//public void create(Film film)  throws IllegalArgumentException;
+	
+/**
+ * Abschnitt aller create-Methoden
+ * Erstellen des uebergebenen Film-Objekts
+ * @param film Film-Objekt, welches in der Datenbank erstellt werden soll
+ * @return 
+ * @throws IllegalArgumentException
+ */
+	public Film createFilm(String filmtitel,String beschreibung, String details) throws IllegalArgumentException;
 //
 //
 ///**
@@ -70,7 +72,8 @@ public interface KinoAdministration extends RemoteService {
 // * @param kinokette Kinokette-Objekt, welches in der Datenbank erstellt werden soll
 // * @throws IllegalArgumentException
 // */
-//public void create(Kinokette kinokette) throws IllegalArgumentException;
+
+	public Kinokette createKinokette(String kinokettenname,String beschreibung ) throws IllegalArgumentException;
 //
 ///**
 // * Abschnitt aller create-Methoden
@@ -78,7 +81,7 @@ public interface KinoAdministration extends RemoteService {
 // * @param kino Kino-Objekt, welches in der Datenbank erstellt werden soll
 // * @throws IllegalArgumentException
 // */
-//public void create(Kino kino) throws IllegalArgumentException;
+	public Kino createKino(String kinoname,String adresse,String beschreibung) throws IllegalArgumentException;
 //
 ///**
 // * Abschnitt aller create-Methoden
@@ -428,4 +431,4 @@ public interface KinoAdministration extends RemoteService {
 // * @throws IllegalArgumentException
 // */
 //public Votum findVotumByID(int id)throws IllegalArgumentException;
-//}
+}

@@ -21,7 +21,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  * @version 1.0
  *
  */
-public class Header extends HorizontalPanel {
+public class HeaderfürKinobesuchsplanung extends HorizontalPanel {
 
 	/* Diese privaten Attribute stellen Widgtes dar, deren Inhalte Variable sind. 
 	 * Sie werden benötigt, um die Inhalte im weiteren Verlauf sinnvolll zu struktutieren. 
@@ -104,13 +104,15 @@ public class Header extends HorizontalPanel {
 	 *
 	 */
 	private class AdminClickHandler implements ClickHandler{
+		
 
-		/** Der Nutzer soll zunächst auf die Seite der Kinobesuchsplanung geführt werden.
-		 *  Klickt er dann nochmals auf Button "Kinobesuchsplanung", so wird die Seite neu geladen.
+		/** Klickt der Nutzer auf den Button der mit "Kinoadministration" beschriftet ist,
+		 *  so wird er auf diese Seite weitergeleitet.
 		 */
+		
 		@Override
 		public void onClick(ClickEvent event) {
-			Window.Location.assign("Kinoadministration.html");
+			Window.Location.assign("KinoAdministration.html");
 
 
 
@@ -118,8 +120,8 @@ public class Header extends HorizontalPanel {
 	}
 	private class PlanerClickHandler implements ClickHandler{
 
-		/** Klickt der Nutzer auf den Button der mit "Kinoadministration" beschriftet ist,
-		 *  so wird er auf diese Seite weitergeleitet.
+		/** Der Nutzer soll zunächst auf die Seite der Kinobesuchsplanung geführt werden.
+		 *  Klickt er dann nochmals auf Button "Kinobesuchsplanung", so wird die Seite neu geladen.
 		 */
 
 		@Override

@@ -5,7 +5,8 @@ import com.google.gwt.user.client.ui.RootPanel;
 
 import de.hdm.swprakt.cinemates.client.gui.Details;
 import de.hdm.swprakt.cinemates.client.gui.GruppenverwaltungForm;
-import de.hdm.swprakt.cinemates.client.gui.Header;
+import de.hdm.swprakt.cinemates.client.gui.HeaderfürKinoAdministration;
+import de.hdm.swprakt.cinemates.client.gui.HeaderfürKinobesuchsplanung;
 import de.hdm.swprakt.cinemates.client.gui.Navigator;
 
 
@@ -23,7 +24,7 @@ public class KinobesuchsplanungEntry implements EntryPoint {
 		 * 
 		 */
 		
-		Header headerPanel = new Header();
+		HeaderfürKinobesuchsplanung headerPanel = new HeaderfürKinobesuchsplanung();
 		Navigator navigator = new Navigator();
 		Details detailsPanel = new Details();
 		

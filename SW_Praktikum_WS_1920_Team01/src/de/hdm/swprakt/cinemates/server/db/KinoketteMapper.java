@@ -9,7 +9,7 @@ import java.util.Vector;
 
 
 import de.hdm.swprakt.cinemates.shared.bo.Kinokette;
-
+import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 import de.hdm.swprakt.cinemates.shared.bo.OwnedBusinessObject;
 
 /**
@@ -207,7 +207,7 @@ public class KinoketteMapper extends OwnedBusinessObjectMapper {
 			e.printStackTrace();
 			if (con != null) {
 	            try {
-	               // System.err.print("Transaktion wird nicht ausgeführt");
+	             //  System.err.print("Transaktion wird nicht ausgeführt");
 	                con.rollback();
 	            } catch(SQLException exc) {
 	            	exc.printStackTrace();
@@ -263,15 +263,60 @@ public class KinoketteMapper extends OwnedBusinessObjectMapper {
 		Connection con = DBConnection.connection();
 
 		try {
+			
+			con.setAutoCommit(false);
+			
+			int bo_id = findBoIDOf(kinokette);
+
+			super.delete(bo_id, con);
+			
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM `kinokette` WHERE (`kinokette_id` =" + kinokette.getID() + ")");
+			stmt.executeUpdate("DELETE FROM `kinokette` WHERE (`kinokette_id` = " + kinokette.getID() + ")");
+			
+			con.commit();
 
+		}catch(SQLException e) {
+			e.printStackTrace();
+			if (con != null) {
+	            try {
+	             //  System.err.print("Transaktion wird nicht ausgeführt");
+	                con.rollback();
+	            } catch(SQLException exc) {
+	            	exc.printStackTrace();
+	            }
+			
 		}
-		catch(SQLException e) {
+			
+	} finally {
+		
+		try {
+			con.setAutoCommit(true);
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+		
+	}
+	}
+	
+	
+	
+	private int findBoIDOf (Kinokette kinokette) throws SQLException {
+		
+		Connection con = DBConnection.connection();
+		int bo_id = 0;
+		
+		
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT `bo_id` FROM `kinokette` WHERE (`kinokette_id` = " +  kinokette.getID() + ")");
+			
+			if(rs.next()) {
+				bo_id = rs.getInt("bo_id");
+			}
+			
+		
+		
+		return bo_id;
 	}
 
 

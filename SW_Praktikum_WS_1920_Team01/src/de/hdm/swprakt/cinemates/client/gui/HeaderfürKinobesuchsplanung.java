@@ -47,7 +47,9 @@ public class HeaderfürKinobesuchsplanung extends HorizontalPanel {
 		 * 
 		 */
 		adminButton = new Button("Kinoadministration");
+		adminButton.getElement().setId("adminbutton");
 		planerButton = new Button("Kinobesuchsplanung");
+		planerButton.getElement().setId("planerbutton");
 		nutzerbeschriftung = new Label("Nutzerkonto");
 
 		nutzerkontolistbox = new ListBox(true);
@@ -59,6 +61,7 @@ public class HeaderfürKinobesuchsplanung extends HorizontalPanel {
 		nutzerkontolistbox2.addItem("Logout");
 		nutzerkontolistbox.setVisibleItemCount(2);
 		nutzerkontolistbox2.setVisibleItemCount(1);
+		nutzerkontolistbox2.getElement().setId("nutzerlistbox");
 		logo = new Image("images/CineMates Logo.jpg");
 		logo.setWidth("100px");
 

@@ -25,6 +25,7 @@ public class KinobesuchsplanungEntry implements EntryPoint {
 		 */
 		
 		HeaderfürKinobesuchsplanung headerPanel = new HeaderfürKinobesuchsplanung();
+		headerPanel.getElement().setId("headerPanelKinobesuchsplanung");
 		Navigator navigator = new Navigator();
 		Details detailsPanel = new Details();
 		

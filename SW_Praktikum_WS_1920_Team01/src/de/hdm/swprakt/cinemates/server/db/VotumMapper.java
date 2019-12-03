@@ -190,7 +190,10 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 	}
 
 	/**
-	 * Einfügen eines Votum-Objekts in die Datenbank.
+	 * Einfügen eines Votum-Objekts in die Datenbank. Hier wird auch der die insert-Methode der Superklasse
+	 * <code>OwnedBusinessObject </code> aufgerufen. Das Votumobjekt(oder vielmehr die
+	 * Referenz darauf), welches auch ein OwnedBusinessObject ist,
+	 * wird auch in die Tabelle OwnedBusinessObject eingetragen.
 	 * @return Ein Objekt der Klasse <Votum>
 	 */
 
@@ -201,30 +204,67 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 		Connection con = DBConnection.connection();
 
 		try {
+			/** Wir arbeiten hier mit AutoCommits, da wir die Funktion einer Transaktion realisieren möchten.
+			 * Initial wir der AutoCommit auf false gesetzt.
+			 * 
+			 */
+			con.setAutoCommit(false);
+			int bo_id = super.insert(votum, con);
+
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT MAX(votum_id) AS maxid FROM votum");
 
+			//Befüllen des Result-Sets
 			if (rs.next()) {
 				votum.setID(rs.getInt("maxid") + 1);
 			}	
 
-			PreparedStatement pstmt1 = con.prepareStatement("INSERT INTO votum(votum_id,istMöglicherTermin,umfrageeintrag_id VALUES (?, ?, ?, ?,?) ");
-			pstmt1.setInt(1,votum.getID());
-			pstmt1.setBoolean(2, votum.getIstMöglicherTermin());
-			pstmt1.setInt(3, votum.getUmfrageeintragID());
-			pstmt1.executeUpdate();
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO votum(votum_id, bo_id, istMöglicherTermin,umfrageeintrag_id VALUES (?, ?, ?, ?) ");
+			pstmt.setInt(1,votum.getID());
+			pstmt.setInt(2, bo_id);
+			pstmt.setBoolean(2, votum.getIstMöglicherTermin());
+			pstmt.setInt(3, votum.getUmfrageeintragID());
+			pstmt.executeUpdate();
 
-			super.insert(votum);
+			con.commit();
 
-			return votum;
 
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
+			/** Wir wollen dass der insert-Befehl ganz oder gar nicht ausgeführt wird, daher wird hier auf
+			 * mögliche Probleme geprüft. Sollten Probleme auftreten, kann die Transaktion nicht 
+			 * ausgeführt werden.
+			 */
+			if (con != null) {
+				try {
+					// System.err.print("Transaktion wird nicht ausgeführt");
+					con.rollback();
+				} catch(SQLException exc) {
+					exc.printStackTrace();
+				}
+
+				return null;
+			}
+
+		} finally {
+
+			/** Sind keine Probleme aufgetreten, so setzen wir den AutoCommit auf true. Die Transaktion ist nun vollständig
+			 * durchlaufen.
+			 */
+			try {
+				con.setAutoCommit(true);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
 		}
-		return null;
+		//Zuletzt geben wir unser Votumobjekt zurück.
+		return votum;
 	}
+
+
 
 	/**
 	 * Aktualisieren eines Votum-Objekts in der Datenbank. Achtung: Es können nicht alle Attribute aktualisiert werden.
@@ -243,7 +283,7 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 			PreparedStatement pstmt = con.prepareStatement("UPDATE votum SET istMöglicherTermin =?");
 
 
-			pstmt.setBoolean(4, votum.getIstMöglicherTermin());
+			pstmt.setBoolean(1,votum.getIstMöglicherTermin());
 
 			pstmt.executeUpdate();
 			return votum;
@@ -254,8 +294,11 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 		}
 		return null;
 	}
+
 	/**
-	 * Löschen eines Votum-Objekts in der Datenbank.
+	 * Löschen eines Votum-Objekts in der Datenbank. Hier wird auch der die delete-Methode der Superklasse
+	 * <code>OwnedBusinessObject </code> aufgerufen. Das Votumobjekt, welches auch ein OwnedBusinessObject ist,
+	 * wird auch aus der Tabelle OwnedBusinessObject gelöscht.
 		 @param Objekt der Klasse <code>Votum</code>
 	 * 
 	 */
@@ -267,21 +310,53 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 		Connection con = DBConnection.connection();
 
 		try {
+			/** Wir arbeiten hier mit AutoCommits, da wir die Funktion einer Transaktion realisieren möchten.
+			 * Initial wir der AutoCommit auf false gesetzt.
+			 * 
+			 */
+			con.setAutoCommit(false);
+
+			int bo_id = findBoIDOf(votum);
+
+			super.delete(bo_id, con);
+
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("DELETE FROM votum WHERE votum_id=" + votum.getID());
-			
-			super.delete(votum);
+			con.commit();
 
+		} 
 
-
-		}
 		catch(SQLException e) {
 			e.printStackTrace();
-		}
+			/** Wir wollen dass der delete-Befehl ganz oder gar nicht ausgeführt wird, daher wird hier auf
+			 * mögliche Probleme geprüft. Sollten Probleme auftreten, kann die Transaktion nicht 
+			 * ausgeführt werden.
+			 */
+			if (con != null) {
+				try {
+					// System.err.print("Transaktion wird nicht ausgeführt");
+					con.rollback();
+				} catch(SQLException exc) {
+					exc.printStackTrace();
+				}
 
+			}
 
+		} finally {
+			/** Sind keine Probleme aufgetreten, so setzen wir den AutoCommit auf true. Die Transaktion ist nun vollständig
+			 * durchlaufen.
+			 */
+			try {
+				con.setAutoCommit(true);
+			} catch (SQLException e) {
+				e.printStackTrace();
+
+			}}
 	}
+
+
+
 
 	/**
 	 * Löschen der Votum-Objekte, welche zu einem Umfrageeintrag gehören.
@@ -308,6 +383,28 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 
 
 	}
+	/** Dies ist eine Hilfsmethode. Sie ermöglicht uns, die bo_id eines OwnedBusinessObjects zu ermitteln.
+	 * 
+	 * @param votum
+	 * @return bo_id
+	 * @throws SQLException
+	 */
+
+	private int findBoIDOf (Votum votum) throws SQLException {
+
+		Connection con = DBConnection.connection();
+		int bo_id = 0;
+
+		Statement stmt = con.createStatement();
+		ResultSet rs = stmt.executeQuery("SELECT `bo_id` FROM `votum` WHERE (`votum_id` = " +  votum.getID() + ")");
+
+		if(rs.next()) {
+			bo_id = rs.getInt("bo_id");
+		}
+
+		return bo_id;
+	}
+
 
 
 }

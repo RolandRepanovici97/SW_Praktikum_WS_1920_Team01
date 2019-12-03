@@ -73,8 +73,7 @@ public class SpielplanMapper extends OwnedBusinessObjectMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery(
-					"SELECT * FROM `spielplan`LEFT JOIN `ownedbusinessobject` ON `spielplan`.`bo_id` = `ownedbusinessobject`.`bo_id` ORDER BY `spielplan_id`;");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `spielplan` LEFT JOIN `ownedbusinessobject` ON `spielplan`.`bo_id` = `ownedbusinessobject`.`bo_id` ORDER BY `spielplan_id`;");
 
 			while (rs.next()) {
 				Spielplan sp = new Spielplan();
@@ -82,6 +81,7 @@ public class SpielplanMapper extends OwnedBusinessObjectMapper {
 				sp.setID(rs.getInt("spielplan_id"));
 				sp.setOwnerID(rs.getInt("owner_id"));
 				sp.setSpielplanname(rs.getString("Spielplanname"));
+				spielplan.add(sp);
 
 			}
 		} catch (Exception exc) {
@@ -99,8 +99,7 @@ public class SpielplanMapper extends OwnedBusinessObjectMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery(
-					"SELECT * FROM `spielplan` WHERE spielplan_id =" + id + "ORDER BY `spielplan_id`");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `spielplan`  LEFT JOIN `ownedbusinessobject` ON `spielplan`.`bo_id` = `ownedbusinessobject`.`bo_id` WHERE (`spielplan_id` = " + id + ") ORDER BY `spielplan_id`");
 
 			if (rs.next()) {
 				Spielplan sp = new Spielplan();
@@ -124,30 +123,52 @@ public class SpielplanMapper extends OwnedBusinessObjectMapper {
 		Connection con = DBConnection.connection();
 
 		try {
+			con.setAutoCommit(false);
+			
+			int bo_id = super.insert(spielplan, con);
 
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT MAX(spielplan_id) AS `maxid` FROM `spielplan`");
 
 			if (rs.next()) {
 				spielplan.setID(rs.getInt("maxid") + 1);
+			}
 
 
-				PreparedStatement pstmt = con.prepareStatement(
-						"INSERT INTO `spielplan` (`spielplan_id`, `bo_id`, `Spielplanname`) VALUES (?, ?, ?) ");
+				PreparedStatement pstmt = con.prepareStatement("INSERT INTO `spielplan` (`spielplan_id`, `bo_id`, `Spielplanname`) VALUES (?, ?, ?) ");
 				pstmt.setInt(1, spielplan.getID());
+				pstmt.setInt(2, bo_id);
 				pstmt.setString(3, spielplan.getSpielplanname());
 
 				pstmt.executeUpdate();
-
-				super.insert(spielplan);
 				
+				con.commit();
+			
 
-
-			} }
-		catch (SQLException e) {
+		} 
+		
+		catch(SQLException e) {
 			e.printStackTrace();
-	
+			if (con != null) {
+	            try {
+	               // System.err.print("Transaktion wird nicht ausgeführt");
+	                con.rollback();
+	            } catch(SQLException exc) {
+	            	exc.printStackTrace();
+	            }
+			
+			return null;
 		}
+			
+	} finally {
+		
+		try {
+			con.setAutoCommit(true);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
 		return spielplan;
 	}
 
@@ -158,11 +179,12 @@ public class SpielplanMapper extends OwnedBusinessObjectMapper {
 		try {
 
 			PreparedStatement pstmt = con.prepareStatement(
-					"UPDATE `spielplan` SET `spielplan_id` = ?, `bo_id` = ?, `Spielplanname` = ? WHERE `spielplan_id` = ?");
+					"UPDATE `spielplan` SET `Spielplanname` = ? WHERE `spielplan_id` = ?");
 
-			pstmt.setInt(1, spielplan.getID());
-			// pstmt.setInt(2, obo.getID();
-			pstmt.setString(3, spielplan.getSpielplanname());
+			pstmt.setString(1, spielplan.getSpielplanname());
+			pstmt.setInt(2, spielplan.getID());
+			pstmt.executeUpdate();
+			
 			return spielplan;
 
 		} catch (SQLException e) {
@@ -177,13 +199,55 @@ public class SpielplanMapper extends OwnedBusinessObjectMapper {
 		Connection con = DBConnection.connection();
 
 		try {
+			
+			con.setAutoCommit(false);
+			
+			int bo_id = findBoIDOf(spielplan);
+
+			super.delete(bo_id, con);
 
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate("DELETE FROM `spielplan` WHERE (`spielplan_id` = " + spielplan.getID() + ")");
-			super.delete(spielplan);
+			
+			con.commit();
 
+		} catch(SQLException e) {
+			e.printStackTrace();
+			if (con != null) {
+	            try {
+	               // System.err.print("Transaktion wird nicht ausgeführt");
+	                con.rollback();
+	            } catch(SQLException exc) {
+	            	exc.printStackTrace();
+	            }
+			
+		}
+			
+	} finally {
+		
+		try {
+			con.setAutoCommit(true);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+	}
+	}
+	
+	
+	private int findBoIDOf (Spielplan spielplan) throws SQLException {
+		
+		Connection con = DBConnection.connection();
+		int bo_id = 0;
+
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT `bo_id` FROM `spielplan` WHERE (`spielplan_id` = " +  spielplan.getID() + ")");
+			
+			if(rs.next()) {
+				bo_id = rs.getInt("bo_id");
+			}
+			
+		
+		return bo_id;
 	}
 }

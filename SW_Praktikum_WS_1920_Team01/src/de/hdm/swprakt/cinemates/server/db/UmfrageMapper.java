@@ -12,6 +12,7 @@ import java.util.Vector;
 
 import de.hdm.swprakt.cinemates.shared.bo.Umfrage;
 import de.hdm.swprakt.cinemates.shared.bo.Umfrageeintrag;
+import de.hdm.swprakt.cinemates.shared.bo.Votum;
 
 /**
  * Diese Mapperklasse bildet <code>Umfrage</code> Objekte auf eine
@@ -111,7 +112,7 @@ public class UmfrageMapper extends OwnedBusinessObjectMapper {
 		try {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM umfrage LEFT JOIN ownedbusinessobject ON nutzer.bo_id = ownedbusinessobject.bo_Id ORDER BY umfrage_id");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM umfrage ORDER BY umfrage_id");
 
 			/* Befüllen des result sets
 			 */
@@ -153,7 +154,7 @@ public class UmfrageMapper extends OwnedBusinessObjectMapper {
 			 * Leeres SQL-Statement (JDBC) anlegen.
 			 */
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM 'umfrage' LEFT JOIN `ownedbusinessobject` ON `umfrage`.`bo_id`= `ownedbusinessobject`.`bo_id` ORDER BY 'owner_id'");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM 'umfrage' LEFT JOIN `ownedbusinessobject` WHERE `umfrage`.`bo_id`= `ownedbusinessobject`.`bo_id` ORDER BY 'owner_id'");
 
 			/**
 			 * Befüllen des result sets
@@ -181,9 +182,9 @@ public class UmfrageMapper extends OwnedBusinessObjectMapper {
 
 	}
 
-	/**Aktualisieren eines Umfrage in der Datenbank. Achtung: Es können nicht alle Attribute aktualisiert werden.
+	/**Aktualisieren eines Umfrageobjekts in der Datenbank. Achtung: Es können nicht alle Attribute aktualisiert werden.
 	 * @param umfrage
-	 * @return Ein (überarbeitetes Objekt der Klasse <Umfrage>
+	 * @return Ein (überarbeitetes) Objekt der Klasse <Umfrage>
 	 */
 	public Umfrage update (Umfrage umfrage) {
 
@@ -210,8 +211,13 @@ public class UmfrageMapper extends OwnedBusinessObjectMapper {
 	}
 
 	/**
-	 * Löschen eines Umfrage in der Datenbank.
+	 * Löschen eines Umfrage-Objekts in der Datenbank. Hier wird auch der die delete-Methode der Superklasse
+	 * <code>OwnedBusinessObject </code> aufgerufen. Das Umfrageobjekt, welches auch ein OwnedBusinessObject ist,
+	 * wird auch aus der Tabelle OwnedBusinessObject gelöscht.
+		 @param Objekt der Klasse <code>Umfrage</code>
+	 * 
 	 */
+
 	public void delete (Umfrage umfrage) {
 
 		/**
@@ -220,34 +226,84 @@ public class UmfrageMapper extends OwnedBusinessObjectMapper {
 		Connection con = DBConnection.connection();
 
 		try {
+			/** Wir arbeiten hier mit AutoCommits, da wir die Funktion einer Transaktion realisieren möchten.
+			 * Initial wir der AutoCommit auf false gesetzt.
+			 * 
+			 */
+			con.setAutoCommit(false);
+
+			int bo_id = findBoIDOf(umfrage);
+
+			super.delete(bo_id, con);
+
 			/**
 			 * Leeres SQL-Statement (JDBC) anlegen
 			 */
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate("DELETE FROM `umfrage` WHERE (`umfrage_id` =" + umfrage.getID() + ")" );
-			super.delete(umfrage);
+			con.commit();
 
 
 		}
+
 		catch(SQLException e) {
 			e.printStackTrace();
-		}
+			/** Wir wollen dass der delete-Befehl ganz oder gar nicht ausgeführt wird, daher wird hier auf
+			 * mögliche Probleme geprüft. Sollten Probleme auftreten, kann die Transaktion nicht 
+			 * ausgeführt werden.
+			 */
+			if (con != null) {
+				try {
+					// System.err.print("Transaktion wird nicht ausgeführt");
+					con.rollback();
+				} catch(SQLException exc) {
+					exc.printStackTrace();
+				}
+
+			}
+
+		} finally {
+			/** Sind keine Probleme aufgetreten, so setzen wir den AutoCommit auf true. Die Transaktion ist nun vollständig
+			 * durchlaufen.
+			 */
+			try {
+				con.setAutoCommit(true);
+			} catch (SQLException e) {
+				e.printStackTrace();
+
+			}}
 	}
+
+	/**
+	 * Einfügen eines Umfrage-Objekts in die Datenbank. Hier wird auch der die insert-Methode der Superklasse
+	 * <code>OwnedBusinessObject </code> aufgerufen. Das Umfrageobjekt(oder vielmehr die
+	 * Referenz darauf), welches auch ein OwnedBusinessObject ist,
+	 * wird auch in die Tabelle OwnedBusinessObject eingetragen.
+	 * @return Ein Objekt der Klasse <Umfrage>
+	 */
 
 	public Umfrage insert (Umfrage umfrage) {
 
 		/**
-		 * Verindung zur Datenbank aufbauen
+		 * Verbindung zur Datenbank aufbauen
 		 */
 		Connection con = DBConnection.connection();
 
 		try {
+			/** Wir arbeiten hier mit AutoCommits, da wir die Funktion einer Transaktion realisieren möchten.
+			 * Initial wir der AutoCommit auf false gesetzt.
+			 * 
+			 */
+			con.setAutoCommit(false);
+			int bo_id = super.insert(umfrage, con);
+
 			/**
 			 * Leeres SQL-Statement (JDBC) anlegen.
 			 */
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT MAX(umfrage_id) AS `maxid` FROM `umfrage`");
 
+			// Befüllen des Result-Sets
 			if (rs.next()) {
 				umfrage.setID(rs.getInt("maxid") + 1);
 			}
@@ -257,18 +313,42 @@ public class UmfrageMapper extends OwnedBusinessObjectMapper {
 			pstmt.setTimestamp(2, dc.aktuellerTimestamp());
 			umfrage.setErstellungszeitpunkt(dc.convertTimestampToDate(dc.aktuellerTimestamp()));
 			pstmt.executeUpdate();
-			
-			super.insert(umfrage);
-			return umfrage;
 
+			con.commit();
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
-			return null;
+			/** Wir wollen dass der insert-Befehl ganz oder gar nicht ausgeführt wird, daher wird hier auf
+			 * mögliche Probleme geprüft. Sollten Probleme auftreten, kann die Transaktion nicht 
+			 * ausgeführt werden.
+			 */
+			if (con != null) {
+				try {
+					// System.err.print("Transaktion wird nicht ausgeführt");
+					con.rollback();
+				} catch(SQLException exc) {
+					exc.printStackTrace();
+				}
+
+				return null;
+			}
+
+		} finally {
+
+			/** Sind keine Probleme aufgetreten, so setzen wir den AutoCommit auf true. Die Transaktion ist nun vollständig
+			 * durchlaufen.
+			 */
+			try {
+				con.setAutoCommit(true);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
 		}
-
-
+		//Zuletzt geben wir unser Umfrageobjekt zurück.
+		return umfrage;
 	}
+
 
 
 	public Umfrage getUmfrageByUmfrageeintrag (Umfrageeintrag umfrageeintrag) {
@@ -365,6 +445,27 @@ public class UmfrageMapper extends OwnedBusinessObjectMapper {
 		}
 
 		return null;
+	}
+	/** Dies ist eine Hilfsmethode. Sie ermöglicht uns, die bo_id eines OwnedBusinessObjects zu ermitteln.
+	 * 
+	 * @param umfrage
+	 * @return bo_id
+	 * @throws SQLException
+	 */
+
+	private int findBoIDOf (Umfrage umfrage) throws SQLException {
+
+		Connection con = DBConnection.connection();
+		int bo_id = 0;
+
+		Statement stmt = con.createStatement();
+		ResultSet rs = stmt.executeQuery("SELECT `bo_id` FROM `umfrage` WHERE (`umfrage_id` = " +  umfrage.getID() + ")");
+
+		if(rs.next()) {
+			bo_id = rs.getInt("bo_id");
+		}
+
+		return bo_id;
 	}
 
 }

@@ -210,7 +210,7 @@ public class NutzerMapper extends OwnedBusinessObjectMapper{
 		try {
 			con.setAutoCommit(false);
 			
-			int bo_id = findBoIdOf(nutzer);
+			int bo_id = findBoIDOf(nutzer);
 
 			super.delete(bo_id, con);
 			
@@ -287,12 +287,11 @@ public class NutzerMapper extends OwnedBusinessObjectMapper{
 
 	}
 	
-	private int findBoIdOf (Nutzer nutzer) {
+	private int findBoIDOf (Nutzer nutzer) throws SQLException {
 		
 		Connection con = DBConnection.connection();
 		int bo_id = 0;
-		
-		try {
+
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT `bo_id` FROM `nutzer` WHERE (`user_id` = " +  nutzer.getID() + ")");
 			
@@ -300,10 +299,6 @@ public class NutzerMapper extends OwnedBusinessObjectMapper{
 				bo_id = rs.getInt("bo_id");
 			}
 			
-		}
-		catch (SQLException e) {
-			e.printStackTrace();
-		}
 		
 		return bo_id;
 	}

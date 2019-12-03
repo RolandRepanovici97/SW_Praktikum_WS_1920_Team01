@@ -113,10 +113,10 @@ public class OwnedBusinessObjectMapper {
 		return null;
 	}
 	
-	public int insert (OwnedBusinessObject obo, Connection con) {
+	public int insert (OwnedBusinessObject obo, Connection con) throws SQLException {
 		
 		int bo_id = 0;
-		try {
+		
 			
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT MAX(bo_id) AS `maxid` FROM `ownedbusinessobject`");
@@ -130,11 +130,6 @@ public class OwnedBusinessObjectMapper {
 			pstmt.setInt(2, obo.getOwnerID());
 			pstmt.setTimestamp(3, dc.convertJavaDateToSqlTimestamp(obo.getErstellungszeitpunkt()));
 			pstmt.executeUpdate();
-			
-		}
-		catch(SQLException e) {
-			e.printStackTrace();
-		}
 		
 		return bo_id;
 	
@@ -162,17 +157,11 @@ public class OwnedBusinessObjectMapper {
 	}
 	
 	*/
-	public void delete (int bo_id, Connection con) {
+	public void delete (int bo_id, Connection con) throws SQLException {
 		
-
-		try {
-
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate("DELETE FROM `ownedbusinessobject` WHERE `bo_id` = " + bo_id);
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
 		
 		

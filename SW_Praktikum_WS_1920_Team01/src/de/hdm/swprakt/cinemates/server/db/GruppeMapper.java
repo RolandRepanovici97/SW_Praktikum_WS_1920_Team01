@@ -204,7 +204,7 @@ public class GruppeMapper extends OwnedBusinessObjectMapper{
 		try {
 			con.setAutoCommit(false);
 			
-			int bo_id = findBoIdOf(gruppe);
+			int bo_id = findBoIDOf(gruppe);
 
 			super.delete(bo_id, con);
 			
@@ -339,23 +339,17 @@ public class GruppeMapper extends OwnedBusinessObjectMapper{
 		
 	}
 	
-	private int findBoIdOf (Gruppe gruppe) {
+	private int findBoIDOf (Gruppe gruppe) throws SQLException {
 		
 		Connection con = DBConnection.connection();
 		int bo_id = 0;
-		
-		try {
+
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT `bo_id` FROM `gruppe` WHERE (`gruppen_id` = " +  gruppe.getID() + ")");
 			
 			if(rs.next()) {
 				bo_id = rs.getInt("bo_id");
 			}
-			
-		}
-		catch (SQLException e) {
-			e.printStackTrace();
-		}
 		
 		return bo_id;
 	}

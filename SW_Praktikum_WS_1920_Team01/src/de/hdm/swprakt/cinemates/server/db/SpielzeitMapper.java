@@ -154,8 +154,9 @@ public class SpielzeitMapper extends OwnedBusinessObjectMapper {
 				spielzeit.setID(rs.getInt("maxid") + 1);
 			}
 			PreparedStatement pstmt = con.prepareStatement(
-					"INSERT INTO `spielplan` (`spielzeit_id`, `bo_id`, `Datum` , `Uhrzeit`) VALUES (?, ?, ?, ?) ");
+					"INSERT INTO `spielplan` (`spielzeit_id`, `film_id`, `Datum` , `Uhrzeit`) VALUES (?, ?, ?, ?) ");
 			pstmt.setInt(1, spielzeit.getID());
+			pstmt.setInt(2, spielzeit.getFilmID());
 			pstmt.setDate(3,dc.convertJavaDateToSQLDate(spielzeit.getZeitpunkt()));
 			pstmt.setTime(4, dc.convertJavaDateToSQLTime(spielzeit.getZeitpunkt()));
 			pstmt.executeUpdate();

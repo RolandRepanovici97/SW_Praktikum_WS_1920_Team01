@@ -13,7 +13,7 @@ public abstract class DBTester {
 		
 		NutzerMapper nutzerMapper = NutzerMapper.nutzerMapper();
 		
-		Vector<Nutzer> nutzer = nutzerMapper.findAll();
+		Vector<Nutzer> nutzer = nutzerMapper.findAllNutzer();
 		
 		Nutzer testnutzer = nutzerMapper.findByEmail("Nutzer8@gmail.com");
 		

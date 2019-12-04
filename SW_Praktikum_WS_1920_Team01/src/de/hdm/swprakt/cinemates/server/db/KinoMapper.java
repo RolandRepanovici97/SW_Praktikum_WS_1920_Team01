@@ -168,7 +168,7 @@ public class KinoMapper {
 /**
  * Suchen eines Kinos innerhalb der Kinokette
  */
-
+/**
 		public Vector<Kino> findByKinokette (Kinokette kinoketteID){
 			
 			Connection con = DBConnection.connection();
@@ -196,7 +196,7 @@ public class KinoMapper {
 			
 			return kino;	
 		}
-
+*/
 /**
  * Suchen eines Kinos innerhalb des Spielplans
  */
@@ -332,4 +332,37 @@ public class KinoMapper {
 			}
 		}
 		
+		public Vector<Kino> findKinosByKinokette(Kinokette kinokette) {
+			
+			//Verbindung zur Datenbank aufbauen.
+			
+			Connection con = DBConnection.connection();
+			
+			try {
+				// Leeres SQL-Statement (JDBC) anlegen
+				Statement stmt = con.createStatement();
+				ResultSet rs = stmt.executeQuery(" SELECT * FROM 'kino' JOIN 'kinokette' WHERE 'kino.kinokette_id' = 'kinokette.kinokette_id' ORDER BY 'kino_id' " );
+		Vector <Kino> kinovector = new Vector <>();
+				if(rs.next()) {
+					Kino kino = new Kino();
+					kino.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+					kino.setID(rs.getInt("kino_id"));
+					kino.setKinoname(rs.getString("Kinoname"));
+					kino.setAdresse(rs.getString("Adresse"));
+					kino.setBeschreibung(rs.getString("Beschreibung"));
+					kinovector.add(kino);
+					
+					return kinovector;
+				}
+			
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			return null;
+
+
+			
+			
+		}
 }
+ 

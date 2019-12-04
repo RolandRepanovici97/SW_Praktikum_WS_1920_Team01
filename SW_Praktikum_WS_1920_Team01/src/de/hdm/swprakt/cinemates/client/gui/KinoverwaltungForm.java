@@ -22,7 +22,7 @@ public class KinoverwaltungForm extends VerticalPanel{
 		
 		super.onLoad();
 		
-		kinoverwaltung = new ListBox(true);
+		kinoverwaltung = new ListBox(false);
 		kinoverwaltung2 = new ListBox(false);
 
 		kinoverwaltung2.setTitle("Kinoverwaltung");

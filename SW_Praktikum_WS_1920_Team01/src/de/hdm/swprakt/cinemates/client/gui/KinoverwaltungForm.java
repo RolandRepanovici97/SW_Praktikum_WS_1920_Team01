@@ -50,4 +50,6 @@ public class KinoverwaltungForm extends VerticalPanel{
 		detailsPanel.add(kinoGrid);
 		RootPanel.get("details").add(kinoGrid);
 }
+	
+	
 }

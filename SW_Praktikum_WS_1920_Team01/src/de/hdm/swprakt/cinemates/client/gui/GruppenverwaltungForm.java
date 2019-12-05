@@ -27,7 +27,6 @@ public void onLoad() {
 		
 		Grid gruppenGrid = new Grid(2, 2);
 		
-		
 		Label name = new Label("Gruppenname");
 		gruppenGrid.setWidget(0, 1, inhalt1);
 		gruppenGrid.setWidget(0, 0, name);

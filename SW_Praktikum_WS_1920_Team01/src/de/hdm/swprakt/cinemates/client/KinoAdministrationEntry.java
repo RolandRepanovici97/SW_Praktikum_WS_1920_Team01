@@ -21,7 +21,7 @@ public class KinoAdministrationEntry implements EntryPoint {
 		RootPanel.get("Header").add(headerPanel);
 		
 		NavigatorfürKinoAdministration navigator = new NavigatorfürKinoAdministration();
-		RootPanel.get().add(navigator);
+		RootPanel.get("details").add(navigator);
 		
 	}
 	

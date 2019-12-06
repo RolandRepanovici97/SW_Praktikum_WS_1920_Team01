@@ -1,7 +1,9 @@
 package de.hdm.swprakt.cinemates.client.gui;
 
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -15,6 +17,8 @@ public class KinoverwaltungForm extends VerticalPanel{
 	TextBox inhalt1 = new TextBox();
 	TextBox inhalt2 = new TextBox();
 	TextBox inhalt3 = new TextBox();
+	ListBox spielplanbox = new ListBox();
+	Button anlegen = new Button("Kino anlegen");
 	
 	VerticalPanel detailsPanel = new VerticalPanel();
 	
@@ -32,7 +36,7 @@ public class KinoverwaltungForm extends VerticalPanel{
 		
 		super.onLoad();
 		
-		Grid kinoGrid = new Grid(3, 3);
+		Grid kinoGrid = new Grid(4, 4);
 		
 		
 		Label name = new Label("Kinoname");
@@ -47,8 +51,13 @@ public class KinoverwaltungForm extends VerticalPanel{
 		kinoGrid.setWidget(2, 1, inhalt3);
 		kinoGrid.setWidget(2, 0, adresse);
 		
+		Label spielplan = new Label("Spielplan");
+		kinoGrid.setWidget(3, 1, spielplanbox);
+		kinoGrid.setWidget(3, 0, spielplan);
+		kinoGrid.setWidget(3, 2, anlegen);
+		
 		detailsPanel.add(kinoGrid);
-		RootPanel.get("details").add(kinoGrid);
+		RootPanel.get("DetailsPanel").add(kinoGrid);
 }
 	
 	

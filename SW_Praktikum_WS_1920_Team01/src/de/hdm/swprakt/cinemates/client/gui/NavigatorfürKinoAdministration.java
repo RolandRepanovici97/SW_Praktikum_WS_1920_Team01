@@ -12,8 +12,11 @@ public class NavigatorfürKinoAdministration extends VerticalPanel{
 	
 	private ListBox kinoverwaltung;
 	private ListBox spielplanverwaltung;
+	private ListBox filmhinzufügen;
 	
 	private KinoverwaltungForm kf;
+	private FilmForm ff;
+	private SpielplanForm sf;
 	
 public void onLoad() {
 	
@@ -27,15 +30,19 @@ public void onLoad() {
 	kinoverwaltung.setVisibleItemCount(3);
 	this.add(kinoverwaltung);
 	
-
+//ClickHandler in Bearbeitung
 	
 	spielplanverwaltung = new ListBox(false);
 	spielplanverwaltung.addItem("Spielplanverwaltung");
+	spielplanverwaltung.addClickHandler(new ShowFilmForm());
 	spielplanverwaltung.addItem("- Film hinzufügen");
 	spielplanverwaltung.addItem("- Spielplan anlegen");
+//	spielplanverwaltung.addClickHandler(new ShowSpielplanForm());
 	spielplanverwaltung.addItem("- Spielpläne anzeigen");
 	spielplanverwaltung.setVisibleItemCount(4);
 	this.add(spielplanverwaltung);
+	
+	
 		
 }
 
@@ -47,10 +54,31 @@ private class ShowKinoverwaltungForm implements ClickHandler {
 
 	@Override
 	public void onClick(ClickEvent event) {
-		RootPanel.get("details").clear();
+		RootPanel.get("DetailsPanel").clear();
 		kf = new KinoverwaltungForm();
-		RootPanel.get("details").add(kf);
+		RootPanel.get("DetailsPanel").add(kf);
 
 	}
 }
+
+private class ShowFilmForm implements ClickHandler {
+
+	@Override
+	public void onClick(ClickEvent event) {
+		RootPanel.get("DetailsPanel").clear();
+		ff = new FilmForm();
+		RootPanel.get("DetailsPanel").add(ff);
+	}	
+}
+
+private class ShowSpielplanForm implements ClickHandler {
+
+	@Override
+	public void onClick(ClickEvent event) {
+		RootPanel.get("DetailsPanel").clear();
+		sf = new SpielplanForm();
+		RootPanel.get("DetailsPanel").add(sf);
+	}	
+}
+
 }

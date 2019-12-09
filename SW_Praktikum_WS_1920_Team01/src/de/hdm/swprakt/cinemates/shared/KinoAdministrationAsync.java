@@ -28,12 +28,7 @@ import de.hdm.swprakt.cinemates.shared.bo.Votum;
 public interface KinoAdministrationAsync {
 
 	
-void createFilm(String filmtitel, String beschreibung, String details, AsyncCallback<Film> callback);
-	
-void createKinokette(String kinokettenname, String beschreibung, AsyncCallback<Kinokette> callback);
 
-
-void createKino(String kinoname, String adresse, String beschreibung, AsyncCallback<Kino> callback);
 	
 
 	

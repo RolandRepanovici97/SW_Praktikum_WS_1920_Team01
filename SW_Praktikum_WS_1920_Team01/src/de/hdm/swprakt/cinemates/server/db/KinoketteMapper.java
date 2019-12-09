@@ -319,5 +319,30 @@ public class KinoketteMapper extends OwnedBusinessObjectMapper {
 		return bo_id;
 	}
 
+//	public Kinokette findKinoketteByOwner(Nutzer nutzer) {
+//
+//		Connection con = DBConnection.connection();
+//
+//		try {
+//			Statement stmt = con.createStatement();
+//			ResultSet rs = stmt.executeQuery("SELECT * FROM `kinokette` LEFT JOIN `ownedbusinessobject` ON `kinokette`.`bo_id` = `ownedbusinessobject`.`bo_id` WHERE (`owner_id` = " + id + ")");
+//	
+//			if (rs.next()) {
+//				Kinokette k = new Kinokette();
+//				k.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+//				k.setID(rs.getInt("kinokette_id"));
+//				k.setOwnerID(rs.getInt("owner_id"));
+//				k.setKinokettenname(rs.getString("Kinokettenname"));
+//				k.setBeschreibung(rs.getString("Beschreibung"));
+//
+//				return k;
+//			}
+//
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return null;
+//		
+//	}
 
 }

@@ -23,6 +23,8 @@ import de.hdm.swprakt.cinemates.shared.KinoBesuchsplanung;
 import de.hdm.swprakt.cinemates.shared.bo.Film;
 import de.hdm.swprakt.cinemates.shared.bo.Kino;
 import de.hdm.swprakt.cinemates.shared.bo.Kinokette;
+import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
+import de.hdm.swprakt.cinemates.shared.bo.Spielplan;
 import de.hdm.swprakt.cinemates.shared.bo.Spielzeit;
 
 
@@ -49,6 +51,7 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 	private FilmMapper filmMapper = null;
 	private SpielzeitMapper spielzeitMapper = null;
 	private SpielplanMapper spielplanMapper = null;
+	private NutzerMapper nutzerMapper = null;
 
 	public KinoAdministrationImpl() throws IllegalArgumentException {
 
@@ -60,6 +63,7 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 		this.kinoketteMapper = KinoketteMapper.kinoketteMapper();
 		this.filmMapper = FilmMapper.filmMapper();
 		this.spielplanMapper = SpielplanMapper.spielplanMapper();
+		this.nutzerMapper = NutzerMapper.nutzerMapper();
 
 		KinoBesuchsplanungImpl kinoBesuchsplanungImpl = new KinoBesuchsplanungImpl();
 		kinoBesuchsplanungImpl.init();
@@ -142,26 +146,52 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 	  }
 	  
 	
+	
+	
+	
+	
+	/**
+	 * Löschen einer Kinokette
+	 */
+	
+	public void deleteKinokette(Kinokette kk) throws IllegalArgumentException {
+
+		Vector<Kino> kinos = kinoMapper.findKinosByKinokette(kk);
+
+		if (kinos != null) { // defensives Porgrammieren
+			for (Kino k : kinos) {
+				this.deleteKino(k);
+			}
+		}
+
+		this.kinoketteMapper.delete(kk);
+
+	}
+	
+	
+
 	/**
 	 * Hinzufügen eines Kinos zur Kinokette
 	 */
 
-	public Kinokette addKinoToKinokette(String kinokettenname, String beschreibung) throws IllegalArgumentException {
-		Kinokette kk = new Kinokette();
-		kk.setKinokettenname(kinokettenname);
-		kk.setBeschreibung(beschreibung);
+	public Kino addKinoToKinokette(Kinokette kinokette) throws IllegalArgumentException {
+		Kino kino = new Kino(); 
+		kinoMapper.insert(kino);
+		kino.setKinoketteID(kinokette.getID());
 
 		/*
 		 * Setzen einer vorläufigen Kinokette Nr. Der insert-Aufruf liefert dann ein
 		 * Objekt, dessen Nummer mit der Datenbank konsistent ist.
 		 */
-		kk.setID(1);
+		kino.setID(1);
 
 		// Objekt in der DB speichern.
-		return this.kinoketteMapper.insert(kk);
+		return this.kinoMapper.insert(kino);
 		// Kinookettennummer wird hier richtig eingesetzt
 	}
 
+	
+	
 	/*
 	 * ***************************************************************************
 	 * ABSCHNITT, Beginn: Methoden für Kino-Objekte
@@ -183,21 +213,26 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 	 */
 	
 
-	public Kino createKino(Kino kino) throws IllegalArgumentException {
-
+	public Kino createKino(String kinoname, String adresse, String beschreibung) throws IllegalArgumentException {
+		Kino k = new Kino();
+		k.setKinoname(kinoname);
+		k.setAdresse(adresse);
+		k.setBeschreibung(beschreibung);
+		
+	
 		/*
 		 * Setzen einer vorläufigen KinoNr. Der insert-Aufruf liefert dann ein Objekt,
 		 * dessen Nummer mit der Datenbank konsistent ist.
-		 */
+		*/
+		k.setID(1);
 
 		// Objekt in der DB speichern.
-		return this.kinoMapper.insert(kino);
+		return this.kinoMapper.insert(k);
 		// Kinonummer wird hier richtig eingesetzt
 	}
 
 	
 
-	
 	
 	public void deleteKino(Kino kino) throws IllegalArgumentException {
 
@@ -208,22 +243,7 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 	
 	
 	
-	public void deleteKinokette(Kinokette kk) throws IllegalArgumentException {
-
-		Vector<Kino> kinos = kinoMapper.findKinosByKinokette(kk);
-
-		if (kinos != null) { // defensives Porgrammieren
-			for (Kino k : kinos) {
-				this.deleteKino(k);
-			}
-		}
-
-		this.kinoketteMapper.delete(kk);
-
-	}
 	
-	
-
 	/*
 	 * ***************************************************************************
 	 * ABSCHNITT, Beginn: Methoden für Spielzeit-Objekte
@@ -232,16 +252,18 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 	
 	
 	/**
-	   * Auslesen sämtliche Spielzeiten dieses Systems.
-	   */
+	 * Auslesen sämtliche Spielzeiten dieses Systems.
+	 */
 	
 	public Vector<Spielzeit> getAllSpielzeiten() throws IllegalArgumentException {
-	    return this.spielzeitMapper.findAllSpielzeit();
-	  }
+		return this.spielzeitMapper.findAllSpielzeit();
+	}
 
 	
-	
-	
+	/**
+	 * Hinzfügen einer Spielzeit
+	 */
+
 	public Spielzeit createSpielzeit(Spielzeit spielzeit) throws IllegalArgumentException {
 
 		// Objekt in der DB speichern.
@@ -249,4 +271,65 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 
 	}
 
+	
+	
+	
+
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Beginn: Methoden für Spielplan-Objekte
+	 * ***************************************************************************
+	 */
+	
+	
+	/**
+	 * Auslesen sämtliche Spielpläne dieses Systems.
+	 */
+	
+	public Vector<Spielplan> getAllSpielplaene() throws IllegalArgumentException {
+		return this.spielplanMapper.findAllSpielplan();
+	}
+
+	
+	
+	/**
+	 * Löschen eines Spielplans
+	 */
+	
+	public void deleteSpielplan(Spielplan spielplan) throws IllegalArgumentException {
+
+		this.spielplanMapper.delete(spielplan);
+
+	}
+	
+	public void editSpielplan(Kino kino) throws IllegalArgumentException {
+
+		Spielplan spielplan = spielplanMapper.findByKino(kino);
+		this.spielplanMapper.update(spielplan);
+	}
+	
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Beginn: Methoden für Nutzer-Objekte
+	 * ***************************************************************************
+	 */
+	
+	
+	/**
+	 * Bearbeiten des Nutzers
+	 * 
+	 * @param nutzer
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
+
+	public Nutzer editNutzer(Nutzer nutzer) throws IllegalArgumentException {
+		return this.nutzerMapper.update(nutzer);
+	}
+
+//	public Spielplan showSpielplanOfKino(Kino kino) throws IllegalArgumentException {
+//		
+//		Spielplan spielplan = spielplanMapper.findByKino(kino);
+//		
+//	}
 }

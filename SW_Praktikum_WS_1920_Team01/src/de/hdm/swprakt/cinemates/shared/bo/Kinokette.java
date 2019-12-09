@@ -26,7 +26,6 @@ public class Kinokette extends OwnedBusinessObject {
 	  */
 	 
 	 private String kinokettenname;
-
 	
 	/**
 	 * Auslesen der Kinobeschreibung

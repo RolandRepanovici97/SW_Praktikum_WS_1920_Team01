@@ -55,17 +55,8 @@ public interface KinoAdministration extends RemoteService {
  * @throws IllegalArgumentException
  */
 	public Film createFilm(String filmtitel,String beschreibung, String details) throws IllegalArgumentException;
-//
-//
-///**
-// * Abschnitt aller create-Methoden
-// * Erstellen des uebergebenen Gruppe-Objekts
-// * @param gruppe Gruppe-Objekt, welches in der Datenbank erstellt werden soll
-// * @throws IllegalArgumentException
-// */
-//public void create(Gruppe gruppe) throws IllegalArgumentException;
-//
-//
+
+
 ///**
 // * Abschnitt aller create-Methoden
 // * Erstellen des uebergebenen Kinokette-Objekts
@@ -73,7 +64,7 @@ public interface KinoAdministration extends RemoteService {
 // * @throws IllegalArgumentException
 // */
 
-	public Kinokette createKinokette(String kinokettenname,String beschreibung ) throws IllegalArgumentException;
+	//public Kinokette createKinokette(String kinokettenname,String beschreibung ) throws IllegalArgumentException;
 //
 ///**
 // * Abschnitt aller create-Methoden
@@ -82,22 +73,14 @@ public interface KinoAdministration extends RemoteService {
 // * @throws IllegalArgumentException
 // */
 	public Kino createKino(String kinoname,String adresse,String beschreibung) throws IllegalArgumentException;
-//
-///**
-// * Abschnitt aller create-Methoden
-// * Erstellen des uebergebenen Nutzer-Objekts
-// * @param nutzer Nutzer-Objekt, welches in der Datenbank erstellt werden soll
-// * @throws IllegalArgumentException
-// */
-//public void create(Nutzer Nutzer) throws IllegalArgumentException;
-//
+
 ///**
 // * Abschnitt aller create-Methoden
 // * Erstellen des uebergebenen Spielplan-Objekts
 // * @param spielplan Spielplan-Objekt, welches in der Datenbank erstellt werden soll
 // * @throws IllegalArgumentException
 // */
-//public void create(Spielplan spielplan) throws IllegalArgumentException;
+//public void createSpielplan(Spielplan spielplan) throws IllegalArgumentException;
 //
 //
 ///**
@@ -106,10 +89,11 @@ public interface KinoAdministration extends RemoteService {
 // * @param spielzeit Spielzeit-Objekt, welches in der Datenbank erstellt werden soll
 // * @throws IllegalArgumentException
 // */
-//public void create(Spielzeit spielzeit) throws IllegalArgumentException;
-//
-//
-//
+//	public Spielzeit createSpielzeit(String kinoname, String adresse, String beschreibung) throws IllegalArgumentException;
+
+	
+	
+	
 ///**
 // * Abschnitt aller save/update-Methoden (Ömer)
 // */
@@ -121,15 +105,8 @@ public interface KinoAdministration extends RemoteService {
 // * @param film Film-Objekt, welches in der Datenbank gespeichert werden soll
 // * @throws IllegalArgumentException
 // */
-//public void save(Film film)  throws IllegalArgumentException;
-//
-///**
-// * Abschnitt aller save/update-Methoden
-// * Speichern des uebergebenen Gruppen-Objekts
-// * @param gruppe Gruppe-Objekt, welches in der Datenbank gespeichert werden soll
-// * @throws IllegalArgumentException
-// */
-//public void save(Gruppe gruppe) throws IllegalArgumentException;
+	public Film editFilm(Film film)  throws IllegalArgumentException;
+
 //
 ///**
 // * Abschnitt aller save/update-Methoden
@@ -137,7 +114,7 @@ public interface KinoAdministration extends RemoteService {
 // * @param kinokette Kinokette-Objekt, welches in der Datenbank gespeichert werden soll
 // * @throws IllegalArgumentException
 // */
-//public void save(Kinokette kinokette) throws IllegalArgumentException;
+//public void editKinokette(Kinokette kinokette) throws IllegalArgumentException;
 //
 //
 ///**
@@ -155,16 +132,16 @@ public interface KinoAdministration extends RemoteService {
 // * @param nutzer Nutzer-Objekt, welches in der Datenbank gespeichert werden soll
 // * @throws IllegalArgumentException
 // */
-//public void save(Nutzer nutzer) throws IllegalArgumentException;
+	public Nutzer editNutzer(Nutzer nutzer) throws IllegalArgumentException;
 //
 //
 ///**
-// * Abschnitt aller save/update-Methoden
+// * Abschnitt aller save/edit-Methoden
 // * Speichern des uebergebenen Spielplan-Objekts
 // * @param spielplan Spielplan-Objekt, welches in der Datenbank gespeichert werden soll
 // * @throws IllegalArgumentException
 // */
-//public void save(Spielplan spielplan) throws IllegalArgumentException;
+	public void editSpielplan(Spielplan spielplan) throws IllegalArgumentException;
 //
 ///**
 // * Abschnitt aller save/update-Methoden
@@ -172,7 +149,8 @@ public interface KinoAdministration extends RemoteService {
 // * @param spielzeit Spielzeit-Objekt, welches in der Datenbank gespeichert werden soll
 // * @throws IllegalArgumentException
 // */
-//public void save(Spielzeit spielzeit) throws IllegalArgumentException;
+	public void editSpielzeit(Spielzeit spielzeit) throws IllegalArgumentException;
+
 //
 ///**
 // * Abschnitt aller delete-Methoden
@@ -180,8 +158,9 @@ public interface KinoAdministration extends RemoteService {
 // * @param film Film-Objekt, welches in der Datenbank geloescht werden soll
 // * @throws IllegalArgumentException
 // */
-//public void delete(Film film) throws IllegalArgumentException;
-//
+	
+	public void deleteFilm(Film film) throws IllegalArgumentException;
+
 ///**
 // * Loeschen des uebergebenen Gruppen-Objekts
 // * @param gruppe Gruppe-Objekt, welches in der Datenbank geloescht werden soll
@@ -201,22 +180,18 @@ public interface KinoAdministration extends RemoteService {
 // * @param kino Kino-Objekt, welches in der Datenbank geloescht werden soll
 // * @throws IllegalArgumentException
 // */
-//public void delete(Kino kino) throws IllegalArgumentException;
-//
-///**
-// * Loeschen des uebergebenen Nutzer-Objekts
-// * @param nutzer Nutzer-Objekt, welches in der Datenbank geloescht werden soll
-// * @throws IllegalArgumentException
-// */
-//public void delete(Nutzer nutzer) throws IllegalArgumentException;
-//
+	public void deleteKino(Kino kino) throws IllegalArgumentException;
+
+	
+
 ///**
 // * Loeschen des uebergebenen Spielplan-Objekts
 // * @param nutzer Spielplan-Objekt, welches in der Datenbank geloescht werden soll
 // * @throws IllegalArgumentException
 // */
-//public void delete(Spielplan spielplan) throws IllegalArgumentException;
-//
+	public void deleteSpielplan(Spielplan spielplan) throws IllegalArgumentException;
+	
+	
 ///**
 // * Loeschen des uebergebenen Spielzeit-Objekts
 // * @param nutzer Spielzeit-Objekt, welches in der Datenbank geloescht werden soll
@@ -224,26 +199,8 @@ public interface KinoAdministration extends RemoteService {
 // */
 //public void delete(Spielzeit spielzeit) throws IllegalArgumentException;
 //
-///**
-// * Loeschen des uebergebenen Umfrageeintrag-Objekts
-// * @param umfrageeintrag Umfrageeintrag-Objekt, welches in der Datenbank geloescht werden soll
-// * @throws IllegalArgumentException
-// */
-//public void delete(Umfrageeintrag umfrageeintrag) throws IllegalArgumentException;
-//
-///**
-// * Loeschen des uebergebenen Umfrage-Objekts
-// * @param umfrage Umfrageeintrag-Objekt, welches in der Datenbank geloescht werden soll
-// * @throws IllegalArgumentException
-// */
-//public void delete(Umfrage umfrage) throws IllegalArgumentException;
-//
-///**
-// * Loeschen des uebergebenen Votum-Objekts
-// * @param votum Votum-Objekt, welches in der Datenbank geloescht werden soll
-// * @throws IllegalArgumentException
-// */
-//public void delete(Votum votum) throws IllegalArgumentException;
+
+
 //
 ///**
 // * Saemtliche filme eines Film-Objekts ausgeben
@@ -251,24 +208,10 @@ public interface KinoAdministration extends RemoteService {
 // * @return ArrayList saemtlicher Filme
 // * @throws IllegalArgumentException
 // */
-//public ArrayList<Film> findAllFilm(Film film) throws IllegalArgumentException;
+	public Vector<Film> getAllFilme() throws IllegalArgumentException;
 //
-///**
-// * Saemtliche Gruppen eines Nutzer-Objekts ausgeben
-// * @param nutzer Nutzer, dessen Gruppen angezeigt werden sollen
-// * @return ArrayList saemtlicher Gruppen eines Nutzers
-// * @throws IllegalArgumentException
-// */
-//public ArrayList<Gruppe> getGruppenOf(Nutzer nutzer) throws IllegalArgumentException;
-//
-///**
-// * Saemtliche Gruppen eines Umfrage-Objekts ausgeben
-// * @param umfrage Umfrage, dessen Gruppen angezeigt werden sollen
-// * @return ArrayList saemtlicher Gruppen einer Umfrage
-// * @throws IllegalArgumentException
-// */
-//public Vector<Gruppe> getGruppenOf (Umfrage umfrage) throws IllegalArgumentException;
-//
+
+
 ///**
 // * Saemtliche kinoketten eines Kinokette-Objekts ausgeben
 // * @param kinokette Kinokette, dessen kinoketten angezeigt werden sollen
@@ -299,7 +242,7 @@ public interface KinoAdministration extends RemoteService {
 // * @return ArrayList saemtliche Spielpläne
 // * @throws IllegalArgumentException
 // */
-//public Vector<Spielplan> findAllSpielplan() throws IllegalArgumentException;
+	public Vector<Spielplan> findAllSpielplan() throws IllegalArgumentException;
 //
 ///**
 // * Saemtliche spielzeiten eines Spielzeit-Objekts ausgeben
@@ -340,18 +283,11 @@ public interface KinoAdministration extends RemoteService {
 // * @throws IllegalArgumentException
 // */
 //public Vector<Umfrage> findAllUmfrage() throws IllegalArgumentException;
-//
-///**
-// * Saemtliche votums eines Votum-Objekts ausgeben
-// * @param votum Votum
-// * @return ArrayList saemtlicher votums
-// * @throws IllegalArgumentException
-// */
-//public Vector <Votum> findAllVotum()throws IllegalArgumentException;
-//
-//
-//
-//
+
+
+	
+	
+	
 ///**
 // * Rueckgabe eines bestimmten Film-Objekts
 // * @param id ID des gesuchten Films
@@ -400,6 +336,12 @@ public interface KinoAdministration extends RemoteService {
 // */
 //public Spielplan findSpielplanByID(int id) throws IllegalArgumentException;
 //
+	
+	
+	
+	
+	
+	
 ///**
 // * Rueckgabe eines bestimmten Spielzeit-Objekts
 // * @param id ID der gesuchten Spielzeit
@@ -407,28 +349,8 @@ public interface KinoAdministration extends RemoteService {
 // * @throws IllegalArgumentException
 // */
 //public Spielzeit findSpielzeitByID(int id)throws IllegalArgumentException;
-//
-///**
-// * Rueckgabe eines bestimmten Umfrageeintrag-Objekts
-// * @param id ID der gesuchten Umfrage
-// * @return Das erste Umfrage-Objekt, welches den Suchkriterien entspricht
-// * @throws IllegalArgumentException
-// */
-//public Umfrageeintrag findUmfrageeintragByID(int id) throws IllegalArgumentException;
-//
-///**
-// * Rueckgabe eines bestimmten Umfrage-Objekts
-// * @param id ID der gesuchten Umfrage
-// * @return Das erste Umfrage-Objekt, welches den Suchkriterien entspricht
-// * @throws IllegalArgumentException
-// */
-//public Umfrage findUmfrageByID(int id)throws IllegalArgumentException;
-//
-///**
-// * Rueckgabe eines bestimmten Votum-Objekts
-// * @param id ID des gesuchten Votums
-// * @return Das erste Votum-Objekt, welches den Suchkriterien entspricht
-// * @throws IllegalArgumentException
-// */
-//public Votum findVotumByID(int id)throws IllegalArgumentException;
+
+
+
+
 }

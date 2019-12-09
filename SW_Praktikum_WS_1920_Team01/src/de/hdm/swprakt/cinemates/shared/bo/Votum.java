@@ -34,7 +34,7 @@ public class Votum extends OwnedBusinessObject{
 	 Das Attribut wird später zur Ermittlung des optimalen Termins innerhalb einer <code> Umfrage </code> benötigt. 
 	 */
 
-	private boolean istMöglicherTermin;
+	private Boolean istMöglicherTermin;
 
 
 	/*default Konstruktor 
@@ -71,7 +71,7 @@ public class Votum extends OwnedBusinessObject{
 	 * Auslesen des Attributs istMöglicherTermin
 	 * @return the istMöglicherTermin
 	 */
-	public boolean getIstMöglicherTermin() {
+	public Boolean getIstMöglicherTermin() {
 		return istMöglicherTermin;
 	}
 
@@ -79,7 +79,7 @@ public class Votum extends OwnedBusinessObject{
 	 * Setzen des Attributs istMöglicherTermin
 	 * @param istMöglicherTermin the istMöglicherTermin to set
 	 */
-	public void setIstMöglicherTermin(boolean istMöglicherTermin) {
+	public void setIstMöglicherTermin(Boolean istMöglicherTermin) {
 		this.istMöglicherTermin = istMöglicherTermin;
 	}
 	

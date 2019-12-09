@@ -195,10 +195,9 @@ public class UmfrageMapper extends OwnedBusinessObjectMapper {
 
 		try {
 
-			PreparedStatement pstmt = con.prepareStatement("UPDATE 'umfrage' SET 'beschreibung' = ? 'umfragename' = ? WHERE ('umfrageeintrag_id' = ?)");
+			PreparedStatement pstmt = con.prepareStatement("UPDATE 'umfrage' SET 'beschreibung' = ? 'umfragename' = ? WHERE ('umfrageeintrag_id =" + umfrage.getID());
 			pstmt.setString(1, umfrage.getBeschreibung());
 			pstmt.setString(2, umfrage.getUmfragenname());
-			pstmt.setInt(5,  umfrage.getFilmID());
 			pstmt.executeUpdate();
 			return umfrage;
 

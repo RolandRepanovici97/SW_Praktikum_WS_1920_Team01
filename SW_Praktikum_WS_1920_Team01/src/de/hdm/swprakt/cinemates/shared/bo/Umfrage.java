@@ -31,7 +31,7 @@ public class Umfrage extends OwnedBusinessObject {
 	private String beschreibung;
 
 	/**
-	 * Der Name des Umfrages
+	 * Der Name der Umfrage
 	 */
 	private String umfragenname;
 	

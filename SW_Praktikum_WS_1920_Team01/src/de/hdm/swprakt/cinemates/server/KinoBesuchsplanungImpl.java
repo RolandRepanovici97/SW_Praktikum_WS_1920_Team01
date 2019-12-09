@@ -73,6 +73,13 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 		this.administration = kinoAdministrationImpl;
 	}
 
+
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Beginn: Methoden für Nutzer-Objekte
+	 * ***************************************************************************
+	 */
+
 	/**
 	 * Diese Methode...
 	 */
@@ -143,7 +150,11 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 
 
 
-
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Beginn: Methoden für Umfrage-Objekte
+	 * ***************************************************************************
+	 */
 
 
 
@@ -156,6 +167,7 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 
 		Umfrage umfrage = new Umfrage();
 		umfrage.setUmfragenname(umfragenname);
+		umfrageMapper.insert(umfrage);
 
 		return umfrage;
 
@@ -166,6 +178,168 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 * @author alina
 	 */
 
+	public Vector <Votum> showVotumOfUmfrageeintrag(Umfrageeintrag umfrageeintrag) {
+		return this.votumMapper.findVotumByUmfrageeintrag(umfrageeintrag);
 
-	
+	}
+
+
+	/**Diese Methode wird aufgerufen, wenn eine Umfrage bearbeitet wird. Hier kann der Name und die Beschreibung geändert werden.
+	 * Es wird die zu bearbeitende Umfrage übergeben. Diese wird in der DB gesucht und entsprechend geändert.
+	 * 
+	 * @author alina
+	 */
+
+	public Umfrage editUmfrage(Umfrage umfrage, String umfragenname, String beschreibung) { 
+		int umfrageID= umfrage.getID();
+		Umfrage dbumfrage = umfrageMapper.findByID(umfrageID);
+		umfrage.setUmfragenname(umfragenname);
+		umfrage.setBeschreibung(beschreibung);
+		umfrageMapper.update(dbumfrage);
+
+		return umfrage;
+
+	}
+
+	/**Diese Methode wird aufgerufen, wenn eine Umfrage gelöscht wird.
+	 * Es wird die zu löschende Umfrage übergeben. Diese wird in der DB gesucht und dort entsprechend gelöscht.
+	 * 
+	 * @author alina
+	 */
+
+	public void deleteUmfrage(Umfrage umfrage) { 
+		int umfrageID= umfrage.getID();
+		Umfrage dbumfrage = umfrageMapper.findByID(umfrageID);
+		umfrageMapper.delete(dbumfrage);
+
+
+	}
+
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Beginn: Methoden für Votum und Umfrageeintrag -Objekte
+	 * ***************************************************************************
+	 */
+
+
+	/**Diese Methode wird aufgerufen, wenn ein Nutzer für einen Umfrageeintrag abstimmt, das heißt ein Votum abgibt. 
+	 * 
+	 * @author alina
+	 */
+	public Votum abstimmen(Umfrageeintrag umfrageeintrag, boolean istMöglicherTermin) {
+		Votum votum = new Votum();
+		votum.setUmfrageeintragID(umfrageeintrag.getID());
+		votum.setIstMöglicherTermin(istMöglicherTermin);
+		votumMapper.update(votum);
+		umfrageeintragMapper.update(umfrageeintrag);
+
+		return votum;
+
+	}
+
+	/**Diese Methode wird aufgerufen, wenn wir alle Umfrageeinträge und deren Vota anzeigen möchten. Wir übergeben eine Umfrage, deren Ergebnisse wir darstellen möchten.
+	 * Wir erhalten die Umfrageeinträge der Umfrage zurück. 
+	 * 
+	 * @author alina
+	 */
+	public Vector <Umfrageeintrag> umfrageergebnisseAnzeigen(Umfrage umfrage) {
+		// Zunächst erstellen wir einen leeren Vector
+		Vector <Umfrageeintrag> umfrageeinträge = new Vector <Umfrageeintrag>();
+		// In den folgenden drei Variablen positiv, negativ und egal wird die Anzahl der verschiedenen Vota auf einen Umfrageeintrag festgehalten.
+		int positiv = 0;
+		int negativ = 0;
+		int egal =  0;
+		//Nun suchen wir alle Umfrageeinträge der übergegebenen Umfrage
+		umfrageeinträge = umfrageeintragMapper.findByUmfrage(umfrage);
+		//Wir iterieren durch die Umfrageeinträge durch und suchen die Votum-Objekte
+		for (Umfrageeintrag eintrag: umfrageeinträge) {
+			//Diese speichern wir wieder in einem Vector
+			Vector <Votum> zwischenvector = votumMapper.findVotumByUmfrageeintrag(eintrag);
+			/** Wir iterieren durch den Vector mit Votum-Objekten und ermitteln jeweils, ob das Votum positiv, negativ oder neutral war.
+			 * Diese Ergebnisse speichern wir uns. Wir möchten die Ergebnisse neben dem jeweiligen Umfrageeintrag anzeigen. 
+			 * 
+			 * 
+			 */
+			for(Votum votum: zwischenvector) {
+				if(votum.getIstMöglicherTermin()== true) {
+					positiv +=1;
+
+				}
+				else if(votum.getIstMöglicherTermin() == false) {
+					negativ+=1;
+				}
+
+				else if(votum.getIstMöglicherTermin()==null) {
+					egal+=1;
+				}
+			}
+
+
+		}
+		return umfrageeinträge;
+	}
+
+	/**Diese Methode wird aufgerufen, wenn wir den bestmöglichen Termin einer Umfrage anzeigen möchten. Wir übergeben eine Umfrage, deren Ergebnisse wir darstellen möchten.
+	 * Wir erhalten den bestmöglichen Termin zurück. 
+	 * 
+	 * @author alina
+	 */
+	public Umfrageeintrag bestesErgebnisErmitteln(Umfrage umfrage) {
+
+		// Zunächst erstellen wir einen leeren Vector
+		Vector <Umfrageeintrag> umfrageeinträge = new Vector <Umfrageeintrag>();
+
+		// In den folgenden drei Variablen positiv, negativ und egal wird die Anzahl der verschiedenen Vota auf einen Umfrageeintrag festgehalten.
+		int positiv = 0;
+		int negativ = 0;
+		int egal =  0;
+
+		//Nun suchen wir alle Umfrageeinträge der übergegebenen Umfrage
+
+		umfrageeinträge = umfrageeintragMapper.findByUmfrage(umfrage);
+
+		//Wir iterieren durch die Umfrageeinträge durch und suchen die Votum-Objekte
+		for (Umfrageeintrag eintrag: umfrageeinträge) {
+
+			//Diese speichern wir wieder in einem Vector
+			Vector <Votum> zwischenvector = votumMapper.findVotumByUmfrageeintrag(eintrag);
+
+			/** Wir iterieren durch den Vector mit Votum-Objekten und ermitteln jeweils, ob das Votum positiv, negativ oder neutral war.
+			 * Diese Ergebnisse speichern wir uns. Wir möchten die Ergebnisse neben dem jeweiligen Umfrageeintrag anzeigen. 
+			 * 
+			 * 
+			 */
+			for(Votum votum: zwischenvector) {
+				if(votum.getIstMöglicherTermin()== true) {
+					positiv +=1;
+					eintrag.setPositiveAbstimmungen(positiv);
+
+				}
+				else if(votum.getIstMöglicherTermin() == false) {
+					negativ+=1;
+				}
+
+				else if(votum.getIstMöglicherTermin()==null) {
+					egal+=1;
+				}
+			}
+			for (Umfrageeintrag eintrag2: umfrageeinträge) {
+				Integer abst= eintrag2.getPositiveAbstimmungen();
+				Vector <Integer> einträge = new Vector<Integer>();
+				einträge.add(abst);
+				int max = 0;
+				for(int i = 0; i < einträge.length(); i++) {
+					if(einträge[0] > max)
+						max = einträge[i];
+				}
+				return max;
+
+
+			}
+
+
+		}
+
+	}
+
 }

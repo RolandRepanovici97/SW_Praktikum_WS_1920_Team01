@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 package de.hdm.swprakt.cinemates.client.gui;
 
 import com.google.gwt.user.client.ui.Button;
@@ -77,5 +77,3 @@ public class FilmForm extends VerticalPanel{
 	}
 	
 	}
-
->>>>>>> branch 'master' of https://github.com/alinahafner/SW_Praktikum_WS_1920_Team01.git

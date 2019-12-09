@@ -1,4 +1,4 @@
-/**
+q/**
  * 
  */
 package de.hdm.swprakt.cinemates.server.db;
@@ -169,7 +169,7 @@ public class UmfrageeintragMapper {
 			while (rs.next()) {
 				/** Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt.  Dazu wird ein Objekt der Klasse <code>Umfrageeintrag</code> angelegt und dessen Attribute werden gesetzt. 
 				Dies wird wiederholt. Das Ergebnis wird jeweils einem Vector hinzugefügt, welchen wir am Ende zurückgeben.
-				*/
+				 */
 				Umfrageeintrag umfrageeintrag = new Umfrageeintrag();
 				umfrageeintrag.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 				umfrageeintrag.setID(rs.getInt("umfrageeintrag_id"));
@@ -178,7 +178,7 @@ public class UmfrageeintragMapper {
 				umfrageeintrag.setSpielzeitID(rs.getInt("spielzeit_id"));
 				vectorumfrageeintrag.add(umfrageeintrag);
 
-				
+
 			}
 		}
 		catch (SQLException e) {
@@ -242,39 +242,39 @@ public class UmfrageeintragMapper {
 
 		//Verbindung zur Datenbank aufbauen.
 
-				Connection con = DBConnection.connection();
-				//Neuen Vector instantiieren, in welchem Umfrageeintrag-Objekte gespeichert werden.
+		Connection con = DBConnection.connection();
+		//Neuen Vector instantiieren, in welchem Umfrageeintrag-Objekte gespeichert werden.
 
-				Vector <Umfrageeintrag> vectorumfrageeintrag = new Vector <Umfrageeintrag>();
-				try {
+		Vector <Umfrageeintrag> vectorumfrageeintrag = new Vector <Umfrageeintrag>();
+		try {
 
 
-					// Leeres SQL-Statement (JDBC) anlegen
-					Statement stmt = con.createStatement();
-					ResultSet rs = stmt.executeQuery("SELECT * FROM `umfrageeintrag` WHERE (`kino_id` =" + kino.getID() + " )ORDER BY `umfrageeintrag_id`");
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `umfrageeintrag` WHERE (`kino_id` =" + kino.getID() + " )ORDER BY `umfrageeintrag_id`");
 
-					/* Befüllen des result sets
-					 */
-					while (rs.next()) {
-						/** Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt.  Dazu wird ein Objekt der Klasse <code>Umfrageeintrag</code> angelegt und dessen Attribute werden gesetzt. 
+			/* Befüllen des result sets
+			 */
+			while (rs.next()) {
+				/** Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt.  Dazu wird ein Objekt der Klasse <code>Umfrageeintrag</code> angelegt und dessen Attribute werden gesetzt. 
 						Dies wird wiederholt. Das Ergebnis wird jeweils einem Vector hinzugefügt, welchen wir am Ende zurückgeben.
-						*/
-						
-						Umfrageeintrag umfrageeintrag = new Umfrageeintrag();
-						umfrageeintrag.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
-						umfrageeintrag.setID(rs.getInt("umfrageeintrag_id"));
-						umfrageeintrag.setKinoID(rs.getInt("kino_id"));
-						umfrageeintrag.setUmfrageID(rs.getInt("umfrage_id"));
-						umfrageeintrag.setSpielzeitID(rs.getInt("spielzeit_id"));
-						vectorumfrageeintrag.add(umfrageeintrag);
+				 */
 
-					}
-				}
-				catch (SQLException e) {
-					e.printStackTrace();
-				}
+				Umfrageeintrag umfrageeintrag = new Umfrageeintrag();
+				umfrageeintrag.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+				umfrageeintrag.setID(rs.getInt("umfrageeintrag_id"));
+				umfrageeintrag.setKinoID(rs.getInt("kino_id"));
+				umfrageeintrag.setUmfrageID(rs.getInt("umfrage_id"));
+				umfrageeintrag.setSpielzeitID(rs.getInt("spielzeit_id"));
+				vectorumfrageeintrag.add(umfrageeintrag);
 
-				return vectorumfrageeintrag;
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return vectorumfrageeintrag;
 	}
 	/**
 	 * Einfügen eines Umfrageeintrags in die Datenbank.
@@ -367,5 +367,36 @@ public class UmfrageeintragMapper {
 		}
 
 
+	}
+	public Vector <Umfrageeintrag> findUmfrageeintragOhneVotum (Nutzer nutzer) {
+
+		//Verbindung zur Datenbank aufbauen.
+
+		Connection con = DBConnection.connection();
+		Vector <Umfrageeintrag> vectorumfrageeintrag = new Vector <Umfrageeintrag>();
+		try {
+
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM umfrageeintrag JOIN votum WHERE (`votum_id` = NULL AND votum.nutzer_id = " + nutzer.getID() + "ORDER BY umfrageeintrag_id");
+			while (rs.next()) {
+				/** Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt.  Dazu wird ein Objekt der Klasse <code>Umfrageeintrag</code> angelegt und dessen Attribute werden gesetzt. 
+						Dies wird wiederholt. Das Ergebnis wird jeweils einem Vector hinzugefügt, welchen wir am Ende zurückgeben.
+				 */
+
+				Umfrageeintrag umfrageeintrag = new Umfrageeintrag();
+				umfrageeintrag.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+				umfrageeintrag.setID(rs.getInt("umfrageeintrag_id"));
+				umfrageeintrag.setKinoID(rs.getInt("kino_id"));
+				umfrageeintrag.setUmfrageID(rs.getInt("umfrage_id"));
+				umfrageeintrag.setSpielzeitID(rs.getInt("spielzeit_id"));
+				vectorumfrageeintrag.add(umfrageeintrag);
+				return vectorumfrageeintrag;
+			}}
+
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

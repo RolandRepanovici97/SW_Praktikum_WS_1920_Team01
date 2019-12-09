@@ -3,6 +3,10 @@
  */
 package de.hdm.swprakt.cinemates.server;
 
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Vector;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.swprakt.cinemates.server.db.GruppeMapper;
@@ -15,7 +19,9 @@ import de.hdm.swprakt.cinemates.shared.KinoAdministration;
 import de.hdm.swprakt.cinemates.shared.KinoBesuchsplanung;
 import de.hdm.swprakt.cinemates.shared.bo.Gruppe;
 import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
-
+import de.hdm.swprakt.cinemates.shared.bo.Umfrage;
+import de.hdm.swprakt.cinemates.shared.bo.Umfrageeintrag;
+import de.hdm.swprakt.cinemates.shared.bo.Votum;
 /**
  * Diese Klasse stellt die Implementierungsklasse des Interface {@link KinoBesuchsplanung} dar. 
  * Sie beinhaltet die komplette Applikationslogik, welche zur Planung eines Kinobesuchs benötigt wird. 
@@ -99,7 +105,65 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 		return gruppe;
 	}
 
+	public Vector <Umfrage> showAllUmfrage() {
 
 
+	}
+
+	/*
+	 * @author alina
+	 */
+
+
+	public Umfrage showAllNewUmfrage(Nutzer n) {
+
+		Vector <Umfrage> ergenisvector = new Vector <Umfrage>();
+		Vector <Gruppe> gruppevector = gruppeMapper.getGruppenOf(n);
+		for(Gruppe g: gruppevector) {
+			Umfrage u = umfrageMapper.findByGruppename(g.getGruppenname());
+			Vector <Integer> ueid= u.getUmfrageeinträgeIDs();
+			Iterator iterate_value = ueid.iterator();
+			Vector <Integer> intwerte = new Vector <Integer>();
+			intwerte.addAll((Collection<? extends Integer>) iterate_value);		
+			Vector <Umfrageeintrag> ueeintrag = new Vector <Umfrageeintrag>();
+			for(Integer i: intwerte) {
+				ueeintrag.add(i);
+
+
+			}
+			for(Umfrageeintrag umfrageeintrag: ueid) {
+				Vector <Votum> votumvector = votumMapper.findVotumByUmfrageeintrag(umfrageeintrag);
+
+
+
+
+
+
+
+
+
+
+
+
+			}
+			/**Diese Methode wird aufgerufen, wenn eine neue Umfrage erstellt wird. Es wird hier lediglich der Umfragenname übergeben, da wir diesen benötigen um ein
+			 * Umfrageeobjekt initial lebensfähig zu machen. Alle anderen Attribute können wir später vergeben.
+			 * @author alina
+			 */
+		
+
+		}
+
+		public Umfrage createUmfrage(String umfragenname) { 
+
+		Umfrage umfrage = new Umfrage();
+		umfrage.setUmfragenname(umfragenname);
+		
+		return umfrage;
+
+
+
+
+}
 
 }

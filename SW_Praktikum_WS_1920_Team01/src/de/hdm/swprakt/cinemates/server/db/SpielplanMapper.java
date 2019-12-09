@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.Vector;
 
 import de.hdm.swprakt.cinemates.shared.bo.Film;
+import de.hdm.swprakt.cinemates.shared.bo.Kino;
 import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 import de.hdm.swprakt.cinemates.shared.bo.OwnedBusinessObject;
 import de.hdm.swprakt.cinemates.shared.bo.Spielplan;
@@ -250,4 +251,33 @@ public class SpielplanMapper extends OwnedBusinessObjectMapper {
 		
 		return bo_id;
 	}
+
+	public Spielplan findByKino(Kino kino) {
+
+		Connection con = DBConnection.connection();
+
+		try {
+
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `spielplan` WHERE kino_id = " + kino.getID());
+
+			if (rs.next()) {
+				Spielplan sp = new Spielplan();
+				sp.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+				sp.setID(rs.getInt("spielplan_id"));
+				sp.setOwnerID(rs.getInt("owner_id"));
+				sp.setSpielplanname(rs.getString("Spielplanname"));
+
+				return sp;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+
+	}
+	
+	
+
 }

@@ -201,14 +201,14 @@ public class KinoMapper {
  * Suchen eines Kinos innerhalb des Spielplans
  */
 
-		public Vector<Kino> findBySpielplan (Spielplan spielplanID){
+		public Kino findBySpielplan (Spielplan spielplan){
 			
 			Connection con = DBConnection.connection();
-			Vector<Kino> kino = new Vector<Kino>();
+			
 			try {
 				
 				Statement stmt = con.createStatement();
-				ResultSet rs = stmt.executeQuery("SELECT * from `kino` WHERE (`spielplan_id` = " + spielplanID.getID() + ")");
+				ResultSet rs = stmt.executeQuery("SELECT * from `kino` WHERE (`spielplan_id` = " + spielplan.getID() + ")");
 				
 				while (rs.next()) {
 					Kino k = new Kino();
@@ -219,14 +219,14 @@ public class KinoMapper {
 					k.setKinoname(rs.getString("Kinoname"));
 					k.setAdresse(rs.getString("Adresse")); 
 					k.setBeschreibung(rs.getString("Beschreibung"));
-					kino.add(k);
+					return k;
 				}
 			}
 			catch(SQLException e) {
 				e.printStackTrace();
 			}
 			
-			return kino;	
+				return null;
 		}
 		
 /**

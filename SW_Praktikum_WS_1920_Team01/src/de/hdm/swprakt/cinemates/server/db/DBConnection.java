@@ -11,7 +11,7 @@ public class DBConnection {
 
    
 //    private static String googleUrl = "";
-    private static String localUrl = "jdbc:mysql://" + "localhost" + ":" + "3306" + "/" + "CineMates" + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Europe/Berlin";
+    private static String localUrl = "jdbc:mysql://" + "localhost" + ":" + "3306" + "/" + "cinemates" + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Europe/Berlin";
 
     
     public static Connection connection() {
@@ -41,7 +41,7 @@ public class DBConnection {
                  * Diese Verbindung wird dann in der statischen Variable con
                  * abgespeichert und fortan verwendet.
                  */
-                con = DriverManager.getConnection(url, "root", "trabzonspor61");
+                con = DriverManager.getConnection(url, "root", "kayseri38.");
             } catch (Exception e) {
                 con = null;
                 e.printStackTrace();

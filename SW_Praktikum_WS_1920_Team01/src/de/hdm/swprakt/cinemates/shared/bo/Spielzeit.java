@@ -26,7 +26,7 @@ public class Spielzeit extends OwnedBusinessObject{
 	
 	private int filmID;
 	
-
+private int spielplanID;
 
 	public Date getZeitpunkt() {
 		return zeitpunkt;
@@ -89,6 +89,15 @@ public class Spielzeit extends OwnedBusinessObject{
 	@Override
 	public int hashCode() {
 		return super.getID();
+	}
+
+	public int getSpielplanID() {
+		// TODO Auto-generated method stub
+		return spielplanID;
+	}
+
+	public void setSpielplanID(int spielplanID) {
+		this.spielplanID = spielplanID;
 	}
 	
 }

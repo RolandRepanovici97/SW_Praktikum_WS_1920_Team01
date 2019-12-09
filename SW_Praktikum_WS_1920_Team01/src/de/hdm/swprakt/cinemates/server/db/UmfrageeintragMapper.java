@@ -1,4 +1,4 @@
-q/**
+/**
  * 
  */
 package de.hdm.swprakt.cinemates.server.db;

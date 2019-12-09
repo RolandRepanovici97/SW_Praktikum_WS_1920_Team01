@@ -115,29 +115,27 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 */
 
 
-	public Umfrage showAllNewUmfrage(Nutzer n) {
-
-		Vector <Umfrage> ergenisvector = new Vector <Umfrage>();
-		Vector <Gruppe> gruppevector = gruppeMapper.getGruppenOf(n);
-		for(Gruppe g: gruppevector) {
-			Umfrage u = umfrageMapper.findByGruppename(g.getGruppenname());
-			Vector <Integer> ueid= u.getUmfrageeinträgeIDs();
-			Iterator iterate_value = ueid.iterator();
-			Vector <Integer> intwerte = new Vector <Integer>();
-			intwerte.addAll((Collection<? extends Integer>) iterate_value);		
-			Vector <Umfrageeintrag> ueeintrag = new Vector <Umfrageeintrag>();
-			for(Integer i: intwerte) {
-				ueeintrag.add(i);
-
-
-			}
-			for(Umfrageeintrag umfrageeintrag: ueid) {
-				Vector <Votum> votumvector = votumMapper.findVotumByUmfrageeintrag(umfrageeintrag);
-
-
-
-
-
+	//	
+	//	public Umfrage showAllNewUmfrage(Nutzer n) {
+	//
+	//		Vector <Umfrage> ergenisvector = new Vector <Umfrage>();
+	//		Vector <Gruppe> gruppevector = gruppeMapper.getGruppenOf(n);
+	//		for(Gruppe g: gruppevector) {
+	//			Umfrage u = umfrageMapper.findByGruppename(g.getGruppenname());
+	//			Vector <Integer> ueid= u.getUmfrageeinträgeIDs();
+	//			Iterator iterate_value = ueid.iterator();
+	//			Vector <Integer> intwerte = new Vector <Integer>();
+	//			intwerte.addAll((Collection<? extends Integer>) iterate_value);		
+	//			Vector <Umfrageeintrag> ueeintrag = new Vector <Umfrageeintrag>();
+	//			for(Integer i: intwerte) {
+	//				ueeintrag.add(i);
+	//
+	//
+	//			}
+	//			for(Umfrageeintrag umfrageeintrag: ueid) {
+	//				Vector <Votum> votumvector = votumMapper.findVotumByUmfrageeintrag(umfrageeintrag);
+	//
+	//
 
 
 
@@ -145,25 +143,29 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 
 
 
-			}
-			/**Diese Methode wird aufgerufen, wenn eine neue Umfrage erstellt wird. Es wird hier lediglich der Umfragenname übergeben, da wir diesen benötigen um ein
-			 * Umfrageeobjekt initial lebensfähig zu machen. Alle anderen Attribute können wir später vergeben.
-			 * @author alina
-			 */
-		
 
-		}
 
-		public Umfrage createUmfrage(String umfragenname) { 
+
+
+	/**Diese Methode wird aufgerufen, wenn eine neue Umfrage erstellt wird. Es wird hier lediglich der Umfragenname übergeben, da wir diesen benötigen um ein
+	 * Umfrageeobjekt initial lebensfähig zu machen. Alle anderen Attribute können wir später vergeben.
+	 * @author alina
+	 */
+
+	public Umfrage createUmfrage(String umfragenname) { 
 
 		Umfrage umfrage = new Umfrage();
 		umfrage.setUmfragenname(umfragenname);
-		
+
 		return umfrage;
 
+	}
+
+	/**Diese Methode wird aufgerufen, wenn alle Vota zu einem Umfrageeintrag angezeigt werden sollen. Hierzu wird die Mapper Methode @link findVotumByUmfrageeintrag
+	 * aufgerufen, welche uns einen Vector von Objekten der Klasse <Votum> zurückgibt.
+	 * @author alina
+	 */
 
 
-
-}
-
+	
 }

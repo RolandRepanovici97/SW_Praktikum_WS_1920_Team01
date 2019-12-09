@@ -147,6 +147,9 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 	  
 	
 	
+	
+	
+	
 	/**
 	 * Löschen einer Kinokette
 	 */
@@ -171,19 +174,19 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 	 * Hinzufügen eines Kinos zur Kinokette
 	 */
 
-	public Kinokette addKinoToKinokette(String kinokettenname, String beschreibung) throws IllegalArgumentException {
-		Kinokette kk = new Kinokette();
-		kk.setKinokettenname(kinokettenname);
-		kk.setBeschreibung(beschreibung);
+	public Kino addKinoToKinokette(Kinokette kinokette) throws IllegalArgumentException {
+		Kino kino = new Kino(); 
+		kinoMapper.insert(kino);
+		kino.setKinoketteID(kinokette.getID());
 
 		/*
 		 * Setzen einer vorläufigen Kinokette Nr. Der insert-Aufruf liefert dann ein
 		 * Objekt, dessen Nummer mit der Datenbank konsistent ist.
 		 */
-		kk.setID(1);
+		kino.setID(1);
 
 		// Objekt in der DB speichern.
-		return this.kinoketteMapper.insert(kk);
+		return this.kinoMapper.insert(kino);
 		// Kinookettennummer wird hier richtig eingesetzt
 	}
 
@@ -299,8 +302,11 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 
 	}
 	
-	
-	
+	public void editSpielplan(Kino kino) throws IllegalArgumentException {
+
+		Spielplan spielplan = spielplanMapper.findByKino(kino);
+		this.spielplanMapper.update(spielplan);
+	}
 	
 	/*
 	 * ***************************************************************************
@@ -321,4 +327,9 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 		return this.nutzerMapper.update(nutzer);
 	}
 
+//	public Spielplan showSpielplanOfKino(Kino kino) throws IllegalArgumentException {
+//		
+//		Spielplan spielplan = spielplanMapper.findByKino(kino);
+//		
+//	}
 }

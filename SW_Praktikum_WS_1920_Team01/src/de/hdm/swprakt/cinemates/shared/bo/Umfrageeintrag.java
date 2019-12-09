@@ -48,6 +48,14 @@ public class Umfrageeintrag extends BusinessObject {
 	private int kinoID;
 
 
+	/**
+	 * Ein Umfrageeintrag benötigt eine Attribut, welches die Anzahl der positiven Abstimmungen festhält.
+	 */
+	
+	
+	private int positiveAbstimmungen;
+	
+	
 	/*default Konstruktor 
 	 */
 	public Umfrageeintrag() {
@@ -124,6 +132,22 @@ public class Umfrageeintrag extends BusinessObject {
 	@Override
 	public int hashCode() {
 		return super.getID();
+	}
+
+	/**
+	 * Auslesen des Attributs positiveAbstimmugen
+	 * @return the positiveAbstimmungen
+	 */
+	public int getPositiveAbstimmungen() {
+		return positiveAbstimmungen;
+	}
+
+	/**
+	 * Setzen des Attributs positiveAbstimmungen
+	 * @param positiveAbstimmungen the positiveAbstimmungen to set
+	 */
+	public void setPositiveAbstimmungen(int positiveAbstimmungen) {
+		this.positiveAbstimmungen = positiveAbstimmungen;
 	}
 
 }

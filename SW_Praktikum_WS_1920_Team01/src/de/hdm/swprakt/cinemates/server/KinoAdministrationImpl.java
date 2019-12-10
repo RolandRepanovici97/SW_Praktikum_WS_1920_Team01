@@ -263,15 +263,22 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 	/**
 	 * Hinzfügen einer Spielzeit
 	 */
-
-	public Spielzeit createSpielzeit(Spielzeit spielzeit) throws IllegalArgumentException {
-
-		// Objekt in der DB speichern.
-		return this.spielzeitMapper.insert(spielzeit);
-
-	}
-
-	
+//
+//	public Spielzeit createSpielzeit(Date ) throws IllegalArgumentException {
+//			
+//			Spielzeit sz = new Spielzeit();
+	//		sz..sz.
+			/*
+//			 * Setzen einer vorläufigen Filmnr. Der insert-Aufruf liefert dann ein Objekt,
+//			 * dessen Nummer mit der Datenbank konsistent ist.
+//			 */
+//			sz.setID(1);
+//
+//			// Objekt in der DB speichern.
+//			return this.spielzeitMapper.insert(sz);
+//			// Filmnummer wird hier richtig eingesetzt
+//		}
+//	
 	
 	
 
@@ -286,7 +293,7 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 	 * Auslesen sämtliche Spielpläne dieses Systems.
 	 */
 	
-	public Vector<Spielplan> getAllSpielplaene() throws IllegalArgumentException {
+	public Vector<Spielplan> getAllSpielplan() throws IllegalArgumentException {
 		return this.spielplanMapper.findAllSpielplan();
 	}
 
@@ -332,4 +339,6 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 //		Spielplan spielplan = spielplanMapper.findByKino(kino);
 //		
 //	}
+	
+	
 }

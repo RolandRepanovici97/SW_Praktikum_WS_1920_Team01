@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> branch 'master' of https://github.com/alinahafner/SW_Praktikum_WS_1920_Team01.git
 package de.hdm.swprakt.cinemates.client.gui;
 
 
@@ -46,5 +50,8 @@ public class FilmForm extends VerticalPanel{
 	}
 	
 	}
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> branch 'master' of https://github.com/alinahafner/SW_Praktikum_WS_1920_Team01.git

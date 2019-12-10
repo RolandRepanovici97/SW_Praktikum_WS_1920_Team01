@@ -2,6 +2,7 @@ package de.hdm.swprakt.cinemates.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -12,11 +13,16 @@ public class NavigatorfürKinoAdministration extends VerticalPanel{
 	
 	private ListBox kinoverwaltung;
 	private ListBox spielplanverwaltung;
-	private ListBox filmhinzufügen;
+	
+	private Button kinoAnlegen;
+	
+	
 	
 	private KinoverwaltungForm kf;
 	private FilmForm ff;
 	private SpielplanForm sf;
+	private KinoketteForm kkf;
+
 	
 public void onLoad() {
 	
@@ -24,13 +30,14 @@ public void onLoad() {
 	
 	kinoverwaltung = new ListBox(false);
 	kinoverwaltung.addClickHandler(new ShowKinoverwaltungForm());
+	kinoverwaltung.addClickHandler(new ShowKinoketteForm());
 	kinoverwaltung.addItem("Kinoverwaltung");
 	kinoverwaltung.addItem("- Kino anlegen");
 	kinoverwaltung.addItem("- Kinokette anzeigen");
 	kinoverwaltung.setVisibleItemCount(3);
 	this.add(kinoverwaltung);
 	
-//ClickHandler in Bearbeitung
+
 	
 	spielplanverwaltung = new ListBox(false);
 	spielplanverwaltung.addItem("Spielplanverwaltung");
@@ -61,6 +68,16 @@ private class ShowKinoverwaltungForm implements ClickHandler {
 	}
 }
 
+private class ShowKinoketteForm implements ClickHandler {
+
+	@Override
+	public void onClick(ClickEvent event) {
+		RootPanel.get("DetailsPanel").clear();
+		kkf = new KinoketteForm();
+		RootPanel.get("DetailsPanel").add(kkf);
+
+	}
+}
 private class ShowFilmForm implements ClickHandler {
 
 	@Override

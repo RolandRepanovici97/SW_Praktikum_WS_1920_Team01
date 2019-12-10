@@ -45,6 +45,4 @@ public class FilmForm extends VerticalPanel{
 		RootPanel.get("DetailsPanel").add(gruppenGrid);
 	}
 	
-	}
-
-
+}

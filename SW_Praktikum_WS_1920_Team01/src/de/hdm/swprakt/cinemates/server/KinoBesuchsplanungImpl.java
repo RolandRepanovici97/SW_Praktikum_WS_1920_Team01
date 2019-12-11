@@ -201,21 +201,41 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 
 	}
 
-	/**Diese Methode wird aufgerufen, wenn eine Umfrage gelöscht wird.
-	 * Es wird die zu löschende Umfrage übergeben. Diese wird in der DB gesucht und dort entsprechend gelöscht.
-	 * 
+	/*Diese Methode realisiert das Löschen einer Umfrage. Hier wird auch die Löschweitergabe realisiert. Unserer Logik nach
+	 * besteht eine Umfrage aus Umfrageeinträgen. Votum-Objekte können wiederum Umgfrageeinträgen zugehörig sein.
+	 * Wird eine Umfrage gelöscht, so müssen auch die Umfrageeinträge und deren
+	 * Votum-Objekte gelöscht werden.
 	 * @author alina
 	 */
 
 	public void deleteUmfrage(Umfrage umfrage) { 
+		
+		// Wir suchen alle Umfrageeinträge, die zu dieser Umfrage ghehören und speichern diese in einem Zwischenvector
+		Vector <Umfrageeintrag> vectorumfrageeinträge = umfrageeintragMapper.findByUmfrage(umfrage);
+		
+		/**Wenn es Umfrageeinträge gab, suchen wir für diese Umfrageeinträge die zugehörigen Votum-Objekte und speichern diese wieder in einer
+		 * Zwischenvariable vom Typ Vector. Wir iterieren anschließend durch diesen Vector und löschen alle Votum-Objekte in der Datenbank
+		 */
 
 
-		Vector <Umfrageeintrag> vectorumfrageeintäge = umfrageeintragMapper.findByUmfrage(dbumfrage);
-		for(Umfrageeintrag: vectorumfrageeinträge) {
-			
-		}
+		if(vectorumfrageeinträge!= null) {
+			for(Umfrageeintrag umfrageeintrag: vectorumfrageeinträge) {
+				Vector <Votum> vectorvotum = votumMapper.findVotumByUmfrageeintrag(umfrageeintrag);
+				if(vectorvotum!= null) {
 
+					for(Votum votum: vectorvotum) {
+						votumMapper.delete(votum);
+
+					}
+					//Wir iterieren durch den Vector mit Umfrageeinträgen und löschen diese in der Datenbank
+					umfrageeintragMapper.delete(umfrageeintrag);
+
+
+
+				}}
+			// Zuletzt löschen wir unsere übergebene Umfrage aus der Datenbank
 			umfrageMapper.delete(umfrage);
+		}
 
 	}
 

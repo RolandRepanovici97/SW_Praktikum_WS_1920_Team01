@@ -147,6 +147,7 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 
 		//Zurückgeben des Gruppenobjekts
 		return gruppe;
+
 	}
 
 
@@ -188,7 +189,39 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 
 	}
 	
-	
+	/**
+	 * Diese Methode wird aufgerufen, wenn wir alle Umfragen eines Nutzers, welche noch kein Ergebnis haben,
+	 * ausgeben möchten. Das heißt wir suchen nach den Gruppen des Nutzers und hier wiederum nach den Umfragen, welche zu den Gruppen 
+	 * gehören. Wir iterieren durch die Umfrageeinträge durch und schauen ob einer der Einträge als finales Ergebnis 
+	 * markiert ist. 
+	 * @author alina
+	 */
+
+
+	public Vector <Umfrage> showAllUmfrageOfNutzerOhneErgebnis(Nutzer n) {
+		Vector <Umfrage> ergebnisvector = new Vector <Umfrage>();
+		Vector <Umfrage> ergebnisvector2 = new Vector();
+		Vector <Gruppe> gruppevector = gruppeMapper.getGruppenOf(n);
+		for(Gruppe g: gruppevector) {
+			ergebnisvector.addAll(umfrageMapper.findByGruppename(g.getGruppenname()));
+		}
+		for(Umfrage u: ergebnisvector) {
+			Vector <Umfrageeintrag> umfrageeinträge = umfrageeintragMapper.findByUmfrage(u);
+			for(Umfrageeintrag eintrag: umfrageeinträge) {
+				if (eintrag.getFinalesErgebnis()==true) {
+					Umfrageeintrag ue= eintrag;
+					
+				}
+				else {
+					
+					ergebnisvector2.add(u);
+				}
+			}
+			
+		}
+		return ergebnisvector2;
+	}
+
 
 	/**Diese Methode wird aufgerufen, wenn eine neue Umfrage erstellt wird. Es wird hier lediglich der Umfragenname übergeben, da wir diesen benötigen um ein
 	 * Umfrageeobjekt initial lebensfähig zu machen. Alle anderen Attribute können wir später vergeben.

@@ -89,16 +89,19 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	}
 
 	/**
-	 * Diese Methode...
+	 * Diese Methode wird aufgerufen wenn ein neuen Nutzer erstellt wird...
+	 * @author roland
+	 * 
 	 */
-	public Nutzer createNutzer(Nutzer nutzer) {
+	public Nutzer createNutzer(String email, String nutzername) {
 
-		/**
-	 Einfügen eines Nutzers in die Nutzertabelle mit zugehöriger OwnedBusinessObject Referenz
-	 Zurückgeben des Nutzerobjektes
-		 */
+		Nutzer nutzer = new Nutzer();
+		nutzer.setEmail(email);
+		nutzer.setNutzername(nutzername);
+		nutzerMapper.insert(nutzer);
 
-		return null;
+
+		return nutzer;
 	}
 
 
@@ -209,10 +212,10 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 */
 
 	public void deleteUmfrage(Umfrage umfrage) { 
-		
+
 		// Wir suchen alle Umfrageeinträge, die zu dieser Umfrage ghehören und speichern diese in einem Zwischenvector
 		Vector <Umfrageeintrag> vectorumfrageeinträge = umfrageeintragMapper.findByUmfrage(umfrage);
-		
+
 		/**Wenn es Umfrageeinträge gab, suchen wir für diese Umfrageeinträge die zugehörigen Votum-Objekte und speichern diese wieder in einer
 		 * Zwischenvariable vom Typ Vector. Wir iterieren anschließend durch diesen Vector und löschen alle Votum-Objekte in der Datenbank
 		 */
@@ -352,7 +355,7 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 				Vector <Integer> einträge = new Vector<Integer>();
 				einträge.add(abst);
 				int max = 0;
-				for(int i = 0; i < einträge.length(); i++) {
+				for(int i = 0; i < einträge.size(); i++) {    
 					if(einträge[0] > max)
 						max = einträge[i];
 				}

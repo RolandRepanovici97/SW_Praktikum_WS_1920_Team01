@@ -208,10 +208,14 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 */
 
 	public void deleteUmfrage(Umfrage umfrage) { 
-		int umfrageID= umfrage.getID();
-		Umfrage dbumfrage = umfrageMapper.findByID(umfrageID);
-		umfrageMapper.delete(dbumfrage);
 
+
+		Vector <Umfrageeintrag> vectorumfrageeintäge = umfrageeintragMapper.findByUmfrage(dbumfrage);
+		for(Umfrageeintrag: vectorumfrageeinträge) {
+			
+		}
+
+			umfrageMapper.delete(umfrage);
 
 	}
 
@@ -226,7 +230,7 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 * 
 	 * @author alina
 	 */
-	public Votum abstimmen(Umfrageeintrag umfrageeintrag, boolean istMöglicherTermin) {
+	public Votum abstimmen(Umfrageeintrag umfrageeintrag, Boolean istMöglicherTermin) {
 		Votum votum = new Votum();
 		votum.setUmfrageeintragID(umfrageeintrag.getID());
 		votum.setIstMöglicherTermin(istMöglicherTermin);

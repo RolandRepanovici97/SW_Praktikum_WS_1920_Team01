@@ -68,32 +68,32 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 		KinoBesuchsplanungImpl kinoBesuchsplanungImpl = new KinoBesuchsplanungImpl();
 		kinoBesuchsplanungImpl.init();
 	}
-	
-	
+
+
 	/*
 	 * ***************************************************************************
 	 * ABSCHNITT, Beginn: Methoden für Film-Objekte
 	 * ***************************************************************************
 	 */
-	
-	
+
+
 	/**
-	   * Auslesen sämtliche Filme dieses Systems.
-	   */
-	
+	 * Auslesen sämtliche Filme dieses Systems.
+	 */
+
 	public Vector<Film> getAllFilme() throws IllegalArgumentException {
-	    return this.filmMapper.findAll();
-	  }
-	  
-	
-	
-	
+		return this.filmMapper.findAll();
+	}
+
+
+
+
 	public Film editFilm(Film film) throws IllegalArgumentException {
 		return this.filmMapper.update(film);
 	}
-	
-	
-	
+
+
+
 	/**
 	 * <p>
 	 * Anlegen eines neuen Films. Dies führt implizit zu einem Speichern des neuen
@@ -110,7 +110,7 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 		f.setFilmtitel(filmtitel);
 		f.setBeschreibung(beschreibung);
 		f.setDetails(details);   // Detail anstatt Spiellänge
-		
+
 		/*
 		 * Setzen einer vorläufigen Filmnr. Der insert-Aufruf liefert dann ein Objekt,
 		 * dessen Nummer mit der Datenbank konsistent ist.
@@ -121,39 +121,44 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 		return this.filmMapper.insert(f);
 		// Filmnummer wird hier richtig eingesetzt
 	}
-	
+
 	/**
-	   * Löschen eines Films 
-	   */
-	
+	 * Löschen eines Films 
+	 */
+
 	public void deleteFilm(Film f) throws IllegalArgumentException{
 		this.filmMapper.delete(f);
 	}
 	
+	
+
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Ende: Methoden für Film-Objekte
+	 * ***************************************************************************
+	 */
+
 	/*
 	 * ***************************************************************************
 	 * ABSCHNITT, Beginn: Methoden für Kinokette-Objekte
 	 * ***************************************************************************
 	 */
-	
-	
+
+
 	/**
-	   * Auslesen sämtliche Kinoketten dieses Systems.
-	   */
-	
+	 * Auslesen sämtliche Kinoketten dieses Systems.
+	 */
+
 	public Vector<Kinokette> getAllKinokette() throws IllegalArgumentException {
-	    return this.kinoketteMapper.findAllKinoketten();
-	  }
-	  
-	
-	
-	
-	
-	
+		return this.kinoketteMapper.findAllKinoketten();
+	}
+
+
+
 	/**
 	 * Löschen einer Kinokette
 	 */
-	
+
 	public void deleteKinokette(Kinokette kk) throws IllegalArgumentException {
 
 		Vector<Kino> kinos = kinoMapper.findKinosByKinokette(kk);
@@ -167,8 +172,8 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 		this.kinoketteMapper.delete(kk);
 
 	}
-	
-	
+
+
 
 	/**
 	 * Hinzufügen eines Kinos zur Kinokette
@@ -188,42 +193,52 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 		// Objekt in der DB speichern.
 		return this.kinoMapper.insert(kino);
 		// Kinookettennummer wird hier richtig eingesetzt
+
 	}
 
-	
-	
+	// neue Methode Kinokette vom curent User anzeigen.
+	//
+	//
+
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Ende: Methoden für Kinokette-Objekte
+	 * ***************************************************************************
+	 */
+
+
 	/*
 	 * ***************************************************************************
 	 * ABSCHNITT, Beginn: Methoden für Kino-Objekte
 	 * ***************************************************************************
 	 */
-	
-	
-	
+
+
+
 	/**
-	   * Auslesen sämtliche Kinos dieses Systems.
-	   */
-	
+	 * Auslesen sämtliche Kinos dieses Systems.
+	 */
+
 	public Vector<Kino> getAllKinos() throws IllegalArgumentException {
-	    return this.kinoMapper.findAll();
-	  }
-	  
+		return this.kinoMapper.findAll();
+	}
+
 	/**
 	 * Hinzfügen eines Kinos dieses Systems.
 	 */
-	
+
 
 	public Kino createKino(String kinoname, String adresse, String beschreibung) throws IllegalArgumentException {
 		Kino k = new Kino();
 		k.setKinoname(kinoname);
 		k.setAdresse(adresse);
 		k.setBeschreibung(beschreibung);
-		
-	
+
+
 		/*
 		 * Setzen einer vorläufigen KinoNr. Der insert-Aufruf liefert dann ein Objekt,
 		 * dessen Nummer mit der Datenbank konsistent ist.
-		*/
+		 */
 		k.setID(1);
 
 		// Objekt in der DB speichern.
@@ -231,97 +246,143 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 		// Kinonummer wird hier richtig eingesetzt
 	}
 
-	
 
-	
+	/** Diese Methode realisiert das Löschen eines Kinos. Hier wird die Löschweitergabe realisiert. Unserer Logik nach
+	 * besitzt ein Kino einen Spielplan, welcher wiederum aus Spielzeit besteht. Wird ein Kino gelöscht, so
+	 * muss auch der dazugehörige Spielplan gelöscht werden und wird dieser gelöscht müssen alle darin enthalten Spielzeiten
+	 * gelöscht.
+	 */
 	public void deleteKino(Kino kino) throws IllegalArgumentException {
+		
+		// Wir suchen den Spielplan des zu löschenden Kinos
+		Spielplan kinoSpielplan = spielplanMapper.findByKino(kino);
+		// Wir suchen alle Spielzeiten dieses Spielplans
+		Vector<Spielzeit> vectorspielzeiten = spielzeitMapper.findSpielzeitenBySpielplan(kinoSpielplan);
+		// Wir löschen den Spielplan aus der Datebank
+		spielplanMapper.delete(kinoSpielplan);
+		//Wir iterieren durch den Vector der Spielzeiten und löschen alle dort enhaltenen Spielzeiten
+		for (Spielzeit spielzeit : vectorspielzeiten) {
+			spielzeitMapper.delete(spielzeit);
 
+		}
+
+		// Zuletzt löschen wir das Kino aus der Datenbank
 		this.kinoMapper.delete(kino);
 	}
 
-	
-	
-	
-	
-	
+
+
+
+	//public <Kino> getKinoOfKinokette(Kinokette kinokette)
+	//
+
+
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Ende: Methoden für Kino-Objekte
+	 * ***************************************************************************
+	 */
+
+
 	/*
 	 * ***************************************************************************
 	 * ABSCHNITT, Beginn: Methoden für Spielzeit-Objekte
 	 * ***************************************************************************
 	 */
-	
-	
+
+
 	/**
 	 * Auslesen sämtliche Spielzeiten dieses Systems.
 	 */
-	
+
 	public Vector<Spielzeit> getAllSpielzeiten() throws IllegalArgumentException {
 		return this.spielzeitMapper.findAllSpielzeit();
 	}
 
-	
+
 	/**
 	 * Hinzfügen einer Spielzeit
 	 */
-//
-//	public Spielzeit createSpielzeit(Date ) throws IllegalArgumentException {
-//			
-//			Spielzeit sz = new Spielzeit();
-	//		sz..sz.
-			/*
-//			 * Setzen einer vorläufigen Filmnr. Der insert-Aufruf liefert dann ein Objekt,
-//			 * dessen Nummer mit der Datenbank konsistent ist.
-//			 */
-//			sz.setID(1);
-//
-//			// Objekt in der DB speichern.
-//			return this.spielzeitMapper.insert(sz);
-//			// Filmnummer wird hier richtig eingesetzt
-//		}
-//	
-	
-	
+
+	public Spielzeit createSpielzeit(int filmID ,Date zeitpunkt) throws IllegalArgumentException {
+			
+		Spielzeit sz = new Spielzeit();
+		sz.setFilmID(filmID);
+		sz.setZeitpunkt(zeitpunkt);
+		
+		
+		/**Setzen einer vorläufigen Filmnr. Der insert-Aufruf liefert dann ein Objekt,
+		dessen Nummer mit der Datenbank konsistent ist.
+		*/
+			sz.setID(1);
+
+				// Objekt in der DB speichern.
+			return this.spielzeitMapper.insert(sz);
+				// Filmnummer wird hier richtig eingesetzt
+	}
+		
+
+
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Ende: Methoden für Spielzeit-Objekte
+	 * ***************************************************************************
+	 */
 
 	/*
 	 * ***************************************************************************
 	 * ABSCHNITT, Beginn: Methoden für Spielplan-Objekte
 	 * ***************************************************************************
 	 */
-	
-	
+
+
 	/**
 	 * Auslesen sämtliche Spielpläne dieses Systems.
 	 */
-	
+
 	public Vector<Spielplan> getAllSpielplan() throws IllegalArgumentException {
 		return this.spielplanMapper.findAllSpielplan();
 	}
 
-	
-	
+
+
 	/**
 	 * Löschen eines Spielplans
 	 */
-	
+
 	public void deleteSpielplan(Spielplan spielplan) throws IllegalArgumentException {
 
 		this.spielplanMapper.delete(spielplan);
 
 	}
-	
+
 	public void editSpielplan(Kino kino) throws IllegalArgumentException {
 
 		Spielplan spielplan = spielplanMapper.findByKino(kino);
 		this.spielplanMapper.update(spielplan);
 	}
-	
+
+	//	public Spielplan showSpielplanOfKino(Kino kino) throws IllegalArgumentException {
+	//	
+	//	Spielplan spielplan = spielplanMapper.findByKino(kino);
+	//	
+	//}
+
+
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Ende: Methoden für Spielplan-Objekte
+	 * ***************************************************************************
+	 */
+
+
 	/*
 	 * ***************************************************************************
 	 * ABSCHNITT, Beginn: Methoden für Nutzer-Objekte
 	 * ***************************************************************************
 	 */
-	
-	
+
+
 	/**
 	 * Bearbeiten des Nutzers
 	 * 
@@ -330,15 +391,18 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 	 * @throws IllegalArgumentException
 	 */
 
-	public Nutzer editNutzer(Nutzer nutzer) throws IllegalArgumentException {
+	public Nutzer editNutzer(Nutzer nutzer) throws IllegalArgumentException {  //Nutzername übergeben 
 		return this.nutzerMapper.update(nutzer);
+		
 	}
 
-//	public Spielplan showSpielplanOfKino(Kino kino) throws IllegalArgumentException {
-//		
-//		Spielplan spielplan = spielplanMapper.findByKino(kino);
-//		
-//	}
 	
-	
+
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Ende: Methoden für Nutzer-Objekte
+	 * ***************************************************************************
+	 */
+
+
 }

@@ -417,7 +417,7 @@ public class UmfrageMapper extends OwnedBusinessObjectMapper {
 	}
 
 
-	public Umfrage findByGruppename (String gruppenname) {
+	public Vector <Umfrage> findByGruppename (String gruppenname) {
 
 		/**
 		 * Verbindung zur Datenbank aufbauen.
@@ -432,11 +432,13 @@ public class UmfrageMapper extends OwnedBusinessObjectMapper {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM 'umfrage' LEFT JOIN `gruppe` ON `umfrage`.`bo_id`= `gruppe`.`bo_id` ORDER BY 'gruppenname'");
 
 			if(rs.next()) {
+				Vector <Umfrage> vectorumfrage = new Vector <Umfrage>();
 				Umfrage umfrage = new Umfrage();
 				umfrage.setID(rs.getInt("umfrage_id"));
 				umfrage.setOwnerID(rs.getInt("bo_id"));
+				vectorumfrage.add(umfrage);
 
-				return umfrage;
+				return vectorumfrage;
 			}
 
 		} catch (SQLException e) {

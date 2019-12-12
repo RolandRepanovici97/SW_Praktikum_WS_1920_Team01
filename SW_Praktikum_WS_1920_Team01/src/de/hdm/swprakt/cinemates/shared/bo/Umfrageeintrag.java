@@ -51,11 +51,18 @@ public class Umfrageeintrag extends BusinessObject {
 	/**
 	 * Ein Umfrageeintrag benötigt eine Attribut, welches die Anzahl der positiven Abstimmungen festhält.
 	 */
-	
-	
+
+
 	private int positiveAbstimmungen;
+
+
+	/**
+	 * Ein Umfrageeintrag kann als finales Ergebnis einer Umfrage herauskommen.
+	 */
+
+	private Boolean finalesErgebnis;
 	
-	
+
 	/*default Konstruktor 
 	 */
 	public Umfrageeintrag() {
@@ -148,6 +155,22 @@ public class Umfrageeintrag extends BusinessObject {
 	 */
 	public void setPositiveAbstimmungen(int positiveAbstimmungen) {
 		this.positiveAbstimmungen = positiveAbstimmungen;
+	}
+
+	/**
+	 * Auslesen des Attributs finalesErgebnis
+	 * @return the finalesErgebnis
+	 */
+	public Boolean getFinalesErgebnis() {
+		return finalesErgebnis;
+	}
+
+	/**
+	 * Setzen des Attributs finalesErgebnis
+	 * @param finalesErgebnis the finalesErgebnis to set
+	 */
+	public void setFinalesErgebnis(Boolean finalesErgebnis) {
+		this.finalesErgebnis = finalesErgebnis;
 	}
 
 }

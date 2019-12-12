@@ -32,7 +32,7 @@ import de.hdm.swprakt.cinemates.shared.bo.Spielzeit;
 /**
  * Diese Klasse stellt die Implementierungsklasse des Interface
  * {@link KinoAdministration} dar. Sie beinhaltet die komplette
- * Applikationslogik, welche zur Verwaltung von Kinos, Kinoketten Filmen,
+ * Applikationslogik, welche zur Verwaltung von Kinos, Kinoketten, Filmen,
  * Spielpläne und Spielzeiten benötigt wird.
  * 
  * @author Ömer
@@ -87,9 +87,11 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 
 
 
-
-	public Film editFilm(Film film) throws IllegalArgumentException {
-		return this.filmMapper.update(film);
+	/**
+	 * Speichern eines Films.
+	 */
+	public void saveFilm(Film f) throws IllegalArgumentException {
+		filmMapper.update(f);
 	}
 
 
@@ -139,22 +141,29 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 	 * ABSCHNITT, Ende: Methoden für Film-Objekte
 	 * ***************************************************************************
 	 */
-
+	
 	/*
 	 * ***************************************************************************
 	 * ABSCHNITT, Beginn: Methoden für Kinokette-Objekte
 	 * ***************************************************************************
 	 */
 
-
+	
+	/**
+	 * Auslesen aller Kinos der Kinokette
+	 * Diese Methode wird bei delete Kinokette verwendet
+	 */ 
+	public Vector<Kino> getKinosOf(Kinokette kk) throws IllegalArgumentException {
+		return this.kinoMapper.findKinosByKinokette(kk);
+	}
+	
+	
 	/**
 	 * Auslesen sämtliche Kinoketten dieses Systems.
 	 */
-
 	public Vector<Kinokette> getAllKinokette() throws IllegalArgumentException {
 		return this.kinoketteMapper.findAllKinoketten();
 	}
-
 
 
 	/**
@@ -163,7 +172,7 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 
 	public void deleteKinokette(Kinokette kk) throws IllegalArgumentException {
 
-		Vector<Kino> kinos = kinoMapper.findKinosByKinokette(kk);
+		Vector<Kino> kinos = this.getKinosOf(kk);
 
 		if (kinos != null) { // defensives Porgrammieren
 			for (Kino k : kinos) {
@@ -174,8 +183,6 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 		this.kinoketteMapper.delete(kk);
 
 	}
-
-
 
 	/**
 	 * Hinzufügen eines Kinos zur Kinokette
@@ -228,8 +235,7 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 	/**
 	 * Hinzfügen eines Kinos dieses Systems.
 	 */
-
-
+	
 	public Kino createKino(String kinoname, String adresse, String beschreibung) throws IllegalArgumentException {
 		Kino k = new Kino();
 		k.setKinoname(kinoname);
@@ -247,6 +253,25 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 		return this.kinoMapper.insert(k);
 		// Kinonummer wird hier richtig eingesetzt
 	}
+	
+	
+	/**
+	 * Auslesen des Spielplans des Kinos Diese Methode wird bei deleteKino verwendet
+	 */
+
+	public Spielplan getSpielplanOf(Kino k) throws IllegalArgumentException {
+		return this.spielplanMapper.findByKino(k); 
+	}
+	
+	
+	/**
+	 * Auslesen der Spielzeiten des Spielplans Diese Methode wird bei
+	 * deleteSpielplan verwendet.
+	 */
+	public Vector<Spielzeit> getSpielzeitOf(Spielplan sp) throws IllegalArgumentException {
+		return this.spielzeitMapper.findSpielzeitenBySpielplan(sp);
+
+	}
 
 
 	/** Diese Methode realisiert das Löschen eines Kinos. Hier wird die Löschweitergabe realisiert. Unserer Logik nach
@@ -254,24 +279,55 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 	 * muss auch der dazugehörige Spielplan gelöscht werden und wird dieser gelöscht müssen alle darin enthalten Spielzeiten
 	 * gelöscht.
 	 */
-	public void deleteKino(Kino kino) throws IllegalArgumentException {
-		
-		// Wir suchen den Spielplan des zu löschenden Kinos
-		Spielplan kinoSpielplan = spielplanMapper.findByKino(kino);
-		// Wir suchen alle Spielzeiten dieses Spielplans
-		Vector<Spielzeit> vectorspielzeiten = spielzeitMapper.findSpielzeitenBySpielplan(kinoSpielplan);
-		// Wir löschen den Spielplan aus der Datebank
-		spielplanMapper.delete(kinoSpielplan);
-		//Wir iterieren durch den Vector der Spielzeiten und löschen alle dort enhaltenen Spielzeiten
-		for (Spielzeit spielzeit : vectorspielzeiten) {
-			spielzeitMapper.delete(spielzeit);
+//	public void deleteKino(Kino kino) throws IllegalArgumentException {
+//		
+//		// Wir suchen den Spielplan des zu löschenden Kinos
+//		Spielplan kinoSpielplan = spielplanMapper.findByKino(kino);
+//		// Wir suchen alle Spielzeiten dieses Spielplans
+//		Vector<Spielzeit> vectorspielzeiten = spielzeitMapper.findSpielzeitenBySpielplan(kinoSpielplan);
+//		// Wir löschen den Spielplan aus der Datebank
+//		spielplanMapper.delete(kinoSpielplan);
+//		//Wir iterieren durch den Vector der Spielzeiten und löschen alle dort enhaltenen Spielzeiten
+//		for (Spielzeit spielzeit : vectorspielzeiten) {
+//			spielzeitMapper.delete(spielzeit);
+//
+//		}
+//
+//		// Zuletzt löschen wir das Kino aus der Datenbank
+//		this.kinoMapper.delete(kino);
+//	}
 
+	public void deleteKino(Kino k) throws IllegalArgumentException {
+
+		Spielplan spielplan = this.getSpielplanOf(k);
+
+		// Vector<Spielzeit> spielzeiten = //this.getSpielzeitOf(k);
+
+		if (spielplan != null) {
+			this.deleteSpielplan(spielplan); // wenn kino gelöscht wird dann auch hier der Spielplan
 		}
 
-		// Zuletzt löschen wir das Kino aus der Datenbank
-		this.kinoMapper.delete(kino);
+		this.kinoMapper.delete(k);
 	}
+	
+	
 
+	/**
+	 * Löschen eines Spielplans
+	 * Löschweitergabe: Die dazugehörigen Spielzeiten werden auch gelöscht.
+	 */
+	
+	public void deleteSpielplan(Spielplan sp) throws IllegalArgumentException {
+		
+		Vector<Spielzeit> spielzeiten = this.getSpielzeitOf(sp);
+		
+		if (spielzeiten != null) {
+			for(Spielzeit sz:spielzeiten) {
+				this.deleteSpielzeit(sz);
+			}
+		}
+		this.spielplanMapper.delete(sp);
+	}
 
 	/**Diese Methode wird aufgerufen,um alle Kinos die zu einer Kinokette gehört angezeigt werden sollen.
 	 * Die Mapper Methode findKinosByKinokette wird aufgerufen.
@@ -281,6 +337,14 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 		
 		return this.kinoMapper.findKinosByKinokette(kinokette);
 	
+	}
+
+	
+	/**
+	 * Speichern eines Kinos.
+	 */
+	public void saveKino(Kino k) throws IllegalArgumentException {
+		kinoMapper.update(k);
 	}
 	
 
@@ -328,8 +392,18 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 				// Filmnummer wird hier richtig eingesetzt
 	}
 		
+	
+	/**
+	 * Löschen eines Spielzeits.
+	 */
 
+	public void deleteSpielzeit(Spielzeit sz) throws IllegalArgumentException {
 
+		this.spielzeitMapper.delete(sz);
+
+	}
+
+	
 	/*
 	 * ***************************************************************************
 	 * ABSCHNITT, Ende: Methoden für Spielzeit-Objekte
@@ -353,26 +427,14 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 
 
 
-	/**
-	 * Löschen eines Spielplans
-	 */
+//	public void saveSpielplan(Kino kino) throws IllegalArgumentException {
+//
+//		Spielplan spielplan = spielplanMapper.findByKino(kino);
+//		this.spielplanMapper.update(spielplan);
+//		
+//}
 
-	public void deleteSpielplan(Spielplan spielplan) throws IllegalArgumentException {
 
-		this.spielplanMapper.delete(spielplan);
-
-	}
-
-	public void editSpielplan(Kino kino) throws IllegalArgumentException {
-
-		Spielplan spielplan = spielplanMapper.findByKino(kino);
-		this.spielplanMapper.update(spielplan);
-	}
-
-//	public Vector <Spielplan> showSpielplanOfKino(Kino kino) throws IllegalArgumentException {
-	
-//		return this.spielplanMapper.findByKino(kino);
-	
 
 
 

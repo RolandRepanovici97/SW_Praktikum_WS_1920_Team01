@@ -17,7 +17,7 @@ public class KinoketteForm extends VerticalPanel{
 
 	private Button spielplanBearbeiten = new Button("Spielplan bearbeiten");
 	private Button kinoBearbeiten = new Button("Kino bearbeiten");
-	private String kinoName = ("Kinoname 1"); 
+	private String kinoName = ("Kinoname 1"); //Als Array!
 	private Button ja = new Button("JA");
 	private Button nein = new Button("NEIN");
 	private Button löschen = new Button("Löschen");

@@ -6,9 +6,11 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ListDataProvider;
@@ -26,11 +28,12 @@ public class KinoverwaltungForm extends VerticalPanel{
 	TextBox kinoname = new TextBox();
 	TextBox kinobeschreibung = new TextBox();
 	TextBox kinoadresse = new TextBox();
-	ListBox spielplanbox = new ListBox();
 	Button anlegen = new Button("Kino anlegen");
+
+
 	
 	// Create a data provider.
-		private ListDataProvider<Kino> dataProvider = new ListDataProvider<Kino>();
+	private ListDataProvider<Kino> dataProvider = new ListDataProvider<Kino>();
 	
 	VerticalPanel detailsPanel = new VerticalPanel();
 	
@@ -50,6 +53,7 @@ public class KinoverwaltungForm extends VerticalPanel{
 		
 		super.onLoad();
 		
+		
 		Grid kinoGrid = new Grid(4, 4);
 		
 		
@@ -65,14 +69,15 @@ public class KinoverwaltungForm extends VerticalPanel{
 		kinoGrid.setWidget(2, 1, kinoadresse);
 		kinoGrid.setWidget(2, 0, adresse);
 		
-		Label spielplan = new Label("Spielplan");
-		kinoGrid.setWidget(3, 1, spielplanbox); //Spielplanform noch nicht fertig
-		kinoGrid.setWidget(3, 0, spielplan);
+	
 		kinoGrid.setWidget(3, 2, anlegen);
 		anlegen.addClickHandler(new kinoanlegenClickHandler());
 		
 		detailsPanel.add(kinoGrid);
 		RootPanel.get("DetailsPanel").add(kinoGrid);
+		
+		
+		
 }
 	/*
 	 * Click handlers und abhängige AsyncCallback Klassen.

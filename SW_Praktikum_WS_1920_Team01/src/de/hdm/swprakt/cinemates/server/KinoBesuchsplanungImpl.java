@@ -431,4 +431,18 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 
 	}
 
+
+	@Override
+	public Nutzer createNutzer(Nutzer nutzer) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Gruppe createGruppe(Gruppe gruppe) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

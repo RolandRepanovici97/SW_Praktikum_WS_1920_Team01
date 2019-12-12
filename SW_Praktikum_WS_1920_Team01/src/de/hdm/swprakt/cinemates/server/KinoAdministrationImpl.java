@@ -106,6 +106,8 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 	 */
 
 	public Film createFilm(String filmtitel, String beschreibung, String details) throws IllegalArgumentException {
+		
+		
 		Film f = new Film();
 		f.setFilmtitel(filmtitel);
 		f.setBeschreibung(beschreibung);
@@ -271,11 +273,16 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 	}
 
 
+	/**Diese Methode wird aufgerufen,um alle Kinos die zu einer Kinokette gehört angezeigt werden sollen.
+	 * Die Mapper Methode findKinosByKinokette wird aufgerufen.
+	 */
 
-
-	//public <Kino> getKinoOfKinokette(Kinokette kinokette)
-	//
-
+	public Vector <Kino> showAllKinoOfKinokette(Kinokette kinokette) {
+		
+		return this.kinoMapper.findKinosByKinokette(kinokette);
+	
+	}
+	
 
 	/*
 	 * ***************************************************************************
@@ -362,11 +369,11 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 		this.spielplanMapper.update(spielplan);
 	}
 
-	//	public Spielplan showSpielplanOfKino(Kino kino) throws IllegalArgumentException {
-	//	
-	//	Spielplan spielplan = spielplanMapper.findByKino(kino);
-	//	
-	//}
+//	public Vector <Spielplan> showSpielplanOfKino(Kino kino) throws IllegalArgumentException {
+	
+//		return this.spielplanMapper.findByKino(kino);
+	
+
 
 
 	/*

@@ -45,6 +45,12 @@ public interface KinoBesuchsplanungAsync {
 
 	public void bestesErgebnisErmitteln(Umfrage umfrage, AsyncCallback<Umfrageeintrag> callback);
 
+	public void deleteGruppe(Gruppe gruppe, AsyncCallback<Void> callback);
+
+	public void deleteUmfrageeintrag(Umfrageeintrag umfrageeintrag, AsyncCallback<Void> callback);
+
+	public void deleteVotum(Votum votum, AsyncCallback<Void> callback);
+
 
 	
 	

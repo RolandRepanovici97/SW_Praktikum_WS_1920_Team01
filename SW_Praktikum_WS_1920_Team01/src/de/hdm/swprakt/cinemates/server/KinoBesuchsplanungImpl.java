@@ -22,26 +22,31 @@ import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 import de.hdm.swprakt.cinemates.shared.bo.Umfrage;
 import de.hdm.swprakt.cinemates.shared.bo.Umfrageeintrag;
 import de.hdm.swprakt.cinemates.shared.bo.Votum;
+
 /**
- * Diese Klasse stellt die Implementierungsklasse des Interface {@link KinoBesuchsplanung} dar. 
- * Sie beinhaltet die komplette Applikationslogik, welche zur Planung eines Kinobesuchs benötigt wird. 
- * (Anlage und Verwaltung von Gruppen, Umfragen, etc.) Sie benötigt Zugriff auf die  <code> KinoAdministration </code>,
- * da diese Methoden bereitstellt, welche für die Kinobesuchsplanung relevant sind. 
+ * Diese Klasse stellt die Implementierungsklasse des Interface
+ * {@link KinoBesuchsplanung} dar. Sie beinhaltet die komplette
+ * Applikationslogik, welche zur Planung eines Kinobesuchs benötigt wird.
+ * (Anlage und Verwaltung von Gruppen, Umfragen, etc.) Sie benötigt Zugriff auf
+ * die <code> KinoAdministration </code>, da diese Methoden bereitstellt, welche
+ * für die Kinobesuchsplanung relevant sind.
  * 
  * @author alina
  * @version 1.0
  *
  */
 public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements KinoBesuchsplanung {
-	/** Zugriff auf KinoAdministration
+	/**
+	 * Zugriff auf KinoAdministration
 	 * 
 	 */
 
 	private KinoAdministration administration = null;
 
-	/** Der Kinobesucher benötigt Zuriff auf die Daten rund um eine Umfrage, Gruppe etc.
-	 *  Dieser Zugriff wird über die jeweiligen Mapper realisiert. 
-	 *  */
+	/**
+	 * Der Kinobesucher benötigt Zuriff auf die Daten rund um eine Umfrage, Gruppe
+	 * etc. Dieser Zugriff wird über die jeweiligen Mapper realisiert.
+	 */
 	private NutzerMapper nutzerMapper = null;
 	private GruppeMapper gruppeMapper = null;
 	private UmfrageMapper umfrageMapper = null;
@@ -49,16 +54,16 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	private VotumMapper votumMapper = null;
 	private OwnedBusinessObjectMapper ownedBusinessObjectMapper = null;
 
-
 	public KinoBesuchsplanungImpl() throws IllegalArgumentException {
 
 	}
 
-
-	/* Initalisierung der Variablen, welche die Referenzen auf die Mapeprklassen darstellen. 
-	 * Wir initialisieren diese durch den Aufruf des protected-Konstruktors. Dieser 
-	 * ermöglicht uns, dass jeweils nur eine Instanz dieser Klasse erzeugt werden kann.
-	 * */
+	/*
+	 * Initalisierung der Variablen, welche die Referenzen auf die Mapeprklassen
+	 * darstellen. Wir initialisieren diese durch den Aufruf des
+	 * protected-Konstruktors. Dieser ermöglicht uns, dass jeweils nur eine Instanz
+	 * dieser Klasse erzeugt werden kann.
+	 */
 	public void init() throws IllegalArgumentException {
 
 		this.nutzerMapper = NutzerMapper.nutzerMapper();
@@ -73,7 +78,6 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 		this.administration = kinoAdministrationImpl;
 	}
 
-
 	/*
 	 * ***************************************************************************
 	 * ABSCHNITT, Beginn: Methoden für Nutzer-Objekte
@@ -81,17 +85,20 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 */
 
 	/**
-	 * Diese Methode wird aufgerufen, wenn wir ein Nutzerobjekt anhand seiner E-Mail finden möchten.
+	 * Diese Methode wird aufgerufen, wenn wir ein Nutzerobjekt anhand seiner E-Mail
+	 * finden möchten.
+	 * 
 	 * @author alina
 	 */
 	public Nutzer findNutzerByEmail(String email) throws IllegalArgumentException {
 
-		Nutzer nutzer= nutzerMapper.findByEmail(email);
+		Nutzer nutzer = nutzerMapper.findByEmail(email);
 		return nutzer;
 	}
 
 	/**
 	 * Diese Methode wird aufgerufen wenn ein neuer Nutzer erstellt wird.
+	 * 
 	 * @author roland
 	 * 
 	 */
@@ -102,52 +109,84 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 		nutzer.setNutzername(nutzername);
 		nutzerMapper.insert(nutzer);
 
-
 		return nutzer;
 	}
 
-
 	/**
-	 * Diese Methode wird aufgerufen, wenn eine Gruppe erstellt wird. Diese Realisierung ist nicht besonders
-	 * elegant, aber das Attribut gruppenmitglieder erwartet Integer-Werte, welche die IDs der einzelnen
-	 * Nutzerobjekte darstellen.
+	 * Diese Methode wird aufgerufen, wenn eine Gruppe erstellt wird. Diese
+	 * Realisierung ist nicht besonders elegant, aber das Attribut gruppenmitglieder
+	 * erwartet Integer-Werte, welche die IDs der einzelnen Nutzerobjekte
+	 * darstellen.
+	 * 
 	 * @author alina
 	 */
-	public Gruppe createGruppe(String gruppenname, Vector <Nutzer> gruppenmitglieder) throws IllegalArgumentException {
+	public Gruppe createGruppe(String gruppenname, Vector<Nutzer> gruppenmitglieder) throws IllegalArgumentException {
 
 		// Erstellen der des neuen Gruppenobjekts
 		Gruppe gruppe = new Gruppe();
 
-		//Setzen des Namens
+		// Setzen des Namens
 		gruppe.setGruppenname(gruppenname);
 
-		/**Erstellung eines leeren Vectors mit Integer Objekten, in welchem später die
+		/**
+		 * Erstellung eines leeren Vectors mit Integer Objekten, in welchem später die
 		 * IDs der Gruppenmitglieder gespeichert werden
 		 */
-		Vector <Integer> gruppenmitgliederids = new Vector <Integer>();
+		Vector<Integer> gruppenmitgliederids = new Vector<Integer>();
 
-		//Zunächst Prüfung, ob Vector nicht leer ist
-		if(gruppenmitglieder!= null) {
+		// Zunächst Prüfung, ob Vector nicht leer ist
+		if (gruppenmitglieder != null) {
 
-			//Iteration durch den Vector, um IDs zu bestimmen
-			for(Nutzer n: gruppenmitglieder) {
-				int id= n.getID();
+			// Iteration durch den Vector, um IDs zu bestimmen
+			for (Nutzer n : gruppenmitglieder) {
+				int id = n.getID();
 
-				//Hinzufügen der IDs zum Zielvector, welcher später das Argument für das Attribut gruppenmitglieder wird
+				// Hinzufügen der IDs zum Zielvector, welcher später das Argument für das
+				// Attribut gruppenmitglieder wird
 				gruppenmitgliederids.add(id);
 
 			}
 
 		}
-		//Setzen des Attributs gruppenmitglieder
+		// Setzen des Attributs gruppenmitglieder
 		gruppe.setGruppenmitglieder(gruppenmitgliederids);
 
-		//Einfügen des Gruppenobjekts in die Datenbank
+		// Einfügen des Gruppenobjekts in die Datenbank
 		gruppe = gruppeMapper.insert(gruppe);
 
-		//Zurückgeben des Gruppenobjekts
+		// Zurückgeben des Gruppenobjekts
 		return gruppe;
 
+	}
+
+	/*
+	 * Diese Methode realisiert das Löschen einer Gruppe. Hier wird auch die
+	 * Löschweitergabe betrachtet. Unserer Logik nach gehören Umfragen zu Grupepen. Wird
+	 * nun eine Gruppe gelöscht, so müssen auch deren Umfragen gelöscht werden.
+	 * 
+	 * @author alina
+	 */
+
+	public void deleteGruppe(Gruppe gruppe) throws IllegalArgumentException {
+
+		// Wir suchen alle Umfragen, die zu dieser Gruppe ghehören und speichern
+		// diese in einem Zwischenvector
+
+		Vector<Umfrage> umfragevector = umfrageMapper.findByGruppename(gruppe.getGruppenname());
+
+		/**
+		 * Wir iterieren durch den Vector mit Umfragen und rufen für jede die Methode deleteUmfrage() auf.
+		 */
+
+		if (umfragevector != null) {
+			for (Umfrage umfrage : umfragevector) {
+
+				deleteUmfrage(umfrage);
+
+			}
+		}
+		// Zuletzt löschen wir unsere übergebene Gruppe aus der Datenbank
+		gruppeMapper.delete(gruppe);
 	}
 
 
@@ -157,78 +196,80 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 * ***************************************************************************
 	 */
 
-
-
 	/**
-	 * Diese Methode wird aufgerufen, wenn wir alle in der Datenbank gespeicherten Umfragen ausgeben möchten.
+	 * Diese Methode wird aufgerufen, wenn wir alle in der Datenbank gespeicherten
+	 * Umfragen ausgeben möchten.
+	 * 
 	 * @author alina
 	 */
-	public Vector <Umfrage> showAllUmfrage() {
+	public Vector<Umfrage> showAllUmfrage() {
 
 		return umfrageMapper.findAllUmfrage();
-
 
 	}
 
 	/**
-	 * Diese Methode wird aufgerufen, wenn wir alle Umfragen eines Nutzers ausgeben möchten. Das heißt wir suchen
-	 * nach den Gruppen des Nutzers und hier wiederum nach den Umfragen, welche zu den Gruppen
-	 * gehören und geben diese aus.
+	 * Diese Methode wird aufgerufen, wenn wir alle Umfragen eines Nutzers ausgeben
+	 * möchten. Das heißt wir suchen nach den Gruppen des Nutzers und hier wiederum
+	 * nach den Umfragen, welche zu den Gruppen gehören und geben diese aus.
+	 * 
 	 * @author alina
 	 */
 
+	public Vector<Umfrage> showAllUmfrageOfNutzer(Nutzer n) {
 
-	public Vector <Umfrage> showAllUmfrageOfNutzer(Nutzer n) {
-
-		Vector <Umfrage> ergebnisvector = new Vector <Umfrage>();
-		Vector <Gruppe> gruppevector = gruppeMapper.getGruppenOf(n);
-		for(Gruppe g: gruppevector) {
+		Vector<Umfrage> ergebnisvector = new Vector<Umfrage>();
+		Vector<Gruppe> gruppevector = gruppeMapper.getGruppenOf(n);
+		for (Gruppe g : gruppevector) {
 			ergebnisvector.addAll(umfrageMapper.findByGruppename(g.getGruppenname()));
 		}
 		return ergebnisvector;
 
 	}
-	
+
 	/**
-	 * Diese Methode wird aufgerufen, wenn wir alle Umfragen eines Nutzers, welche noch kein Ergebnis haben,
-	 * ausgeben möchten. Das heißt wir suchen nach den Gruppen des Nutzers und hier wiederum nach den Umfragen, welche zu den Gruppen 
-	 * gehören. Wir iterieren durch die Umfrageeinträge durch und schauen ob einer der Einträge als finales Ergebnis 
-	 * markiert ist. 
+	 * Diese Methode wird aufgerufen, wenn wir alle Umfragen eines Nutzers, welche
+	 * noch kein Ergebnis haben, ausgeben möchten. Das heißt wir suchen nach den
+	 * Gruppen des Nutzers und hier wiederum nach den Umfragen, welche zu den
+	 * Gruppen gehören. Wir iterieren durch die Umfrageeinträge durch und schauen ob
+	 * einer der Einträge als finales Ergebnis markiert ist.
+	 * 
 	 * @author alina
 	 */
 
-
-	public Vector <Umfrage> showAllUmfrageOfNutzerOhneErgebnis(Nutzer n) {
-		Vector <Umfrage> ergebnisvector = new Vector <Umfrage>();
-		Vector <Umfrage> ergebnisvector2 = new Vector();
-		Vector <Gruppe> gruppevector = gruppeMapper.getGruppenOf(n);
-		for(Gruppe g: gruppevector) {
+	public Vector<Umfrage> showAllUmfrageOfNutzerOhneErgebnis(Nutzer n) {
+		Vector<Umfrage> ergebnisvector = new Vector<Umfrage>();
+		Vector<Umfrage> ergebnisvector2 = new Vector();
+		Vector<Gruppe> gruppevector = gruppeMapper.getGruppenOf(n);
+		for (Gruppe g : gruppevector) {
 			ergebnisvector.addAll(umfrageMapper.findByGruppename(g.getGruppenname()));
 		}
-		for(Umfrage u: ergebnisvector) {
-			Vector <Umfrageeintrag> umfrageeinträge = umfrageeintragMapper.findByUmfrage(u);
-			for(Umfrageeintrag eintrag: umfrageeinträge) {
-				if (eintrag.getFinalesErgebnis()==true) {
-					Umfrageeintrag ue= eintrag;
-					
-				}
-				else {
-					
+		for (Umfrage u : ergebnisvector) {
+			Vector<Umfrageeintrag> umfrageeinträge = umfrageeintragMapper.findByUmfrage(u);
+			for (Umfrageeintrag eintrag : umfrageeinträge) {
+				if (eintrag.getFinalesErgebnis() == true) {
+					Umfrageeintrag ue = eintrag;
+
+				} else {
+
 					ergebnisvector2.add(u);
 				}
 			}
-			
+
 		}
 		return ergebnisvector2;
 	}
 
-
-	/**Diese Methode wird aufgerufen, wenn eine neue Umfrage erstellt wird. Es wird hier lediglich der Umfragenname übergeben, da wir diesen benötigen um ein
-	 * Umfrageeobjekt initial lebensfähig zu machen. Alle anderen Attribute können wir später vergeben.
+	/**
+	 * Diese Methode wird aufgerufen, wenn eine neue Umfrage erstellt wird. Es wird
+	 * hier lediglich der Umfragenname übergeben, da wir diesen benötigen um ein
+	 * Umfrageeobjekt initial lebensfähig zu machen. Alle anderen Attribute können
+	 * wir später vergeben.
+	 * 
 	 * @author alina
 	 */
 
-	public Umfrage createUmfrage(String umfragenname) throws IllegalArgumentException { 
+	public Umfrage createUmfrage(String umfragenname) throws IllegalArgumentException {
 
 		Umfrage umfrage = new Umfrage();
 		umfrage.setUmfragenname(umfragenname);
@@ -238,25 +279,31 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 
 	}
 
-	/**Diese Methode wird aufgerufen, wenn alle Vota zu einem Umfrageeintrag angezeigt werden sollen. Hierzu wird die Mapper Methode @link findVotumByUmfrageeintrag
-	 * aufgerufen, welche uns einen Vector von Objekten der Klasse <Votum> zurückgibt.
-	 * @author alina
-	 */
-
-	public Vector <Votum> showVotumOfUmfrageeintrag(Umfrageeintrag umfrageeintrag) throws IllegalArgumentException{
-		return this.votumMapper.findVotumByUmfrageeintrag(umfrageeintrag);
-
-	}
-
-
-	/**Diese Methode wird aufgerufen, wenn eine Umfrage bearbeitet wird. Hier kann der Name und die Beschreibung geändert werden.
-	 * Es wird die zu bearbeitende Umfrage übergeben. Diese wird in der DB gesucht und entsprechend geändert.
+	/**
+	 * Diese Methode wird aufgerufen, wenn alle Vota zu einem Umfrageeintrag
+	 * angezeigt werden sollen. Hierzu wird die Mapper Methode @link
+	 * findVotumByUmfrageeintrag aufgerufen, welche uns einen Vector von Objekten
+	 * der Klasse <Votum> zurückgibt.
 	 * 
 	 * @author alina
 	 */
 
-	public Umfrage editUmfrage(Umfrage umfrage, String umfragenname, String beschreibung) throws IllegalArgumentException { 
-		int umfrageID= umfrage.getID();
+	public Vector<Votum> showVotumOfUmfrageeintrag(Umfrageeintrag umfrageeintrag) throws IllegalArgumentException {
+		return this.votumMapper.findVotumByUmfrageeintrag(umfrageeintrag);
+
+	}
+
+	/**
+	 * Diese Methode wird aufgerufen, wenn eine Umfrage bearbeitet wird. Hier kann
+	 * der Name und die Beschreibung geändert werden. Es wird die zu bearbeitende
+	 * Umfrage übergeben. Diese wird in der DB gesucht und entsprechend geändert.
+	 * 
+	 * @author alina
+	 */
+
+	public Umfrage editUmfrage(Umfrage umfrage, String umfragenname, String beschreibung)
+			throws IllegalArgumentException {
+		int umfrageID = umfrage.getID();
 		Umfrage dbumfrage = umfrageMapper.findByID(umfrageID);
 		umfrage.setUmfragenname(umfragenname);
 		umfrage.setBeschreibung(beschreibung);
@@ -266,52 +313,85 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 
 	}
 
-	/*Diese Methode realisiert das Löschen einer Umfrage. Hier wird auch die Löschweitergabe realisiert. Unserer Logik nach
-	 * besteht eine Umfrage aus Umfrageeinträgen. Votum-Objekte können wiederum Umgfrageeinträgen zugehörig sein.
-	 * Wird eine Umfrage gelöscht, so müssen auch die Umfrageeinträge und deren
-	 * Votum-Objekte gelöscht werden.
+	/*
+	 * Diese Methode realisiert das Löschen einer Umfrage. Hier wird auch die
+	 * Löschweitergabe betrachtet. Unserer Logik nach besteht eine Umfrage aus
+	 * Umfrageeinträgen. Votum-Objekte können wiederum Umgfrageeinträgen zugehörig
+	 * sein. Wird eine Umfrage gelöscht, so müssen auch die Umfrageeinträge und
+	 * deren Votum-Objekte gelöscht werden.
+	 * 
 	 * @author alina
 	 */
 
-	public void deleteUmfrage(Umfrage umfrage) throws IllegalArgumentException{ 
+	public void deleteUmfrage(Umfrage umfrage) throws IllegalArgumentException {
 
-		// Wir suchen alle Umfrageeinträge, die zu dieser Umfrage ghehören und speichern diese in einem Zwischenvector
-		Vector <Umfrageeintrag> vectorumfrageeinträge = umfrageeintragMapper.findByUmfrage(umfrage);
+		// Wir suchen alle Umfrageeinträge, die zu dieser Umfrage ghehören und speichern
+		// diese in einem Zwischenvector
 
-		/**Wenn es Umfrageeinträge gab, suchen wir für diese Umfrageeinträge die zugehörigen Votum-Objekte und speichern diese wieder in einer
-		 * Zwischenvariable vom Typ Vector. Wir iterieren anschließend durch diesen Vector und löschen alle Votum-Objekte in der Datenbank
+		Vector<Umfrageeintrag> vectorumfrageeinträge = umfrageeintragMapper.findByUmfrage(umfrage);
+
+		/**
+		 * Wir iterieren durch den Vector mit Umfrageeinträgen und rufen für jeden die Methode deleteUmfrageeintrag() auf.
 		 */
 
+		if (vectorumfrageeinträge != null) {
+			for (Umfrageeintrag umfrageeintrag : vectorumfrageeinträge) {
 
-		if(vectorumfrageeinträge!= null) {
-			for(Umfrageeintrag umfrageeintrag: vectorumfrageeinträge) {
-				Vector <Votum> vectorvotum = votumMapper.findVotumByUmfrageeintrag(umfrageeintrag);
-				if(vectorvotum!= null) {
+				deleteUmfrageeintrag(umfrageeintrag);
 
-					for(Votum votum: vectorvotum) {
-						votumMapper.delete(votum);
-
-					}
-					//Wir iterieren durch den Vector mit Umfrageeinträgen und löschen diese in der Datenbank
-					umfrageeintragMapper.delete(umfrageeintrag);
+			}
+		}
+		// Zuletzt löschen wir unsere übergebene Umfrage aus der Datenbank
+		umfrageMapper.delete(umfrage);
+	}
 
 
 
-				}}
-			// Zuletzt löschen wir unsere übergebene Umfrage aus der Datenbank
-			umfrageMapper.delete(umfrage);
+	/*
+	 * Diese Methode realisiert das Löschen eines Umfrageeeintrags. Hier wird auch die
+	 * Löschweitergabe betrachtet. Unserer Logik nach besteht eine Umfrage aus
+	 * Umfrageeinträgen. Votum-Objekte können wiederum Umgfrageeinträgen zugehörig
+	 * sein. Wird ein Umfrageeintrag gelöscht, so müssen auch deren Votum-Objekte gelöscht werden.
+	 * 
+	 * @author alina
+	 */
+
+	public void deleteUmfrageeintrag(Umfrageeintrag umfrageeintrag) throws IllegalArgumentException {
+		/**
+		 * Wir suchen alle Votum-Objekte zu diesem Umfrageeintrag und speicehern diese
+		 * in einem Vector. Anschließend iterieren wir durch diesen und rufen für jedes Votum-Objekt die 
+		 * deleteVotum()-Methode auf, welche dieses löscht,
+		 */
+		Vector <Votum> votumvector = votumMapper.findVotumByUmfrageeintrag(umfrageeintrag);
+		if (votumvector!= null) {
+			for(Votum votum: votumvector) {
+				deleteVotum(votum);
+			}
+			//Zuletzt löschen wir den übergebenen Umfrageeintrag aus der Datenbank
+			umfrageeintragMapper.delete(umfrageeintrag);
 		}
 
 	}
 
+	/*
+	 * Diese Methode realisiert das Löschen eines Votumobjekts.
+	 * 
+	 * @author alina
+	 */
+	public void deleteVotum(Votum votum) throws IllegalArgumentException {
+
+		//Hier wird das übergebene Votum-Objekt aus der Datenbank gelöscht.
+		votumMapper.delete(votum);
+	}
 	/*
 	 * ***************************************************************************
 	 * ABSCHNITT, Beginn: Methoden für Votum und Umfrageeintrag -Objekte
 	 * ***************************************************************************
 	 */
 
-
-	/**Diese Methode wird aufgerufen, wenn ein Nutzer für einen Umfrageeintrag abstimmt, das heißt ein Votum abgibt. 
+	/**
+	 * Diese Methode wird aufgerufen, wenn ein Nutzer für einen Umfrageeintrag
+	 * abstimmt, das heißt ein Votum abgibt.
 	 * 
 	 * @author alina
 	 */
@@ -326,123 +406,112 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 
 	}
 
-	/**Diese Methode wird aufgerufen, wenn wir alle Umfrageeinträge und deren Vota anzeigen möchten. Wir übergeben eine Umfrage, deren Ergebnisse wir darstellen möchten.
-	 * Wir erhalten die Umfrageeinträge der Umfrage zurück. 
+	/**
+	 * Diese Methode wird aufgerufen, wenn wir alle Umfrageeinträge und deren Vota
+	 * anzeigen möchten. Wir übergeben eine Umfrage, deren Ergebnisse wir darstellen
+	 * möchten. Wir erhalten die Umfrageeinträge der Umfrage zurück.
 	 * 
 	 * @author alina
 	 */
-	public Vector <Umfrageeintrag> umfrageergebnisseAnzeigen(Umfrage umfrage) throws IllegalArgumentException {
+	public Vector<Umfrageeintrag> umfrageergebnisseAnzeigen(Umfrage umfrage) throws IllegalArgumentException {
 		// Zunächst erstellen wir einen leeren Vector
-		Vector <Umfrageeintrag> umfrageeinträge = new Vector <Umfrageeintrag>();
-		// In den folgenden drei Variablen positiv, negativ und egal wird die Anzahl der verschiedenen Vota auf einen Umfrageeintrag festgehalten.
+		Vector<Umfrageeintrag> umfrageeinträge = new Vector<Umfrageeintrag>();
+		// In den folgenden drei Variablen positiv, negativ und egal wird die Anzahl der
+		// verschiedenen Vota auf einen Umfrageeintrag festgehalten.
 		int positiv = 0;
 		int negativ = 0;
-		int egal =  0;
-		//Nun suchen wir alle Umfrageeinträge der übergegebenen Umfrage
+		int egal = 0;
+		// Nun suchen wir alle Umfrageeinträge der übergegebenen Umfrage
 		umfrageeinträge = umfrageeintragMapper.findByUmfrage(umfrage);
-		//Wir iterieren durch die Umfrageeinträge durch und suchen die Votum-Objekte
-		for (Umfrageeintrag eintrag: umfrageeinträge) {
-			//Diese speichern wir wieder in einem Vector
-			Vector <Votum> zwischenvector = votumMapper.findVotumByUmfrageeintrag(eintrag);
-			/** Wir iterieren durch den Vector mit Votum-Objekten und ermitteln jeweils, ob das Votum positiv, negativ oder neutral war.
-			 * Diese Ergebnisse speichern wir uns. Wir möchten die Ergebnisse neben dem jeweiligen Umfrageeintrag anzeigen. 
+		// Wir iterieren durch die Umfrageeinträge durch und suchen die Votum-Objekte
+		for (Umfrageeintrag eintrag : umfrageeinträge) {
+			// Diese speichern wir wieder in einem Vector
+			Vector<Votum> zwischenvector = votumMapper.findVotumByUmfrageeintrag(eintrag);
+			/**
+			 * Wir iterieren durch den Vector mit Votum-Objekten und ermitteln jeweils, ob
+			 * das Votum positiv, negativ oder neutral war. Diese Ergebnisse speichern wir
+			 * uns. Wir möchten die Ergebnisse neben dem jeweiligen Umfrageeintrag anzeigen.
 			 * 
 			 * 
 			 */
-			for(Votum votum: zwischenvector) {
-				if(votum.getIstMöglicherTermin()== true) {
-					positiv +=1;
+			for (Votum votum : zwischenvector) {
+				if (votum.getIstMöglicherTermin() == true) {
+					positiv += 1;
 
-				}
-				else if(votum.getIstMöglicherTermin() == false) {
-					negativ+=1;
+				} else if (votum.getIstMöglicherTermin() == false) {
+					negativ += 1;
 				}
 
-				else if(votum.getIstMöglicherTermin()==null) {
-					egal+=1;
+				else if (votum.getIstMöglicherTermin() == null) {
+					egal += 1;
 				}
 			}
-
 
 		}
 		return umfrageeinträge;
 	}
 
-	/**Diese Methode wird aufgerufen, wenn wir den bestmöglichen Termin einer Umfrage anzeigen möchten. Wir übergeben eine Umfrage, deren Ergebnisse wir darstellen möchten.
-	 * Wir erhalten den bestmöglichen Termin zurück. 
+	/**
+	 * Diese Methode wird aufgerufen, wenn wir den bestmöglichen Termin einer
+	 * Umfrage anzeigen möchten. Wir übergeben eine Umfrage, deren Ergebnisse wir
+	 * darstellen möchten. Wir erhalten den bestmöglichen Termin zurück.
 	 * 
 	 * @author alina
 	 */
 	public Umfrageeintrag bestesErgebnisErmitteln(Umfrage umfrage) throws IllegalArgumentException {
 
 		// Zunächst erstellen wir einen leeren Vector
-		Vector <Umfrageeintrag> umfrageeinträge = new Vector <Umfrageeintrag>();
+		Vector<Umfrageeintrag> umfrageeinträge = new Vector<Umfrageeintrag>();
 
-		// In den folgenden drei Variablen positiv, negativ und egal wird die Anzahl der verschiedenen Vota auf einen Umfrageeintrag festgehalten.
+		// In den folgenden drei Variablen positiv, negativ und egal wird die Anzahl der
+		// verschiedenen Vota auf einen Umfrageeintrag festgehalten.
 		int positiv = 0;
 		int negativ = 0;
-		int egal =  0;
+		int egal = 0;
 
-		//Nun suchen wir alle Umfrageeinträge der übergegebenen Umfrage
+		// Nun suchen wir alle Umfrageeinträge der übergegebenen Umfrage
 
 		umfrageeinträge = umfrageeintragMapper.findByUmfrage(umfrage);
 
-		//Wir iterieren durch die Umfrageeinträge durch und suchen die Votum-Objekte
-		for (Umfrageeintrag eintrag: umfrageeinträge) {
+		// Wir iterieren durch die Umfrageeinträge durch und suchen die Votum-Objekte
+		for (Umfrageeintrag eintrag : umfrageeinträge) {
 
-			//Diese speichern wir wieder in einem Vector
-			Vector <Votum> zwischenvector = votumMapper.findVotumByUmfrageeintrag(eintrag);
+			// Diese speichern wir wieder in einem Vector
+			Vector<Votum> zwischenvector = votumMapper.findVotumByUmfrageeintrag(eintrag);
 
-			/** Wir iterieren durch den Vector mit Votum-Objekten und ermitteln jeweils, ob das Votum positiv, negativ oder neutral war.
-			 * Diese Ergebnisse speichern wir uns. Wir möchten die Ergebnisse neben dem jeweiligen Umfrageeintrag anzeigen. 
+			/**
+			 * Wir iterieren durch den Vector mit Votum-Objekten und ermitteln jeweils, ob
+			 * das Votum positiv, negativ oder neutral war. Diese Ergebnisse speichern wir
+			 * uns. Wir möchten die Ergebnisse neben dem jeweiligen Umfrageeintrag anzeigen.
 			 * 
 			 * 
 			 */
-			for(Votum votum: zwischenvector) {
-				if(votum.getIstMöglicherTermin()== true) {
-					positiv +=1;
+			for (Votum votum : zwischenvector) {
+				if (votum.getIstMöglicherTermin() == true) {
+					positiv += 1;
 					eintrag.setPositiveAbstimmungen(positiv);
 
-				}
-				else if(votum.getIstMöglicherTermin() == false) {
-					negativ+=1;
+				} else if (votum.getIstMöglicherTermin() == false) {
+					negativ += 1;
 				}
 
-				else if(votum.getIstMöglicherTermin()==null) {
-					egal+=1;
+				else if (votum.getIstMöglicherTermin() == null) {
+					egal += 1;
 				}
 			}
-			for (Umfrageeintrag eintrag2: umfrageeinträge) {
-				Integer abst= eintrag2.getPositiveAbstimmungen();
-				Vector <Integer> einträge = new Vector<Integer>();
+			for (Umfrageeintrag eintrag2 : umfrageeinträge) {
+				Integer abst = eintrag2.getPositiveAbstimmungen();
+				Vector<Integer> einträge = new Vector<Integer>();
 				einträge.add(abst);
 				int max = 0;
-				for(int i = 0; i < einträge.size(); i++) {    
-					if(einträge[0] > max)
+				for (int i = 0; i < einträge.size(); i++) {
+					if (einträge[0] > max)
 						max = einträge[i];
 				}
 				return max;
 
-
 			}
-
 
 		}
 
-	}
-
-
-	@Override
-	public Nutzer createNutzer(Nutzer nutzer) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public Gruppe createGruppe(Gruppe gruppe) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-}
+	}}

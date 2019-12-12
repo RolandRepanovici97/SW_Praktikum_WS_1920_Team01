@@ -53,5 +53,11 @@ public interface KinoBesuchsplanung extends RemoteService {
 	public Vector <Umfrageeintrag> umfrageergebnisseAnzeigen(Umfrage umfrage);
 
 	public Umfrageeintrag bestesErgebnisErmitteln(Umfrage umfrage);
+	
+	public void deleteGruppe(Gruppe gruppe);
+	
+	public void deleteUmfrageeintrag(Umfrageeintrag umfrageeintrag);
+	
+	public void deleteVotum(Votum votum);
 
 }

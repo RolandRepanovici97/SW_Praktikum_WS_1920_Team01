@@ -181,7 +181,6 @@ public class UmfrageMapper extends OwnedBusinessObjectMapper {
 		return vectorumfrage;
 
 	}
-
 	/**Aktualisieren eines Umfrageobjekts in der Datenbank. Achtung: Es können nicht alle Attribute aktualisiert werden.
 	 * @param umfrage
 	 * @return Ein (überarbeitetes) Objekt der Klasse <Umfrage>

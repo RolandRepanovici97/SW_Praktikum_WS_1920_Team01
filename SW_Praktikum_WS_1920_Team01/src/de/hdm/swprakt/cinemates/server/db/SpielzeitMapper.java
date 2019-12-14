@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 import java.util.Vector;
 
 import de.hdm.swprakt.cinemates.shared.bo.Film;
@@ -310,6 +311,54 @@ public Vector<Spielzeit> findSpielzeitenBySpielplan (Spielplan spielplan) {
 
 	return vectorspielzeit;
 }
+
+
+/**
+ * Suchen aller Spielzeit-Objekte, welche die Vorstellung eines Filmes repräsentieren.
+ *
+ *
+ *@param Objekt der Klasse <code>Film</code>
+ *@author alina
+ * 
+ */
+
+public Vector<Spielzeit> findSpielzeitenByFilmAndByDate (Film film, Date datum) {
+
+	// Verbindung zur Datenbank aufbauen.
+
+	Connection con = DBConnection.connection();
+	// Neuen Vector instantiieren, in welchem Film-Objekte gespeichert werden.
+
+	Vector<Spielzeit> vectorspielzeit = new Vector<Spielzeit>();
+	try {
+
+		// Leeres SQL-Statement (JDBC) anlegen
+		Statement stmt = con.createStatement();
+		ResultSet rs = stmt.executeQuery(
+				"SELECT * FROM 'spielzeit' WHERE film_id= " + film.getID() + "AND datum = "+ datum + "ORDER BY `spielzeit_id`");
+
+		/*
+		 * Befüllen des result sets
+		 */
+		while (rs.next()) {
+			// Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt
+			Spielzeit sz = new Spielzeit();
+			sz.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+			sz.setID(rs.getInt("spielzeit_id"));
+			sz.setID(rs.getInt("film_id"));
+			sz.setID(rs.getInt("bo_id"));
+			sz.setZeitpunkt( dc.convertDatumUndUhrzeitToDate(rs.getDate("Datum"),rs.getTime("Uhrzeit")));
+
+			vectorspielzeit.add(sz);
+
+		}
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+
+	return vectorspielzeit;
+}
+
 
 /** Dies ist eine Hilfsmethode. Sie ermöglicht uns, die bo_id eines OwnedBusinessObjects zu ermitteln.
  * 

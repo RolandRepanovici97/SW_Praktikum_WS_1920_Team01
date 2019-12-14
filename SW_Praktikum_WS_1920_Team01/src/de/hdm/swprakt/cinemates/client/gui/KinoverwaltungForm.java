@@ -18,6 +18,8 @@ import com.google.gwt.view.client.ListDataProvider;
 import de.hdm.swprakt.cinemates.client.ClientSideSettings;
 import de.hdm.swprakt.cinemates.shared.KinoAdministrationAsync;
 import de.hdm.swprakt.cinemates.shared.bo.Kino;
+import de.hdm.swprakt.cinemates.shared.bo.Kinokette;
+import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 
 public class KinoverwaltungForm extends VerticalPanel{
 
@@ -38,6 +40,7 @@ public class KinoverwaltungForm extends VerticalPanel{
 	VerticalPanel detailsPanel = new VerticalPanel();
 	
 	KinoAdministrationAsync kaa = ClientSideSettings.getkinoAdministration();
+	
 	
 	
 	public KinoverwaltungForm() {
@@ -88,7 +91,15 @@ public class KinoverwaltungForm extends VerticalPanel{
 	 * Callback wird benötigt, um das Kino zu erstellen
 	 */
 	private class KinoCreationCallback implements AsyncCallback<Kino> {
-
+		
+		Kinokette kinokette = null;
+		
+		KinoCreationCallback(Kinokette kk) {
+			kinokette = kk;
+		}
+		
+		
+		
 		@Override
 		public void onFailure(Throwable caught) {
 			Window.alert("Das Kino konnte nicht erstellt werden");
@@ -116,9 +127,46 @@ public class KinoverwaltungForm extends VerticalPanel{
 	private class kinoanlegenClickHandler implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			kaa.createKino(kinoname.getValue(), kinobeschreibung.getValue(), kinoadresse.getValue(), new KinoCreationCallback());
-			
+			kaa.createKino(kinoname.getValue(), kinobeschreibung.getValue(), kinoadresse.getValue(), new KinoCreationCallback(null));
+		
 		}
+		
+		
+		
+	
+		/**
+		 * Callback wird benötigt, um das Kino zu löschen
+		 */
+		private class KinoDeleteCallback implements AsyncCallback<Kino> {
+			
+			Kinokette kinokette = null;
+			
+			KinoDeleteCallback(Kinokette kk) {
+				kinokette = kk;
+			}
+			
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Das Kino konnte nicht enfernt werden");
+
+			}
+
+			@Override
+			public void onSuccess(Kino kino) {
+			
+
+			}
+		}
+		
+		private class kinoentfernenClickHandler implements ClickHandler{
+			@Override
+			public void onClick(ClickEvent event) {
+	//			kaa.deleteKino( new KinoCreationCallback(null));
+			}
+		}
+		
+		
 		
 	}
 	

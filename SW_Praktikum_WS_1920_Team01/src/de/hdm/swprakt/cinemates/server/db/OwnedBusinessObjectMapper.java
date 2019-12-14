@@ -166,7 +166,7 @@ public class OwnedBusinessObjectMapper {
 		
 		
 	
-	public int getOwnerOf (OwnedBusinessObject obo) {
+	public int getOwnerIDOf (OwnedBusinessObject obo) {
 		
 		Connection con = DBConnection.connection();
 		

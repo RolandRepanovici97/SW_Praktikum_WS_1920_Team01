@@ -333,7 +333,7 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 	 * Die Mapper Methode findKinosByKinokette wird aufgerufen.
 	 */
 
-	public Vector <Kino> showAllKinoOfKinokette(Kinokette kinokette) {
+	public Vector <Kino> getAllKinoOfKinokette(Kinokette kinokette) {
 		
 		return this.kinoMapper.findKinosByKinokette(kinokette);
 	
@@ -427,14 +427,13 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 
 
 
-//	public void saveSpielplan(Kino kino) throws IllegalArgumentException {
-//
-//		Spielplan spielplan = spielplanMapper.findByKino(kino);
-//		this.spielplanMapper.update(spielplan);
-//		
-//}
-
-
+	/**
+	 * Speichern eines Spielplans.
+	 */
+	
+	public void saveSpielplan(Spielplan sp) throws IllegalArgumentException {
+		spielplanMapper.update(sp);
+	}
 
 
 
@@ -453,14 +452,14 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 
 
 	/**
-	 * Bearbeiten des Nutzers
+	 * Speichern des Nutzers
 	 * 
 	 * @param nutzer
 	 * @return
 	 * @throws IllegalArgumentException
 	 */
 
-	public Nutzer editNutzer(Nutzer nutzer) throws IllegalArgumentException {  //Nutzername übergeben 
+	public Nutzer saveNutzer(Nutzer nutzer) throws IllegalArgumentException {  //Nutzername übergeben 
 		return this.nutzerMapper.update(nutzer);
 		
 	}

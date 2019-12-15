@@ -156,6 +156,17 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	}
 
 
+	/**
+	 * Diese Methode wird aufgerufen, wenn ein Nutzerobjekt in der Datenbank gespeichert werden soll.
+	 * @param gruppe
+	 * @throws IllegalArgumentException
+	 * @author alina
+	 */
+
+
+	public void save(Nutzer nutzer) throws IllegalArgumentException {
+		this.nutzerMapper.update(nutzer);
+	}
 
 	/*
 	 * ***************************************************************************
@@ -218,7 +229,7 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 * @author alina
 	 */
 	public Nutzer getOwnerOfGruppe(Gruppe gruppe) throws IllegalArgumentException {
-		int ownerid= this.nutzerMapper.getOwnerOf(gruppe);
+		int ownerid= this.gruppeMapper.getOwnerIDOf(gruppe);
 		Nutzer nutzer = this.nutzerMapper.findByID(ownerid);
 		return nutzer;
 

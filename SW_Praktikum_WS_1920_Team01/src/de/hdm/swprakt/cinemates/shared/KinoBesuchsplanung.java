@@ -8,6 +8,7 @@ import java.util.Vector;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
+import de.hdm.swprakt.cinemates.shared.bo.Film;
 import de.hdm.swprakt.cinemates.shared.bo.Gruppe;
 import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 import de.hdm.swprakt.cinemates.shared.bo.Umfrage;
@@ -36,7 +37,9 @@ public interface KinoBesuchsplanung extends RemoteService {
 
 	public Nutzer createNutzer(Nutzer nutzer);
 
-	public Gruppe createGruppe(Gruppe gruppe);
+	public void save(Nutzer nutzer);
+
+	public void save(Gruppe gruppe);
 
 	public Vector <Umfrage> showAllUmfrage();
 
@@ -53,11 +56,33 @@ public interface KinoBesuchsplanung extends RemoteService {
 	public Vector <Umfrageeintrag> umfrageergebnisseAnzeigen(Umfrage umfrage);
 
 	public Umfrageeintrag bestesErgebnisErmitteln(Umfrage umfrage);
+
+	public void deleteUmfrageeintrag(Umfrageeintrag umfrageeintrag);
+
+	public void deleteVotum(Votum votum);
+
+	public Vector <Gruppe>getAllGruppen();
+
+	public Vector <Gruppe> getAllGruppenOfNutzer(Nutzer nutzer);
+
+	public Vector <Gruppe> getAllGruppenOfUmfrage(Umfrage umfrage);
+
+	public Nutzer getOwnerOfGruppe(Gruppe gruppe);
+
+	public void mitgliedEntfernen(Nutzer nutzer, Gruppe gruppe);
+
+	public Gruppe mitgliedHinzufügen(Nutzer nutzer, Gruppe gruppe);
+
+	public Gruppe createGruppe(Nutzer nutzer, String gruppenname, Vector<Nutzer> gruppenmitglieder);
 	
 	public void deleteGruppe(Gruppe gruppe);
 	
-	public void deleteUmfrageeintrag(Umfrageeintrag umfrageeintrag);
+	public Umfrage save(Umfrage umfrage);
 	
-	public void deleteVotum(Votum votum);
-
+	public Vector<Umfrage> showAllUmfragenOfGruppe(Gruppe gruppe);
+	
+	public Vector<Umfrage> showAllUmfrageOfNutzer(Nutzer nutzer);
+	
+	public Vector<Umfrage> showAllUmfragenOFilm(Film film);
+	
 }

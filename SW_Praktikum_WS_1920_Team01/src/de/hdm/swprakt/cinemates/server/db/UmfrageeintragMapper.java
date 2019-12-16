@@ -80,7 +80,7 @@ public class UmfrageeintragMapper {
 		try {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM umfrageeintrag WHERE umfrageeintrag_id = " + id);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `umfrageeintrag` WHERE (`umfrageeintrag_id` = " + id + ")");
 
 			/* Da ID Primaerschlüssel ist, kann max. nur ein Tupel zurückgegeben werden.
 			 * Prüfe, ob ein Ergebnis vorliegt.
@@ -89,8 +89,8 @@ public class UmfrageeintragMapper {
 				// Ergebnis-Tupel in Objekt umwandeln
 				Umfrageeintrag umfrageeintrag = new Umfrageeintrag();
 				umfrageeintrag.setID(rs.getInt("umfrageeintrag_id"));
-				umfrageeintrag.setKinoID(rs.getInt("kino_id"));
 				umfrageeintrag.setUmfrageID(rs.getInt("umfrage_id"));
+				umfrageeintrag.setKinoID(rs.getInt("kino_id"));
 				umfrageeintrag.setSpielzeitID(rs.getInt("spielzeit_id"));
 
 
@@ -110,7 +110,7 @@ public class UmfrageeintragMapper {
 	 */
 
 
-	public Vector <Umfrageeintrag> findAll(){
+	public Vector <Umfrageeintrag> findAllUmfrageeintrag(){
 		//Verbindung zur Datenbank aufbauen.
 		Connection con = DBConnection.connection();
 		//Neuen Vector instantiieren, in welchem Umfrageeintrag-Objekte gespeichert werden.
@@ -162,7 +162,7 @@ public class UmfrageeintragMapper {
 
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM `umfrageeintrag` WHERE (`umfrage_id` = " + umfrage.getID() + " )ORDER BY `umfrageeintrag_id`");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `umfrageeintrag` WHERE (`umfrage_id` = " + umfrage.getID() + " ) ORDER BY `umfrageeintrag_id`");
 
 			/* Befüllen des result sets
 			 */
@@ -208,7 +208,7 @@ public class UmfrageeintragMapper {
 
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM `umfrageeintrag` WHERE (`spielzeit_id` =" + spielzeit.getID() + " )ORDER BY `umfrageeintrag_id`");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `umfrageeintrag` WHERE (`spielzeit_id` =" + spielzeit.getID() + " ) ORDER BY `umfrageeintrag_id`");
 
 			/* Befüllen des result sets
 			 */
@@ -251,7 +251,7 @@ public class UmfrageeintragMapper {
 
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM `umfrageeintrag` WHERE (`kino_id` =" + kino.getID() + " )ORDER BY `umfrageeintrag_id`");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `umfrageeintrag` WHERE (`kino_id` =" + kino.getID() + " ) ORDER BY `umfrageeintrag_id`");
 
 			/* Befüllen des result sets
 			 */
@@ -301,8 +301,7 @@ public class UmfrageeintragMapper {
 			pstmt.setInt(2, umfrageeintrag.getUmfrageID());
 			pstmt.setInt(3, umfrageeintrag.getSpielzeitID());
 			pstmt.setInt(4, umfrageeintrag.getKinoID());
-			pstmt.setTimestamp(5, dc.aktuellerTimestamp());
-			umfrageeintrag.setErstellungszeitpunkt(dc.convertTimestampToDate(dc.aktuellerTimestamp()));
+			pstmt.setTimestamp(5, dc.convertJavaDateToSqlTimestamp(umfrageeintrag.getErstellungszeitpunkt()));
 			pstmt.executeUpdate();
 			return umfrageeintrag;
 
@@ -357,7 +356,7 @@ public class UmfrageeintragMapper {
 		try {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM `umfrageeintrag` WHERE (`umfrageeintrag_id` =" + umfrageeintrag.getID() + ")");
+			stmt.executeUpdate("DELETE FROM `umfrageeintrag` WHERE (`umfrageeintrag_id` = " + umfrageeintrag.getID() + ")");
 
 
 
@@ -368,6 +367,7 @@ public class UmfrageeintragMapper {
 
 
 	}
+	
 	public Vector <Umfrageeintrag> findUmfrageeintragOhneVotum (Nutzer nutzer) {
 
 		//Verbindung zur Datenbank aufbauen.
@@ -379,7 +379,7 @@ public class UmfrageeintragMapper {
 
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM umfrageeintrag JOIN votum WHERE (`votum_id` = NULL AND votum.nutzer_id = " + nutzer.getID() + "ORDER BY umfrageeintrag_id");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `votum` LEFT JOIN `umfrageeintrag` ON `votum`.`umfrageeintrag_id` = `umfrageeintrag`.`umfrageeintrag_id` LEFT JOIN `ownedbusinessobject` ON `votum`.`bo_id` = `ownedbusinessobject`.`bo_id` WHERE (`istMöglicherTermin` = NULL AND `ownedbusinessobject`.`owner_id` = " + nutzer.getID() + ") ORDER BY umfrageeintrag_id");
 			while (rs.next()) {
 				/** Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt.  Dazu wird ein Objekt der Klasse <code>Umfrageeintrag</code> angelegt und dessen Attribute werden gesetzt. 
 						Dies wird wiederholt. Das Ergebnis wird jeweils einem Vector hinzugefügt, welchen wir am Ende zurückgeben.
@@ -392,11 +392,13 @@ public class UmfrageeintragMapper {
 				umfrageeintrag.setUmfrageID(rs.getInt("umfrage_id"));
 				umfrageeintrag.setSpielzeitID(rs.getInt("spielzeit_id"));
 				vectorumfrageeintrag.add(umfrageeintrag);
-				return vectorumfrageeintrag;
-			}}
+			}
+		}
 
 		catch(SQLException e) {
 			e.printStackTrace();
 		}
+		
+		return vectorumfrageeintrag;
 	}
 }

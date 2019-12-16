@@ -75,7 +75,7 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 		try {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM votum WHERE votum_id=" + id + "ORDER BY votum_id");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `votum` LEFT JOIN `ownedbusinessobject` ON `votum`.`bo_id` = `ownedbusinessobject`.`bo_id`  WHERE (`votum_id` = " + id + ") ORDER BY `votum_id`");
 
 			/* Da ID Primaerschlüssel ist, kann max. nur ein Tupel zurückgegeben werden.
 			 * Prüfe, ob ein Ergebnis vorliegt.
@@ -116,7 +116,7 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 		try {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM votum ORDER BY votum_id");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `votum` LEFT JOIN `ownedbusinessobject` ON `votum`.`bo_id` = `ownedbusinessobject`.`bo_id` ORDER BY `votum_id`");
 
 			/* Befüllen des result sets
 			 */
@@ -132,9 +132,6 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 				votum.setUmfrageeintragID(rs.getInt("umfrageeintrag_id"));
 				vectorvotum.add(votum);
 
-
-
-				return vectorvotum;
 			}
 
 
@@ -142,7 +139,7 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 			e.printStackTrace();
 		}
 
-		return null;
+		return vectorvotum;
 	}
 
 	/**
@@ -152,7 +149,7 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 	 */
 
 
-	public Vector <Votum> findVotumByUmfrageeintrag(Umfrageeintrag umfrageeintrag) {
+	public Vector <Votum> findVotumByUmfrageeintrag (Umfrageeintrag umfrageeintrag) {
 		//Verbindung zur Datenbank aufbauen.
 		Connection con = DBConnection.connection();
 		// Neuen Vector instantiieren, in welchem unsere Votum-Objekte gespeichert werden
@@ -160,10 +157,9 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 		try {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM votum WHERE votum.umfrageeintrag_id="+
-					umfrageeintrag.getID()+ "ORDER BY umfrageeintrag_id");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `votum` LEFT JOIN `ownedbusinessobject` ON `votum`.`bo_id` = `ownedbusinessobject`.`bo_id` WHERE `votum`.`umfrageeintrag_id` = " + umfrageeintrag.getID() + ") ORDER BY `votum_id`");
 
-			if (rs.next()) {
+			while (rs.next()) {
 				/** Es werden für jedes Votum-Objekt die nötigen Attribute gesetzt.Dazu wird ein Objekt der Klasse <code>Votum</code> angelegt und dessen Attribute werden gesetzt. 
 				Dies wird wiederholt. Das Ergebnis wird jeweils einem Vector hinzugefügt, welchen wir am Ende zurückgeben. */
 
@@ -173,11 +169,7 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 				votum.setOwnerID(rs.getInt("bo_id"));
 				votum.setIstMöglicherTermin(rs.getBoolean("istMöglicherTermin"));
 				votum.setUmfrageeintragID(rs.getInt("umfrageeintrag_id"));
-				vectorvotum.add(votum);
-
-
-
-				return vectorvotum;
+				vectorvotum.add(votum);	
 
 			}
 
@@ -186,7 +178,7 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 			e.printStackTrace();
 		}
 
-		return null;
+		return vectorvotum;
 	}
 
 	/**
@@ -213,14 +205,14 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT MAX(votum_id) AS maxid FROM votum");
+			ResultSet rs = stmt.executeQuery("SELECT MAX(votum_id) AS `maxid` FROM `votum`");
 
 			//Befüllen des Result-Sets
 			if (rs.next()) {
 				votum.setID(rs.getInt("maxid") + 1);
 			}	
 
-			PreparedStatement pstmt = con.prepareStatement("INSERT INTO votum(votum_id, bo_id, istMöglicherTermin,umfrageeintrag_id VALUES (?, ?, ?, ?) ");
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO `votum` (`votum_id`, `bo_id`, `istMöglicherTermin` , `umfrageeintrag_id`) VALUES (?, ?, ?, ?) ");
 			pstmt.setInt(1,votum.getID());
 			pstmt.setInt(2, bo_id);
 			pstmt.setBoolean(2, votum.getIstMöglicherTermin());
@@ -280,10 +272,11 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 
 		try {
 
-			PreparedStatement pstmt = con.prepareStatement("UPDATE votum SET istMöglicherTermin =?");
+			PreparedStatement pstmt = con.prepareStatement("UPDATE `votum` SET istMöglicherTermin = ? WHERE (`votum_id` = ? ) "); 
 
 
 			pstmt.setBoolean(1,votum.getIstMöglicherTermin());
+			pstmt.setInt(2, votum.getID());
 
 			pstmt.executeUpdate();
 			return votum;
@@ -322,7 +315,8 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("DELETE FROM votum WHERE votum_id=" + votum.getID());
+			ResultSet rs = stmt.executeQuery("DELETE FROM `votum` WHERE `votum_id` = " + votum.getID());
+			
 			con.commit();
 
 		} 
@@ -356,33 +350,6 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 	}
 
 
-
-
-	/**
-	 * Löschen der Votum-Objekte, welche zu einem Umfrageeintrag gehören.
-	 * @param Objekt der Klasse <code>Umfrageeintrag</code>
-	 */
-
-	public void deleteVotumByUmfrage (Umfrageeintrag umfrageeintrag) {
-
-		//Verbindung zur Datenbank aufbauen.
-
-		Connection con = DBConnection.connection();
-
-		try {
-			// Leeres SQL-Statement (JDBC) anlegen
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("DELETE FROM votum WHERE umfrageeintrag_id=" + umfrageeintrag.getID());
-
-
-
-		}
-		catch(SQLException e) {
-			e.printStackTrace();
-		}
-
-
-	}
 	/** Dies ist eine Hilfsmethode. Sie ermöglicht uns, die bo_id eines OwnedBusinessObjects zu ermitteln.
 	 * 
 	 * @param votum

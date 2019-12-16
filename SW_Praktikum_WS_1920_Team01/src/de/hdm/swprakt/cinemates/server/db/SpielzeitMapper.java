@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.Vector;
 
 import de.hdm.swprakt.cinemates.shared.bo.Film;
+import de.hdm.swprakt.cinemates.shared.bo.Gruppe;
 import de.hdm.swprakt.cinemates.shared.bo.Kinokette;
 import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 import de.hdm.swprakt.cinemates.shared.bo.OwnedBusinessObject;
@@ -78,13 +79,15 @@ public class SpielzeitMapper extends OwnedBusinessObjectMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM `spielzeit`LEFT JOIN `ownedbusinessobject` ON `spielzeit`.`bo_id` = `ownedbusinessobject`.`bo_id` ORDER BY `spielzeit_id`;");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `spielzeit` LEFT JOIN `ownedbusinessobject` ON `spielzeit`.`bo_id` = `ownedbusinessobject`.`bo_id` ORDER BY `spielzeit_id`;");
 
 			while(rs.next()) {
 				Spielzeit sz = new Spielzeit();
 				sz.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 				sz.setID(rs.getInt("spielzeit_id"));
-				sz.setZeitpunkt(rs.getDate("Uhrzeit"));
+				sz.setOwnerID(rs.getInt("owner_id"));
+				sz.setFilmID(rs.getInt("film_id"));
+				sz.setZeitpunkt(dc.convertDatumUndUhrzeitToDate(rs.getDate("Datum"), rs.getTime("Uhrzeit")));
 				spielzeit.add(sz);
 			}
 		}
@@ -105,14 +108,15 @@ public class SpielzeitMapper extends OwnedBusinessObjectMapper {
 
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(
-					"SELECT * FROM `spielzeit` LEFT JOIN `ownedbusinessobject` ON `spielzeit`.`bo_id` = `ownedbusinessobject`.`bo_id` WHERE spielzeit_id = \" + id + \" ORDER BY `spielzeit_id`");
+					"SELECT * FROM `spielzeit` LEFT JOIN `ownedbusinessobject` ON `spielzeit`.`bo_id` = `ownedbusinessobject`.`bo_id` WHERE ( `spielzeit_id` ="  + id + " ) ORDER BY `spielzeit_id`");
 
 			if (rs.next()) {
 				Spielzeit sz = new Spielzeit();
 				sz.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 				sz.setID(rs.getInt("spielzeit_id"));
 				sz.setOwnerID(rs.getInt("owner_id"));
-				sz.setZeitpunkt(rs.getDate("Uhrzeit"));
+				sz.setFilmID(rs.getInt("film_id"));
+				sz.setZeitpunkt(dc.convertDatumUndUhrzeitToDate(rs.getDate("Datum"), rs.getTime("Uhrzeit")));
 
 				return sz;
 			}
@@ -144,6 +148,7 @@ public class SpielzeitMapper extends OwnedBusinessObjectMapper {
 			 * 
 			 */
 			con.setAutoCommit(false);
+			
 			int bo_id = super.insert(spielzeit, con);
 
 			// Leeres SQL-Statement (JDBC) anlegen
@@ -155,13 +160,15 @@ public class SpielzeitMapper extends OwnedBusinessObjectMapper {
 				spielzeit.setID(rs.getInt("maxid") + 1);
 			}
 			PreparedStatement pstmt = con.prepareStatement(
-					"INSERT INTO `spielplan` (`spielzeit_id`, `spielplan_id`,`film_id`, `Datum` , `Uhrzeit`) VALUES (?, ?, ?, ?,?) ");
+					"INSERT INTO `spielzeit` (`spielzeit_id`, `bo_id`, `film_id`, `Datum` , `Uhrzeit`) VALUES (?, ?, ?, ?, ?) ");
 			pstmt.setInt(1, spielzeit.getID());
-			pstmt.setInt(2, spielzeit.getSpielplanID());
-			pstmt.setInt(3,spielzeit.getFilmID());
-			pstmt.setDate(4,dc.convertJavaDateToSQLDate(spielzeit.getZeitpunkt()));
+			pstmt.setInt(2, bo_id);
+			pstmt.setInt(3, spielzeit.getFilmID());
+			pstmt.setDate(4, dc.convertJavaDateToSQLDate(spielzeit.getZeitpunkt()));
 			pstmt.setTime(5, dc.convertJavaDateToSQLTime(spielzeit.getZeitpunkt()));
 			pstmt.executeUpdate();
+			
+			con.commit();
 
 
 
@@ -199,6 +206,40 @@ public class SpielzeitMapper extends OwnedBusinessObjectMapper {
 
 		return spielzeit;
 	}
+	
+	public void insertSpielzeitToSpielplan (int spielzeitid, int spielplanid) {
+		
+		Connection con = DBConnection.connection();
+
+		try {
+
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO `spielplan_spielzeit` (`spielzeit_id`, `spielplan_id`) VALUES (?, ?)");
+
+			pstmt.setInt(1, spielzeitid);
+			pstmt.setInt(2, spielplanid);
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void deleteSpielzeitFromSpielplan (int spielzeitid, int spielplanid) {
+		
+		Connection con = DBConnection.connection();
+
+		try {
+
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate("DELETE FROM `spielplan_spielzeit` WHERE (`spielzeit_id` = " + spielzeitid + " AND `spielplan_id` = " + spielplanid);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+
 
 	public Spielzeit update(Spielzeit spielzeit) {
 
@@ -210,6 +251,7 @@ public class SpielzeitMapper extends OwnedBusinessObjectMapper {
 					.prepareStatement("UPDATE `spielzeit` SET `Datum` = ?, `Uhrzeit` = ? WHERE `spielzeit_id` = ?");
 			pstmt.setDate(1, dc.convertJavaDateToSQLDate(spielzeit.getZeitpunkt()));
 			pstmt.setTime(2, dc.convertJavaDateToSQLTime(spielzeit.getZeitpunkt()));
+			pstmt.setInt(3,  spielzeit.getID());
 			pstmt.executeUpdate();
 			return spielzeit;
 
@@ -288,7 +330,7 @@ public class SpielzeitMapper extends OwnedBusinessObjectMapper {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(
-					"SELECT * FROM `Spielplan_Spielzeit`LEFT JOIN `spielzeit`ON `Spielplan_Spielzeit`.`spielzeit_id`= `Spielzeit`.`spielzeit_id` LEFT JOIN `ownedbusinessobject` ON `spielzeit`.`bo_id` = `ownedbusinessobject`.`bo_id`  WHERE (`spielplan_id` = " + spielplan.getID() + " ) ORDER BY `spielzeit_id`");
+					"SELECT * FROM `Spielplan_Spielzeit`LEFT JOIN `spielzeit` ON `Spielplan_Spielzeit`.`spielzeit_id`= `Spielzeit`.`spielzeit_id` LEFT JOIN `ownedbusinessobject` ON `spielzeit`.`bo_id` = `ownedbusinessobject`.`bo_id`  WHERE (`spielplan_id` = " + spielplan.getID() + " ) ORDER BY `spielzeit_id`");
 
 			/*
 			 * Befüllen des result sets
@@ -298,10 +340,9 @@ public class SpielzeitMapper extends OwnedBusinessObjectMapper {
 				Spielzeit sz = new Spielzeit();
 				sz.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 				sz.setID(rs.getInt("spielzeit_id"));
-				sz.setID(rs.getInt("film_id"));
-				sz.setID(rs.getInt("bo_id"));
-				sz.setZeitpunkt( dc.convertDatumUndUhrzeitToDate(rs.getDate("Datum"),rs.getTime("Uhrzeit")));
-
+				sz.setOwnerID(rs.getInt("owner_id"));
+				sz.setFilmID(rs.getInt("film_id"));
+				sz.setZeitpunkt(dc.convertDatumUndUhrzeitToDate(rs.getDate("Datum"), rs.getTime("Uhrzeit")));
 				vectorspielzeit.add(sz);
 
 			}
@@ -335,7 +376,7 @@ public class SpielzeitMapper extends OwnedBusinessObjectMapper {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(
-					"SELECT * FROM 'spielzeit' WHERE film_id= " + film.getID() + "AND datum = "+ datum + "ORDER BY `spielzeit_id`");
+					"SELECT * FROM 'spielzeit' WHERE film_id = " + film.getID() + " AND datum = " + dc.convertJavaDateToSQLDate(datum) + " ORDER BY `spielzeit_id`");
 
 			/*
 			 * Befüllen des result sets
@@ -345,11 +386,11 @@ public class SpielzeitMapper extends OwnedBusinessObjectMapper {
 				Spielzeit sz = new Spielzeit();
 				sz.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 				sz.setID(rs.getInt("spielzeit_id"));
-				sz.setID(rs.getInt("film_id"));
-				sz.setID(rs.getInt("bo_id"));
-				sz.setZeitpunkt( dc.convertDatumUndUhrzeitToDate(rs.getDate("Datum"),rs.getTime("Uhrzeit")));
-
+				sz.setOwnerID(rs.getInt("owner_id"));
+				sz.setFilmID(rs.getInt("film_id"));
+				sz.setZeitpunkt(dc.convertDatumUndUhrzeitToDate(rs.getDate("Datum"), rs.getTime("Uhrzeit")));
 				vectorspielzeit.add(sz);
+
 
 			}
 		} catch (SQLException e) {

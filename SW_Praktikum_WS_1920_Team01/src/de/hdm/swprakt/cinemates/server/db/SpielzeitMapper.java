@@ -239,19 +239,7 @@ public class SpielzeitMapper extends OwnedBusinessObjectMapper {
 		
 	}
 	
-	public void deleteSpielzeitenFromSpielplan (Spielplan spielplan) {
-		
-		Connection con = DBConnection.connection();
 
-		try {
-
-			Statement stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM `spielplan_spielzeit` WHERE `spielplan_id` = " + spielplan.getID());
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
 
 	public Spielzeit update(Spielzeit spielzeit) {
 

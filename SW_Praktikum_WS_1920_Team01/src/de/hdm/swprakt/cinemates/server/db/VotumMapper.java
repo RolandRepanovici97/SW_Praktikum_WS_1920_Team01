@@ -205,14 +205,14 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT MAX(votum_id) AS maxid FROM votum");
+			ResultSet rs = stmt.executeQuery("SELECT MAX(votum_id) AS `maxid` FROM `votum`");
 
 			//Befüllen des Result-Sets
 			if (rs.next()) {
 				votum.setID(rs.getInt("maxid") + 1);
 			}	
 
-			PreparedStatement pstmt = con.prepareStatement("INSERT INTO votum(votum_id, bo_id, istMöglicherTermin,umfrageeintrag_id VALUES (?, ?, ?, ?) ");
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO `votum` (`votum_id`, `bo_id`, `istMöglicherTermin` , `umfrageeintrag_id`) VALUES (?, ?, ?, ?) ");
 			pstmt.setInt(1,votum.getID());
 			pstmt.setInt(2, bo_id);
 			pstmt.setBoolean(2, votum.getIstMöglicherTermin());
@@ -272,10 +272,11 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 
 		try {
 
-			PreparedStatement pstmt = con.prepareStatement("UPDATE votum SET istMöglicherTermin =?");
+			PreparedStatement pstmt = con.prepareStatement("UPDATE `votum` SET istMöglicherTermin = ? WHERE (`votum_id` = ? ) "); 
 
 
 			pstmt.setBoolean(1,votum.getIstMöglicherTermin());
+			pstmt.setInt(2, votum.getID());
 
 			pstmt.executeUpdate();
 			return votum;
@@ -314,7 +315,8 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("DELETE FROM votum WHERE votum_id=" + votum.getID());
+			ResultSet rs = stmt.executeQuery("DELETE FROM `votum` WHERE `votum_id` = " + votum.getID());
+			
 			con.commit();
 
 		} 
@@ -348,33 +350,6 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 	}
 
 
-
-
-	/**
-	 * Löschen der Votum-Objekte, welche zu einem Umfrageeintrag gehören.
-	 * @param Objekt der Klasse <code>Umfrageeintrag</code>
-	 */
-
-	public void deleteVotumByUmfrage (Umfrageeintrag umfrageeintrag) {
-
-		//Verbindung zur Datenbank aufbauen.
-
-		Connection con = DBConnection.connection();
-
-		try {
-			// Leeres SQL-Statement (JDBC) anlegen
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("DELETE FROM votum WHERE umfrageeintrag_id=" + umfrageeintrag.getID());
-
-
-
-		}
-		catch(SQLException e) {
-			e.printStackTrace();
-		}
-
-
-	}
 	/** Dies ist eine Hilfsmethode. Sie ermöglicht uns, die bo_id eines OwnedBusinessObjects zu ermitteln.
 	 * 
 	 * @param votum

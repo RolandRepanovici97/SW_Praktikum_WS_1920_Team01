@@ -4,6 +4,7 @@
 package de.hdm.swprakt.cinemates.shared;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -31,9 +32,9 @@ public interface KinoAdministrationAsync {
 
 	void createKino(String kinoname, String adresse, String beschreibung, AsyncCallback<Kino> callback);
 
-	void editFilm(Film film, AsyncCallback<Film> callback);
+	
 
-	void editNutzer(Nutzer nutzer, AsyncCallback<Nutzer> callback);
+	
 
 	void editSpielplan(Spielplan spielplan, AsyncCallback<Void> callback);
 
@@ -48,6 +49,40 @@ public interface KinoAdministrationAsync {
 	void getAllFilme(AsyncCallback<Vector<Film>> callback);
 
 	void findAllSpielplan(AsyncCallback<Vector<Spielplan>> callback);
+
+	void createSpielzeit(int filmID, Date zeitpunkt, AsyncCallback<Spielzeit> callback);
+
+	void saveFilm(Film film, AsyncCallback<Void> callback);
+
+	void saveNutzer(Nutzer nutzer, AsyncCallback<Nutzer> callback);
+
+	void deleteSpielzeit(Spielzeit sz, AsyncCallback<Void> callback);
+
+	void getKinosOf(Kinokette kk, AsyncCallback<Vector<Kino>> callback);
+
+	void getAllKinokette(AsyncCallback<Vector<Kinokette>> callback);
+
+	void deleteKinokette(Kinokette kk, AsyncCallback<Void> callback);
+
+	void addKinoToKinokette(Kinokette kinokette, AsyncCallback<Kino> callback);
+
+	void getAllKinos(AsyncCallback<Vector<Kino>> callback);
+
+	void getSpielplanOf(Kino k, AsyncCallback<Spielplan> callback);
+
+	void getSpielzeitOf(Spielplan sp, AsyncCallback<Vector<Spielzeit>> callback);
+
+	void getAllKinoOfKinokette(Kinokette kinokette, AsyncCallback<Vector<Kino>> callback);
+
+	void saveKino(Kino k, AsyncCallback<Void> callback);
+
+	void getAllSpielzeiten(AsyncCallback<Vector<Spielzeit>> callback);
+
+	void getAllSpielplan(AsyncCallback<Vector<Spielplan>> callback);
+
+	void saveSpielplan(Spielplan spielplan, AsyncCallback<Void> callback);
+
+	
 
 	
 

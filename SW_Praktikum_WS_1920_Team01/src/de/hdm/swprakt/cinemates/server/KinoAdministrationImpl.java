@@ -132,8 +132,8 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 	 * Löschen eines Films 
 	 */
 
-	public void deleteFilm(Film f) throws IllegalArgumentException{
-		this.filmMapper.delete(f);
+	public void deleteFilm(Film film) throws IllegalArgumentException{
+		this.filmMapper.delete(film);
 	}
 
 
@@ -335,7 +335,7 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 	 * Die Mapper Methode findKinosByKinokette wird aufgerufen.
 	 */
 
-	public Vector <Kino> getAllKinoOfKinokette(Kinokette kinokette) {
+	public Vector <Kino> getAllKinoOfKinokette(Kinokette kinokette)throws IllegalArgumentException {
 
 		return this.kinoMapper.findKinosByKinokette(kinokette);
 

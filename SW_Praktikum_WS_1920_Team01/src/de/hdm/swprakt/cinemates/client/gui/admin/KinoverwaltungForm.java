@@ -39,7 +39,7 @@ public class KinoverwaltungForm extends VerticalPanel{
 	
 	VerticalPanel detailsPanel = new VerticalPanel();
 	
-	KinoAdministrationAsync kaa = ClientSideSettings.getkinoAdministration();
+	KinoAdministrationAsync kaa = ClientSideSettings.getKinoAdministration();
 	
 	
 	

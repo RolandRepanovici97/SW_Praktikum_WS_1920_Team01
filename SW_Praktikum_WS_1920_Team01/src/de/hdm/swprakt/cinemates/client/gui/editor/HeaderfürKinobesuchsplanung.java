@@ -1,7 +1,7 @@
 /**
  * 
  */
-package de.hdm.swprakt.cinemates.client.gui;
+package de.hdm.swprakt.cinemates.client.gui.editor;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -21,7 +21,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  * @version 1.0
  *
  */
-public class HeaderfürKinoAdministration extends HorizontalPanel {
+public class HeaderfürKinobesuchsplanung extends HorizontalPanel {
 
 	/* Diese privaten Attribute stellen Widgtes dar, deren Inhalte Variable sind. 
 	 * Sie werden benötigt, um die Inhalte im weiteren Verlauf sinnvolll zu struktutieren. 
@@ -47,7 +47,9 @@ public class HeaderfürKinoAdministration extends HorizontalPanel {
 		 * 
 		 */
 		adminButton = new Button("Kinoadministration");
+		adminButton.getElement().setId("adminbutton");
 		planerButton = new Button("Kinobesuchsplanung");
+		planerButton.getElement().setId("planerbutton");
 		nutzerbeschriftung = new Label("Nutzerkonto");
 
 		nutzerkontolistbox = new ListBox(true);
@@ -59,6 +61,7 @@ public class HeaderfürKinoAdministration extends HorizontalPanel {
 		nutzerkontolistbox2.addItem("Logout");
 		nutzerkontolistbox.setVisibleItemCount(2);
 		nutzerkontolistbox2.setVisibleItemCount(1);
+		nutzerkontolistbox2.getElement().setId("nutzerlistbox");
 		logo = new Image("images/CineMates Logo.jpg");
 		logo.setWidth("100px");
 
@@ -104,13 +107,15 @@ public class HeaderfürKinoAdministration extends HorizontalPanel {
 	 *
 	 */
 	private class AdminClickHandler implements ClickHandler{
+		
 
-		/** Der Nutzer soll zunächst auf die Seite der Kinobesuchsplanung geführt werden.
-		 *  Klickt er dann nochmals auf Button "Kinoadministration", so wird die Seite neu geladen.
+		/** Klickt der Nutzer auf den Button der mit "Kinoadministration" beschriftet ist,
+		 *  so wird er auf diese Seite weitergeleitet.
 		 */
+		
 		@Override
 		public void onClick(ClickEvent event) {
-			Window.Location.reload();
+			Window.Location.assign("KinoAdministration.html");
 
 
 
@@ -118,13 +123,13 @@ public class HeaderfürKinoAdministration extends HorizontalPanel {
 	}
 	private class PlanerClickHandler implements ClickHandler{
 
-		/** Klickt der Nutzer auf den Button der mit "Kinobesuchsplanung" beschriftet ist,
-		 *  so wird er auf diese Seite weitergeleitet.
+		/** Der Nutzer soll zunächst auf die Seite der Kinobesuchsplanung geführt werden.
+		 *  Klickt er dann nochmals auf Button "Kinobesuchsplanung", so wird die Seite neu geladen.
 		 */
 
 		@Override
 		public void onClick(ClickEvent event) {
-			Window.Location.assign("Kinobesuchsplanung.html");
+			Window.Location.reload();
 		}
 
 

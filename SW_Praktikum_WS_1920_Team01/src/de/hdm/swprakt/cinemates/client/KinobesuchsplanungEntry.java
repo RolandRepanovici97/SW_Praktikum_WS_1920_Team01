@@ -6,8 +6,8 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.swprakt.cinemates.client.gui.HeaderfürKinobesuchsplanung;
-import de.hdm.swprakt.cinemates.client.gui.Navigator;
+import de.hdm.swprakt.cinemates.client.gui.admin.Navigator;
+import de.hdm.swprakt.cinemates.client.gui.editor.HeaderfürKinobesuchsplanung;
 
 
 

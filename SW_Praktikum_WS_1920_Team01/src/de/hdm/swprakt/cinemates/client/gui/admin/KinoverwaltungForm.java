@@ -1,4 +1,4 @@
-package de.hdm.swprakt.cinemates.client.gui;
+package de.hdm.swprakt.cinemates.client.gui.admin;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;

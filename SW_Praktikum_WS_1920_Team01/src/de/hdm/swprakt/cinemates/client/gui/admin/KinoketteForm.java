@@ -1,4 +1,4 @@
-package de.hdm.swprakt.cinemates.client.gui;
+package de.hdm.swprakt.cinemates.client.gui.admin;
 
 import java.awt.event.MouseEvent;
 

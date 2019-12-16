@@ -1,4 +1,4 @@
-package de.hdm.swprakt.cinemates.client.gui;
+package de.hdm.swprakt.cinemates.client.gui.admin;
 
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -9,6 +9,8 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+
+import de.hdm.swprakt.cinemates.client.gui.editor.GruppenverwaltungForm;
 
 
 

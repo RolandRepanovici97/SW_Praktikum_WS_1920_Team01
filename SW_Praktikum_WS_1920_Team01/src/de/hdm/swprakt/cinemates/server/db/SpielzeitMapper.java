@@ -196,191 +196,191 @@ public class SpielzeitMapper extends OwnedBusinessObjectMapper {
 
 		}
 		//Zuletzt geben wir unser Votumobjekt zurück.
-		
+
 		return spielzeit;
 	}
 
-public Spielzeit update(Spielzeit spielzeit) {
+	public Spielzeit update(Spielzeit spielzeit) {
 
-	Connection con = DBConnection.connection();
+		Connection con = DBConnection.connection();
 
-	try {
-
-		PreparedStatement pstmt = con
-				.prepareStatement("UPDATE `spielzeit` SET `Datum` = ?, `Uhrzeit` = ? WHERE `spielzeit_id` = ?");
-		pstmt.setDate(1, dc.convertJavaDateToSQLDate(spielzeit.getZeitpunkt()));
-		pstmt.setTime(2, dc.convertJavaDateToSQLTime(spielzeit.getZeitpunkt()));
-		pstmt.executeUpdate();
-		return spielzeit;
-
-	} catch (SQLException e) {
-		e.printStackTrace();
-		return null;
-
-	}
-
-}
-
-/**
- * Löschen eines Spielzeit-Objekts in der Datenbank. Hier wird auch der die delete-Methode der Superklasse
- * <code>OwnedBusinessObject </code> aufgerufen. Das Spielzeitobjekt, welches auch ein OwnedBusinessObject ist,
- * wird auch aus der Tabelle OwnedBusinessObject gelöscht.
-	 @param Objekt der Klasse <code>Spielzeit</code>
- * 
- */
-public void delete (Spielzeit spielzeit) {
-
-	//Verbindung zur Datenbank aufbauen.
-	Connection con = DBConnection.connection();
-
-	try {
-		/** Wir arbeiten hier mit AutoCommits, da wir die Funktion einer Transaktion realisieren möchten.
-		 * Initial wir der AutoCommit auf false gesetzt.
-		 * 
-		 */
-		con.setAutoCommit(false);
-		int bo_id = findBoIDOf(spielzeit);
-		super.delete(bo_id, con);
-
-		// Leeres SQL-Statement (JDBC) anlegen
-		Statement stmt = con.createStatement();
-		stmt.executeUpdate("DELETE FROM `spielzeit` WHERE (`spielzeit_id` = " + spielzeit.getID() + ")");
-		con.commit();
-
-	}  catch(SQLException e) {
-		e.printStackTrace();
-		/** Wir wollen dass der delete-Befehl ganz oder gar nicht ausgeführt wird, daher wird hier auf
-		 * mögliche Probleme geprüft. Sollten Probleme auftreten, kann die Transaktion nicht 
-		 * ausgeführt werden.
-		 */
-		if (con != null) {
-			try {
-				// System.err.print("Transaktion wird nicht ausgeführt");
-				con.rollback();
-			} catch(SQLException exc) {
-				exc.printStackTrace();
-			}
-
-		}
-
-	} finally {
-		/** Sind keine Probleme aufgetreten, so setzen wir den AutoCommit auf true. Die Transaktion ist nun vollständig
-		 * durchlaufen.
-		 */
 		try {
-			con.setAutoCommit(true);
+
+			PreparedStatement pstmt = con
+					.prepareStatement("UPDATE `spielzeit` SET `Datum` = ?, `Uhrzeit` = ? WHERE `spielzeit_id` = ?");
+			pstmt.setDate(1, dc.convertJavaDateToSQLDate(spielzeit.getZeitpunkt()));
+			pstmt.setTime(2, dc.convertJavaDateToSQLTime(spielzeit.getZeitpunkt()));
+			pstmt.executeUpdate();
+			return spielzeit;
+
 		} catch (SQLException e) {
 			e.printStackTrace();
-
-		}}
-}
-
-public Vector<Spielzeit> findSpielzeitenBySpielplan (Spielplan spielplan) {
-
-	// Verbindung zur Datenbank aufbauen.
-
-	Connection con = DBConnection.connection();
-	// Neuen Vector instantiieren, in welchem Film-Objekte gespeichert werden.
-
-	Vector<Spielzeit> vectorspielzeit = new Vector<Spielzeit>();
-	try {
-
-		// Leeres SQL-Statement (JDBC) anlegen
-		Statement stmt = con.createStatement();
-		ResultSet rs = stmt.executeQuery(
-				"SELECT * FROM `Spielplan_Spielzeit`LEFT JOIN `spielzeit`ON `Spielplan_Spielzeit`.`spielzeit_id`= `Spielzeit`.`spielzeit_id` LEFT JOIN `ownedbusinessobject` ON `spielzeit`.`bo_id` = `ownedbusinessobject`.`bo_id`  WHERE (`spielplan_id` = " + spielplan.getID() + " ) ORDER BY `spielzeit_id`");
-
-		/*
-		 * Befüllen des result sets
-		 */
-		while (rs.next()) {
-			// Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt
-			Spielzeit sz = new Spielzeit();
-			sz.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
-			sz.setID(rs.getInt("spielzeit_id"));
-			sz.setID(rs.getInt("film_id"));
-			sz.setID(rs.getInt("bo_id"));
-			sz.setZeitpunkt( dc.convertDatumUndUhrzeitToDate(rs.getDate("Datum"),rs.getTime("Uhrzeit")));
-
-			vectorspielzeit.add(sz);
+			return null;
 
 		}
-	} catch (SQLException e) {
-		e.printStackTrace();
+
 	}
 
-	return vectorspielzeit;
-}
+	/**
+	 * Löschen eines Spielzeit-Objekts in der Datenbank. Hier wird auch der die delete-Methode der Superklasse
+	 * <code>OwnedBusinessObject </code> aufgerufen. Das Spielzeitobjekt, welches auch ein OwnedBusinessObject ist,
+	 * wird auch aus der Tabelle OwnedBusinessObject gelöscht.
+	 @param Objekt der Klasse <code>Spielzeit</code>
+	 * 
+	 */
+	public void delete (Spielzeit spielzeit) {
 
+		//Verbindung zur Datenbank aufbauen.
+		Connection con = DBConnection.connection();
 
-/**
- * Suchen aller Spielzeit-Objekte, welche die Vorstellung eines Filmes repräsentieren.
- *
- *
- *@param Objekt der Klasse <code>Film</code>
- *@author alina
- * 
- */
+		try {
+			/** Wir arbeiten hier mit AutoCommits, da wir die Funktion einer Transaktion realisieren möchten.
+			 * Initial wir der AutoCommit auf false gesetzt.
+			 * 
+			 */
+			con.setAutoCommit(false);
+			int bo_id = findBoIDOf(spielzeit);
+			super.delete(bo_id, con);
 
-public Vector<Spielzeit> findSpielzeitenByFilmAndByDate (Film film, Date datum) {
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate("DELETE FROM `spielzeit` WHERE (`spielzeit_id` = " + spielzeit.getID() + ")");
+			con.commit();
 
-	// Verbindung zur Datenbank aufbauen.
+		}  catch(SQLException e) {
+			e.printStackTrace();
+			/** Wir wollen dass der delete-Befehl ganz oder gar nicht ausgeführt wird, daher wird hier auf
+			 * mögliche Probleme geprüft. Sollten Probleme auftreten, kann die Transaktion nicht 
+			 * ausgeführt werden.
+			 */
+			if (con != null) {
+				try {
+					// System.err.print("Transaktion wird nicht ausgeführt");
+					con.rollback();
+				} catch(SQLException exc) {
+					exc.printStackTrace();
+				}
 
-	Connection con = DBConnection.connection();
-	// Neuen Vector instantiieren, in welchem Film-Objekte gespeichert werden.
+			}
 
-	Vector<Spielzeit> vectorspielzeit = new Vector<Spielzeit>();
-	try {
+		} finally {
+			/** Sind keine Probleme aufgetreten, so setzen wir den AutoCommit auf true. Die Transaktion ist nun vollständig
+			 * durchlaufen.
+			 */
+			try {
+				con.setAutoCommit(true);
+			} catch (SQLException e) {
+				e.printStackTrace();
 
-		// Leeres SQL-Statement (JDBC) anlegen
-		Statement stmt = con.createStatement();
-		ResultSet rs = stmt.executeQuery(
-				"SELECT * FROM 'spielzeit' WHERE film_id= " + film.getID() + "AND datum = "+ datum + "ORDER BY `spielzeit_id`");
+			}}
+	}
 
-		/*
-		 * Befüllen des result sets
-		 */
-		while (rs.next()) {
-			// Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt
-			Spielzeit sz = new Spielzeit();
-			sz.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
-			sz.setID(rs.getInt("spielzeit_id"));
-			sz.setID(rs.getInt("film_id"));
-			sz.setID(rs.getInt("bo_id"));
-			sz.setZeitpunkt( dc.convertDatumUndUhrzeitToDate(rs.getDate("Datum"),rs.getTime("Uhrzeit")));
+	public Vector<Spielzeit> findSpielzeitenBySpielplan (Spielplan spielplan) {
 
-			vectorspielzeit.add(sz);
+		// Verbindung zur Datenbank aufbauen.
 
+		Connection con = DBConnection.connection();
+		// Neuen Vector instantiieren, in welchem Film-Objekte gespeichert werden.
+
+		Vector<Spielzeit> vectorspielzeit = new Vector<Spielzeit>();
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(
+					"SELECT * FROM `Spielplan_Spielzeit`LEFT JOIN `spielzeit`ON `Spielplan_Spielzeit`.`spielzeit_id`= `Spielzeit`.`spielzeit_id` LEFT JOIN `ownedbusinessobject` ON `spielzeit`.`bo_id` = `ownedbusinessobject`.`bo_id`  WHERE (`spielplan_id` = " + spielplan.getID() + " ) ORDER BY `spielzeit_id`");
+
+			/*
+			 * Befüllen des result sets
+			 */
+			while (rs.next()) {
+				// Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt
+				Spielzeit sz = new Spielzeit();
+				sz.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+				sz.setID(rs.getInt("spielzeit_id"));
+				sz.setID(rs.getInt("film_id"));
+				sz.setID(rs.getInt("bo_id"));
+				sz.setZeitpunkt( dc.convertDatumUndUhrzeitToDate(rs.getDate("Datum"),rs.getTime("Uhrzeit")));
+
+				vectorspielzeit.add(sz);
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-	} catch (SQLException e) {
-		e.printStackTrace();
+
+		return vectorspielzeit;
 	}
 
-	return vectorspielzeit;
-}
 
+	/**
+	 * Suchen aller Spielzeit-Objekte, welche die Vorstellung eines Filmes repräsentieren.
+	 *
+	 *
+	 *@param Objekt der Klasse <code>Film</code>
+	 *@author alina
+	 * 
+	 */
 
-/** Dies ist eine Hilfsmethode. Sie ermöglicht uns, die bo_id eines OwnedBusinessObjects zu ermitteln.
- * 
- * @param spielzeit
- * @return bo_id
- * @throws SQLException
- */
+	public Vector<Spielzeit> findSpielzeitenByFilmAndByDate (Film film, Date datum) {
 
-private int findBoIDOf (Spielzeit spielzeit) throws SQLException {
+		// Verbindung zur Datenbank aufbauen.
 
-	Connection con = DBConnection.connection();
-	int bo_id = 0;
+		Connection con = DBConnection.connection();
+		// Neuen Vector instantiieren, in welchem Film-Objekte gespeichert werden.
 
-	Statement stmt = con.createStatement();
-	ResultSet rs = stmt.executeQuery("SELECT `bo_id` FROM `spielzeit` WHERE (`spielzeit_id` = " +  spielzeit.getID() + ")");
+		Vector<Spielzeit> vectorspielzeit = new Vector<Spielzeit>();
+		try {
 
-	if(rs.next()) {
-		bo_id = rs.getInt("bo_id");
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(
+					"SELECT * FROM 'spielzeit' WHERE film_id= " + film.getID() + "AND datum = "+ datum + "ORDER BY `spielzeit_id`");
+
+			/*
+			 * Befüllen des result sets
+			 */
+			while (rs.next()) {
+				// Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt
+				Spielzeit sz = new Spielzeit();
+				sz.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+				sz.setID(rs.getInt("spielzeit_id"));
+				sz.setID(rs.getInt("film_id"));
+				sz.setID(rs.getInt("bo_id"));
+				sz.setZeitpunkt( dc.convertDatumUndUhrzeitToDate(rs.getDate("Datum"),rs.getTime("Uhrzeit")));
+
+				vectorspielzeit.add(sz);
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return vectorspielzeit;
 	}
 
-	return bo_id;
-}
+
+	/** Dies ist eine Hilfsmethode. Sie ermöglicht uns, die bo_id eines OwnedBusinessObjects zu ermitteln.
+	 * 
+	 * @param spielzeit
+	 * @return bo_id
+	 * @throws SQLException
+	 */
+
+	private int findBoIDOf (Spielzeit spielzeit) throws SQLException {
+
+		Connection con = DBConnection.connection();
+		int bo_id = 0;
+
+		Statement stmt = con.createStatement();
+		ResultSet rs = stmt.executeQuery("SELECT `bo_id` FROM `spielzeit` WHERE (`spielzeit_id` = " +  spielzeit.getID() + ")");
+
+		if(rs.next()) {
+			bo_id = rs.getInt("bo_id");
+		}
+
+		return bo_id;
+	}
 
 
 }

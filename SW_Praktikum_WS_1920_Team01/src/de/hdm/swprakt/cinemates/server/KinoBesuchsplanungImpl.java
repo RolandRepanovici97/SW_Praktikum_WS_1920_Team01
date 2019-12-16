@@ -562,7 +562,8 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 		/**Wir suchen alle Spielzeiten, die eine Vorstellung des gewünschten Films am gewünschten 
 		 * Datum bereitstellen. Wir speichern die Ergebnisse wieder zwischen.
 		 */
-		Vector<Spielzeit> spielzeiten = this.spielzeitMapper.findSpielzeitenByFilmAndByDate(film, datum);
+
+		Vector <Spielzeit> spielzeiten = this.spielzeitMapper.findSpielzeitenByFilmAndByDate(film, datum);
 
 		//Wir iterieren durch die Ergebnisse und erstellen zu jeder Spielzeit einen neuen Umfrageeintrag
 		for(Spielzeit spielzeit: spielzeiten) {

@@ -75,7 +75,7 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 		try {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM votum WHERE votum_id=" + id + "ORDER BY votum_id");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `votum` LEFT JOIN `ownedbusinessobject` ON `votum`.`bo_id` = `ownedbusinessobject`.`bo_id`  WHERE (`votum_id` = " + id + ") ORDER BY `votum_id`");
 
 			/* Da ID Primaerschlüssel ist, kann max. nur ein Tupel zurückgegeben werden.
 			 * Prüfe, ob ein Ergebnis vorliegt.
@@ -116,7 +116,7 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 		try {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM votum ORDER BY votum_id");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `votum` LEFT JOIN `ownedbusinessobject` ON `votum`.`bo_id` = `ownedbusinessobject`.`bo_id` ORDER BY `votum_id`");
 
 			/* Befüllen des result sets
 			 */
@@ -132,9 +132,6 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 				votum.setUmfrageeintragID(rs.getInt("umfrageeintrag_id"));
 				vectorvotum.add(votum);
 
-
-
-				return vectorvotum;
 			}
 
 
@@ -142,7 +139,7 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 			e.printStackTrace();
 		}
 
-		return null;
+		return vectorvotum;
 	}
 
 	/**
@@ -152,7 +149,7 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 	 */
 
 
-	public Vector <Votum> findVotumByUmfrageeintrag(Umfrageeintrag umfrageeintrag) {
+	public Vector <Votum> findVotumByUmfrageeintrag (Umfrageeintrag umfrageeintrag) {
 		//Verbindung zur Datenbank aufbauen.
 		Connection con = DBConnection.connection();
 		// Neuen Vector instantiieren, in welchem unsere Votum-Objekte gespeichert werden
@@ -160,10 +157,9 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 		try {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM votum WHERE votum.umfrageeintrag_id="+
-					umfrageeintrag.getID()+ "ORDER BY umfrageeintrag_id");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `votum` LEFT JOIN `ownedbusinessobject` ON `votum`.`bo_id` = `ownedbusinessobject`.`bo_id` WHERE `votum`.`umfrageeintrag_id` = " + umfrageeintrag.getID() + ") ORDER BY `votum_id`");
 
-			if (rs.next()) {
+			while (rs.next()) {
 				/** Es werden für jedes Votum-Objekt die nötigen Attribute gesetzt.Dazu wird ein Objekt der Klasse <code>Votum</code> angelegt und dessen Attribute werden gesetzt. 
 				Dies wird wiederholt. Das Ergebnis wird jeweils einem Vector hinzugefügt, welchen wir am Ende zurückgeben. */
 
@@ -173,11 +169,7 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 				votum.setOwnerID(rs.getInt("bo_id"));
 				votum.setIstMöglicherTermin(rs.getBoolean("istMöglicherTermin"));
 				votum.setUmfrageeintragID(rs.getInt("umfrageeintrag_id"));
-				vectorvotum.add(votum);
-
-
-
-				return vectorvotum;
+				vectorvotum.add(votum);	
 
 			}
 
@@ -186,7 +178,7 @@ public class VotumMapper extends OwnedBusinessObjectMapper {
 			e.printStackTrace();
 		}
 
-		return null;
+		return vectorvotum;
 	}
 
 	/**

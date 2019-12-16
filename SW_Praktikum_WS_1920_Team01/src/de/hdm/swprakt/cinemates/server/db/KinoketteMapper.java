@@ -228,6 +228,24 @@ public class KinoketteMapper extends OwnedBusinessObjectMapper {
 		return kinokette;
 	}
 	
+	public void insertFilmToKinokette (int filmid, int kinoketteid) {
+		
+		Connection con = DBConnection.connection();
+
+		try {
+
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO `Kinokette_Film` (`film_id`, `kinokette_id`) VALUES (?, ?)");
+
+			pstmt.setInt(1, filmid);
+			pstmt.setInt(2, kinoketteid);
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 
 	/**
 	 * Aktualisieren einer Kinokette in der Datenbank.
@@ -297,6 +315,37 @@ public class KinoketteMapper extends OwnedBusinessObjectMapper {
 		}
 		
 	}
+	}
+	
+	public void deleteFilmFromKinokette (int filmid, int kinoketteid) {
+		
+		Connection con = DBConnection.connection();
+
+		try {
+
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate("DELETE FROM `kinokette_film` WHERE (`film_id` = " + filmid + " AND `kinokette_id` = " + kinoketteid);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+	public void deleteFilmeFromKinokette (Kinokette kinokette) {
+		
+		Connection con = DBConnection.connection();
+
+		try {
+
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate("DELETE FROM `kinokette_film` WHERE `kinokette_id` = " + kinokette.getID());
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	

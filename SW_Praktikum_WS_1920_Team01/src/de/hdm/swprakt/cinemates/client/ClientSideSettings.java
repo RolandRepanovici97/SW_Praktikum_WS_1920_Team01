@@ -12,6 +12,8 @@ import de.hdm.swprakt.cinemates.shared.KinoAdministration;
 import de.hdm.swprakt.cinemates.shared.KinoAdministrationAsync;
 import de.hdm.swprakt.cinemates.shared.KinoBesuchsplanung;
 import de.hdm.swprakt.cinemates.shared.KinoBesuchsplanungAsync;
+import de.hdm.swprakt.cinemates.shared.LoginService;
+import de.hdm.swprakt.cinemates.shared.LoginServiceAsync;
 
 
 /**
@@ -35,6 +37,13 @@ public class ClientSideSettings {
 	 * namens <code>Kinobesuchsplanung</code>.
 	 */
 	private static KinoBesuchsplanungAsync kinoBesuchsplanung = null;
+
+	/**
+	 * Remote Service Proxy zur Verbindungsaufnahme mit dem Server-seitgen Dienst
+	 * namens <code>LoginService</code>.
+	 */
+
+	private static LoginServiceAsync loginService = null;
 
 	/**
 	 * Name des Client-seitigen Loggers.
@@ -84,7 +93,7 @@ public class ClientSideSettings {
 		}
 
 
-		final AsyncCallback<Void> initKinoAdministrationCallBack = new AsyncCallback<Void>() {
+	/*	final AsyncCallback<Void> initKinoAdministrationCallBack = new AsyncCallback<Void>() {
 			@Override
 			public void onFailure(Throwable caught) {
 
@@ -97,9 +106,9 @@ public class ClientSideSettings {
 				ClientSideSettings.getLogger().info(
 						"Die Kinoadministration wurde initialisiert.");
 			}
-		};
+		};*/
 
-		kinoBesuchsplanung.init(initKinoAdministrationCallBack);
+		//kinoBesuchsplanung.init(initKinoAdministrationCallBack);
 
 
 
@@ -156,5 +165,56 @@ public class ClientSideSettings {
 
 		// Hier geben wir Kinobesuchsplanung zurück
 		return kinoBesuchsplanung;
+	}
+
+
+	/**
+	 * <p>
+	 * Anlegen und Auslesen des applikationsweiten eindeutigen Login-Services.
+	 * Diese Methode erstellt den Login-Service, sofern dieser noch nicht
+	 * existiert. Bei wiederholtem Aufruf dieser Methode wird stets das bereits
+	 * zuvor angelegte Objekt zurückgegeben.
+	 * Der Aufruf dieser Methode erfolgt im Client z.B. durch
+	 * <code>LoginServiceAsync loginService = ClientSideSettings.getLoginService()</code>
+	 * </p>
+	 * 
+	 * @return eindeutige Instanz des Typs <code>LoginServiceAsync</code>
+	 * @author alina
+	 */
+
+	public static LoginServiceAsync getLoginService() {
+
+		/** Wir prüfen, ob es bisher eine Instanz des Loginservices gab, wenn nicht, dann
+		 * erstellen wir diese... 
+		 * 
+		 */
+		if (loginService == null) {
+
+			// Instantiierung des Login-Services
+
+			loginService = GWT.create(LoginService.class);
+
+			final AsyncCallback<Void> initLoginServiceCallBack = new AsyncCallback<Void>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+
+					ClientSideSettings.getLogger().severe(
+							"Der Login-Service konnte nicht initialisiert werden!");
+				}
+
+				@Override
+				public void onSuccess(Void result) {
+					ClientSideSettings.getLogger().info(
+							"Der Login-Service wurde initialisiert.");
+				}
+			};
+
+			kinoBesuchsplanung.init(initLoginServiceCallBack);
+		}
+
+		// Hier geben wir den Login-Service zurück
+		return loginService;
+
 	}
 }

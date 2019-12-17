@@ -16,18 +16,18 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.swprakt.cinemates.client.gui.NutzerkontoForm;
+import de.hdm.swprakt.cinemates.client.gui.admin.HeaderfürKinoAdministration;
 import de.hdm.swprakt.cinemates.client.gui.admin.Navigator;
 import de.hdm.swprakt.cinemates.client.gui.editor.HeaderfürKinobesuchsplanung;
 import de.hdm.swprakt.cinemates.shared.KinoBesuchsplanung;
 import de.hdm.swprakt.cinemates.shared.LoginServiceAsync;
 import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 
-
-
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class KinobesuchsplanungEntry implements EntryPoint {
+
 
 
 	/*
@@ -36,6 +36,9 @@ public class KinobesuchsplanungEntry implements EntryPoint {
 	 * ***************************************************************************
 	 */
 	private LoginServiceAsync loginService = null;
+
+	private Nutzer nutzer = null;
+
 	private Button loginButton = new Button("Login");
 	private Anchor signInLink = new Anchor("Login");
 	private VerticalPanel loginPanel = new VerticalPanel();
@@ -46,11 +49,21 @@ public class KinobesuchsplanungEntry implements EntryPoint {
 	@Override
 	public void onModuleLoad() {
 
+		HeaderfürKinobesuchsplanung headerPanel = new HeaderfürKinobesuchsplanung();
+		RootPanel.get("Header").add(headerPanel);
+		RootPanel.get("DetailsPanel").add(loginPanel);
+		RootPanel.get("DetailsPanel").add(signInLink);
+
+		loginPanel.add(loginLabel);
+		loginPanel.add(loginButton);
+		signInLink.setHref(AktuellerNutzer.getNutzer().getLoginUrl());
+
 		/*
 		 * Zugriff auf Instanz des asynchronen Interfaces
 		 */
 		loginService = ClientSideSettings.getLoginService();
 		loginService.login(GWT.getHostPageBaseURL() + "Kinobesuchsplanung.html", new LoginServiceCallback());
+
 	}
 
 
@@ -144,13 +157,8 @@ public class KinobesuchsplanungEntry implements EntryPoint {
 	/* Das ist nur ein Test!
 	 */
 
-//	HeaderfürKinobesuchsplanung headerPanel = new HeaderfürKinobesuchsplanung();
-//	headerPanel.getElement().setId("headerPanelKinobesuchsplanung");
-//	Navigator navigator = new Navigator();
-//
-//	RootPanel.get("Header").add(headerPanel);
-//	RootPanel.get("NavigationPanel").add(navigator);
 
 
 
 }
+

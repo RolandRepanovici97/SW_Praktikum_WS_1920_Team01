@@ -93,7 +93,7 @@ public class ClientSideSettings {
 		}
 
 
-		final AsyncCallback<Void> initKinoAdministrationCallBack = new AsyncCallback<Void>() {
+	/*	final AsyncCallback<Void> initKinoAdministrationCallBack = new AsyncCallback<Void>() {
 			@Override
 			public void onFailure(Throwable caught) {
 
@@ -106,9 +106,9 @@ public class ClientSideSettings {
 				ClientSideSettings.getLogger().info(
 						"Die Kinoadministration wurde initialisiert.");
 			}
-		};
+		};*/
 
-		kinoBesuchsplanung.init(initKinoAdministrationCallBack);
+		//kinoBesuchsplanung.init(initKinoAdministrationCallBack);
 
 
 

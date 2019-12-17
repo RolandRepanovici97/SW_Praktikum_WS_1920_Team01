@@ -36,9 +36,9 @@ public interface KinoAdministrationAsync {
 
 	
 
-	void editSpielplan(Spielplan spielplan, AsyncCallback<Void> callback);
+	//void editSpielplan(Spielplan spielplan, AsyncCallback<Void> callback);
 
-	void editSpielzeit(Spielzeit spielzeit, AsyncCallback<Void> callback);
+	//void editSpielzeit(Spielzeit spielzeit, AsyncCallback<Void> callback);
 
 	void deleteFilm(Film film, AsyncCallback<Void> callback);
 
@@ -48,7 +48,7 @@ public interface KinoAdministrationAsync {
 
 	void getAllFilme(AsyncCallback<Vector<Film>> callback);
 
-	void findAllSpielplan(AsyncCallback<Vector<Spielplan>> callback);
+	//void findAllSpielplan(AsyncCallback<Vector<Spielplan>> callback);
 
 	void createSpielzeit(int filmID, Date zeitpunkt, AsyncCallback<Spielzeit> callback);
 

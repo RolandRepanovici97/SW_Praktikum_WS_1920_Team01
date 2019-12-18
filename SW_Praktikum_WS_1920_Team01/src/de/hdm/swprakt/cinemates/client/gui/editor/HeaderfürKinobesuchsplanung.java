@@ -29,6 +29,7 @@ public class HeaderfürKinobesuchsplanung extends HorizontalPanel {
 	 */
 	private Button adminButton;
 	private Button planerButton;
+	private Button nutzer;
 	private ListBox nutzerkontolistbox;
 	private ListBox nutzerkontolistbox2;
 	private Label nutzerbeschriftung;
@@ -48,6 +49,12 @@ public class HeaderfürKinobesuchsplanung extends HorizontalPanel {
 		 */
 		adminButton = new Button("Kinoadministration");
 		adminButton.getElement().setId("adminbutton");
+		nutzer = new Button("Nutzer");
+		nutzer.setStyleName("nutzer");
+		nutzer.setHTML("<i class=\"fas fa-user\"></i>");
+		nutzer.setHeight("100px");
+		nutzer.setWidth("100px");
+		nutzer.getElement().setId("NutzerButton");
 		planerButton = new Button("Kinobesuchsplanung");
 		planerButton.getElement().setId("planerbutton");
 		nutzerbeschriftung = new Label("Nutzerkonto");
@@ -74,7 +81,8 @@ public class HeaderfürKinobesuchsplanung extends HorizontalPanel {
 		this.add(logo);
 		this.add(planerButton);
 		this.add(adminButton);
-	
+		this.add(nutzer);
+
 		this.add(nutzerbeschriftung);
 
 		this.add(nutzerkontolistbox2);
@@ -107,12 +115,12 @@ public class HeaderfürKinobesuchsplanung extends HorizontalPanel {
 	 *
 	 */
 	private class AdminClickHandler implements ClickHandler{
-		
+
 
 		/** Klickt der Nutzer auf den Button der mit "Kinoadministration" beschriftet ist,
 		 *  so wird er auf diese Seite weitergeleitet.
 		 */
-		
+
 		@Override
 		public void onClick(ClickEvent event) {
 			Window.Location.assign("KinoAdministration.html");

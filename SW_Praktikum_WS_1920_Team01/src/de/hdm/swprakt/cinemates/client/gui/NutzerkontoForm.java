@@ -12,10 +12,12 @@ import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
  * @author alina
  *
  */
-public class NutzerkontoForm extends HorizontalPanel() {
+public class NutzerkontoForm extends HorizontalPanel {
+
+
 
 	public NutzerkontoForm(Anchor kinoBesuchsplanungLink, Nutzer nutzer) {
-		// TODO Auto-generated constructor stub
-	}
 
+	// TODO Auto-generated constructor stub
+}
 }

@@ -4,8 +4,11 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 
+import de.hdm.swprakt.cinemates.client.gui.admin.FilmForm;
 import de.hdm.swprakt.cinemates.client.gui.admin.HeaderfürKinoAdministration;
 import de.hdm.swprakt.cinemates.client.gui.admin.KinoketteForm;
+import de.hdm.swprakt.cinemates.client.gui.admin.SpielplanForm;
+import de.hdm.swprakt.cinemates.client.gui.admin.SpielplanverwaltungForm;
 
 
 
@@ -25,6 +28,13 @@ public class KinoAdministrationEntry implements EntryPoint {
 		KinoketteForm kf = new KinoketteForm();
 		RootPanel.get("DetailsPanel").add(kf);
 		
+		
+		
+		SpielplanForm spf = new SpielplanForm();
+		RootPanel.get("DetailsPanel").add(spf);
+		
+		SpielplanverwaltungForm spvf = new SpielplanverwaltungForm();
+		RootPanel.get("DetailsPanel").add(spvf);
 	}
 	
 }

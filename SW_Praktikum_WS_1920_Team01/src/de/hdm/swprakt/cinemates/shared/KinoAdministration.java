@@ -3,7 +3,6 @@
  */
 package de.hdm.swprakt.cinemates.shared;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
 
@@ -11,19 +10,16 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import de.hdm.swprakt.cinemates.shared.bo.Film;
-import de.hdm.swprakt.cinemates.shared.bo.Gruppe;
 import de.hdm.swprakt.cinemates.shared.bo.Kino;
 import de.hdm.swprakt.cinemates.shared.bo.Kinokette;
 import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 import de.hdm.swprakt.cinemates.shared.bo.Spielplan;
 import de.hdm.swprakt.cinemates.shared.bo.Spielzeit;
-import de.hdm.swprakt.cinemates.shared.bo.Umfrage;
-import de.hdm.swprakt.cinemates.shared.bo.Umfrageeintrag;
-import de.hdm.swprakt.cinemates.shared.bo.Votum;
 
 /**
- * Synchrone Schnittstelle für eine RPC-fähige Klasse zur Verwaltung von Kinos, Kinoketten
- * Filmen, Spielpläne und Spielzeiten.
+ * Synchrone Schnittstelle für eine RPC-fähige Klasse zur Verwaltung von Kinos,
+ * Kinoketten Filmen, Spielpläne und Spielzeiten.
+ * 
  * @author alina
  * @version 1.0
  *
@@ -47,16 +43,15 @@ public interface KinoAdministration extends RemoteService {
 // * Abschnitt aller create-Methoden (Ömer)
 // */
 //
-	
-/**
- * Abschnitt aller create-Methoden
- * Erstellen des uebergebenen Film-Objekts
- * @param film Film-Objekt, welches in der Datenbank erstellt werden soll
- * @return 
- * @throws IllegalArgumentException
- */
-	public Film createFilm(String filmtitel,String beschreibung, String details) throws IllegalArgumentException;
 
+	/**
+	 * Abschnitt aller create-Methoden Erstellen des uebergebenen Film-Objekts
+	 * 
+	 * @param film Film-Objekt, welches in der Datenbank erstellt werden soll
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
+	public Film createFilm(String filmtitel, String beschreibung, String details) throws IllegalArgumentException;
 
 ///**
 // * Abschnitt aller create-Methoden
@@ -65,7 +60,8 @@ public interface KinoAdministration extends RemoteService {
 // * @throws IllegalArgumentException
 // */
 
-	//public Kinokette createKinokette(String kinokettenname,String beschreibung ) throws IllegalArgumentException;
+	// public Kinokette createKinokette(String kinokettenname,String beschreibung )
+	// throws IllegalArgumentException;
 //
 ///**
 // * Abschnitt aller create-Methoden
@@ -73,7 +69,7 @@ public interface KinoAdministration extends RemoteService {
 // * @param kino Kino-Objekt, welches in der Datenbank erstellt werden soll
 // * @throws IllegalArgumentException
 // */
-	public Kino createKino(String kinoname,String adresse,String beschreibung) throws IllegalArgumentException;
+	public Kino createKino(String kinoname, String adresse, String beschreibung) throws IllegalArgumentException;
 
 ///**
 // * Abschnitt aller create-Methoden
@@ -81,7 +77,8 @@ public interface KinoAdministration extends RemoteService {
 // * @param spielplan Spielplan-Objekt, welches in der Datenbank erstellt werden soll
 // * @throws IllegalArgumentException
 // */
-	//public void createSpielplan(Spielplan spielplan) throws IllegalArgumentException;
+	// public void createSpielplan(Spielplan spielplan) throws
+	// IllegalArgumentException;
 //
 //
 ///**
@@ -92,9 +89,6 @@ public interface KinoAdministration extends RemoteService {
 // */
 	public Spielzeit createSpielzeit(int filmID, Date zeitpunkt) throws IllegalArgumentException;
 
-	
-	
-	
 ///**
 // * Abschnitt aller save/update-Methoden (Ömer)
 // */
@@ -106,7 +100,7 @@ public interface KinoAdministration extends RemoteService {
 // * @param film Film-Objekt, welches in der Datenbank gespeichert werden soll
 // * @throws IllegalArgumentException
 // */
-	public void saveFilm(Film film)  throws IllegalArgumentException;
+	public void saveFilm(Film film) throws IllegalArgumentException;
 
 //
 ///**
@@ -134,6 +128,7 @@ public interface KinoAdministration extends RemoteService {
 // * @throws IllegalArgumentException
 // */
 	public Nutzer saveNutzer(Nutzer nutzer) throws IllegalArgumentException;
+
 //
 //
 ///**
@@ -144,7 +139,6 @@ public interface KinoAdministration extends RemoteService {
 // */
 	public void saveSpielplan(Spielplan spielplan) throws IllegalArgumentException;
 
-
 //
 ///**
 // * Abschnitt aller delete-Methoden
@@ -152,7 +146,7 @@ public interface KinoAdministration extends RemoteService {
 // * @param film Film-Objekt, welches in der Datenbank geloescht werden soll
 // * @throws IllegalArgumentException
 // */
-	
+
 	public void deleteFilm(Film film) throws IllegalArgumentException;
 
 ///**
@@ -176,23 +170,19 @@ public interface KinoAdministration extends RemoteService {
 // */
 	public void deleteKino(Kino k) throws IllegalArgumentException;
 
-	
-
 ///**
 // * Loeschen des uebergebenen Spielplan-Objekts
 // * @param nutzer Spielplan-Objekt, welches in der Datenbank geloescht werden soll
 // * @throws IllegalArgumentException
 // */
 	public void deleteSpielplan(Spielplan sp) throws IllegalArgumentException;
-	
-	
+
 ///**
 // * Loeschen des uebergebenen Spielzeit-Objekts
 // * @param nutzer Spielzeit-Objekt, welches in der Datenbank geloescht werden soll
 // * @throws IllegalArgumentException
 // */
 	public void deleteSpielzeit(Spielzeit sz) throws IllegalArgumentException;
-
 
 //
 ///**
@@ -203,7 +193,6 @@ public interface KinoAdministration extends RemoteService {
 // */
 	public Vector<Film> getAllFilme() throws IllegalArgumentException;
 //
-
 
 ///**
 // * Saemtliche kinoketten eines Kinokette-Objekts ausgeben
@@ -277,10 +266,6 @@ public interface KinoAdministration extends RemoteService {
 // */
 //public Vector<Umfrage> findAllUmfrage() throws IllegalArgumentException;
 
-
-	
-	
-	
 ///**
 // * Rueckgabe eines bestimmten Film-Objekts
 // * @param id ID des gesuchten Films
@@ -329,12 +314,7 @@ public interface KinoAdministration extends RemoteService {
 // */
 //public Spielplan findSpielplanByID(int id) throws IllegalArgumentException;
 //
-	
-	
-	
-	
-	
-	
+
 ///**
 // * Rueckgabe eines bestimmten Spielzeit-Objekts
 // * @param id ID der gesuchten Spielzeit
@@ -343,71 +323,61 @@ public interface KinoAdministration extends RemoteService {
 // */
 //public Spielzeit findSpielzeitByID(int id)throws IllegalArgumentException;
 
-
-	
-	
+	/**
+	 * Auslesen aller Kinos der Kinokette Diese Methode wird bei delete Kinokette
+	 * verwendet
+	 */
+	public Vector<Kino> getKinosOf(Kinokette kk) throws IllegalArgumentException;
 
 	/**
-	 * Auslesen aller Kinos der Kinokette
-	 * Diese Methode wird bei delete Kinokette verwendet
-	 */ 
-	public Vector<Kino> getKinosOf(Kinokette kk) throws IllegalArgumentException;
-		
-	
+	 * Auslesen sämtliche Kinoketten dieses Systems.
+	 */
+	public Vector<Kinokette> getAllKinokette() throws IllegalArgumentException;
 
-/**
- * Auslesen sämtliche Kinoketten dieses Systems.
- */
-public Vector<Kinokette> getAllKinokette() throws IllegalArgumentException;
+	/**
+	 * Löschen einer Kinokette
+	 */
 
+	public void deleteKinokette(Kinokette kk) throws IllegalArgumentException;
 
+	/**
+	 * Hinzufügen eines Kinos zur Kinokette
+	 */
+	public Kino addKinoToKinokette(Kinokette kinokette) throws IllegalArgumentException;
 
-/**
- * Löschen einer Kinokette
- */
+	/**
+	 * Auslesen sämtliche Kinos dieses Systems.
+	 */
 
-public void deleteKinokette(Kinokette kk) throws IllegalArgumentException;
+	public Vector<Kino> getAllKinos() throws IllegalArgumentException;
 
-/**
- * Hinzufügen eines Kinos zur Kinokette
- */
-public Kino addKinoToKinokette(Kinokette kinokette) throws IllegalArgumentException;
+	/**
+	 * Auslesen des Spielplans des Kinos Diese Methode wird bei deleteKino verwendet
+	 */
+	public Spielplan getSpielplanOf(Kino k) throws IllegalArgumentException;
 
+	/**
+	 * Auslesen der Spielzeiten des Spielplans Diese Methode wird bei
+	 * deleteSpielplan verwendet.
+	 */
+	public Vector<Spielzeit> getSpielzeitOf(Spielplan sp) throws IllegalArgumentException;
 
+	/**
+	 * Diese Methode wird aufgerufen,um alle Kinos die zu einer Kinokette gehört
+	 * angezeigt werden sollen. Die Mapper Methode findKinosByKinokette wird
+	 * aufgerufen.
+	 */
 
-/**
- * Auslesen sämtliche Kinos dieses Systems.
- */
+	public Vector<Kino> getAllKinoOfKinokette(Kinokette kinokette) throws IllegalArgumentException;
 
-public Vector<Kino> getAllKinos() throws IllegalArgumentException;
+	/**
+	 * Speichern eines Kinos.
+	 */
+	public void saveKino(Kino k) throws IllegalArgumentException;
 
-/**
- * Auslesen des Spielplans des Kinos Diese Methode wird bei deleteKino verwendet
- */
-public Spielplan getSpielplanOf(Kino k) throws IllegalArgumentException;
+	/**
+	 * Auslesen sämtliche Spielzeiten dieses Systems.
+	 */
 
-/**
- * Auslesen der Spielzeiten des Spielplans Diese Methode wird bei
- * deleteSpielplan verwendet.
- */
-public Vector<Spielzeit> getSpielzeitOf(Spielplan sp) throws IllegalArgumentException;
-
-
-/**Diese Methode wird aufgerufen,um alle Kinos die zu einer Kinokette gehört angezeigt werden sollen.
- * Die Mapper Methode findKinosByKinokette wird aufgerufen.
- */
-
-public Vector <Kino> getAllKinoOfKinokette(Kinokette kinokette)throws IllegalArgumentException;
-
-/**
- * Speichern eines Kinos.
- */
-public void saveKino(Kino k) throws IllegalArgumentException;
-
-/**
- * Auslesen sämtliche Spielzeiten dieses Systems.
- */
-
-public Vector<Spielzeit> getAllSpielzeiten() throws IllegalArgumentException;
+	public Vector<Spielzeit> getAllSpielzeiten() throws IllegalArgumentException;
 }
-

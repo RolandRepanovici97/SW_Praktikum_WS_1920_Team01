@@ -30,9 +30,6 @@ public class HeaderfürKinobesuchsplanung extends HorizontalPanel {
 	private Button adminButton;
 	private Button planerButton;
 	private Button nutzer;
-	private ListBox nutzerkontolistbox;
-	private ListBox nutzerkontolistbox2;
-	private Label nutzerbeschriftung;
 	private Image logo;
 
 
@@ -57,18 +54,6 @@ public class HeaderfürKinobesuchsplanung extends HorizontalPanel {
 		nutzer.getElement().setId("NutzerButton");
 		planerButton = new Button("Kinobesuchsplanung");
 		planerButton.getElement().setId("planerbutton");
-		nutzerbeschriftung = new Label("Nutzerkonto");
-
-		nutzerkontolistbox = new ListBox(true);
-		nutzerkontolistbox2 = new ListBox(false);
-
-		nutzerkontolistbox2.setTitle("Nutzerkonto");
-		nutzerkontolistbox2.addItem("--Bitte auswählen--");
-		nutzerkontolistbox2.addItem("Nutzerkonto bearbeiten");
-		nutzerkontolistbox2.addItem("Logout");
-		nutzerkontolistbox.setVisibleItemCount(2);
-		nutzerkontolistbox2.setVisibleItemCount(1);
-		nutzerkontolistbox2.getElement().setId("nutzerlistbox");
 		logo = new Image("images/CineMates Logo.jpg");
 		logo.setWidth("100px");
 
@@ -82,10 +67,6 @@ public class HeaderfürKinobesuchsplanung extends HorizontalPanel {
 		this.add(planerButton);
 		this.add(adminButton);
 		this.add(nutzer);
-
-		this.add(nutzerbeschriftung);
-
-		this.add(nutzerkontolistbox2);
 
 
 		/** Auf den Button, welcher zunächst den Nutzernamen darstellen soll, soll ein Panel "gelegt" werden,

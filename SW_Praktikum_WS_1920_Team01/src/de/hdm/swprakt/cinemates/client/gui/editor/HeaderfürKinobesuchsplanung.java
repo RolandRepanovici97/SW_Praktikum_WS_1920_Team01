@@ -11,8 +11,12 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+
+import de.hdm.swprakt.cinemates.client.gui.NutzerkontoForm;
+import de.hdm.swprakt.cinemates.client.gui.admin.KinoverwaltungForm;
 
 /**
  * Diese Klasse dient zur Darstellung des Headers der Applikation. Sie beinhaltet das Logo der Applikation,
@@ -41,6 +45,9 @@ public class HeaderfürKinobesuchsplanung extends HorizontalPanel {
 	 */
 
 	public void onLoad() {
+
+		super.onLoad();
+
 		/*+ Zunächst die Instantiierung der einzelenen Widgets/Buttons
 		 * 
 		 */
@@ -56,7 +63,6 @@ public class HeaderfürKinobesuchsplanung extends HorizontalPanel {
 		planerButton.getElement().setId("planerbutton");
 		logo = new Image("images/CineMates Logo.jpg");
 		logo.setWidth("100px");
-
 
 
 
@@ -80,6 +86,7 @@ public class HeaderfürKinobesuchsplanung extends HorizontalPanel {
 		 */
 		adminButton.addClickHandler(new AdminClickHandler());
 		planerButton.addClickHandler(new PlanerClickHandler());
+		nutzer.addClickHandler(new NutzerClickHandler());
 
 
 	}
@@ -123,38 +130,24 @@ public class HeaderfürKinobesuchsplanung extends HorizontalPanel {
 
 
 	}
-	/** Klickt der Nutzer auf den Button der mit "Nutzerkonto anzeigen" beschriftet ist,
-	 *  so wird ihm sein Nutzerkonto angezeigt.
+	/** Klickt der Nutzer auf den Nutzerbutton,
+	 *  so wird ihm sein Nutzerkonto angezeigt und er kann hier seinen Nutzernamen bearbeiten.
 	 */
-	private class NutzerAnzeigenClickHandler implements ClickHandler {
+	private class NutzerClickHandler implements ClickHandler {
+
+
 
 		@Override
 		public void onClick(ClickEvent event) {
-			// TODO Auto-generated method stub
 
-		}
-
-	}			/** Klickt der Nutzer auf den Button der mit "Nutzerkonto bearbeiten" beschriftet ist,
-	 *      so bekommt er die Möglichkeit, sein Nutzerkonto zu bearbeiten.
-	 */
-	private class NutzerBearbeitenClickHandler implements ClickHandler{
-
-		@Override
-		public void onClick(ClickEvent event) {
-			// TODO Auto-generated method stub
+			RootPanel.get("DetailsPanel").clear();
+			NutzerkontoForm nutzerkontoform = new NutzerkontoForm();
+			Window.Location.getParameter("");
+			RootPanel.get("DetailsPanel").add(nutzerkontoform);
 
 
 
 		}
-		/** Klickt der Nutzer auf den Button der mit "Logout" beschriftet ist,
-		 *  so wird er ausgeloggt und landet wieder auf der Login-Page. 
-		 */
-		private class LogoutClickHandler implements ClickHandler {
 
-			@Override
-			public void onClick(ClickEvent event) {
-				Window.Location.assign("Loginpage.html");
-
-			}
-
-		}}}
+	}
+}

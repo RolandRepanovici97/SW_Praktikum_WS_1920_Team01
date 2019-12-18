@@ -47,8 +47,9 @@ public class StartseiteEditor extends HorizontalPanel {
 		AktuellerNutzer nutzer = new AktuellerNutzer();
 
 		KinoBesuchsplanungAsync kinobesuchsplanung = ClientSideSettings.getKinobesuchsplanung();
-		kinobesuchsplanung.showAllUmfrageOfNutzer(nutzer, new UmfragenAnzeigenCallback());
-		kinobesuchsplanung.showAllUmfrageOfNutzerOhneErgebnis(nutzer, new OffeneUmfragenAnzeigenCallback());
+		
+//		kinobesuchsplanung.showAllUmfrageOfNutzer(nutzer, new UmfragenAnzeigenCallback());
+//		kinobesuchsplanung.showAllUmfrageOfNutzerOhneErgebnis(nutzer, new OffeneUmfragenAnzeigenCallback());
 
 		this.add(label1);
 		this.add(label2);

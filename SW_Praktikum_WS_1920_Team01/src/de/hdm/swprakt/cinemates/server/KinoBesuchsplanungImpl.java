@@ -472,7 +472,6 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 
 	public Vector<Umfrage> showAllUmfrageOfNutzerOhneErgebnis(Nutzer nutzer) throws IllegalArgumentException {
 		Vector<Umfrage> ergebnisvector = new Vector<Umfrage>();
-		Vector<Umfrage> ergebnisvector2 = new Vector();
 		Vector<Gruppe> gruppevector = gruppeMapper.getGruppenOf(nutzer);
 		for (Gruppe g : gruppevector) {
 			ergebnisvector.addAll(this.umfrageMapper.findByGruppename(g.getGruppenname()));
@@ -480,17 +479,13 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 		for (Umfrage u : ergebnisvector) {
 			Vector<Umfrageeintrag> umfrageeinträge = this.umfrageeintragMapper.findByUmfrage(u);
 			for (Umfrageeintrag eintrag : umfrageeinträge) {
-				if (eintrag.getFinalesErgebnis() == true) {
-					Umfrageeintrag ue = eintrag;
+				if (eintrag.getFinalesErgebnis() == null) {
 
-				} else {
 
-					ergebnisvector2.add(u);
 				}
 			}
-
 		}
-		return ergebnisvector2;
+		return ergebnisvector;
 	}
 
 

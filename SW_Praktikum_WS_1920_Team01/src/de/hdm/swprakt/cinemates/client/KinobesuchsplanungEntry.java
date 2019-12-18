@@ -1,6 +1,6 @@
 package de.hdm.swprakt.cinemates.client;
 
-import com.gargoylesoftware.htmlunit.javascript.host.Notification;
+
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.gwt.core.client.EntryPoint;
@@ -19,6 +19,7 @@ import de.hdm.swprakt.cinemates.client.gui.NutzerkontoForm;
 import de.hdm.swprakt.cinemates.client.gui.admin.HeaderfürKinoAdministration;
 import de.hdm.swprakt.cinemates.client.gui.admin.Navigator;
 import de.hdm.swprakt.cinemates.client.gui.editor.HeaderfürKinobesuchsplanung;
+import de.hdm.swprakt.cinemates.client.gui.editor.StartseiteEditor;
 import de.hdm.swprakt.cinemates.shared.KinoBesuchsplanung;
 import de.hdm.swprakt.cinemates.shared.LoginServiceAsync;
 import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
@@ -42,7 +43,7 @@ public class KinobesuchsplanungEntry implements EntryPoint {
 	private Button loginButton = new Button("Login");
 	private Anchor signInLink = new Anchor("Login");
 	private VerticalPanel loginPanel = new VerticalPanel();
-
+	private StartseiteEditor startseite = new StartseiteEditor();
 	private Label loginLabel = new Label(
 			"Bitte melden Sie sich hier mit Ihrem Google-Konto an, um auf CineMates zugreifen zu können ");
 
@@ -51,6 +52,7 @@ public class KinobesuchsplanungEntry implements EntryPoint {
 
 		HeaderfürKinobesuchsplanung headerPanel = new HeaderfürKinobesuchsplanung();
 		RootPanel.get("Header").add(headerPanel);
+		RootPanel.get("DetailsPanel").add(startseite);
 		RootPanel.get("DetailsPanel").add(loginPanel);
 		RootPanel.get("DetailsPanel").add(signInLink);
 
@@ -141,8 +143,9 @@ public class KinobesuchsplanungEntry implements EntryPoint {
 		 * angemeldeten Nutzer. Da der Nutzer an weiteren Stellen nötig ist, muss er abrufbar sein.
 		 */
 	}
-	public static class AktuellerNutzer {
+	public static class AktuellerNutzer extends Nutzer {
 
+		private static final long serialVersionUID = 1L;
 		private static Nutzer nutzer  = null;
 
 		public static Nutzer getNutzer() {

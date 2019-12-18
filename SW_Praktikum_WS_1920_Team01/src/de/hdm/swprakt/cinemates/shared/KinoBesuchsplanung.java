@@ -74,15 +74,19 @@ public interface KinoBesuchsplanung extends RemoteService {
 	public Gruppe mitgliedHinzufügen(Nutzer nutzer, Gruppe gruppe);
 
 	public Gruppe createGruppe(Nutzer nutzer, String gruppenname, Vector<Nutzer> gruppenmitglieder);
-	
+
 	public void deleteGruppe(Gruppe gruppe);
-	
+
 	public Umfrage save(Umfrage umfrage);
-	
+
 	public Vector<Umfrage> showAllUmfragenOfGruppe(Gruppe gruppe);
-	
+
 	public Vector<Umfrage> showAllUmfrageOfNutzer(Nutzer nutzer);
-	
+
 	public Vector<Umfrage> showAllUmfragenOFilm(Film film);
-	
+
+	public Vector<Umfrage> showAllUmfrageOfNutzerOhneErgebnis(Nutzer nutzer);
+
+
+
 }

@@ -46,7 +46,8 @@ public class SpielplanForm extends HorizontalPanel {
 	    /**
 	     * The list of data to display.
 	     */
-	    private static final List<Spielplan> SPIELPLAENE = Arrays.asList();
+	    private static final List<Spielplan> SPIELPLAENE = Arrays.asList(
+	    		new Spielplan("Ömer","Hallo", new Date(80,4,12)));
 	       
 	       
 	  }
@@ -105,16 +106,16 @@ public class SpielplanForm extends HorizontalPanel {
 		 * Festlegen der Gesamtanzahl der Zeilen
 		 */
 
-//		table.setRowCount(SPIELPLAENE.size(), true);
+	//    table.setRowCount(SPIELPLAENE.size(), true);
 
 		/*
 		 * Daten in die Tabelle hinzufügen
 		 */
 
-//		table.setRowData(0, SPIELPLAENE);
+	//    table.setRowData(0, SPIELPLAENE);
 
 		
-		this.add(table);
+	//	this.add(table);
 		
 		
 		

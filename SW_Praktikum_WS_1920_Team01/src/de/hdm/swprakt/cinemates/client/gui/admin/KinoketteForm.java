@@ -34,8 +34,11 @@ public class KinoketteForm extends HorizontalPanel{
 	
 	 KinoverwaltungForm kf;
 	 SpielplanForm sf;
+
 	 SpielplanverwaltungForm spvf;
-	
+
+	 KinoBearbeitenForm kbf;
+
 	
 	public void onLoad() {
 		super.onLoad();
@@ -53,7 +56,7 @@ public class KinoketteForm extends HorizontalPanel{
 		spielplanBearbeiten.addClickHandler(new spielplanBearbeitenClickHandler());
 		kinoketteGrid.setText(0, 2, this.kinoName);
 		kinoketteGrid.setWidget(0, 4, kinoBearbeiten);
-		//kinoBearbeiten.addClickHandler(new kinoBearbeitenClickHandler());
+		kinoBearbeiten.addClickHandler(new kinoBearbeitenClickHandler());
 		kinoketteGrid.setWidget(0, 5, löschen);
 		kinoketteGrid.setWidget(1, 7, logo);
 		kinoketteGrid.setText(1, 8, "Neues Kino anlegen");
@@ -64,6 +67,17 @@ public class KinoketteForm extends HorizontalPanel{
 		
 
 
+	}
+	
+	
+	private class kinoBearbeitenClickHandler implements ClickHandler{
+		
+		public void onClick(ClickEvent event) {
+			RootPanel.get("DetailsPanel").clear();
+			kbf = new KinoBearbeitenForm();
+			Window.Location.getParameter("");
+			RootPanel.get("DetailsPanel").add(kbf);	
+		}
 	}
 	
 /*

@@ -49,7 +49,22 @@ public abstract class DBTester {
 		Nutzer testnutzerEmail = nutzerMapper.findByEmail("Nutzer8@gmail.com");
 		System.out.println(testnutzerEmail.toString());
 		
-	
+		
+		System.out.println("\ninsert()");
+		
+		
+		System.out.println("\nupdate()");
+		
+		
+		System.out.println("\ndelete()");
+		
+		
+		System.out.println("\ndeleteGruppenzugehörigkeiten()");
+		
+		
+		System.out.println("\ngetGruppenmitgliederOf()");
+		
+		
 		
 		/*
 		 * ***************************************************************************

@@ -30,9 +30,6 @@ public class KinoAdministrationEntry implements EntryPoint {
 		
 		
 		
-		SpielplanForm spf = new SpielplanForm();
-		RootPanel.get("DetailsPanel").add(spf);
-		
 		SpielplanverwaltungForm spvf = new SpielplanverwaltungForm();
 		RootPanel.get("DetailsPanel").add(spvf);
 	}

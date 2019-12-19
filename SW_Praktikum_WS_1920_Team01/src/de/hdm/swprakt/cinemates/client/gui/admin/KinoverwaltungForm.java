@@ -99,7 +99,7 @@ public class KinoverwaltungForm extends HorizontalPanel{
 			private class KinoAnlegenClickHandler implements ClickHandler{
 				@Override
 				public void onClick(ClickEvent event) {
-					kinoAdministration.createKino(kinoname.getValue(), kinobeschreibung.getValue(), kinoadresse.getValue(), new KinoAnlegenCallback());
+					kinoAdministration.createKino(kinoname.getText(), kinobeschreibung.getText(), kinoadresse.getText(), new KinoAnlegenCallback());
 				
 				}
 				

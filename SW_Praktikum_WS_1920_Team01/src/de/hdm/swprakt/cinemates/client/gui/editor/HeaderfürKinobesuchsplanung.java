@@ -11,8 +11,12 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+
+import de.hdm.swprakt.cinemates.client.gui.NutzerkontoForm;
+import de.hdm.swprakt.cinemates.client.gui.admin.KinoverwaltungForm;
 
 /**
  * Diese Klasse dient zur Darstellung des Headers der Applikation. Sie beinhaltet das Logo der Applikation,
@@ -30,9 +34,6 @@ public class HeaderfürKinobesuchsplanung extends HorizontalPanel {
 	private Button adminButton;
 	private Button planerButton;
 	private Button nutzer;
-	private ListBox nutzerkontolistbox;
-	private ListBox nutzerkontolistbox2;
-	private Label nutzerbeschriftung;
 	private Image logo;
 
 
@@ -44,6 +45,9 @@ public class HeaderfürKinobesuchsplanung extends HorizontalPanel {
 	 */
 
 	public void onLoad() {
+
+		super.onLoad();
+
 		/*+ Zunächst die Instantiierung der einzelenen Widgets/Buttons
 		 * 
 		 */
@@ -57,21 +61,8 @@ public class HeaderfürKinobesuchsplanung extends HorizontalPanel {
 		nutzer.getElement().setId("NutzerButton");
 		planerButton = new Button("Kinobesuchsplanung");
 		planerButton.getElement().setId("planerbutton");
-		nutzerbeschriftung = new Label("Nutzerkonto");
-
-		nutzerkontolistbox = new ListBox(true);
-		nutzerkontolistbox2 = new ListBox(false);
-
-		nutzerkontolistbox2.setTitle("Nutzerkonto");
-		nutzerkontolistbox2.addItem("--Bitte auswählen--");
-		nutzerkontolistbox2.addItem("Nutzerkonto bearbeiten");
-		nutzerkontolistbox2.addItem("Logout");
-		nutzerkontolistbox.setVisibleItemCount(2);
-		nutzerkontolistbox2.setVisibleItemCount(1);
-		nutzerkontolistbox2.getElement().setId("nutzerlistbox");
 		logo = new Image("images/CineMates Logo.jpg");
 		logo.setWidth("100px");
-
 
 
 
@@ -82,10 +73,6 @@ public class HeaderfürKinobesuchsplanung extends HorizontalPanel {
 		this.add(planerButton);
 		this.add(adminButton);
 		this.add(nutzer);
-
-		this.add(nutzerbeschriftung);
-
-		this.add(nutzerkontolistbox2);
 
 
 		/** Auf den Button, welcher zunächst den Nutzernamen darstellen soll, soll ein Panel "gelegt" werden,
@@ -99,6 +86,7 @@ public class HeaderfürKinobesuchsplanung extends HorizontalPanel {
 		 */
 		adminButton.addClickHandler(new AdminClickHandler());
 		planerButton.addClickHandler(new PlanerClickHandler());
+		nutzer.addClickHandler(new NutzerClickHandler());
 
 
 	}
@@ -142,38 +130,24 @@ public class HeaderfürKinobesuchsplanung extends HorizontalPanel {
 
 
 	}
-	/** Klickt der Nutzer auf den Button der mit "Nutzerkonto anzeigen" beschriftet ist,
-	 *  so wird ihm sein Nutzerkonto angezeigt.
+	/** Klickt der Nutzer auf den Nutzerbutton,
+	 *  so wird ihm sein Nutzerkonto angezeigt und er kann hier seinen Nutzernamen bearbeiten.
 	 */
-	private class NutzerAnzeigenClickHandler implements ClickHandler {
+	private class NutzerClickHandler implements ClickHandler {
+
+
 
 		@Override
 		public void onClick(ClickEvent event) {
-			// TODO Auto-generated method stub
 
-		}
-
-	}			/** Klickt der Nutzer auf den Button der mit "Nutzerkonto bearbeiten" beschriftet ist,
-	 *      so bekommt er die Möglichkeit, sein Nutzerkonto zu bearbeiten.
-	 */
-	private class NutzerBearbeitenClickHandler implements ClickHandler{
-
-		@Override
-		public void onClick(ClickEvent event) {
-			// TODO Auto-generated method stub
+			RootPanel.get("DetailsPanel").clear();
+			NutzerkontoForm nutzerkontoform = new NutzerkontoForm();
+			Window.Location.getParameter("");
+			RootPanel.get("DetailsPanel").add(nutzerkontoform);
 
 
 
 		}
-		/** Klickt der Nutzer auf den Button der mit "Logout" beschriftet ist,
-		 *  so wird er ausgeloggt und landet wieder auf der Login-Page. 
-		 */
-		private class LogoutClickHandler implements ClickHandler {
 
-			@Override
-			public void onClick(ClickEvent event) {
-				Window.Location.assign("Loginpage.html");
-
-			}
-
-		}}}
+	}
+}

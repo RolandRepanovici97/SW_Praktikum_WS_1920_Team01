@@ -52,13 +52,14 @@ public class KinobesuchsplanungEntry implements EntryPoint {
 
 		HeaderfürKinobesuchsplanung headerPanel = new HeaderfürKinobesuchsplanung();
 		RootPanel.get("Header").add(headerPanel);
-		RootPanel.get("DetailsPanel").add(startseite);
-		RootPanel.get("DetailsPanel").add(loginPanel);
-		RootPanel.get("DetailsPanel").add(signInLink);
 
-		loginPanel.add(loginLabel);
-		loginPanel.add(loginButton);
-		signInLink.setHref(AktuellerNutzer.getNutzer().getLoginUrl());
+		//		RootPanel.get("DetailsPanel").add(startseite);
+		//		RootPanel.get("DetailsPanel").add(loginPanel);
+		//		RootPanel.get("DetailsPanel").add(signInLink);
+		//
+		//		loginPanel.add(loginLabel);
+		//		loginPanel.add(loginButton);
+		//		signInLink.setHref(AktuellerNutzer.getNutzer().getLoginUrl());
 
 		/*
 		 * Zugriff auf Instanz des asynchronen Interfaces
@@ -96,7 +97,7 @@ public class KinobesuchsplanungEntry implements EntryPoint {
 					Anchor kinoBesuchsplanungLink = new Anchor();
 					kinoBesuchsplanungLink.setHref(GWT.getHostPageBaseURL());
 
-					RootPanel.get("main").add(new NutzerkontoForm(kinoBesuchsplanungLink, nutzer));
+					RootPanel.get("main").add(new NutzerkontoForm());
 
 				} else {
 
@@ -143,9 +144,8 @@ public class KinobesuchsplanungEntry implements EntryPoint {
 		 * angemeldeten Nutzer. Da der Nutzer an weiteren Stellen nötig ist, muss er abrufbar sein.
 		 */
 	}
-	public static class AktuellerNutzer extends Nutzer {
+	public static class AktuellerNutzer {
 
-		private static final long serialVersionUID = 1L;
 		private static Nutzer nutzer  = null;
 
 		public static Nutzer getNutzer() {

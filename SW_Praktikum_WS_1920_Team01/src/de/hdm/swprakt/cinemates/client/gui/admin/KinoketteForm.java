@@ -34,9 +34,13 @@ public class KinoketteForm extends HorizontalPanel{
 	
 	 KinoverwaltungForm kf;
 	 SpielplanForm sf;
+	 SpielplanverwaltungForm spvf;
+	
 	
 	public void onLoad() {
 		super.onLoad();
+		
+		
 	
 		
 		logo = new Image("images/plus.jpg");
@@ -71,9 +75,10 @@ public class KinoketteForm extends HorizontalPanel{
 		@Override
 		public void onClick(ClickEvent event) {
 			RootPanel.get("DetailsPanel").clear();
-			sf = new SpielplanForm();
+	spvf = new SpielplanverwaltungForm();
+			//		sf = new SpielplanForm();
 			Window.Location.getParameter("");
-			RootPanel.get("DetailsPanel").add(sf);
+			RootPanel.get("DetailsPanel").add(spvf);
 		}
 		
 	}

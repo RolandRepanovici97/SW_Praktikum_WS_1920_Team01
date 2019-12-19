@@ -1,39 +1,167 @@
 package de.hdm.swprakt.cinemates.client;
 
+
+import com.google.appengine.api.users.User;
+import com.google.appengine.api.users.UserService;
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.hdm.swprakt.cinemates.client.gui.NutzerkontoForm;
+import de.hdm.swprakt.cinemates.client.gui.admin.HeaderfürKinoAdministration;
 import de.hdm.swprakt.cinemates.client.gui.admin.Navigator;
 import de.hdm.swprakt.cinemates.client.gui.editor.HeaderfürKinobesuchsplanung;
-
-
+import de.hdm.swprakt.cinemates.client.gui.editor.StartseiteEditor;
+import de.hdm.swprakt.cinemates.shared.KinoBesuchsplanung;
+import de.hdm.swprakt.cinemates.shared.LoginServiceAsync;
+import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class KinobesuchsplanungEntry implements EntryPoint {
 
+
+
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT LOGIN
+	 * ***************************************************************************
+	 */
+	private LoginServiceAsync loginService = null;
+
+	private Nutzer nutzer = null;
+
+	private Button loginButton = new Button("Login");
+	private Anchor signInLink = new Anchor("Login");
+	private VerticalPanel loginPanel = new VerticalPanel();
+	private StartseiteEditor startseite = new StartseiteEditor();
+	private Label loginLabel = new Label(
+			"Bitte melden Sie sich hier mit Ihrem Google-Konto an, um auf CineMates zugreifen zu können ");
+
 	@Override
 	public void onModuleLoad() {
-		// TODO Auto-generated method stub.
-		
-		/* Das ist nur ein Test!.
-		 * 
-		 */
-		
+
 		HeaderfürKinobesuchsplanung headerPanel = new HeaderfürKinobesuchsplanung();
-		headerPanel.getElement().setId("headerPanelKinobesuchsplanung");
-		Navigator navigator = new Navigator();
-		
 		RootPanel.get("Header").add(headerPanel);
-		RootPanel.get("NavigationPanel").add(navigator);
 
+		//		RootPanel.get("DetailsPanel").add(startseite);
+		//		RootPanel.get("DetailsPanel").add(loginPanel);
+		//		RootPanel.get("DetailsPanel").add(signInLink);
+		//
+		//		loginPanel.add(loginLabel);
+		//		loginPanel.add(loginButton);
+		//		signInLink.setHref(AktuellerNutzer.getNutzer().getLoginUrl());
 
-	
+		/*
+		 * Zugriff auf Instanz des asynchronen Interfaces
+		 */
+		loginService = ClientSideSettings.getLoginService();
+		loginService.login(GWT.getHostPageBaseURL() + "Kinobesuchsplanung.html", new LoginServiceCallback());
+
 	}
-	
-	
+
+
+	/** Nutzung des Konzepts NestedClass für Rückgabe des LoginServiceCallbacks. 
+	 * Nach erfolgreichem Callback setzen wird den <code>AktuellerNutzer<code>
+	 * Anschließend erfolt eine Abfrage ob der Nutzer bereits eingeloggt ist, falls
+	 * dies zutreffend ist wird er zu Cinemates (Editor-Client)
+	 * weitergeleitet. Falls nicht wird die Methode loadLogin() aufgerufen.
+	 * 
+	 * @author alina
+	 *
+	 */
+	private class LoginServiceCallback implements AsyncCallback<Nutzer> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert(caught.toString());
+		}
+
+
+		@Override
+		public void onSuccess(Nutzer nutzer) {
+
+			AktuellerNutzer.setNutzer(nutzer);
+
+			if (nutzer.isLoggedIn()) {
+				if (nutzer.getNutzername() == null) {
+					Anchor kinoBesuchsplanungLink = new Anchor();
+					kinoBesuchsplanungLink.setHref(GWT.getHostPageBaseURL());
+
+					RootPanel.get("main").add(new NutzerkontoForm());
+
+				} else {
+
+
+				}
+			} else {
+				loadLogin();
+
+			}
+		}
+
+		/**
+		 * Diese Methode wird aufgerufen, falls der Nutzer nicht bei CineMates eingeloggt ist
+		 * In dieser wird die Google LoginMaske über den Button
+		 * <code>loginButton </code> aufgerufen.
+		 */
+		private void loadLogin() {
+			RootPanel.get("Selection").setVisible(false);
+			RootPanel.get("Result").setVisible(false);
+			RootPanel.get().add(loginPanel);
+
+			loginPanel.add(loginLabel);
+			loginPanel.add(loginButton);
+			signInLink.setHref(AktuellerNutzer.getNutzer().getLoginUrl());
+
+			loginButton.addClickHandler((ClickHandler) new LoginClickHandler());
+		}
+
+		/**
+		 * Durch einen Klick auf den loginButton wird der User auf die GoogleLoginMaske
+		 * weitergeleitet
+		 */
+		private class LoginClickHandler implements ClickHandler {
+
+			@Override
+			public void onClick(ClickEvent event) {
+
+				Window.open(signInLink.getHref(), "_self", "");
+			}
+		}
+
+		/**
+		 * Die Klasse <code>AktuellerNutzer</code> repräsentiert den aktuell im System
+		 * angemeldeten Nutzer. Da der Nutzer an weiteren Stellen nötig ist, muss er abrufbar sein.
+		 */
+	}
+	public static class AktuellerNutzer {
+
+		private static Nutzer nutzer  = null;
+
+		public static Nutzer getNutzer() {
+			return nutzer;
+		}
+
+		public static void setNutzer(Nutzer nutzer) {
+			AktuellerNutzer.nutzer = nutzer;
+		}
+	}
+
+	/* Das ist nur ein Test!
+	 */
+
+
+
+
 }
+

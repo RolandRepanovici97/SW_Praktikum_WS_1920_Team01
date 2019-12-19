@@ -8,37 +8,57 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Grid;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class KinoketteForm extends VerticalPanel{
+public class KinoketteForm extends HorizontalPanel{
 
 	private Button spielplanBearbeiten = new Button("Spielplan bearbeiten");
 	private Button kinoBearbeiten = new Button("Kino bearbeiten");
+	private Button kino = new Button("Kino löschen");
 	private String kinoName = ("Kinoname 1"); //Als Array!
 	private Button ja = new Button("JA");
 	private Button nein = new Button("NEIN");
 	private Button löschen = new Button("Löschen");
+
 	
-	KinoverwaltungForm kf = new KinoverwaltungForm();
-	SpielplanForm sf = new SpielplanForm();
+	private Image logo;
+
+	
+	 KinoverwaltungForm kf;
+	 SpielplanForm sf;
 	
 	public void onLoad() {
 		super.onLoad();
 	
-
-		Grid kinoketteGrid = new Grid(6, 6);
+		
+		logo = new Image("images/plus.jpg");
+		logo.setWidth("40px");
+		this.add(logo);
+		logo.addClickHandler(new kinoAnlegenClickHandler());
+		
+		Grid kinoketteGrid = new Grid(10, 10);
 		kinoketteGrid.setWidget(0, 3, spielplanBearbeiten);
 		spielplanBearbeiten.addClickHandler(new spielplanBearbeitenClickHandler());
 		kinoketteGrid.setText(0, 2, this.kinoName);
 		kinoketteGrid.setWidget(0, 4, kinoBearbeiten);
-		kinoBearbeiten.addClickHandler(new kinoBearbeitenClickHandler());
+		//kinoBearbeiten.addClickHandler(new kinoBearbeitenClickHandler());
 		kinoketteGrid.setWidget(0, 5, löschen);
+		kinoketteGrid.setWidget(1, 7, logo);
+		kinoketteGrid.setText(1, 8, "Neues Kino anlegen");
 		löschen.addClickHandler(new löschenClickHandler());
 		this.add(kinoketteGrid);
+
 		RootPanel.get("DetailsPanel").add(kinoketteGrid);
+		
+
 
 	}
 	
@@ -51,20 +71,18 @@ public class KinoketteForm extends VerticalPanel{
 		@Override
 		public void onClick(ClickEvent event) {
 			RootPanel.get("DetailsPanel").clear();
+			sf = new SpielplanForm();
 			Window.Location.getParameter("");
 			RootPanel.get("DetailsPanel").add(sf);
 		}
 		
 	}
 	
-	private class kinoBearbeitenClickHandler implements ClickHandler{
+	private class kinoAnlegenClickHandler implements ClickHandler{
 
-
-		public kinoBearbeitenClickHandler() {
-			
-		}
 		public void onClick(ClickEvent event) {
 			RootPanel.get("DetailsPanel").clear();
+			kf = new KinoverwaltungForm();
 			Window.Location.getParameter("");
 			RootPanel.get("DetailsPanel").add(kf);
 		}

@@ -54,6 +54,7 @@ public void onLoad() {
 	kinoverwaltung.addItem("Kinoverwaltung");
 	//kinoverwaltung.addItem("Spielplanverwaltung");
 	kinoverwaltung.setVisibleItemCount(1);
+	//this.add(kinoverwaltung);
 	
 	spielplanverwaltung = new ListBox(false);
 	spielplanverwaltung.addItem("Spielplanverwaltung");

@@ -6,46 +6,41 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
-import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ListDataProvider;
 
 import de.hdm.swprakt.cinemates.client.ClientSideSettings;
 import de.hdm.swprakt.cinemates.shared.KinoAdministrationAsync;
 import de.hdm.swprakt.cinemates.shared.bo.Kino;
 import de.hdm.swprakt.cinemates.shared.bo.Kinokette;
-import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 
-public class KinoverwaltungForm extends VerticalPanel{
+public class KinoverwaltungForm extends HorizontalPanel{
 
 /*
  * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
  */
 	
-	TextBox kinoname = new TextBox();
-	TextBox kinobeschreibung = new TextBox();
-	TextBox kinoadresse = new TextBox();
-	Button anlegen = new Button("Kino anlegen");
+	 TextBox kinoname = new TextBox();
+	 TextBox kinobeschreibung = new TextBox();
+	 TextBox kinoadresse = new TextBox();
+	 Button kinoAnlegen = new Button("Kino anlegen");
+	
 
 
+	HorizontalPanel detailsPanel = new HorizontalPanel();
 	
 	// Create a data provider.
 	private ListDataProvider<Kino> dataProvider = new ListDataProvider<Kino>();
 	
-	VerticalPanel detailsPanel = new VerticalPanel();
 	
-	KinoAdministrationAsync kaa = ClientSideSettings.getKinoAdministration();
-	
+	KinoAdministrationAsync kinoAdministration = ClientSideSettings.getKinoAdministration();
 	
 	
-	public KinoverwaltungForm() {
-		
-	}
+	
 /*
  * Beim Anzeigen werden die Widgets erzeugt. Alle werden in einem
  * Raster angeordnet, dessen Größe sich aus dem Platzbedarf der enthaltenen
@@ -56,6 +51,7 @@ public class KinoverwaltungForm extends VerticalPanel{
 		
 		super.onLoad();
 		
+	
 		
 		Grid kinoGrid = new Grid(4, 4);
 		
@@ -73,11 +69,12 @@ public class KinoverwaltungForm extends VerticalPanel{
 		kinoGrid.setWidget(2, 0, adresse);
 		
 	
-		kinoGrid.setWidget(3, 2, anlegen);
-		anlegen.addClickHandler(new kinoanlegenClickHandler());
+		kinoGrid.setWidget(3, 2, kinoAnlegen);
+		kinoAnlegen.addClickHandler(new KinoAnlegenClickHandler());
+		
 		
 		detailsPanel.add(kinoGrid);
-		RootPanel.get("DetailsPanel").add(kinoGrid);
+		RootPanel.get("DetailsPanel").add(detailsPanel);
 		
 		
 		
@@ -86,17 +83,32 @@ public class KinoverwaltungForm extends VerticalPanel{
 	 * Click handlers und abhängige AsyncCallback Klassen.
 	 */	
 	
-	
+
+		
+		private class kinoentfernenClickHandler implements ClickHandler{
+			@Override
+			public void onClick(ClickEvent event) {
+		//		kinoAdministration.deleteKino(kino, callback);
+			}
+		}
+		
+		/**
+		 * Sobald die Textfelder ausgefüllt wurden, wird ein neues Kino nach dem
+		 * Klicken des Kinoanlegen Buttons erstellt.
+		 */
+			private class KinoAnlegenClickHandler implements ClickHandler{
+				@Override
+				public void onClick(ClickEvent event) {
+					kinoAdministration.createKino(kinoname.getText(), kinobeschreibung.getText(), kinoadresse.getText(), new KinoAnlegenCallback());
+				
+				}
+				
+			}
+		
 	/**
 	 * Callback wird benötigt, um das Kino zu erstellen
 	 */
-	private class KinoCreationCallback implements AsyncCallback<Kino> {
-		
-		Kinokette kinokette = null;
-		
-		KinoCreationCallback(Kinokette kk) {
-			kinokette = kk;
-		}
+	private class KinoAnlegenCallback implements AsyncCallback<Kino> {
 		
 		
 		
@@ -120,18 +132,7 @@ public class KinoverwaltungForm extends VerticalPanel{
 		}
 	}
 
-/**
- * Sobald die Textfelder ausgefüllt wurden, wird ein neues Kino nach dem
- * Klicken des Kinoanlegen Buttons erstellt.
- */
-	private class kinoanlegenClickHandler implements ClickHandler{
-		@Override
-		public void onClick(ClickEvent event) {
-			kaa.createKino(kinoname.getValue(), kinobeschreibung.getValue(), kinoadresse.getValue(), new KinoCreationCallback(null));
-		
-		}
-		
-		
+
 		
 	
 		/**
@@ -159,15 +160,10 @@ public class KinoverwaltungForm extends VerticalPanel{
 			}
 		}
 		
-		private class kinoentfernenClickHandler implements ClickHandler{
-			@Override
-			public void onClick(ClickEvent event) {
-	//			kaa.deleteKino( new KinoCreationCallback(null));
-			}
-		}
+	
 		
 		
 		
 	}
 	
-}
+

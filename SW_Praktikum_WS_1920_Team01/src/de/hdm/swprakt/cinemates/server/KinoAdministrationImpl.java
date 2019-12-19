@@ -156,7 +156,7 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 	 * Diese Methode wird bei delete Kinokette verwendet
 	 */ 
 	public Vector<Kino> getKinosOf(Kinokette kk) throws IllegalArgumentException {
-		return this.kinoMapper.findKinosByKinokette(kk);
+		return this.kinoMapper.findByKinokette(kk);
 	}
 
 
@@ -337,7 +337,7 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 
 	public Vector <Kino> getAllKinoOfKinokette(Kinokette kinokette)throws IllegalArgumentException {
 
-		return this.kinoMapper.findKinosByKinokette(kinokette);
+		return this.kinoMapper.findByKinokette(kinokette);
 
 	}
 

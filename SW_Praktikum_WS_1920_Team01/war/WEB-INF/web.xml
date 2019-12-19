@@ -13,7 +13,7 @@
   </welcome-file-list>
   
   
-    <!-- Servlets -->
+<!--     Servlets -->
 <!--   <servlet> -->
 <!--     <servlet-name>LoginServiceImpl</servlet-name> -->
 <!--     <servlet-class>de.hdm.swprakt.cinemates.server.LoginServiceImpl</servlet-class> -->
@@ -25,25 +25,25 @@
 <!--      <url-pattern>/kinobesuchsplanung/login</url-pattern> -->
 <!--   </servlet-mapping> -->
   
-<!--   <servlet> -->
-<!--     <servlet-name>KinoBesuchsplanungImpl</servlet-name> -->
-<!--     <servlet-class>de.hdm.swprakt.cinemates.server.KinoBesuchslplanungImpl</servlet-class> -->
-<!--   </servlet> -->
+  <servlet>
+    <servlet-name>KinoBesuchsplanungImpl</servlet-name>
+    <servlet-class>de.hdm.swprakt.cinemates.server.KinoBesuchsplanungImpl</servlet-class>
+  </servlet>
 
-<!--   <servlet-mapping> -->
-<!--     <servlet-name>KinoBesuchsplanungImpl</servlet-name> -->
-<!--      <url-pattern>/kinobesuchsplanung/kinobesuchsplanung</url-pattern> -->
-<!--   </servlet-mapping> -->
+  <servlet-mapping>
+    <servlet-name>KinoBesuchsplanungImpl</servlet-name>
+     <url-pattern>/Kinobesuchsplanung/kinobesuchsplanung</url-pattern>
+  </servlet-mapping>
   
-<!--    <servlet> -->
-<!--     <servlet-name>KinoAdministrationImpl</servlet-name> -->
-<!--     <servlet-class>de.hdm.swprakt.cinemates.server.KinoAdministrationImpl</servlet-class> -->
-<!--   </servlet> -->
+   <servlet>
+    <servlet-name>KinoAdministrationImpl</servlet-name>
+    <servlet-class>de.hdm.swprakt.cinemates.server.KinoAdministrationImpl</servlet-class>
+  </servlet>
 
-<!--   <servlet-mapping> -->
-<!--     <servlet-name>KinoAdministrationImpl</servlet-name> -->
-<!--      <url-pattern>/kinoadministration/kinoadministration</url-pattern> -->
-<!--   </servlet-mapping> -->
+  <servlet-mapping>
+    <servlet-name>KinoAdministrationImpl</servlet-name>
+     <url-pattern>/KinoAdministration/kinoadministration</url-pattern>
+  </servlet-mapping>
   
   
 

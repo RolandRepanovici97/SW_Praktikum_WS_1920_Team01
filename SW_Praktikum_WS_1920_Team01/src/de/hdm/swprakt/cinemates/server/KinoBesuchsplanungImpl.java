@@ -409,7 +409,7 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 * @author alina
 	 */
 
-	public Vector<Umfrage> showAllUmfrageOfNutzer(Nutzer nutzer) {
+	public Vector<Umfrage> showAllUmfrageOfNutzer(Nutzer nutzer) throws IllegalArgumentException {
 
 		Vector<Umfrage> ergebnisvector = new Vector<Umfrage>();
 		Vector<Gruppe> gruppevector = this.gruppeMapper.getGruppenOf(nutzer);
@@ -428,7 +428,7 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 * @author alina
 	 */
 
-	public Vector<Umfrage> showAllUmfragenOfGruppe(Gruppe gruppe) {
+	public Vector<Umfrage> showAllUmfragenOfGruppe(Gruppe gruppe) throws IllegalArgumentException {
 
 		return this.umfrageMapper.findByGruppename(gruppe.getGruppenname());
 
@@ -442,7 +442,7 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 * @throws IllegalArgumentException
 	 * @author alina
 	 */
-	public Vector<Umfrage> showAllUmfragenOFilm(Film film) {
+	public Vector<Umfrage> showAllUmfragenOFilm(Film film) throws IllegalArgumentException {
 
 		Vector <Umfrage> ergebnis = new Vector <Umfrage>();
 		Vector <Umfrage> alleUmfragen = umfrageMapper.findAllUmfrage();
@@ -470,9 +470,8 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 * @author alina
 	 */
 
-	public Vector<Umfrage> showAllUmfrageOfNutzerOhneErgebnis(Nutzer nutzer) {
+	public Vector<Umfrage> showAllUmfrageOfNutzerOhneErgebnis(Nutzer nutzer) throws IllegalArgumentException {
 		Vector<Umfrage> ergebnisvector = new Vector<Umfrage>();
-		Vector<Umfrage> ergebnisvector2 = new Vector();
 		Vector<Gruppe> gruppevector = gruppeMapper.getGruppenOf(nutzer);
 		for (Gruppe g : gruppevector) {
 			ergebnisvector.addAll(this.umfrageMapper.findByGruppename(g.getGruppenname()));
@@ -480,17 +479,13 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 		for (Umfrage u : ergebnisvector) {
 			Vector<Umfrageeintrag> umfrageeinträge = this.umfrageeintragMapper.findByUmfrage(u);
 			for (Umfrageeintrag eintrag : umfrageeinträge) {
-				if (eintrag.getFinalesErgebnis() == true) {
-					Umfrageeintrag ue = eintrag;
+				if (eintrag.getFinalesErgebnis() == null) {
 
-				} else {
 
-					ergebnisvector2.add(u);
 				}
 			}
-
 		}
-		return ergebnisvector2;
+		return ergebnisvector;
 	}
 
 
@@ -668,7 +663,7 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 * @author alina
 	 */
 
-	public Votum createVotum(Umfrageeintrag umfrageeintrag, Boolean istMöglicherTermin) {
+	public Votum createVotum(Umfrageeintrag umfrageeintrag, Boolean istMöglicherTermin) throws IllegalArgumentException {
 		Votum votum = new Votum();
 		votum.setUmfrageeintragID(umfrageeintrag.getID());
 		votum.setIstMöglicherTermin(istMöglicherTermin);
@@ -734,7 +729,7 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 * @author alina
 	 */
 
-	public Votum findVotumByID(int votumid) {
+	public Votum findVotumByID(int votumid) throws IllegalArgumentException {
 		return this.votumMapper.findByID(votumid);
 
 	}
@@ -746,7 +741,7 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 * @throws IllegalArgumentException
 	 * @author alina
 	 */
-	public Nutzer findOwnerOfVotum(Votum votum) {
+	public Nutzer findOwnerOfVotum(Votum votum) throws IllegalArgumentException {
 		int ownerid =  this.ownedBusinessObjectMapper.getOwnerOf(votum);
 		Nutzer nutzer = this.nutzerMapper.findByID(ownerid);
 		return nutzer;

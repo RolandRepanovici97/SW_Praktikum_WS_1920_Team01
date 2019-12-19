@@ -10,6 +10,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.view.client.ListDataProvider;
 
@@ -18,7 +19,7 @@ import de.hdm.swprakt.cinemates.shared.KinoAdministrationAsync;
 import de.hdm.swprakt.cinemates.shared.bo.Kino;
 import de.hdm.swprakt.cinemates.shared.bo.Kinokette;
 
-public class KinoverwaltungForm extends HorizontalPanel{
+public class KinoverwaltungForm extends TabPanel{
 
 /*
  * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
@@ -39,7 +40,7 @@ public class KinoverwaltungForm extends HorizontalPanel{
 	
 	KinoAdministrationAsync kinoAdministration = ClientSideSettings.getKinoAdministration();
 	
-	
+	KinoBearbeitenForm kbf = new KinoBearbeitenForm();
 	
 /*
  * Beim Anzeigen werden die Widgets erzeugt. Alle werden in einem
@@ -75,6 +76,8 @@ public class KinoverwaltungForm extends HorizontalPanel{
 		
 		detailsPanel.add(kinoGrid);
 		RootPanel.get("DetailsPanel").add(detailsPanel);
+		this.add(kbf, "KinoBearbeiten");
+		this.selectTab(1);
 		
 		
 		

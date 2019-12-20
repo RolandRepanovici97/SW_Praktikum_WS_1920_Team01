@@ -3,12 +3,17 @@
  */
 package de.hdm.swprakt.cinemates.server;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
+import de.hdm.swprakt.cinemates.client.ClientSideSettings;
+import de.hdm.swprakt.cinemates.server.db.NutzerMapper;
 import de.hdm.swprakt.cinemates.shared.KinoBesuchsplanung;
+import de.hdm.swprakt.cinemates.shared.KinoBesuchsplanungAsync;
 import de.hdm.swprakt.cinemates.shared.LoginService;
 import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 
+import java.util.Vector;
 
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
@@ -25,12 +30,25 @@ import com.google.appengine.api.users.UserServiceFactory;
 public class LoginServiceImpl extends RemoteServiceServlet implements LoginService {
 
 	// wird zur Serialisierung benötigt.
-
 	private static final long serialVersionUID = 1L;
 
+	//Referenz auf den NutzerMapper
+	private NutzerMapper nutzerMapper = null;
+
 	//Zugriff auf die Methoden der Kinobesuchsplanung, e.g. für die Verwaltung des eingeloggten Nutzers
-	
-	private KinoBesuchsplanung kinobesuchsplanung = null;
+
+	private KinoBesuchsplanungAsync kinobesuchsplanung = null;
+
+
+	public LoginServiceImpl() throws IllegalArgumentException {
+	}
+
+
+	//	public void init() throws IllegalArgumentException {
+	//		KinoBesuchsplanungImpl kbi = new KinoBesuchsplanungImpl();
+	//		kbi.init();
+	//		this.kinobesuchsplanung = kbi;
+
 
 	/**
 	 * Diese Methode realisiert den Login, es wird geprüft, ob ein <code>Nutzer</code> unserem System
@@ -43,17 +61,6 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
 	 * @return neues oder eingeloggtes Objekt der Klasse <code>Nutzer</code>
 	 */
 
-	public LoginServiceImpl() throws IllegalArgumentException {
-	}
-
-
-	public void init() throws IllegalArgumentException {
-		KinoBesuchsplanungImpl kbi = new KinoBesuchsplanungImpl();
-		kbi.init();
-		this.kinobesuchsplanung = kbi;
-	}
-
-
 	public Nutzer login(String requestUri) {
 		UserService userService = UserServiceFactory.getUserService();
 		User googleUser = userService.getCurrentUser();
@@ -65,7 +72,8 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
 		 */
 
 		if(googleUser != null) {
-			Nutzer bekannterNutzer = kinobesuchsplanung.findNutzerByEmail(googleUser.getEmail());
+
+			Nutzer bekannterNutzer = NutzerMapper.nutzerMapper().findByEmail(googleUser.getEmail());
 
 			/** Ist dieser Nutzer CineMates nun bekannt, so vermerken wir dass er eingeloggt ist. 
 			 *  
@@ -77,6 +85,8 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
 
 				nutzer.setLoggedIn(true);
 				nutzer.setLogoutUrl(userService.createLogoutURL(requestUri));
+
+				return bekannterNutzer;
 
 
 			}
@@ -94,7 +104,7 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
 
 				//Einfügen des neuen Nutzers in die Datenbank
 
-				nutzer = kinobesuchsplanung.createNutzer(nutzer);
+				NutzerMapper.nutzerMapper().insert(nutzer);
 			}
 
 		}
@@ -105,8 +115,6 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
 		}
 
 		return nutzer;
+
 	}
 }
-
-
-

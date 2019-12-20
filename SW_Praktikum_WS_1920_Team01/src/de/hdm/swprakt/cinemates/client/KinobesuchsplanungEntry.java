@@ -21,6 +21,7 @@ import de.hdm.swprakt.cinemates.client.gui.admin.Navigator;
 import de.hdm.swprakt.cinemates.client.gui.editor.HeaderfürKinobesuchsplanung;
 import de.hdm.swprakt.cinemates.client.gui.editor.StartseiteEditor;
 import de.hdm.swprakt.cinemates.shared.KinoBesuchsplanung;
+import de.hdm.swprakt.cinemates.shared.LoginService;
 import de.hdm.swprakt.cinemates.shared.LoginServiceAsync;
 import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 
@@ -36,7 +37,6 @@ public class KinobesuchsplanungEntry implements EntryPoint {
 	 * ABSCHNITT LOGIN
 	 * ***************************************************************************
 	 */
-	private LoginServiceAsync loginService = null;
 
 	private Nutzer nutzer = null;
 
@@ -55,18 +55,16 @@ public class KinobesuchsplanungEntry implements EntryPoint {
 
 		//		RootPanel.get("DetailsPanel").add(startseite);
 		//		RootPanel.get("DetailsPanel").add(loginPanel);
-		//		RootPanel.get("DetailsPanel").add(signInLink);
+		//				RootPanel.get("DetailsPanel").add(signInLink);
 		//
 		//		loginPanel.add(loginLabel);
 		//		loginPanel.add(loginButton);
 		//		signInLink.setHref(AktuellerNutzer.getNutzer().getLoginUrl());
 
-		/*
-		 * Zugriff auf Instanz des asynchronen Interfaces
-		 */
-		loginService = ClientSideSettings.getLoginService();
-		loginService.login(GWT.getHostPageBaseURL() + "Kinobesuchsplanung.html", new LoginServiceCallback());
+		// Zugriff auf Instanz des asynchronen Interfaces für den Login
 
+		LoginServiceAsync loginService = GWT.create(LoginService.class);
+		loginService.login(GWT.getHostPageBaseURL(), new LoginServiceCallback());
 	}
 
 

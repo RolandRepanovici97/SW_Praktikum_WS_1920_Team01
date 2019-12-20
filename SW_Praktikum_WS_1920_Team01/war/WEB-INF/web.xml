@@ -1,50 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
               http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-         version="2.5"
-         xmlns="http://java.sun.com/xml/ns/javaee">
+	version="2.5" xmlns="http://java.sun.com/xml/ns/javaee">
 
 
-  <!-- Default page to serve -->
-  <welcome-file-list>
-    <welcome-file>Kinobesuchsplanung.html</welcome-file>
-    <welcome-file>KinoAdministration.html</welcome-file>
-  </welcome-file-list>
-  
-  
-<!--     Servlets -->
-<!--   <servlet> -->
-<!--     <servlet-name>LoginServiceImpl</servlet-name> -->
-<!--     <servlet-class>de.hdm.swprakt.cinemates.server.LoginServiceImpl</servlet-class> -->
-<!--   </servlet> -->
+	<!-- Default page to serve -->
+	<welcome-file-list>
+		<welcome-file>Kinobesuchsplanung.html</welcome-file>
+		<welcome-file>KinoAdministration.html</welcome-file>
+	</welcome-file-list>
 
-<!--   <servlet-mapping> -->
-<!--     <servlet-name>LoginServiceImpl</servlet-name> -->
-<!--     <url-pattern>/kinoadministration/login</url-pattern> -->
-<!--      <url-pattern>/kinobesuchsplanung/login</url-pattern> -->
-<!--   </servlet-mapping> -->
-  
-  <servlet>
-    <servlet-name>KinoBesuchsplanungImpl</servlet-name>
-    <servlet-class>de.hdm.swprakt.cinemates.server.KinoBesuchsplanungImpl</servlet-class>
-  </servlet>
+	<!-- Servlets -->
+	
+	<servlet>
+		<servlet-name>loginService</servlet-name>
+		<servlet-class>de.hdm.swprakt.cinemates.server.LoginServiceImpl</servlet-class>
+	</servlet>
 
-  <servlet-mapping>
-    <servlet-name>KinoBesuchsplanungImpl</servlet-name>
-     <url-pattern>/Kinobesuchsplanung/kinobesuchsplanung</url-pattern>
-  </servlet-mapping>
-  
-   <servlet>
-    <servlet-name>KinoAdministrationImpl</servlet-name>
-    <servlet-class>de.hdm.swprakt.cinemates.server.KinoAdministrationImpl</servlet-class>
-  </servlet>
+	<servlet-mapping>
+		<servlet-name>loginService</servlet-name>
+		<!-- <url-pattern>/kinoadministration/login</url-pattern> -->
+		<url-pattern>/kinobesuchsplanung/login</url-pattern>
+	</servlet-mapping>
 
-  <servlet-mapping>
-    <servlet-name>KinoAdministrationImpl</servlet-name>
-     <url-pattern>/KinoAdministration/kinoadministration</url-pattern>
-  </servlet-mapping>
-  
-  
+	<servlet>
+		<servlet-name>KinoBesuchsplanungImpl</servlet-name>
+		<servlet-class>de.hdm.swprakt.cinemates.server.KinoBesuchsplanungImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>KinoBesuchsplanungImpl</servlet-name>
+		<url-pattern>/KinoBesuchsplanung/kinobesuchsplanung</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>KinoAdministrationImpl</servlet-name>
+		<servlet-class>de.hdm.swprakt.cinemates.server.KinoAdministrationImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>KinoAdministrationImpl</servlet-name>
+		<url-pattern>/KinoAdministration/kinoadministration</url-pattern>
+	</servlet-mapping>
+
+
 
 </web-app>

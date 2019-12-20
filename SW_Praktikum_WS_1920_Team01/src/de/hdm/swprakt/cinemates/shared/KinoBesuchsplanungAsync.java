@@ -79,6 +79,8 @@ public interface KinoBesuchsplanungAsync {
 
 	public void showAllUmfrageOfNutzerOhneErgebnis(Nutzer nutzer, AsyncCallback<Vector<Umfrage>> callback);
 
+	public void showUmfrageeinträgeofUmfrage(Umfrage umfrage, AsyncCallback<Vector<Umfrageeintrag>> callback);
+
 
 
 

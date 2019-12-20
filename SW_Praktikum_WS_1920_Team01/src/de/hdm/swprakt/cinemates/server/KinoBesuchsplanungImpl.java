@@ -618,6 +618,20 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	}
 
 
+	/*
+	 * Diese Methode wird benötgt, um alle Umfrageeinträge einer Umfrage zu finden.
+	 * @param Umfrage, zu welcher die Umfrageeinträge gefunden werden sollen.
+	 * @throws IllegalArgumentException
+	 * @author alina
+	 */
+
+	public Vector <Umfrageeintrag> showUmfrageeinträgeofUmfrage(Umfrage umfrage) throws IllegalArgumentException{
+
+		return this.umfrageeintragMapper.findByUmfrage(umfrage);
+
+	}
+
+
 
 
 
@@ -637,7 +651,7 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 		 * in einem Vector. Anschließend iterieren wir durch diesen und rufen für jedes Votum-Objekt die 
 		 * deleteVotum()-Methode auf, welche dieses löscht,
 		 */
-		Vector <Votum> votumvector = votumMapper.findVotumByUmfrageeintrag(umfrageeintrag);
+		Vector <Votum> votumvector = this.votumMapper.findVotumByUmfrageeintrag(umfrageeintrag);
 		if (votumvector!= null) {
 			for(Votum votum: votumvector) {
 				deleteVotum(votum);

@@ -86,6 +86,8 @@ public interface KinoBesuchsplanung extends RemoteService {
 	public Vector<Umfrage> showAllUmfragenOFilm(Film film);
 
 	public Vector<Umfrage> showAllUmfrageOfNutzerOhneErgebnis(Nutzer nutzer);
+	
+	public Vector <Umfrageeintrag> showUmfrageeinträgeofUmfrage(Umfrage umfrage);
 
 
 

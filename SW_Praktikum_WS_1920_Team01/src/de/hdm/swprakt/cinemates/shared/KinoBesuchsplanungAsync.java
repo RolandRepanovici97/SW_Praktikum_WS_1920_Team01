@@ -26,22 +26,19 @@ public interface KinoBesuchsplanungAsync {
 
 	public void findNutzerByEmail(String email, AsyncCallback<Nutzer> callback);
 
-	public void createNutzer(Nutzer nutzer, AsyncCallback<Nutzer> callback);
+	public void createNutzer(String email, String nutzername, AsyncCallback<Nutzer> callback);
 
 	public void createGruppe(Nutzer nutzer, String gruppenname, Vector<Nutzer> gruppenmitglieder,
 			AsyncCallback<Gruppe> callback);
 
 	public void showAllUmfrage(AsyncCallback<Vector<Umfrage>> callback);
 
-	public void createUmfrage(String umfragenname, AsyncCallback<Umfrage> callback);
+	public void createUmfrage(String umfragenname, Vector<Integer> gruppenIDs, AsyncCallback<Umfrage> callback);
 
 	public void showVotumOfUmfrageeintrag(Umfrageeintrag umfrageeintrag, AsyncCallback<Vector<Votum>> callback);
 
-	public void editUmfrage(Umfrage umfrage, String umfragenname, String beschreibung, AsyncCallback<Umfrage> callback);
-
 	public void deleteUmfrage(Umfrage umfrage, AsyncCallback<Void> callback);
 
-	public void abstimmen(Umfrageeintrag umfrageeintrag, Boolean istMöglicherTermin, AsyncCallback<Votum> callback);
 
 	public void umfrageergebnisseAnzeigen(Umfrage umfrage, AsyncCallback<Vector<Umfrageeintrag>> callback);
 

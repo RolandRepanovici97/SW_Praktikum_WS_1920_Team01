@@ -66,7 +66,7 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 		this.filmMapper = FilmMapper.filmMapper();
 		this.spielplanMapper = SpielplanMapper.spielplanMapper();
 		this.nutzerMapper = NutzerMapper.nutzerMapper();
-		this.ownedBusinessObjectMapper.ownedBusinessObjectMapper();
+		this.ownedBusinessObjectMapper= OwnedBusinessObjectMapper.ownedBusinessObjectMapper();
 
 
 	}

@@ -35,7 +35,7 @@ public interface KinoBesuchsplanung extends RemoteService {
 
 	public Nutzer findNutzerByEmail(String email);
 
-	public Nutzer createNutzer(Nutzer nutzer);
+	public Nutzer createNutzer(String email, String nutzername);
 
 	public void save(Nutzer nutzer);
 
@@ -43,15 +43,12 @@ public interface KinoBesuchsplanung extends RemoteService {
 
 	public Vector <Umfrage> showAllUmfrage();
 
-	public Umfrage createUmfrage(String umfragenname);
+	public Umfrage createUmfrage(String umfragenname, Vector<Integer> gruppenIDs);
 
 	public Vector <Votum> showVotumOfUmfrageeintrag(Umfrageeintrag umfrageeintrag);
 
-	public Umfrage editUmfrage(Umfrage umfrage, String umfragenname, String beschreibung);
-
 	public void deleteUmfrage(Umfrage umfrage);
 
-	public Votum abstimmen(Umfrageeintrag umfrageeintrag, Boolean istMöglicherTermin);
 
 	public Vector <Umfrageeintrag> umfrageergebnisseAnzeigen(Umfrage umfrage);
 
@@ -86,7 +83,7 @@ public interface KinoBesuchsplanung extends RemoteService {
 	public Vector<Umfrage> showAllUmfragenOFilm(Film film);
 
 	public Vector<Umfrage> showAllUmfrageOfNutzerOhneErgebnis(Nutzer nutzer);
-	
+
 	public Vector <Umfrageeintrag> showUmfrageeinträgeofUmfrage(Umfrage umfrage);
 
 

@@ -15,15 +15,6 @@ div#DetailsPanel {
 	overflow: auto;
 }
 
-div#FooterPanel {
-	background-color: #F4BFBE;
-	height: 10vh;
-	width: 100%;
-	margin-bottom: -10px;
-	margin-top: -8px;
-	clear: both;
-}
-
 div#MenuBar {
 	float: right;
 	width: 60px;
@@ -78,7 +69,6 @@ div#MenuBar {
 	width: 100%;
 	margin-bottom: 0px;
 	margin-top: -8px;
-	background-color: #F4BFBE;
 }
 
 #NutzerButton {

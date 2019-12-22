@@ -45,7 +45,7 @@ public class KinobesuchsplanungEntry implements EntryPoint {
 	private Button loginButton = new Button("Login");
 	private Anchor signInLink = new Anchor("Login");
 	private VerticalPanel loginPanel = new VerticalPanel();
-	private StartseiteEditor startseite = new StartseiteEditor();
+	private StartseiteEditor startseite;
 	private Label loginLabel = new Label(
 			"Bitte melden Sie sich hier mit Ihrem Google-Konto an, um auf CineMates zugreifen zu können ");
 
@@ -57,6 +57,8 @@ public class KinobesuchsplanungEntry implements EntryPoint {
 		HeaderfürKinobesuchsplanung headerPanel = new HeaderfürKinobesuchsplanung();
 		headerPanel.getElement().setId("headerPanelKinobesuchsplanung");
 		RootPanel.get("Header").add(headerPanel);
+		startseite = new StartseiteEditor();
+		RootPanel.get("DetailsPanel").add(startseite);
 
 		//		RootPanel.get("DetailsPanel").add(startseite);
 		//		RootPanel.get("DetailsPanel").add(loginPanel);

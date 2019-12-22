@@ -61,6 +61,8 @@ public class UmfrageErstellenForm extends VerticalPanel {
 
 		// Hinzufügen des ClickHandlers zum Erstellen Button
 		erstellenButton.addClickHandler(new ErstellenClickHandler());
+		
+		this.add(umfragename);
 
 	}
 

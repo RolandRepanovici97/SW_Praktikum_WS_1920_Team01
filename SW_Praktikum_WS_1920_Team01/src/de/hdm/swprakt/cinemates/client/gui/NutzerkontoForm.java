@@ -7,7 +7,9 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -21,20 +23,21 @@ import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
  * @author alina
  *
  */
-public class NutzerkontoForm extends VerticalPanel {
+public class NutzerkontoForm extends HorizontalPanel {
 
 	KinoBesuchsplanungAsync kinobesuchsplanung = ClientSideSettings.getKinobesuchsplanung();
 
 
 	//Erzeugen der einzelnen Widgets
 
-	private Nutzer nutzer = new Nutzer();
+	private Nutzer nutzer;
 	private Label titel = new Label("Mein Nutzerkonto");
 	private Label nutzernamelabel = new Label("Nutzername:");
 	private TextBox nutzernametext;
 	private Label emaillabel = new Label("E-Mail");
 	private Label emailtext;
 	private Button speichernButton;
+	private VerticalPanel panelfürnutzer = new VerticalPanel();
 
 
 	public void onLoad() {
@@ -48,6 +51,15 @@ public class NutzerkontoForm extends VerticalPanel {
 		speichernButton = new Button("Speichern");
 
 		speichernButton.addClickHandler(new SpeichernClickHandler());
+
+		panelfürnutzer.add(titel);
+		panelfürnutzer.add(nutzernamelabel);
+		panelfürnutzer.add(nutzernametext);
+		panelfürnutzer.add(emaillabel);
+		panelfürnutzer.add(emailtext);
+		panelfürnutzer.add(speichernButton);
+		this.add(panelfürnutzer);
+		RootPanel.get().add(this);
 
 	}
 

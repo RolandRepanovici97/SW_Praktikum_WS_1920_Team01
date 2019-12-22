@@ -16,20 +16,23 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.swprakt.cinemates.client.gui.NutzerkontoForm;
-import de.hdm.swprakt.cinemates.client.gui.admin.KinoverwaltungForm;
+
 
 /**
- * Diese Klasse dient zur Darstellung des Headers der Applikation. Sie beinhaltet das Logo der Applikation,
- * sowie den Namen 
+ * Diese Klasse dient zur Darstellung des Headers der Applikation. Sie
+ * beinhaltet das Logo der Applikation, sowie den Namen
+ * 
  * @author alina
  * @version 1.0
  *
  */
 public class HeaderfürKinobesuchsplanung extends HorizontalPanel {
 
-	/* Diese privaten Attribute stellen Widgtes dar, deren Inhalte Variable sind. 
-	 * Sie werden benötigt, um die Inhalte im weiteren Verlauf sinnvolll zu struktutieren. 
-	 * Es werden dazu später ClickHandler auf die Widgets implementiert.
+	/*
+	 * Diese privaten Attribute stellen Widgtes dar, deren Inhalte Variable sind.
+	 * Sie werden benötigt, um die Inhalte im weiteren Verlauf sinnvolll zu
+	 * struktutieren. Es werden dazu später ClickHandler auf die Widgets
+	 * implementiert.
 	 */
 	private Button adminButton;
 	private Button planerButton;
@@ -38,19 +41,18 @@ public class HeaderfürKinobesuchsplanung extends HorizontalPanel {
 	private Button logout;
 	private Image logo;
 
-
-
 	/*
-	 * Beim Anzeigen werden die Widgets erzeugt. Alle werden in einem
-	 * Raster angeordnet, dessen Größe sich aus dem Platzbedarf der enthaltenen
-	 * Widgets bestimmt.
+	 * Beim Anzeigen werden die Widgets erzeugt. Alle werden in einem Raster
+	 * angeordnet, dessen Größe sich aus dem Platzbedarf der enthaltenen Widgets
+	 * bestimmt.
 	 */
 
 	public void onLoad() {
 
 		super.onLoad();
 
-		/*+ Zunächst die Instantiierung der einzelenen Widgets/Buttons
+		/*
+		 * + Zunächst die Instantiierung der einzelenen Widgets/Buttons
 		 * 
 		 */
 		adminButton = new Button("Kinoadministration");
@@ -70,17 +72,14 @@ public class HeaderfürKinobesuchsplanung extends HorizontalPanel {
 		gruppe.setHeight("60px");
 		gruppe.setWidth("60px");
 		gruppe.getElement().setId("GruppeButton");
-		logout= new Button("Logout");
+		logout = new Button("Logout");
 		logout.setHTML("<i class=\"fas fa-sign-out-alt\"></i>");
 		logout.setHeight("60px");
 		logout.setWidth("60px");
 		logout.getElement().setId("LogoutButton");
 
-
-
-
-
-		/** Hinzufügen der Buttons/Widgtes zum HorizontalPanel
+		/**
+		 * Hinzufügen der Buttons/Widgtes zum HorizontalPanel
 		 * 
 		 */
 		this.add(logo);
@@ -90,53 +89,55 @@ public class HeaderfürKinobesuchsplanung extends HorizontalPanel {
 		RootPanel.get("MenuBar").add(gruppe);
 		RootPanel.get("MenuBar").add(logout);
 
-
-		/** Auf den Button, welcher zunächst den Nutzernamen darstellen soll, soll ein Panel "gelegt" werden,
-		 * welches es dem Nutzer ermöglicht, sich sein Nutzerkonto anzeigen zu lassen
-		 * ,es zu bearbeiten, sowie sich auszuloggen.
+		/**
+		 * Auf den Button, welcher zunächst den Nutzernamen darstellen soll, soll ein
+		 * Panel "gelegt" werden, welches es dem Nutzer ermöglicht, sich sein
+		 * Nutzerkonto anzeigen zu lassen ,es zu bearbeiten, sowie sich auszuloggen.
 		 * 
 		 */
 
-		/** Hinzufügen der ClickHandler zu den Buttons
+		/**
+		 * Hinzufügen der ClickHandler zu den Buttons
 		 * 
 		 */
 		adminButton.addClickHandler(new AdminClickHandler());
 		planerButton.addClickHandler(new PlanerClickHandler());
 		nutzer.addClickHandler(new NutzerClickHandler());
 
-
 	}
 
 	/**
 	 *************************
-	 *Abschnitt der Click-Handler
+	 * Abschnitt der Click-Handler
 	 *************************
 	 */
 
-
-	/** Für ClickHandler-Klassen bietet sich das Konzept der nested classes an, da sie nicht weiter benötigt werden
-	 * als an dieser Stelle. Sie implementieren das, von GWT bereitgestellte, Interface <code> ClickHandler </code>
+	/**
+	 * Für ClickHandler-Klassen bietet sich das Konzept der nested classes an, da
+	 * sie nicht weiter benötigt werden als an dieser Stelle. Sie implementieren
+	 * das, von GWT bereitgestellte, Interface <code> ClickHandler </code>
 	 *
 	 */
-	private class AdminClickHandler implements ClickHandler{
+	private class AdminClickHandler implements ClickHandler {
 
-
-		/** Klickt der Nutzer auf den Button der mit "Kinoadministration" beschriftet ist,
-		 *  so wird er auf diese Seite weitergeleitet.
+		/**
+		 * Klickt der Nutzer auf den Button der mit "Kinoadministration" beschriftet
+		 * ist, so wird er auf diese Seite weitergeleitet.
 		 */
 
 		@Override
 		public void onClick(ClickEvent event) {
 			Window.Location.assign("KinoAdministration.html");
 
-
-
 		}
 	}
-	private class PlanerClickHandler implements ClickHandler{
 
-		/** Der Nutzer soll zunächst auf die Seite der Kinobesuchsplanung geführt werden.
-		 *  Klickt er dann nochmals auf Button "Kinobesuchsplanung", so wird die Seite neu geladen.
+	private class PlanerClickHandler implements ClickHandler {
+
+		/**
+		 * Der Nutzer soll zunächst auf die Seite der Kinobesuchsplanung geführt werden.
+		 * Klickt er dann nochmals auf Button "Kinobesuchsplanung", so wird die Seite
+		 * neu geladen.
 		 */
 
 		@Override
@@ -144,23 +145,20 @@ public class HeaderfürKinobesuchsplanung extends HorizontalPanel {
 			Window.Location.reload();
 		}
 
-
 	}
-	/** Klickt der Nutzer auf den Nutzerbutton,
-	 *  so wird ihm sein Nutzerkonto angezeigt und er kann hier seinen Nutzernamen bearbeiten.
+
+	/**
+	 * Klickt der Nutzer auf den Nutzerbutton, so wird ihm sein Nutzerkonto
+	 * angezeigt und er kann hier seinen Nutzernamen bearbeiten.
 	 */
 	private class NutzerClickHandler implements ClickHandler {
-
-
 
 		@Override
 		public void onClick(ClickEvent event) {
 
 			RootPanel.get("DetailsPanel").clear();
 			NutzerkontoForm nutzerkontoform = new NutzerkontoForm();
-			Window.Location.getParameter("");
 			RootPanel.get("DetailsPanel").add(nutzerkontoform);
-
 
 		}
 

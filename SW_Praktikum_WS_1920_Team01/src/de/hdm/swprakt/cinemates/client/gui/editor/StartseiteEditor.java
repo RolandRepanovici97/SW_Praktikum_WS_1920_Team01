@@ -13,6 +13,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -46,23 +47,35 @@ public class StartseiteEditor extends HorizontalPanel {
 	private Vector <Umfrage> umfragen = new Vector<Umfrage>();
 	private Label label1 = new Label("Meine Umfragen");
 	private Label label2 = new Label("Neue Umfragen");
-	private Nutzer nutzer = new Nutzer();
+	private Nutzer nutzer;
 	private VerticalPanel panelfürumfragen= new VerticalPanel();
 	private Button neueUmfrage = new Button();
+	private ListBox umfragen1;
 
 
 
 	public void onLoad() { 
 
 		neueUmfrage.setHTML("<i class=\"fas fa-plus\"></i>");
-		neueUmfrage.addClickHandler(new NeueUmfrageClickHandler());
+
+		//		neueUmfrage.addClickHandler(new NeueUmfrageClickHandler());
 		KinoBesuchsplanungAsync kinobesuchsplanung = ClientSideSettings.getKinobesuchsplanung();
 		kinobesuchsplanung.showAllUmfrageOfNutzer(nutzer, new UmfragenAnzeigenCallback());
+		umfragen1 = new ListBox();
 
 
 		panelfürumfragen.add(label1);
+		panelfürumfragen.add(label2);
+		panelfürumfragen.add(neueUmfrage);
+
+//		neueUmfrage.addClickHandler(new NeueUmfrageClickHandler());
+		
+		this.add(panelfürumfragen);
+		RootPanel.get("DetailsPanel").add(this);
 
 		for(Umfrage u: umfragen) {
+
+			umfragen1.addItem(u.toString());
 			//Wir instanttieren ein neues UmfrageAuswahl-Objekt
 			UmfrageAuswahl auswahl = new UmfrageAuswahl();
 
@@ -164,7 +177,7 @@ class UmfrageAuswählenClickHandler implements ClickHandler {
 	public void onClick(ClickEvent event) {
 
 		UmfrageAnzeige anzeige = new UmfrageAnzeige();
-		RootPanel.get("Deatils").add(anzeige);
+		RootPanel.get("DeatilsPanel").add(anzeige);
 
 	}
 
@@ -181,8 +194,10 @@ class UmfrageAuswählenClickHandler implements ClickHandler {
 class NeueUmfrageClickHandler implements ClickHandler {
 
 	public void onClick(ClickEvent event) {
+
+		RootPanel.get("DetailsPanel").clear();
 		UmfrageErstellenForm neueUmfrage = new UmfrageErstellenForm();
-		RootPanel.get("Details").add(neueUmfrage);
+		RootPanel.get("DetailsPanel").add(neueUmfrage);
 	}
 
 }

@@ -43,7 +43,7 @@ public interface KinoBesuchsplanung extends RemoteService {
 
 	public Vector <Umfrage> showAllUmfrage();
 
-	public Umfrage createUmfrage(String umfragenname, Vector<Integer> gruppenIDs);
+	public Umfrage createUmfrage(String umfragenname);
 
 	public Vector <Votum> showVotumOfUmfrageeintrag(Umfrageeintrag umfrageeintrag);
 

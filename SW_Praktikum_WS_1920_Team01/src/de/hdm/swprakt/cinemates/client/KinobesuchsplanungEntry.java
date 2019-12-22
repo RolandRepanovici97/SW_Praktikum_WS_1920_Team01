@@ -11,6 +11,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -40,6 +41,7 @@ public class KinobesuchsplanungEntry implements EntryPoint {
 
 	private Nutzer nutzer = null;
 
+
 	private Button loginButton = new Button("Login");
 	private Anchor signInLink = new Anchor("Login");
 	private VerticalPanel loginPanel = new VerticalPanel();
@@ -50,7 +52,10 @@ public class KinobesuchsplanungEntry implements EntryPoint {
 	@Override
 	public void onModuleLoad() {
 
+
+
 		HeaderfürKinobesuchsplanung headerPanel = new HeaderfürKinobesuchsplanung();
+		headerPanel.getElement().setId("headerPanelKinobesuchsplanung");
 		RootPanel.get("Header").add(headerPanel);
 
 		//		RootPanel.get("DetailsPanel").add(startseite);
@@ -65,6 +70,7 @@ public class KinobesuchsplanungEntry implements EntryPoint {
 
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
 		loginService.login(GWT.getHostPageBaseURL(), new LoginServiceCallback());
+
 	}
 
 

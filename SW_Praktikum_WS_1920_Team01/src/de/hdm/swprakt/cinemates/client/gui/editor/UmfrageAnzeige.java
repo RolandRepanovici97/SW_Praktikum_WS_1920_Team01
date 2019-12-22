@@ -63,7 +63,7 @@ public class UmfrageAnzeige extends VerticalPanel {
 		kinobesuchsplanung.showUmfrageeinträgeofUmfrage(umfrage, new UmfrageeintragCallback());
 
 		for(Umfrageeintrag eintrag: einträgevector) {
-			Kino kino = KinoMapper.kinoMapper().findByID(eintrag.getID());
+	
 			
 		}
 

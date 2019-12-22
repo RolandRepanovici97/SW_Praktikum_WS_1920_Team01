@@ -414,16 +414,15 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 * Umfrageeobjekt initial lebensfähig zu machen. Alle anderen Attribute können
 	 * wir später vergeben.
 	 * 
-	 * @param Name der Umfrage, Gruppen zu welchen die Umfrage gehören soll
+	 * @param Name der Umfrage
 	 * @throws IllegalArgumentException
 	 * @author alina
 	 */
 
-	public Umfrage createUmfrage(String umfragenname, Vector<Integer> gruppenIDs) throws IllegalArgumentException {
+	public Umfrage createUmfrage(String umfragenname) throws IllegalArgumentException {
 
 		Umfrage umfrage = new Umfrage();
 		umfrage.setUmfragenname(umfragenname);
-		umfrage.setGruppenIDs(gruppenIDs);
 		umfrage.setOwnerID(nutzer.getID());
 		this.umfrageMapper.insert(umfrage);
 

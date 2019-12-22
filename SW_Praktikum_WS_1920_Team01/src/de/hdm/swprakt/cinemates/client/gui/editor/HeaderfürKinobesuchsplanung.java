@@ -34,6 +34,8 @@ public class HeaderfürKinobesuchsplanung extends HorizontalPanel {
 	private Button adminButton;
 	private Button planerButton;
 	private Button nutzer;
+	private Button gruppe;
+	private Button logout;
 	private Image logo;
 
 
@@ -56,13 +58,25 @@ public class HeaderfürKinobesuchsplanung extends HorizontalPanel {
 		nutzer = new Button("Nutzer");
 		nutzer.setStyleName("nutzer");
 		nutzer.setHTML("<i class=\"fas fa-user\"></i>");
-		nutzer.setHeight("100px");
-		nutzer.setWidth("100px");
+		nutzer.setHeight("60x");
+		nutzer.setWidth("60px");
 		nutzer.getElement().setId("NutzerButton");
 		planerButton = new Button("Kinobesuchsplanung");
 		planerButton.getElement().setId("planerbutton");
 		logo = new Image("images/CineMates Logo.jpg");
-		logo.setWidth("100px");
+		logo.setWidth("80px");
+		gruppe = new Button("Gruppe");
+		gruppe.setHTML("<i class=\"fas fa-users\"></i>");
+		gruppe.setHeight("60px");
+		gruppe.setWidth("60px");
+		gruppe.getElement().setId("GruppeButton");
+		logout= new Button("Logout");
+		logout.setHTML("<i class=\"fas fa-sign-out-alt\"></i>");
+		logout.setHeight("60px");
+		logout.setWidth("60px");
+		logout.getElement().setId("LogoutButton");
+
+
 
 
 
@@ -72,7 +86,9 @@ public class HeaderfürKinobesuchsplanung extends HorizontalPanel {
 		this.add(logo);
 		this.add(planerButton);
 		this.add(adminButton);
-		this.add(nutzer);
+		RootPanel.get("MenuBar").add(nutzer);
+		RootPanel.get("MenuBar").add(gruppe);
+		RootPanel.get("MenuBar").add(logout);
 
 
 		/** Auf den Button, welcher zunächst den Nutzernamen darstellen soll, soll ein Panel "gelegt" werden,
@@ -144,7 +160,6 @@ public class HeaderfürKinobesuchsplanung extends HorizontalPanel {
 			NutzerkontoForm nutzerkontoform = new NutzerkontoForm();
 			Window.Location.getParameter("");
 			RootPanel.get("DetailsPanel").add(nutzerkontoform);
-
 
 
 		}

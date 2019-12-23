@@ -77,7 +77,7 @@ public abstract class DBTester {
 //		nutzerMapper.delete(deleteTest);
 //		deleteTest = nutzerMapper.findByEmail("updateTest@gmail.com");
 //		if(deleteTest == null) System.out.println("Der Nutzer wurde gelöscht");
-//		
+		
 //		
 //		System.out.println("\ndeleteGruppenzugehörigkeiten()");
 //		
@@ -226,43 +226,58 @@ public abstract class DBTester {
 		 * ***************************************************************************
 		 */
 		
-		System.out.println("\nfindById(2)");
-		Umfrage umfrage2 = umfrageMapper.findByID(2);
-		System.out.println(umfrage2.toString());
+//		System.out.println("\nfindById(2)");
+//		Umfrage umfrage2 = umfrageMapper.findByID(2);
+//		System.out.println(umfrage2.toString());
+//		
+//		
+//		System.out.println("\nfindAllUmfrage()");
+//		Vector<Umfrage> umfragen = umfrageMapper.findAllUmfrage();
+//		for(Umfrage u : umfragen) {
+//			System.out.println(u.toString());
+//		}
+//		
+//		
+//		System.out.println("\nfindByErsteller(Nutzer7)");
+//		Nutzer nutzer7 = nutzerMapper.findByID(7);
+//		Vector<Umfrage> umfragenVonNutzer7 = umfrageMapper.findByErsteller(nutzer7);
+//		for(Umfrage u : umfragenVonNutzer7) {
+//			System.out.println(u.toString());
+//		}
+//		
+//		
+//		System.out.println("\nfindByUmfragename(Umfrage 4)");
+//		Umfrage testUmfrageName = umfrageMapper.findByUmfragenname("Umfrage4");
+//		System.out.println(testUmfrageName.toString());
+//		
+//		
+//		System.out.println("\ninsert()");
+//		Umfrage testUmfrageInsert = new Umfrage();
+//		testUmfrageInsert.setUmfragenname("TestUmfrage Insert");
+//		testUmfrageInsert.setBeschreibung("TestBeschreibung Umfrage Insert");
+//		testUmfrageInsert.setFilmID(33);
+//		java.util.Date date = new java.util.Date();
+//		
+//		Calendar cal = Calendar.getInstance();
+//		cal.set(Calendar.DAY_OF_MONTH,17);
+//		cal.set(Calendar.MONTH, Calendar.FEBRUARY);
+//		cal.set(Calendar.YEAR, 2020);
+//		date = cal.getTime();
+//		testUmfrageInsert.setDatum(date);
+//		testUmfrageInsert.setOwnerID(3);
+//		System.out.println(testUmfrageInsert.toString());
+//		testUmfrageInsert = umfrageMapper.insert(testUmfrageInsert);
+//		System.out.println(testUmfrageInsert.toString());
+//		
+//		
+//		System.out.println("\nupdate()");
+//		Umfrage testUmfrageUpdate = umfrageMapper.findByUmfragenname("TestUmfrage Insert");
+//		System.out.println(testUmfrageUpdate.toString());
+//		testUmfrageUpdate.setUmfragenname("TestUmfrage nach Update");
+//		testUmfrageUpdate.setBeschreibung("TestUmfrage nach Update Beschreibung");
+//		testUmfrageUpdate = umfrageMapper.update(testUmfrageUpdate);
+//		System.out.println(testUmfrageUpdate.toString());
 		
-		
-		System.out.println("\nfindAllUmfrage()");
-		Vector<Umfrage> umfragen = umfrageMapper.findAllUmfrage();
-		for(Umfrage u : umfragen) {
-			System.out.println(u.toString());
-		}
-		
-		
-		System.out.println("\nfindByErsteller(Nutzer7)");
-		Nutzer nutzer7 = nutzerMapper.findByID(7);
-		Vector<Umfrage> umfragenVonNutzer7 = umfrageMapper.findByErsteller(nutzer7);
-		for(Umfrage u : umfragenVonNutzer7) {
-			System.out.println(u.toString());
-		}
-		
-		
-		System.out.println("\ninsert()");
-		Umfrage testUmfrageInsert = new Umfrage();
-		testUmfrageInsert.setUmfragenname("TestUmfrage Insert");
-		testUmfrageInsert.setBeschreibung("TestBeschreibung Umfrage Insert");
-		testUmfrageInsert.setFilmID(33);
-		java.util.Date date = new java.util.Date();
-		
-		Calendar cal = Calendar.getInstance();
-		cal.set(Calendar.DAY_OF_MONTH,17);
-		cal.set(Calendar.MONTH, Calendar.FEBRUARY);
-		cal.set(Calendar.YEAR, 2020);
-		date = cal.getTime();
-		testUmfrageInsert.setDatum(date);
-		testUmfrageInsert.setOwnerID(3);
-		System.out.println(testUmfrageInsert.toString());
-		testUmfrageInsert = umfrageMapper.insert(testUmfrageInsert);
-		System.out.println(testUmfrageInsert.toString());
 		
 		
 		

@@ -105,6 +105,41 @@ public class UmfrageMapper extends OwnedBusinessObjectMapper {
 
 		return null;
 	}
+	
+	public Umfrage findByUmfragenname (String umfragenname) {
+
+		/**
+		 * Verbindung zur Datenbank aufbauen.
+		 */
+		Connection con = DBConnection.connection();
+
+		try {
+			/**
+			 * Leeres SQL-Statement (JDBC) anelgen
+			 */
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `umfrage`LEFT JOIN `ownedbusinessobject` ON `umfrage`.`bo_id` = `ownedbusinessobject`.`bo_id`  WHERE (`umfragename` = '" + umfragenname + "' )");
+
+			if(rs.next()) {
+				Umfrage umfrage = new Umfrage();
+				umfrage.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+				umfrage.setOwnerID(rs.getInt("owner_id"));
+				umfrage.setID(rs.getInt("umfrage_id"));
+				umfrage.setBeschreibung(rs.getString("beschreibung"));
+				umfrage.setFilmID(rs.getInt("film_id"));
+				umfrage.setUmfragenname(rs.getString("Umfragename"));
+				umfrage.setDatum(dc.convertSQLDateToJavaDate(rs.getDate("Datum")));
+
+				return umfrage;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
 
 	public Vector<Umfrage> findAllUmfrage() {
 		//Verbindung zur Datenbank aufbauen.
@@ -198,9 +233,12 @@ public class UmfrageMapper extends OwnedBusinessObjectMapper {
 
 		try {
 
-			PreparedStatement pstmt = con.prepareStatement("UPDATE 'umfrage' SET 'beschreibung' = ? 'umfragename' = ? WHERE ('umfrageeintrag_id =" + umfrage.getID());
-			pstmt.setString(1, umfrage.getBeschreibung());
+			PreparedStatement pstmt = con.prepareStatement("UPDATE `umfrage` SET `film_id` = ?, `Umfragename` = ?, `Datum` = ?, `Beschreibung` = ? WHERE (`umfrage_id` = ? )");
+			pstmt.setInt(1, umfrage.getFilmID());
 			pstmt.setString(2, umfrage.getUmfragenname());
+			pstmt.setDate(3, dc.convertJavaDateToSQLDate(umfrage.getDatum()));
+			pstmt.setString(4, umfrage.getBeschreibung());
+			pstmt.setInt(5, umfrage.getID());
 			pstmt.executeUpdate();
 			return umfrage;
 
@@ -389,39 +427,7 @@ public class UmfrageMapper extends OwnedBusinessObjectMapper {
 	}
 
 
-	public Umfrage findByUmfragenname (String umfragenname) {
-
-		/**
-		 * Verbindung zur Datenbank aufbauen.
-		 */
-		Connection con = DBConnection.connection();
-
-		try {
-			/**
-			 * Leeres SQL-Statement (JDBC) anelgen
-			 */
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM `umfrage` WHERE (`umfragename` = " + umfragenname + ")");
-
-			if(rs.next()) {
-				Umfrage umfrage = new Umfrage();
-				umfrage.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
-				umfrage.setID(rs.getInt("umfrage_id"));
-				umfrage.setOwnerID(rs.getInt("owner_id"));
-				umfrage.setBeschreibung(rs.getString("beschreibung"));
-				umfrage.setUmfragenname(rs.getString("umfragename"));
-
-
-				return umfrage;
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return null;
-	}
-
+	
 
 	public Vector <Umfrage> findByGruppename (String gruppenname) {
 

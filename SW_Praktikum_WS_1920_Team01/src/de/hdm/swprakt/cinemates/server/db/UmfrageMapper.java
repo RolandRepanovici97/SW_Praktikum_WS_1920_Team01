@@ -308,10 +308,13 @@ public class UmfrageMapper extends OwnedBusinessObjectMapper {
 				umfrage.setID(rs.getInt("maxid") + 1);
 			}
 
-			PreparedStatement pstmt = con.prepareStatement("INSERT INTO `umfrage` (`umfrage_id`, `Erstellungszeitpunkt`) VALUES (?, ?) ");
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO `umfrage` (`umfrage_id`, `bo_id`, `film_id`, `Umfragename`, `Datum`, `Beschreibung`) VALUES (?, ?, ?, ?, ?, ?) ");
 			pstmt.setInt(1, umfrage.getID());
-			pstmt.setTimestamp(2, dc.aktuellerTimestamp());
-			umfrage.setErstellungszeitpunkt(dc.convertTimestampToDate(dc.aktuellerTimestamp()));
+			pstmt.setInt(2, bo_id);
+			pstmt.setInt(3, umfrage.getFilmID());
+			pstmt.setString(4, umfrage.getUmfragenname());
+			pstmt.setDate(5, dc.convertJavaDateToSQLDate(umfrage.getDatum()));
+			pstmt.setString(6, umfrage.getBeschreibung());
 			pstmt.executeUpdate();
 
 			con.commit();

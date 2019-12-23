@@ -1,5 +1,6 @@
 package de.hdm.swprakt.cinemates.server.db;
 import java.sql.*;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -241,8 +242,28 @@ public abstract class DBTester {
 		Nutzer nutzer7 = nutzerMapper.findByID(7);
 		Vector<Umfrage> umfragenVonNutzer7 = umfrageMapper.findByErsteller(nutzer7);
 		for(Umfrage u : umfragenVonNutzer7) {
-			System.out.println(umfragenVonNutzer7.toString());
+			System.out.println(u.toString());
 		}
+		
+		
+		System.out.println("\ninsert()");
+		Umfrage testUmfrageInsert = new Umfrage();
+		testUmfrageInsert.setUmfragenname("TestUmfrage Insert");
+		testUmfrageInsert.setBeschreibung("TestBeschreibung Umfrage Insert");
+		testUmfrageInsert.setFilmID(33);
+		java.util.Date date = new java.util.Date();
+		
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.DAY_OF_MONTH,17);
+		cal.set(Calendar.MONTH, Calendar.FEBRUARY);
+		cal.set(Calendar.YEAR, 2020);
+		date = cal.getTime();
+		testUmfrageInsert.setDatum(date);
+		testUmfrageInsert.setOwnerID(3);
+		System.out.println(testUmfrageInsert.toString());
+		testUmfrageInsert = umfrageMapper.insert(testUmfrageInsert);
+		System.out.println(testUmfrageInsert.toString());
+		
 		
 		
 		/*

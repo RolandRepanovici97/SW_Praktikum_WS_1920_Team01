@@ -9,6 +9,8 @@ public class SpielplanverwaltungForm extends TabPanel{
 	
 	FilmForm ffm = new FilmForm();
 	SpielplanForm spf = new SpielplanForm();
+	SpielzeitForm szf = new SpielzeitForm();
+	
 	
 	public void onLoad() {
 		
@@ -20,7 +22,7 @@ public class SpielplanverwaltungForm extends TabPanel{
 		
 		this.add(spf, "Spielplan bearbeiten");
 		this.add(ffm, "Filme verwalten");
-		this.add(new HTML("Baz"), "Spielzeit anlegen");
+		this.add(szf, "Spielzeit anlegen");
 
 		this.selectTab(1);
 		

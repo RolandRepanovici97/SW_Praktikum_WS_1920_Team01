@@ -1,7 +1,13 @@
 package de.hdm.swprakt.cinemates.client.gui.admin;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Vector;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.cellview.client.CellTable;
+import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -30,13 +36,19 @@ public class FilmForm extends HorizontalPanel {
 	VerticalPanel detailsPanel = new VerticalPanel();
 
 	// Create a data provider.
-	private ListDataProvider<Film> dataProvider = new ListDataProvider<Film>();
+//	private ListDataProvider<Film> dataProvider = new ListDataProvider<Film>();
 
 	KinoAdministrationAsync kinoAdministration = ClientSideSettings.getKinoAdministration();
+
+
+	
 
 	public FilmForm() {
 
 	}
+
+	// The list of data to display.
+	private static List<Film> FILMS = Arrays.asList();
 
 	public void onLoad() {
 
@@ -55,26 +67,23 @@ public class FilmForm extends HorizontalPanel {
 		Label spiellänge = new Label("Spiellänge");
 		filmGrid.setWidget(2, 1, spiellange);
 		filmGrid.setWidget(2, 0, spiellänge);
-		filmGrid.setWidget(2, 2, filmanlegen);
+		// filmGrid.setWidget(2, 2, filmanlegen);
 
 		filmGrid.setWidget(3, 2, filmanlegen);
-		
 
 		detailsPanel.add(filmGrid);
 		RootPanel.get("DetailsPanel").add(detailsPanel);
 		this.add(detailsPanel);
-		
+
 		  FlexTable flexTable = new FlexTable();
 		
 		
-		flexTable.setText(0, 1, "Film");
-		flexTable.setText(0, 2, "Beschreibung");
+	flexTable.setText(0, 1, "Film");
+	flexTable.setText(0, 2, "Beschreibung");
 		flexTable.setText(0, 3, "Spiellänge");
 		
 		detailsPanel.add(flexTable);
-		
-		
-		
+
 
 		class FilmAnlegenCallback implements AsyncCallback<Film> {
 			@Override
@@ -84,46 +93,81 @@ public class FilmForm extends HorizontalPanel {
 
 			@Override
 			public void onSuccess(Film result) {
-				
+
 				Window.alert("Der Film wurde erstellt");
-			
+
 				filmname.setText("");
 				filmbeschreibung.setText("");
 				spiellange.setText("");
-				// TODO Auto-generated method stub
+
+			
+				
+				flexTable.setText(1, 1, result.getFilmtitel());
+				flexTable.setText(1, 2, result.getBeschreibung());
+				flexTable.setText(1, 3, result.getDetails());
 
 			}
 
 		}
-		
-		
+
 //		Button addRowButton = new Button("Add a Row"); 
-//	      addRowButton.addClickHandler(new ClickHandler() {
+//      addRowButton.addClickHandler(new ClickHandler() {
 //	         @Override
-//	         public void onClick(ClickEvent event) {
+//         public void onClick(ClickEvent event) {
 //	            addRow(flexTable);
-//	         }
+//         }
 //	      });
 
 		class FilmAnlegenClickHandler implements ClickHandler {
 			public void onClick(ClickEvent event) {
-			
-			     
-				kinoAdministration.createFilm(filmname.getText(), filmbeschreibung.getText(), spiellange.getText(), new FilmAnlegenCallback());
-				addRow(flexTable);
+
+				kinoAdministration.createFilm(filmname.getText(), filmbeschreibung.getText(), spiellange.getText(),
+						new FilmAnlegenCallback());
+				// addRow(flexTable);
 			}
 		}
 		filmanlegen.addClickHandler(new FilmAnlegenClickHandler());
-	
+
 	}
-		
-		
-		/**
-		    * Add a row to the flex table.
-		    */
-		   private void addRow(FlexTable flexTable) {
-		      int numRows = flexTable.getRowCount();
-		      flexTable.setText(1, 1, "test");
+
+	class AlleFilmeCallback implements AsyncCallback<Vector<Film>> {
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Der Film konnte nicht .....");
+		}
+
+		@Override
+		public void onSuccess(Vector<Film> result) {
+			// TODO Auto-generated method stub
+			Window.alert("Die Filme.... ");
+
+			filmname.setText("");
+			filmbeschreibung.setText("");
+			spiellange.setText("");
+
+//			flexTable.setText(1, 1, result.getFilmtitel());
+//			flexTable.setText(1, 2, result.getBeschreibung());
+//			flexTable.setText(1, 3, result.getDetails());
+
+		}
+
 	}
-	
+
+	class AlleFilmeClickHandler implements ClickHandler {
+		public void onClick(ClickEvent event) {
+
+			kinoAdministration.getAllFilme(new AlleFilmeCallback());
+
+		}
+	}
+
+//	
+//		/**
+//		    * Add a row to the flex table.
+//		    */
+//		   private void addRow(FlexTable flexTable) {
+//		  
+//			   int numRows = flexTable.getRowCount();
+//		     
+
 }

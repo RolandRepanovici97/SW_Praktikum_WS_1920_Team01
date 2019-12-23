@@ -9,6 +9,8 @@ import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Widget;
 
+import de.hdm.swprakt.cinemates.shared.bo.Umfrage;
+
 /**
  * Diese Klasse erweitert die Basisklasse Widget. 
  * Sie wird benötigt, um die Interaktion mit einzelnen Umfrageobjekten ermöglichen zu können.
@@ -24,6 +26,10 @@ public class UmfrageAuswahl extends Widget implements HasClickHandlers {
 	public HandlerRegistration addClickHandler(ClickHandler handler) {
 		// TODO Auto-generated method stub
 		return addDomHandler(handler, ClickEvent.getType());
+	}
+	
+	public UmfrageAuswahl(Umfrage umfrage) {
+		
 	}
 
 

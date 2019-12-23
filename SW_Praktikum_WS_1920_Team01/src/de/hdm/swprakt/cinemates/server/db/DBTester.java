@@ -225,7 +225,24 @@ public abstract class DBTester {
 		 * ***************************************************************************
 		 */
 		
+		System.out.println("\nfindById(2)");
+		Umfrage umfrage2 = umfrageMapper.findByID(2);
+		System.out.println(umfrage2.toString());
 		
+		
+		System.out.println("\nfindAllUmfrage()");
+		Vector<Umfrage> umfragen = umfrageMapper.findAllUmfrage();
+		for(Umfrage u : umfragen) {
+			System.out.println(u.toString());
+		}
+		
+		
+		System.out.println("\nfindByErsteller(Nutzer7)");
+		Nutzer nutzer7 = nutzerMapper.findByID(7);
+		Vector<Umfrage> umfragenVonNutzer7 = umfrageMapper.findByErsteller(nutzer7);
+		for(Umfrage u : umfragenVonNutzer7) {
+			System.out.println(umfragenVonNutzer7.toString());
+		}
 		
 		
 		/*

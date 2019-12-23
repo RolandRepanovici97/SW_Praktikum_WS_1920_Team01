@@ -8,6 +8,7 @@ import java.util.Vector;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.CellTable;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -60,26 +61,24 @@ public class StartseiteEditor extends HorizontalPanel {
 
 		neueUmfrage.setHTML("<i class=\"fas fa-plus\"></i>");
 
-		// neueUmfrage.addClickHandler(new NeueUmfrageClickHandler());
+//		 neueUmfrage.addClickHandler(new NeueUmfrageClickHandler());
 
-		KinoBesuchsplanungAsync kinobesuchsplanung = ClientSideSettings.getKinobesuchsplanung();
-		kinobesuchsplanung.showAllUmfrageOfNutzer(nutzer, new UmfragenAnzeigenCallback());
-
-		kinobesuchsplanung.showAllUmfrage(new UmfragenAnzeigenCallback());
-		// kinobesuchsplanung.showAllUmfrageOfNutzer(nutzer, new
-		// UmfragenAnzeigenCallback());
 		tabelle = new FlexTable();
-
+		
+		kinobesuchsplanung.showAllUmfrage(new UmfragenAnzeigenCallback());
+		
+//		 kinobesuchsplanung.showAllUmfrageOfNutzer(nutzer, new
+//		 UmfragenAnzeigenCallback());
+		
+		
 		panelfürumfragen.add(label1);
 		panelfürumfragen.add(label2);
 		panelfürumfragen.add(neueUmfrage);
 
-		neueUmfrage.addClickHandler(new NeueUmfrageClickHandler());
-
 		this.add(tabelle);
 
 		this.add(panelfürumfragen);
-		RootPanel.get("DetailsPanel").add(this);
+
 
 	}
 
@@ -122,115 +121,146 @@ public class StartseiteEditor extends HorizontalPanel {
 
 			for (Umfrage u : result) {
 
-				tabelle.setText(rowCount, 0, u.toString());
-				rowCount += 1;
+				tabelle.setText(rowCount, 0, u.getUmfragenname());
+				Button umfrageAnzeigen = new Button("Anzeigen");
+				umfrageAnzeigen.addClickHandler(new ClickHandler() {
+
+					@Override
+					public void onClick(ClickEvent event) {
+						Window.alert("Umfrage " + u.getUmfragenname());
+						
+					}
+					
+				});
+				tabelle.setWidget(rowCount, 1, umfrageAnzeigen);
+				rowCount++;
 
 				// Wir instanttieren ein neues UmfrageAuswahl-Objekt und übergeben unsere
 				// Umfrage
-				UmfrageAuswahl auswahl = new UmfrageAuswahl(u);
+				//UmfrageAuswahl auswahl = new UmfrageAuswahl(u);
 
-				tabelle.add(auswahl);
+				//tabelle.add(auswahl);
 
 				// Wir geben diesem Umfrage-Auswahl-Objekt einen ClickHandler, durch welchen die
 				// Detailanzeige der Umfrage angezeigt wird
-				auswahl.addClickHandler(new UmfrageAuswählenClickHandler());
+				// auswahl.addClickHandler(new UmfrageAuswählenClickHandler());
 
 			}
 		}
 	}
-
-	/**
-	 * Diese Nested Class wird als Callback für das Anzeigen neuer Umfrageobjekte
-	 * benötigt.
-	 * 
-	 * @author alina
-	 */
-
-	class OffeneUmfragenAnzeigenCallback implements AsyncCallback<Vector<Umfrage>> {
-
-		@Override
-		public void onFailure(Throwable caught) {
-			/*
-			 * Wenn ein Fehler auftritt, dann geben wir eine kurze Log Message aus.
-			 */
-			ClientSideSettings.getLogger().severe("Ihre neuen Umfragen konnten nicht geladen werden");
-		}
-
-		@Override
-		public void onSuccess(Vector<Umfrage> result) {
-			// TODO Auto-generated method stub
-
-		}
+//
+//	/**
+//	 * Diese Nested Class wird als Callback für das Anzeigen neuer Umfrageobjekte
+//	 * benötigt.
+//	 * 
+//	 * @author alina
+//	 */
+//
+//	class OffeneUmfragenAnzeigenCallback implements AsyncCallback<Vector<Umfrage>> {
+//
+//		@Override
+//		public void onFailure(Throwable caught) {
+//			/*
+//			 * Wenn ein Fehler auftritt, dann geben wir eine kurze Log Message aus.
+//			 */
+//			ClientSideSettings.getLogger().severe("Ihre neuen Umfragen konnten nicht geladen werden");
+//		}
+//
+//		@Override
+//		public void onSuccess(Vector<Umfrage> result) {
+//			// TODO Auto-generated method stub
+//
+//		}
 	}
+//
+//	/**
+//	 * Diese Nested Class implementiert das Interface ClickHandler und ermöglicht
+//	 * die Interaktion zur Auswahl eines Umfrageobjekts.
+//	 * 
+//	 * @author alina
+//	 */
+//
+//	class UmfrageAuswählenClickHandler implements ClickHandler {
+//
+//		public void onClick(ClickEvent event) {
+//
+//			UmfrageAnzeige anzeige = new UmfrageAnzeige();
+//			RootPanel.get("DeatilsPanel").add(anzeige);
 
-	/**
-	 * Diese Nested Class implementiert das Interface ClickHandler und ermöglicht
-	 * die Interaktion zur Auswahl eines Umfrageobjekts.
-	 * 
-	 * @author alina
-	 */
+		
+//
+//		}
+//
+//	}
+//
+//	/**
+//	 * Diese Nested Class implementiert das Interface ClickHandler und ermöglicht
+//	 * die Interaktion zur Weiterleitung auf die Möglichkeit zur Erstellung einer
+//	 * neuen Umfrage,
+//	 * 
+//	 * @author alina
+//	 */
+//}
+//
+//class NeueUmfrageClickHandler implements ClickHandler {
+//
+//	public void onClick(ClickEvent event) {
+//
+//		RootPanel.get("DetailsPanel").clear();
+//		UmfrageErstellenForm neueUmfrage = new UmfrageErstellenForm();
+//		RootPanel.get("DetailsPanel").add(neueUmfrage);
+//	}
+//
+//}
+//
+//class OffeneUmfragenAnzeigenCallback implements AsyncCallback<Vector<Umfrage>> {
+//
+//	@Override
+//	public void onFailure(Throwable caught) {
+//		/*
+//		 * Wenn ein Fehler auftritt, dann geben wir eine kurze Log Message aus.
+//		 */
+//		ClientSideSettings.getLogger().severe("Ihre neuen Umfragen konnten nicht geladen werden");
+//	}
+//
+//	@Override
+//	public void onSuccess(Vector<Umfrage> result) {
+//		// TODO Auto-generated method stub
+//
+//	}
+//}
+//
+///**
+// * Diese Nested Class implementiert das Interface ClickHandler und ermöglicht
+// * die Interaktion zur Auswahl eines Umfrageobjekts.
+// * 
+// * @author alina
+// */
+//
+//class UmfrageAuswählenClickHandler implements ClickHandler {
+//
+//	public void onClick(ClickEvent event) {
+//
+//		UmfrageAnzeige anzeige = new UmfrageAnzeige();
+//		RootPanel.get("DeatilsPanel").add(anzeige);
+//
+//	}
+//}
 
-	class UmfrageAuswählenClickHandler implements ClickHandler {
 
-		public void onClick(ClickEvent event) {
-
-			UmfrageAnzeige anzeige = new UmfrageAnzeige();
-			RootPanel.get("DeatilsPanel").add(anzeige);
-
-		}
-
-	}
-
-	/**
-	 * Diese Nested Class implementiert das Interface ClickHandler und ermöglicht
-	 * die Interaktion zur Weiterleitung auf die Möglichkeit zur Erstellung einer
-	 * neuen Umfrage,
-	 * 
-	 * @author alina
-	 */
-}
-
-class NeueUmfrageClickHandler implements ClickHandler {
-
-	public void onClick(ClickEvent event) {
-
-		RootPanel.get("DetailsPanel").clear();
-		UmfrageErstellenForm neueUmfrage = new UmfrageErstellenForm();
-		RootPanel.get("DetailsPanel").add(neueUmfrage);
-	}
-
-}
-
-class OffeneUmfragenAnzeigenCallback implements AsyncCallback<Vector<Umfrage>> {
+class UmfrageBearbeitenCallback implements AsyncCallback<Umfrage> {
 
 	@Override
 	public void onFailure(Throwable caught) {
-		/*
-		 * Wenn ein Fehler auftritt, dann geben wir eine kurze Log Message aus.
-		 */
-		ClientSideSettings.getLogger().severe("Ihre neuen Umfragen konnten nicht geladen werden");
+		
+		
 	}
+
 
 	@Override
-	public void onSuccess(Vector<Umfrage> result) {
+	public void onSuccess(Umfrage result) {
 		// TODO Auto-generated method stub
-
+		
 	}
-}
-
-/**
- * Diese Nested Class implementiert das Interface ClickHandler und ermöglicht
- * die Interaktion zur Auswahl eines Umfrageobjekts.
- * 
- * @author alina
- */
-
-class UmfrageAuswählenClickHandler implements ClickHandler {
-
-	public void onClick(ClickEvent event) {
-
-		UmfrageAnzeige anzeige = new UmfrageAnzeige();
-		RootPanel.get("DeatilsPanel").add(anzeige);
-
-	}
+	
 }

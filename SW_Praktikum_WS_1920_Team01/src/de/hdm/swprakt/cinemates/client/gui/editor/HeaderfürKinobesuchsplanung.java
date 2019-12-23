@@ -15,8 +15,6 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.swprakt.cinemates.client.gui.NutzerkontoForm;
-
 
 /**
  * Diese Klasse dient zur Darstellung des Headers der Applikation. Sie
@@ -158,6 +156,7 @@ public class HeaderfürKinobesuchsplanung extends HorizontalPanel {
 
 			RootPanel.get("DetailsPanel").clear();
 			NutzerkontoForm nutzerkontoform = new NutzerkontoForm();
+
 			RootPanel.get("DetailsPanel").add(nutzerkontoform);
 
 		}

@@ -232,6 +232,21 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 		return this.gruppeMapper.getGruppenOf(nutzer);
 	}
 
+
+	/**
+	 * Diese Methode wird aufgerufen, wenn alle Gruppenmitglieder einer Gruppe angezeigt
+	 * werden sollen.
+	 * 
+	 * @param Gruppenobjekt, dessen Nutzer gefunden werden sollen
+	 * @throws IllegalArgumentException
+	 * @author alina
+	 */
+
+	public Vector<Nutzer> getAllNutzerOfGruppe(Gruppe gruppe) throws IllegalArgumentException {
+		return this.nutzerMapper.getGruppenmitgliederOf(gruppe);
+	}
+
+
 	/**
 	 * Diese Methode wird aufgerufen, wenn alle Gruppen angezeigt werden sollen, die
 	 * zu einer Umfrage gehören.

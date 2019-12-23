@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import de.hdm.swprakt.cinemates.shared.bo.Gruppe;
 import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
+import de.hdm.swprakt.cinemates.shared.bo.Umfrage;
 
 public abstract class DBTester {
 	
@@ -94,44 +95,69 @@ public abstract class DBTester {
 		 * ***************************************************************************
 		 */
 		
-		System.out.println("\nfindAllGruppe()");
-		Vector <Gruppe> gruppen = gruppeMapper.findAllGruppe();
-		for(Gruppe g : gruppen) {
-			System.out.println(g.toString());
-		}
-		
-		System.out.println("\nfindById(2)");
-		Gruppe testGruppeId = gruppeMapper.findByID(2);
-		System.out.println(testGruppeId.toString());
-		
-		System.out.println("\nfindByGruppenname(Gruppe5)");
-		Gruppe testGruppeGruppenname = gruppeMapper.findByGruppenname("Gruppe5");
-		System.out.println(testGruppeGruppenname.toString());
-		
-		System.out.println("\ninsert()");
-		Gruppe gruppeInsert = new Gruppe();
-		gruppeInsert.setOwnerID(3);
-		gruppeInsert.setGruppenname("TestGruppe Insert");
-		System.out.println(gruppeInsert.toString());
-		gruppeInsert = gruppeMapper.insert(gruppeInsert);
-		System.out.println(gruppeInsert.toString());
-		
-		System.out.println("\nupdate()");
-		Gruppe gruppeUpdate = gruppeMapper.findByGruppenname("TestGruppe Insert");
-		System.out.println(gruppeUpdate.toString());
-		gruppeUpdate.setGruppenname("TestGruppeUpdate");
-		System.out.println(gruppeUpdate.toString());
-		gruppeUpdate = gruppeMapper.update(gruppeUpdate);
-		System.out.println(gruppeUpdate.toString());
-		
-		System.out.println("\ndelete()");
-		Gruppe gruppeDelete = gruppeMapper.findByGruppenname("TestGruppeUpdate");
-		System.out.println(gruppeDelete.toString());
-		gruppeMapper.delete(gruppeDelete);
-		gruppeDelete = gruppeMapper.findByGruppenname("TestGruppe Insert");
-		if(gruppeDelete == null) System.out.println("Die Gruppe wurde gelöscht");
-		
-		
+//		System.out.println("\nfindAllGruppe()");
+//		Vector <Gruppe> gruppen = gruppeMapper.findAllGruppe();
+//		for(Gruppe g : gruppen) {
+//			System.out.println(g.toString());
+//		}
+//		
+//		System.out.println("\nfindById(2)");
+//		Gruppe testGruppeId = gruppeMapper.findByID(2);
+//		System.out.println(testGruppeId.toString());
+//		
+//		System.out.println("\nfindByGruppenname(Gruppe5)");
+//		Gruppe testGruppeGruppenname = gruppeMapper.findByGruppenname("Gruppe5");
+//		System.out.println(testGruppeGruppenname.toString());
+//		
+//		System.out.println("\ninsert()");
+//		Gruppe gruppeInsert = new Gruppe();
+//		gruppeInsert.setOwnerID(3);
+//		gruppeInsert.setGruppenname("TestGruppe Insert");
+//		System.out.println(gruppeInsert.toString());
+//		gruppeInsert = gruppeMapper.insert(gruppeInsert);
+//		System.out.println(gruppeInsert.toString());
+//		
+//		System.out.println("\nupdate()");
+//		Gruppe gruppeUpdate = gruppeMapper.findByGruppenname("TestGruppe Insert");
+//		System.out.println(gruppeUpdate.toString());
+//		gruppeUpdate.setGruppenname("TestGruppeUpdate");
+//		System.out.println(gruppeUpdate.toString());
+//		gruppeUpdate = gruppeMapper.update(gruppeUpdate);
+//		System.out.println(gruppeUpdate.toString());
+//		
+//		System.out.println("\ndelete()");
+//		Gruppe gruppeDelete = gruppeMapper.findByGruppenname("TestGruppeUpdate");
+//		System.out.println(gruppeDelete.toString());
+//		gruppeMapper.delete(gruppeDelete);
+//		gruppeDelete = gruppeMapper.findByGruppenname("TestGruppe Insert");
+//		if(gruppeDelete == null) System.out.println("Die Gruppe wurde gelöscht");
+//		
+//		System.out.println("\ninsertGruppenzugehörigkeit(8,3)");
+//		gruppeMapper.insertGruppenzugehörigkeit(8,3);
+//		Gruppe testGruppe = gruppeMapper.findByID(3);
+//		Vector <Nutzer> gruppenmitgliederTest = nutzerMapper.getGruppenmitgliederOf(testGruppe);
+//		for(Nutzer n : gruppenmitgliederTest) {
+//			System.out.println(n.toString());
+//		}
+//		
+//		System.out.println("\ndeleteGruppenmitglieder(3)");
+//		
+//		
+//		System.out.println("\ngetGruppenOf(Nutzer9)");
+//		Nutzer nutzer9 = nutzerMapper.findByID(9);
+//		Vector<Gruppe> gruppenOfNutzer = gruppeMapper.getGruppenOf(nutzer9);
+//		for(Gruppe g : gruppenOfNutzer) {
+//			System.out.println(g.toString());
+//		}
+//		
+//		
+//		System.out.println("\ngetGruppenOf(Umfrage 4)");
+//		Umfrage umfrage4 = umfrageMapper.findByID(4);
+//		System.out.println(umfrage4.toString());
+//		Vector<Gruppe> gruppenOfUmfrage = gruppeMapper.getGruppenOf(umfrage4);
+//		for(Gruppe g : gruppenOfUmfrage) {
+//			System.out.println(g.toString());
+//		}
 		
 		
 		
@@ -140,6 +166,9 @@ public abstract class DBTester {
 		 * Testen der Film-Mapper Methoden
 		 * ***************************************************************************
 		 */
+		
+		
+		
 		
 		
 		/*

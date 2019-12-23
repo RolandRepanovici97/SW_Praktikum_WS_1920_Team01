@@ -2,38 +2,19 @@ package de.hdm.swprakt.cinemates.client.gui.editor;
 
 import java.util.Vector;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Grid;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.PushButton;
-import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.TabBar;
-import com.google.gwt.user.client.ui.TabLayoutPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.TabPanel;
-import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.VerticalPanel;
-
-import de.hdm.swprakt.cinemates.client.ClientSideSettings;
-import de.hdm.swprakt.cinemates.shared.KinoBesuchsplanung;
-import de.hdm.swprakt.cinemates.shared.KinoBesuchsplanungAsync;
-import de.hdm.swprakt.cinemates.shared.bo.Gruppe;
-import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 
 
 /**
- * Diese Klasse stellt eine Erweiterung des VerticalPanels dar und wird verwendet, um dem angemeldeten Nutzer die Möglichkeit
- * zu bieten Gruppen und ihre Mitglieder anzusehen, neue Gruppen zu erstellen
- * und zu bearbeiten
+ * Diese Klasse stellt eine Erweiterung des TabPanels dar und wird verwendet, 
+ * um dem angemeldeten Nutzer die Möglichkeit
+ * zu bieten zwischen 3 Gruppe Forms zu navigieren: Anzeigen, Erstellen und Editieren. 
  * @author roland
  *
  */
 
-public class GruppenverwaltungForm extends HorizontalPanel{
+public class GruppenverwaltungForm extends TabPanel{
 
 	/*
 	 * ***************************************************************************
@@ -45,51 +26,33 @@ public class GruppenverwaltungForm extends HorizontalPanel{
 	 * ***************************************************************************
 	 */
 
+
+	
+	/**
+	 * Erstellung der 3 Form Objekte für die Navigation zwischen Tabs.
+	 */
+
+	GruppenAnzeigenForm gaf = new GruppenAnzeigenForm();
+	GruppeErstellenForm gef = new GruppeErstellenForm();
+	GruppeEditierenForm gedf = new GruppeEditierenForm();
+
+	
 	
 
-	/**
-	 * Attribute: GruppenverwaltungsForm Widgets
-	 */
-
-
-	private Gruppe gruppe = new Gruppe();
-	private Label titel = new Label("Gruppenverwaltung");
-	private Vector <Gruppe> gruppen = new Vector<Gruppe>();
-	//private TabLayoutPanel panelGruppenverwaltung = new TabLayoutPanel();
-	private VerticalPanel panelFürGruppen = new VerticalPanel();
-	private PushButton neueGruppe = new PushButton("Neue Gruppe");
-	private PushButton zurückButton = new PushButton("Zurück");
-	private Nutzer nutzer;
-
-
-
 	public void onLoad() {
+		
+		super.onLoad();
 
+		this.add(gaf, "Anzeigen");
+		this.add(gef, "Erstellen");
+		this.add(gedf, "Editieren");
 
-		KinoBesuchsplanungAsync kinobesuchsplanung = ClientSideSettings.getKinobesuchsplanung();
-		//kinobesuchsplanung.getAllGruppenOfNutzer(nutzer, new GruppenAnzeigenCallback());
+		
+		this.selectTab(1);
 		
 		
-		TabBar gruppenVerwaltungBar = new TabBar();
-		gruppenVerwaltungBar.addTab("Anzeigen");
-		gruppenVerwaltungBar.addTab("Erstellen");
-		gruppenVerwaltungBar.addTab("Editieren");
 
 	}
 
-	/*
-	 * ***************************************************************************
-	 * ABSCHNITT: ClickHandlers...
-	 * ***************************************************************************
-	 */
 
-
-	private class anlegenClickHandler implements ClickHandler {
-		@Override
-		public void onClick(ClickEvent event) {
-
-			Window.alert("Gruppe erfolgreich angelegt");
-		}
-
-	}
 }

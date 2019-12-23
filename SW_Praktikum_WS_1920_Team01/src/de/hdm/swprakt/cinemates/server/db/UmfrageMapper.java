@@ -112,7 +112,7 @@ public class UmfrageMapper extends OwnedBusinessObjectMapper {
 		try {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM umfrage ORDER BY umfrage_id");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM umfrage LEFT JOIN `ownedbusinessobject` ON `umfrage`.`bo_id` = `ownedbusinessobject`.`bo_id` ORDER BY umfrage_id");
 
 			/* Befüllen des result sets
 			 */

@@ -3,7 +3,9 @@ import java.sql.*;
 import java.util.Iterator;
 import java.util.Vector;
 
+import de.hdm.swprakt.cinemates.shared.bo.Film;
 import de.hdm.swprakt.cinemates.shared.bo.Gruppe;
+import de.hdm.swprakt.cinemates.shared.bo.Kinokette;
 import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 import de.hdm.swprakt.cinemates.shared.bo.Umfrage;
 
@@ -168,6 +170,52 @@ public abstract class DBTester {
 		 */
 		
 		
+//		System.out.println("\nfindAll()");
+//		Vector<Film> filme = filmMapper.findAll();
+//		for (Film f : filme) {
+//			System.out.println(f.toString());
+//		}
+		
+		
+//		System.out.println("\nfindById(33)");
+//		Film testfilmId = filmMapper.findByID(33);
+//		System.out.println(testfilmId.toString());
+//		
+//		
+//		System.out.println("\ninsert()");
+//		Film testInsertFilm = new Film();
+//		testInsertFilm.setFilmtitel("TestFilm Insert");
+//		testInsertFilm.setBeschreibung("Testbeschreibung TestFilm");
+//		testInsertFilm.setDetails("paar Minuten");
+//		System.out.println(testInsertFilm.toString());
+//		testInsertFilm = filmMapper.insert(testInsertFilm);
+//		System.out.println(testInsertFilm.toString());
+//		
+//		
+//		System.out.println("\nupdate()");
+//		Film testUpdateFilm = filmMapper.findByID(510);
+//		System.out.println(testInsertFilm.toString());
+//		testUpdateFilm.setBeschreibung("Testbeschreibung nach Update");
+//		testUpdateFilm.setFilmtitel("TestFilmTitle nach  Update");
+//		testUpdateFilm = filmMapper.update(testUpdateFilm);
+//		System.out.println(testUpdateFilm.toString());
+//		
+//		
+//		System.out.println("\ndelete()");
+//		Film testdeleteFilm = filmMapper.findByID(510);
+//		filmMapper.delete(testdeleteFilm);
+//		testdeleteFilm = filmMapper.findByID(510);
+//		if(testdeleteFilm == null) System.out.println("Der Film wurde gelöscht");
+//		
+//		
+//		System.out.println("\nfindAllFilmeByKinokette(1)");
+//		Kinokette kinokette1 = kinoketteMapper.findByID(1);
+//		Vector<Film> filmeinKinokette = filmMapper.findFilmeByKinokette(kinokette1);
+//		for(Film f : filmeinKinokette) {
+//			
+//			System.out.println(f.toString());
+//			
+//		}
 		
 		
 		

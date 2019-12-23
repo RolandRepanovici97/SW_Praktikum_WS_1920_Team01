@@ -3,6 +3,7 @@ import java.sql.*;
 import java.util.Iterator;
 import java.util.Vector;
 
+import de.hdm.swprakt.cinemates.shared.bo.Gruppe;
 import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 
 public abstract class DBTester {
@@ -51,19 +52,40 @@ public abstract class DBTester {
 		
 		
 		System.out.println("\ninsert()");
-		
+		Nutzer insertTest = new Nutzer();
+		insertTest.setEmail("insertTest@gmail.com");
+		insertTest.setNutzername("InsertTestNutzer");
+		System.out.println(insertTest.toString());
+		insertTest = nutzerMapper.insert(insertTest);
+		System.out.println(insertTest.toString());
 		
 		System.out.println("\nupdate()");
-		
+		Nutzer updateTest = nutzerMapper.findByEmail("insertTest@gmail.com");
+		System.out.println(updateTest.toString());
+		updateTest.setEmail("updateTest@gmail.com");
+		updateTest.setNutzername("UpdateTest");
+		updateTest = nutzerMapper.update(updateTest);
+		System.out.println(updateTest.toString());
 		
 		System.out.println("\ndelete()");
+		Nutzer deleteTest = nutzerMapper.findByEmail("updateTest@gmail.com");
+		System.out.println(deleteTest.toString());
+		nutzerMapper.delete(deleteTest);
+		deleteTest = nutzerMapper.findByEmail("updateTest@gmail.com");
+		if(deleteTest == null) System.out.println("Der Nutzer wurde gelöscht");
 		
 		
 		System.out.println("\ndeleteGruppenzugehörigkeiten()");
 		
 		
 		System.out.println("\ngetGruppenmitgliederOf()");
-		
+		Gruppe gruppe2 = gruppeMapper.findByID(2);
+		Vector<Nutzer> gruppenmitglieder = nutzerMapper.getGruppenmitgliederOf(gruppe2);
+		Nutzer gruppenadmin = nutzerMapper.findByID(gruppe2.getOwnerID());
+		gruppenmitglieder.add(gruppenadmin);
+		for(Nutzer n : gruppenmitglieder) {
+			System.out.println(n.toString());
+		}
 		
 		
 		/*

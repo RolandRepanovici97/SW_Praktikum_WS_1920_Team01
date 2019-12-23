@@ -166,14 +166,14 @@ public class OwnedBusinessObjectMapper {
 		
 		
 	
-	public int getOwnerIDOf (OwnedBusinessObject obo) {
+	public int getOwnerOf (int boid) {
 		
 		Connection con = DBConnection.connection();
 		
 		try {
 			
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * from `ownedbusinessobject` WHERE `bo_id` = " + obo.getID());
+			ResultSet rs = stmt.executeQuery("SELECT * from `ownedbusinessobject` WHERE `bo_id` = " + boid);
 			
 			if (rs.next()) {
 				return rs.getInt("owner_id");

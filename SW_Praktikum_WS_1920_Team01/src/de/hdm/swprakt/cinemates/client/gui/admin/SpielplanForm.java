@@ -17,6 +17,7 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.view.client.ListDataProvider;
 
 import de.hdm.swprakt.cinemates.shared.bo.Kino;
 
@@ -40,34 +41,32 @@ public class SpielplanForm extends HorizontalPanel {
 	      this.kinoname = kinoname;
 	      this.filmname = filmname;
 	      this.spielzeit = spielzeit;
-	    }
+	    }}
 	  
 	  
 	    /**
 	     * The list of data to display.
 	     */
-	    private static final List<Spielplan> SPIELPLAENE = Arrays.asList(
-	    		new Spielplan("Ömer","Hallo", new Date(80,4,12)));
+	    private static final List<Spielplan> SPIELPLAENE = Arrays.asList();
+	    		
 	       
-	       
-	  }
-
+	 // Create a CellTable.
+	    CellTable<Spielplan> table = new CellTable<Spielplan>();
+	//   table.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
+	  
+	    // Data List erstellen 
+		final ListDataProvider<Spielplan> spielplanProvider = new ListDataProvider<Spielplan>();
+		
+	
 	
 	public void onLoad() {
 		
 		super.onLoad();
-		
-		// Create a CellTable.
-	    CellTable<Spielplan> table = new CellTable<Spielplan>();
-	//   table.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 
-	    
-	    
-	    
-	    
+	   spielplanProvider.addDataDisplay(table); 
 
 		
-		//	    // Add a text column to show the name.
+	    // Add a text column to show the name.
 	    TextColumn<Spielplan> kinonameColumn = new TextColumn<Spielplan>() {
 	      @Override
 	      public String getValue(Spielplan object) {
@@ -100,22 +99,22 @@ public class SpielplanForm extends HorizontalPanel {
 
 	  
 	    
-	//    table.setWidth("60%", true);
+	   table.setWidth("60%", true);
 
 		/*
 		 * Festlegen der Gesamtanzahl der Zeilen
 		 */
 
-	//    table.setRowCount(SPIELPLAENE.size(), true);
+	    table.setRowCount(SPIELPLAENE.size(), true);
 
 		/*
 		 * Daten in die Tabelle hinzufügen
 		 */
 
-	//    table.setRowData(0, SPIELPLAENE);
+	    table.setRowData(0, SPIELPLAENE);
 
 		
-	//	this.add(table);
+		this.add(table);
 		
 		
 		

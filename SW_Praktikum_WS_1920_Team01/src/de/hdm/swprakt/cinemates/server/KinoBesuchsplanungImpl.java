@@ -18,6 +18,7 @@ import de.hdm.swprakt.cinemates.server.db.UmfrageMapper;
 import de.hdm.swprakt.cinemates.server.db.UmfrageeintragMapper;
 import de.hdm.swprakt.cinemates.server.db.VotumMapper;
 import de.hdm.swprakt.cinemates.shared.KinoAdministration;
+import de.hdm.swprakt.cinemates.shared.KinoAdministrationAsync;
 import de.hdm.swprakt.cinemates.shared.KinoBesuchsplanung;
 import de.hdm.swprakt.cinemates.shared.bo.Film;
 import de.hdm.swprakt.cinemates.shared.bo.Gruppe;
@@ -216,7 +217,7 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 */
 
 	public Vector<Gruppe> getAllGruppen() throws IllegalArgumentException {
-		return this.getAllGruppen();
+		return this.gruppeMapper.findAllGruppe();
 	}
 
 	/**
@@ -231,6 +232,21 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	public Vector<Gruppe> getAllGruppenOfNutzer(Nutzer nutzer) throws IllegalArgumentException {
 		return this.gruppeMapper.getGruppenOf(nutzer);
 	}
+
+
+	/**
+	 * Diese Methode wird aufgerufen, wenn alle Gruppenmitglieder einer Gruppe angezeigt
+	 * werden sollen.
+	 * 
+	 * @param Gruppenobjekt, dessen Nutzer gefunden werden sollen
+	 * @throws IllegalArgumentException
+	 * @author alina
+	 */
+
+	public Vector<Nutzer> getAllNutzerOfGruppe(Gruppe gruppe) throws IllegalArgumentException {
+		return this.nutzerMapper.getGruppenmitgliederOf(gruppe);
+	}
+
 
 	/**
 	 * Diese Methode wird aufgerufen, wenn alle Gruppen angezeigt werden sollen, die
@@ -255,7 +271,7 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 * @author alina
 	 */
 	public Nutzer getOwnerOfGruppe(Gruppe gruppe) throws IllegalArgumentException {
-		int ownerid = this.gruppeMapper.getOwnerIDOf(gruppe);
+		int ownerid = this.gruppeMapper.getOwnerOf(gruppe.getID());
 		Nutzer nutzer = this.nutzerMapper.findByID(ownerid);
 		return nutzer;
 

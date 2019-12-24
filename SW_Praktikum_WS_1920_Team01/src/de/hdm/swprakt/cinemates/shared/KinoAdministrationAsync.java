@@ -77,10 +77,14 @@ public interface KinoAdministrationAsync {
 
 	void saveSpielplan(Spielplan spielplan, AsyncCallback<Void> callback);
 
+<<<<<<< HEAD
 	void save(Kino kino, AsyncCallback<Void> callback);
 
 	void getKinoketteOf(Nutzer nutzer, AsyncCallback<Kinokette> callback);
 	
 	void findNutzerByEmail(String email, AsyncCallback<Nutzer> callback);
+=======
+	void init(AsyncCallback<Void> callback);
+>>>>>>> branch 'master' of https://github.com/alinahafner/SW_Praktikum_WS_1920_Team01.git
 
 }

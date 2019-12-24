@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
+import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 import de.hdm.swprakt.cinemates.shared.bo.Umfrage;
 import de.hdm.swprakt.cinemates.shared.bo.Umfrageeintrag;
 import de.hdm.swprakt.cinemates.shared.bo.Votum;
@@ -79,7 +80,7 @@ public class UmfrageMapper extends OwnedBusinessObjectMapper {
 		try {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM `umfrage` LEFT JOIN `ownedbusinessobject` ON `umfrage`.`bo_id` = `ownedbusinessobject`.`bo_id` WHERE (`umfrage_id`= " + id + ") ORDER BY `umfrage_id`");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `umfrage` LEFT JOIN `ownedbusinessobject` ON `umfrage`.`bo_id` = `ownedbusinessobject`.`bo_id` WHERE (`umfrage_id`= " + id + ") ");
 
 			/* Da ID Primaerschlüssel ist, kann max. nur ein Tupel zurückgegeben werden.
 			 * Prüfe, ob ein Ergebnis vorliegt.
@@ -112,7 +113,9 @@ public class UmfrageMapper extends OwnedBusinessObjectMapper {
 		try {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM umfrage ORDER BY umfrage_id");
+
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `umfrage` LEFT JOIN `ownedbusinessobject` ON `umfrage`.`bo_id` = `ownedbusinessobject`.`bo_id` ORDER BY umfrage_id");
+
 
 			/* Befüllen des result sets
 			 */
@@ -137,7 +140,7 @@ public class UmfrageMapper extends OwnedBusinessObjectMapper {
 		return vectorumfrage;
 	}
 
-	public Vector <Umfrage> findByErsteller (int erstellerID){
+	public Vector <Umfrage> findByErsteller (Nutzer nutzer){
 
 		/**
 		 * Verbindung zur Datenabnk aufbauen:
@@ -154,7 +157,7 @@ public class UmfrageMapper extends OwnedBusinessObjectMapper {
 			 * Leeres SQL-Statement (JDBC) anlegen.
 			 */
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM 'umfrage' LEFT JOIN `ownedbusinessobject` WHERE `umfrage`.`bo_id`= `ownedbusinessobject`.`bo_id` ORDER BY 'owner_id'");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `umfrage` LEFT JOIN `ownedbusinessobject` ON `umfrage`.`bo_id`= `ownedbusinessobject`.`bo_id` WHERE (`owner_id` = " + nutzer.getID() + " ) ORDER BY `umfrage_id`");
 
 			/**
 			 * Befüllen des result sets
@@ -165,12 +168,13 @@ public class UmfrageMapper extends OwnedBusinessObjectMapper {
 				 */
 				Umfrage umfrage = new Umfrage();
 				umfrage.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
-				umfrage.setID(rs.getInt("umfrage_id"));
 				umfrage.setOwnerID(rs.getInt("owner_id"));
+				umfrage.setID(rs.getInt("umfrage_id"));
 				umfrage.setBeschreibung(rs.getString("beschreibung"));
-				umfrage.setUmfragenname(rs.getString("umfragename"));
+				umfrage.setFilmID(rs.getInt("film_id"));
+				umfrage.setUmfragenname(rs.getString("Umfragename"));
+				umfrage.setDatum(dc.convertSQLDateToJavaDate(rs.getDate("Datum")));
 				vectorumfrage.add(umfrage);
-
 			}
 
 		}
@@ -306,10 +310,13 @@ public class UmfrageMapper extends OwnedBusinessObjectMapper {
 				umfrage.setID(rs.getInt("maxid") + 1);
 			}
 
-			PreparedStatement pstmt = con.prepareStatement("INSERT INTO `umfrage` (`umfrage_id`, `Erstellungszeitpunkt`) VALUES (?, ?) ");
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO `umfrage` (`umfrage_id`, `bo_id`, `film_id`, `Umfragename`, `Datum`, `Beschreibung`) VALUES (?, ?, ?, ?, ?, ?) ");
 			pstmt.setInt(1, umfrage.getID());
-			pstmt.setTimestamp(2, dc.aktuellerTimestamp());
-			umfrage.setErstellungszeitpunkt(dc.convertTimestampToDate(dc.aktuellerTimestamp()));
+			pstmt.setInt(2, bo_id);
+			pstmt.setInt(3, umfrage.getFilmID());
+			pstmt.setString(4, umfrage.getUmfragenname());
+			pstmt.setDate(5, dc.convertJavaDateToSQLDate(umfrage.getDatum()));
+			pstmt.setString(6, umfrage.getBeschreibung());
 			pstmt.executeUpdate();
 
 			con.commit();

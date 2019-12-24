@@ -114,8 +114,7 @@ public class FilmMapper {
 		return null;
 	}
 
-	//Diese Methode brauchen wir eigentlich nicht, da wir für Cinemates eine "externe" Filmdatenbank verwenden
-	// Für die Pflege der externen Filmdatenbank ist der Admin von Cinemates verantwortlich
+	
 	public Film insert(Film film) {
 
 		Connection con = DBConnection.connection();

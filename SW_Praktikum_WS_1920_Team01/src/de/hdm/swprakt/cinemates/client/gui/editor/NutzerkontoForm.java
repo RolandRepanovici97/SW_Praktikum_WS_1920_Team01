@@ -1,5 +1,5 @@
 
-package de.hdm.swprakt.cinemates.client.gui;
+package de.hdm.swprakt.cinemates.client.gui.editor;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -47,22 +47,26 @@ public class NutzerkontoForm extends HorizontalPanel {
 
 
 		nutzernametext = new TextBox();
-		emailtext = new Label(nutzer.getEmail());
+//		emailtext = new Label(nutzer.getEmail());
 		speichernButton = new Button("Speichern");
 
-		speichernButton.addClickHandler(new SpeichernClickHandler());
+//		speichernButton.addClickHandler(new SpeichernClickHandler());
 
 		panelfürnutzer.add(titel);
 		panelfürnutzer.add(nutzernamelabel);
 		panelfürnutzer.add(nutzernametext);
 		panelfürnutzer.add(emaillabel);
-		panelfürnutzer.add(emailtext);
+//		panelfürnutzer.add(emailtext);
 		panelfürnutzer.add(speichernButton);
+		
 		this.add(panelfürnutzer);
-		RootPanel.get().add(this);
+		this.add(speichernButton);
+		this.add(nutzernametext);
+		
+	//	RootPanel.get().add(this);
 
 	}
-
+	
 
 
 	/*
@@ -79,47 +83,47 @@ public class NutzerkontoForm extends HorizontalPanel {
 	 * @author alina
 	 */
 
-	class SpeichernClickHandler implements ClickHandler{
-
-
-		@Override
-		public void onClick(ClickEvent event) {
-			//Wenn die Textbox zum Nutzernamen befüllt ist, dann...
-
-			if(nutzernametext!= null) {
-				//Update des Nutzerobjekts. Implizit wird das Nutzerobjekt in der Datenbank aktualisiert.
-				kinobesuchsplanung.save(nutzer, new NutzerCallback());
-
-			}
-
-			//Andernfalls hat der Nutzers nichts geändert...
-			else {
-				Window.alert("Sie haben keine Änderungen ausgeführt");
-			}
-
-		}
-
-	}
-
-	/**
-	 * Diese Nested Class implementiert das Interface AsyncCallBack und ermöglicht die Rückgabe des Nutzerobjekts.
-	 * @author alina
-	 */
-	class NutzerCallback implements AsyncCallback <Void>{
-
-		@Override
-		public void onFailure(Throwable caught) {
-			Window.alert("Ihr Nutzerkonto konnte nicht aktualisiert werden");
-
-		}
-
-
-		@Override
-		public void onSuccess(Void result) {
-			// TODO Auto-generated method stub
-
-		}
-
-	}
-
+//	class SpeichernClickHandler implements ClickHandler{
+//
+//
+//		@Override
+//		public void onClick(ClickEvent event) {
+//			//Wenn die Textbox zum Nutzernamen befüllt ist, dann...
+//
+//			if(nutzernametext!= null) {
+//				//Update des Nutzerobjekts. Implizit wird das Nutzerobjekt in der Datenbank aktualisiert.
+//				kinobesuchsplanung.save(nutzer, new NutzerCallback());
+//
+//			}
+//
+//			//Andernfalls hat der Nutzers nichts geändert...
+//			else {
+//				Window.alert("Sie haben keine Änderungen ausgeführt");
+//			}
+//
+//		}
+//
+//	}
+//
+//	/**
+//	 * Diese Nested Class implementiert das Interface AsyncCallBack und ermöglicht die Rückgabe des Nutzerobjekts.
+//	 * @author alina
+//	 */
+//	class NutzerCallback implements AsyncCallback <Void>{
+//
+//		@Override
+//		public void onFailure(Throwable caught) {
+//			Window.alert("Ihr Nutzerkonto konnte nicht aktualisiert werden");
+//
+//		}
+//
+//
+//		@Override
+//		public void onSuccess(Void result) {
+//			// TODO Auto-generated method stub
+//
+//		}
+//
+//	}
+//
 }

@@ -16,10 +16,10 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.swprakt.cinemates.client.gui.NutzerkontoForm;
 import de.hdm.swprakt.cinemates.client.gui.admin.HeaderfürKinoAdministration;
 import de.hdm.swprakt.cinemates.client.gui.admin.Navigator;
 import de.hdm.swprakt.cinemates.client.gui.editor.HeaderfürKinobesuchsplanung;
+import de.hdm.swprakt.cinemates.client.gui.editor.NutzerkontoForm;
 import de.hdm.swprakt.cinemates.client.gui.editor.StartseiteEditor;
 import de.hdm.swprakt.cinemates.shared.KinoBesuchsplanung;
 import de.hdm.swprakt.cinemates.shared.LoginService;
@@ -70,8 +70,8 @@ public class KinobesuchsplanungEntry implements EntryPoint {
 
 		// Zugriff auf Instanz des asynchronen Interfaces für den Login
 
-		LoginServiceAsync loginService = GWT.create(LoginService.class);
-		loginService.login(GWT.getHostPageBaseURL(), new LoginServiceCallback());
+//		LoginServiceAsync loginService = GWT.create(LoginService.class);
+//		loginService.login(GWT.getHostPageBaseURL(), new LoginServiceCallback());
 
 	}
 

@@ -21,7 +21,7 @@
 	<servlet-mapping>
 		<servlet-name>loginService</servlet-name>
 		<!-- <url-pattern>/kinoadministration/login</url-pattern> -->
-		<url-pattern>/kinobesuchsplanung/login</url-pattern>
+		<url-pattern>/Kinobesuchsplanung/login</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
@@ -31,7 +31,7 @@
 
 	<servlet-mapping>
 		<servlet-name>KinoBesuchsplanungImpl</servlet-name>
-		<url-pattern>/KinoBesuchsplanung/kinobesuchsplanung</url-pattern>
+		<url-pattern>/Kinobesuchsplanung/kinobesuchsplanung</url-pattern>
 	</servlet-mapping>
 
 	<servlet>

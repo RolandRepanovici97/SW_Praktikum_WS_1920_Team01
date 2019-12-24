@@ -118,7 +118,7 @@ public interface KinoAdministration extends RemoteService {
 // * @param kino Kino-Objekt, welches in der Datenbank gespeichert werden soll
 // * @throws IllegalArgumentException
 // */
-//public void save(Kino kino) throws IllegalArgumentException;
+public void save(Kino kino) throws IllegalArgumentException;
 //
 //
 ///**
@@ -127,7 +127,7 @@ public interface KinoAdministration extends RemoteService {
 // * @param nutzer Nutzer-Objekt, welches in der Datenbank gespeichert werden soll
 // * @throws IllegalArgumentException
 // */
-	public Nutzer saveNutzer(Nutzer nutzer) throws IllegalArgumentException;
+	public void saveNutzer(Nutzer nutzer) throws IllegalArgumentException;
 
 //
 //
@@ -380,4 +380,10 @@ public interface KinoAdministration extends RemoteService {
 	 */
 
 	public Vector<Spielzeit> getAllSpielzeiten() throws IllegalArgumentException;
+	
+	public Kinokette getKinoketteOf(Nutzer nutzer) throws IllegalArgumentException;
+	
+	
+	//vorläufige Funktion für das Bekommen des Eingeloggten Nutzers
+	public Nutzer findNutzerByEmail(String email) throws IllegalArgumentException;
 }

@@ -206,6 +206,12 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 		// Kinookettennummer wird hier richtig eingesetzt
 
 	}
+	
+	
+	public Kinokette getKinoketteOf(Nutzer nutzer) throws IllegalArgumentException{
+		
+		return kinoketteMapper.findKinoketteByOwner(nutzer);
+	}
 
 	// neue Methode Kinokette vom curent User anzeigen.
 	//
@@ -461,9 +467,24 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 	 * @throws IllegalArgumentException
 	 */
 
-	public Nutzer saveNutzer(Nutzer nutzer) throws IllegalArgumentException {  //Nutzername übergeben 
-		return this.nutzerMapper.update(nutzer);
 
+	@Override
+	public void save(Kino kino) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void saveNutzer(Nutzer nutzer) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public Nutzer findNutzerByEmail(String email) throws IllegalArgumentException {
+		
+		return nutzerMapper.findByEmail(email);
 	}
 
 

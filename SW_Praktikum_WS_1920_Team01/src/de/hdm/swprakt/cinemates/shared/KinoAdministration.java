@@ -103,34 +103,32 @@ public interface KinoAdministration extends RemoteService {
 	// */
 	public void saveFilm(Film film) throws IllegalArgumentException;
 
-<<<<<<< HEAD
-//
-///**
-// * Abschnitt aller save/update-Methoden
-// * Speichern des uebergebenen Kinokette-Objekts
-// * @param kinokette Kinokette-Objekt, welches in der Datenbank gespeichert werden soll
-// * @throws IllegalArgumentException
-// */
-//public void editKinokette(Kinokette kinokette) throws IllegalArgumentException;
-//
-//
-///**
-// * Abschnitt aller save/update-Methoden
-// * Speichern des uebergebenen Kino-Objekts
-// * @param kino Kino-Objekt, welches in der Datenbank gespeichert werden soll
-// * @throws IllegalArgumentException
-// */
-public void save(Kino kino) throws IllegalArgumentException;
-//
-//
-///**
-// * Abschnitt aller save/update-Methoden
-// * Speichern des uebergebenen Nutzer-Objekts
-// * @param nutzer Nutzer-Objekt, welches in der Datenbank gespeichert werden soll
-// * @throws IllegalArgumentException
-// */
+	//
+	///**
+	// * Abschnitt aller save/update-Methoden
+	// * Speichern des uebergebenen Kinokette-Objekts
+	// * @param kinokette Kinokette-Objekt, welches in der Datenbank gespeichert werden soll
+	// * @throws IllegalArgumentException
+	// */
+	//public void editKinokette(Kinokette kinokette) throws IllegalArgumentException;
+	//
+	//
+	///**
+	// * Abschnitt aller save/update-Methoden
+	// * Speichern des uebergebenen Kino-Objekts
+	// * @param kino Kino-Objekt, welches in der Datenbank gespeichert werden soll
+	// * @throws IllegalArgumentException
+	// */
+	public void save(Kino kino) throws IllegalArgumentException;
+	//
+	//
+	///**
+	// * Abschnitt aller save/update-Methoden
+	// * Speichern des uebergebenen Nutzer-Objekts
+	// * @param nutzer Nutzer-Objekt, welches in der Datenbank gespeichert werden soll
+	// * @throws IllegalArgumentException
+	// */
 	public void saveNutzer(Nutzer nutzer) throws IllegalArgumentException;
-=======
 	//
 	///**
 	// * Abschnitt aller save/update-Methoden
@@ -156,8 +154,6 @@ public void save(Kino kino) throws IllegalArgumentException;
 	// * @param nutzer Nutzer-Objekt, welches in der Datenbank gespeichert werden soll
 	// * @throws IllegalArgumentException
 	// */
-	public Nutzer saveNutzer(Nutzer nutzer) throws IllegalArgumentException;
->>>>>>> branch 'master' of https://github.com/alinahafner/SW_Praktikum_WS_1920_Team01.git
 
 	//
 	//
@@ -410,10 +406,10 @@ public void save(Kino kino) throws IllegalArgumentException;
 	 */
 
 	public Vector<Spielzeit> getAllSpielzeiten() throws IllegalArgumentException;
-	
+
 	public Kinokette getKinoketteOf(Nutzer nutzer) throws IllegalArgumentException;
-	
-	
+
+
 	//vorläufige Funktion für das Bekommen des Eingeloggten Nutzers
 	public Nutzer findNutzerByEmail(String email) throws IllegalArgumentException;
 }

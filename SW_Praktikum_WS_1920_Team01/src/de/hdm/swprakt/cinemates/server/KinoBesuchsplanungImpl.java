@@ -18,6 +18,7 @@ import de.hdm.swprakt.cinemates.server.db.UmfrageMapper;
 import de.hdm.swprakt.cinemates.server.db.UmfrageeintragMapper;
 import de.hdm.swprakt.cinemates.server.db.VotumMapper;
 import de.hdm.swprakt.cinemates.shared.KinoAdministration;
+import de.hdm.swprakt.cinemates.shared.KinoAdministrationAsync;
 import de.hdm.swprakt.cinemates.shared.KinoBesuchsplanung;
 import de.hdm.swprakt.cinemates.shared.bo.Film;
 import de.hdm.swprakt.cinemates.shared.bo.Gruppe;
@@ -216,7 +217,7 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 */
 
 	public Vector<Gruppe> getAllGruppen() throws IllegalArgumentException {
-		return this.getAllGruppen();
+		return this.gruppeMapper.findAllGruppe();
 	}
 
 	/**
@@ -270,7 +271,7 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 * @author alina
 	 */
 	public Nutzer getOwnerOfGruppe(Gruppe gruppe) throws IllegalArgumentException {
-		int ownerid = this.gruppeMapper.getOwnerIDOf(gruppe);
+		int ownerid = this.gruppeMapper.getOwnerOf(gruppe.getID());
 		Nutzer nutzer = this.nutzerMapper.findByID(ownerid);
 		return nutzer;
 

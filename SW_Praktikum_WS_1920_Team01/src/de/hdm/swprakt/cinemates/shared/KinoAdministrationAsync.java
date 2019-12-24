@@ -75,4 +75,6 @@ public interface KinoAdministrationAsync {
 
 	void saveSpielplan(Spielplan spielplan, AsyncCallback<Void> callback);
 
+	void init(AsyncCallback<Void> callback);
+
 }

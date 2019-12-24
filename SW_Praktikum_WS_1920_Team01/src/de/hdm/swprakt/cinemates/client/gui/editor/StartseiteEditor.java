@@ -61,16 +61,16 @@ public class StartseiteEditor extends HorizontalPanel {
 
 		neueUmfrage.setHTML("<i class=\"fas fa-plus\"></i>");
 
-//		 neueUmfrage.addClickHandler(new NeueUmfrageClickHandler());
+		neueUmfrage.addClickHandler(new NeueUmfrageClickHandler());
 
 		tabelle = new FlexTable();
-		
+
 		kinobesuchsplanung.showAllUmfrage(new UmfragenAnzeigenCallback());
-		
-//		 kinobesuchsplanung.showAllUmfrageOfNutzer(nutzer, new
-//		 UmfragenAnzeigenCallback());
-		
-		
+
+		//		 kinobesuchsplanung.showAllUmfrageOfNutzer(nutzer, new
+		//		 UmfragenAnzeigenCallback());
+
+
 		panelfürumfragen.add(label1);
 		panelfürumfragen.add(label2);
 		panelfürumfragen.add(neueUmfrage);
@@ -127,10 +127,10 @@ public class StartseiteEditor extends HorizontalPanel {
 
 					@Override
 					public void onClick(ClickEvent event) {
-						Window.alert("Umfrage " + u.getUmfragenname());
-						
+						Window.alert("Umfrage " + u.getUmfragenname()+ " wird angezeigt.");
+
 					}
-					
+
 				});
 				tabelle.setWidget(rowCount, 1, umfrageAnzeigen);
 				rowCount++;
@@ -148,30 +148,30 @@ public class StartseiteEditor extends HorizontalPanel {
 			}
 		}
 	}
-//
-//	/**
-//	 * Diese Nested Class wird als Callback für das Anzeigen neuer Umfrageobjekte
-//	 * benötigt.
-//	 * 
-//	 * @author alina
-//	 */
-//
-//	class OffeneUmfragenAnzeigenCallback implements AsyncCallback<Vector<Umfrage>> {
-//
-//		@Override
-//		public void onFailure(Throwable caught) {
-//			/*
-//			 * Wenn ein Fehler auftritt, dann geben wir eine kurze Log Message aus.
-//			 */
-//			ClientSideSettings.getLogger().severe("Ihre neuen Umfragen konnten nicht geladen werden");
-//		}
-//
-//		@Override
-//		public void onSuccess(Vector<Umfrage> result) {
-//			// TODO Auto-generated method stub
-//
-//		}
-	}
+	//
+	//	/**
+	//	 * Diese Nested Class wird als Callback für das Anzeigen neuer Umfrageobjekte
+	//	 * benötigt.
+	//	 * 
+	//	 * @author alina
+	//	 */
+	//
+	//	class OffeneUmfragenAnzeigenCallback implements AsyncCallback<Vector<Umfrage>> {
+	//
+	//		@Override
+	//		public void onFailure(Throwable caught) {
+	//			/*
+	//			 * Wenn ein Fehler auftritt, dann geben wir eine kurze Log Message aus.
+	//			 */
+	//			ClientSideSettings.getLogger().severe("Ihre neuen Umfragen konnten nicht geladen werden");
+	//		}
+	//
+	//		@Override
+	//		public void onSuccess(Vector<Umfrage> result) {
+	//			// TODO Auto-generated method stub
+	//
+	//		}
+}
 //
 //	/**
 //	 * Diese Nested Class implementiert das Interface ClickHandler und ermöglicht
@@ -187,7 +187,7 @@ public class StartseiteEditor extends HorizontalPanel {
 //			UmfrageAnzeige anzeige = new UmfrageAnzeige();
 //			RootPanel.get("DeatilsPanel").add(anzeige);
 
-		
+
 //
 //		}
 //
@@ -202,16 +202,16 @@ public class StartseiteEditor extends HorizontalPanel {
 //	 */
 //}
 //
-//class NeueUmfrageClickHandler implements ClickHandler {
-//
-//	public void onClick(ClickEvent event) {
-//
-//		RootPanel.get("DetailsPanel").clear();
-//		UmfrageErstellenForm neueUmfrage = new UmfrageErstellenForm();
-//		RootPanel.get("DetailsPanel").add(neueUmfrage);
-//	}
-//
-//}
+class NeueUmfrageClickHandler implements ClickHandler {
+
+	public void onClick(ClickEvent event) {
+
+		RootPanel.get("DetailsPanel").clear();
+		UmfrageErstellenForm neueUmfrage = new UmfrageErstellenForm();
+		RootPanel.get("DetailsPanel").add(neueUmfrage);
+	}
+
+}
 //
 //class OffeneUmfragenAnzeigenCallback implements AsyncCallback<Vector<Umfrage>> {
 //
@@ -252,15 +252,15 @@ class UmfrageBearbeitenCallback implements AsyncCallback<Umfrage> {
 
 	@Override
 	public void onFailure(Throwable caught) {
-		
-		
+
+
 	}
 
 
 	@Override
 	public void onSuccess(Umfrage result) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 }

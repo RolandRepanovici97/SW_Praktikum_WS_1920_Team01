@@ -78,6 +78,8 @@ public interface KinoBesuchsplanungAsync {
 
 	public void showUmfrageeinträgeofUmfrage(Umfrage umfrage, AsyncCallback<Vector<Umfrageeintrag>> callback);
 
+	public void findUmfrageByID(int id, AsyncCallback<Umfrage> callback);
+
 
 
 

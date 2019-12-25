@@ -424,6 +424,19 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 
 	}
 
+
+	/**
+	 * Diese Methode wird aufgerufen, wenn nach einer Umfrage mittels ihrer ID gesucht werden soll.
+	 * 
+	 * @param Umfrageobjekt, welches gespeichert werden soll
+	 * @throws IllegalArgumentException
+	 * @author alina
+	 */
+
+	public Umfrage findUmfrageByID(int id) throws IllegalArgumentException {
+		return this.umfrageMapper.findByID(id);
+	}
+	
 	/**
 	 * Diese Methode wird aufgerufen, wenn eine neue Umfrage erstellt wird. Es wird
 	 * hier lediglich der Umfragenname übergeben, da wir diesen benötigen um ein

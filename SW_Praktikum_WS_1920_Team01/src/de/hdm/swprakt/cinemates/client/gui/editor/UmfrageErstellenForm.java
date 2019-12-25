@@ -39,7 +39,7 @@ public class UmfrageErstellenForm extends HorizontalPanel {
 	KinoBesuchsplanungAsync kinobesuchsplanung = ClientSideSettings.getKinobesuchsplanung();
 	KinoAdministrationAsync kinoadministration = ClientSideSettings.getKinoAdministration();
 
-	//	Nutzer nutzer = new Nutzer();
+	// Nutzer nutzer = new Nutzer();
 
 	// Erzeugen der einzelnen Widgets
 	private Label umfragename = new Label("Umfragename: ");
@@ -57,10 +57,9 @@ public class UmfrageErstellenForm extends HorizontalPanel {
 	public void onLoad() {
 		super.onLoad();
 
-
 		// Instanttierung der Widgets
 		panelfürumfrage = new VerticalPanel();
-		tabelle = new Grid(4,4);
+		tabelle = new Grid(4, 4);
 		umfragenametext = new TextBox();
 		gruppebox = new ListBox();
 		filmbox = new ListBox();
@@ -70,14 +69,14 @@ public class UmfrageErstellenForm extends HorizontalPanel {
 		kinobesuchsplanung.getAllGruppen(new GruppeCallback());
 		kinoadministration.getAllFilme(new FilmCallback());
 		//
-		//		// Hinzufügen des ClickHandlers zum Erstellen Button
-		//		erstellenButton.addClickHandler(new ErstellenClickHandler());
-		
-		//Hinzufügen unserer Widgets zur Tabelle
-		tabelle.setWidget(0,0, umfragename);
+		// Hinzufügen des ClickHandlers zum Erstellen Button
+		erstellenButton.addClickHandler(new ErstellenClickHandler());
+
+		// Hinzufügen unserer Widgets zur Tabelle
+		tabelle.setWidget(0, 0, umfragename);
 		tabelle.setWidget(0, 1, umfragenametext);
-		tabelle.setWidget(1,1, gruppe);
-		tabelle.setWidget(1,2, gruppebox);
+		tabelle.setWidget(1, 1, gruppe);
+		tabelle.setWidget(1, 2, gruppebox);
 		tabelle.setWidget(2, 1, film);
 		tabelle.setWidget(2, 2, filmbox);
 		tabelle.setWidget(3, 1, datum);
@@ -85,7 +84,6 @@ public class UmfrageErstellenForm extends HorizontalPanel {
 		panelfürumfrage.add(tabelle);
 		panelfürumfrage.add(erstellenButton);
 		this.add(panelfürumfrage);
-
 
 	}
 
@@ -116,16 +114,18 @@ public class UmfrageErstellenForm extends HorizontalPanel {
 
 				filmbox.addItem(film.getFilmtitel());
 
-			}}
+			}
+		}
 
 	}
+
 	//
-	//	/**
-	//	 * Diese Nested Class implementiert das Interface AsyncCallback und ermöglicht
-	//	 * die Rückgabe der Gruppenobjekte eines Nutzers.
-	//	 * 
-	//	 * @author alina
-	//	 */
+	// /**
+	// * Diese Nested Class implementiert das Interface AsyncCallback und ermöglicht
+	// * die Rückgabe der Gruppenobjekte eines Nutzers.
+	// *
+	// * @author alina
+	// */
 	class GruppeCallback implements AsyncCallback<Vector<Gruppe>> {
 
 		@Override
@@ -136,38 +136,17 @@ public class UmfrageErstellenForm extends HorizontalPanel {
 		@Override
 		public void onSuccess(Vector<Gruppe> result) {
 			ClientSideSettings.getLogger().severe("Ihre Gruppen wurden geladen.");
-			
+
 			for (Gruppe gruppe : result) {
 				gruppebox.addItem(gruppe.getGruppenname());
 
 			}
 
-
-
 		}
+
 		//
-		//	}
+		// }
 		//
-		//	/**
-		//	 * Diese Nested Class implementiert das Interface AsyncCallback und ermöglicht
-		//	 * die Rückgabe eines Umfrageobjekts.
-		//	 * 
-		//	 * @author alina
-		//	 */
-		//	class UmfrageCallback implements AsyncCallback<Umfrage> {
-		//
-		//		@Override
-		//		public void onFailure(Throwable caught) {
-		//			Window.alert("Die Umfrage konnte nicht erstellt werden");
-		//
-		//		}
-		//
-		//		@Override
-		//		public void onSuccess(Umfrage result) {
-		//
-		//		}
-		//
-		//	}
 
 		/**
 		 * Diese Nested Class implementiert das Interface ClickHandler und ermöglicht in
@@ -177,35 +156,67 @@ public class UmfrageErstellenForm extends HorizontalPanel {
 		 * 
 		 * @author alina
 		 */
-		//
-		//	private class ErstellenClickHandler implements ClickHandler {
-		//
-		//		@Override
-		//		public void onClick(ClickEvent event) {
-		//			// Prüfung, ob alle Angaben gemacht wurden
-		//			if (umfragenametext != null && gruppebox != null && filmbox != null && datumwähler != null) {
-		//
-		//				// Neues Objekt der Klasse Umfrage wird erstellt
-		//				Umfrage umfrage = new Umfrage();
-		//
-		//				// Setzen der Attribute
-		//				umfrage.setUmfragenname(umfragenametext.getText());
-		//				umfrage.setDatum(datumwähler.getValue());
-		//				umfrage.setOwnerID(nutzer.getID());
-		//				// Aufruf des asynchronen Kinobesuchsplanung Interface
-		//				KinoBesuchsplanungAsync kinobesuchsplanung = ClientSideSettings.getKinobesuchsplanung();
-		//				// Aufruf der Methode createUmfrage: Hierdurch wird implizit das neue
-		//				// Umfrageobjekt in der DB gespeichert
-		//				kinobesuchsplanung.createUmfrage(umfragenametext.getText(), new UmfrageCallback());
-		//				// Wir informieren den Nutzer über den positiven Ausgang
-		//				Window.alert("Die Umfrage wurde erstellt. Die Teilnehmer wurden per E-Mail darüber informiert.");
-		//
-		//			}
-		//			// Falls Angaben gefehlt haben, geben wir folgendes aus:
-		//			else {
-		//				Window.alert("Bitte geben Sie alle Informationen an.");
-		//			}
-		//
-		//	}
+	}
+	private class ErstellenClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			// Prüfung, ob alle Angaben gemacht wurden
+			if (umfragenametext != null && gruppebox != null && filmbox != null && datumwähler != null) {
+
+				// Neues Objekt der Klasse Umfrage wird erstellt
+				Umfrage umfrage = new Umfrage();
+
+				// Setzen der Attribute
+				umfrage.setUmfragenname(umfragenametext.getText());
+				umfrage.setDatum(datumwähler.getValue());
+				//Wir entnehmen den Inhalt der Listbox zur Gruppe
+				int index=gruppebox.getSelectedIndex();
+				String gruppewert= gruppebox.getSelectedValue();
+				//Umwandeln des Inhalts in einen Integer-Wert
+				int gruppenwertalsint = Integer.parseInt(gruppewert);
+				Vector <Integer> vectorgruppenwert= new Vector <Integer>();
+				//Das ist jetzt dumm. Werden wir noch ändern
+				vectorgruppenwert.add(gruppenwertalsint);
+				//Setzen des Attributs
+				umfrage.setGruppenIDs(vectorgruppenwert);
+				// Aufruf des asynchronen Kinobesuchsplanung Interface
+				KinoBesuchsplanungAsync kinobesuchsplanung = ClientSideSettings.getKinobesuchsplanung();
+				// Aufruf der Methode createUmfrage: Hierdurch wird implizit das neue
+				// Umfrageobjekt in der DB gespeichert
+				kinobesuchsplanung.createUmfrage(umfragenametext.getText(), new UmfrageCallback());
+
+
+			}
+			// Falls Angaben gefehlt haben, geben wir folgendes aus:
+			else {
+				Window.alert("Bitte geben Sie alle Informationen an.");
+			}}
+
+
+
+		/**
+		 * Diese Nested Class implementiert das Interface AsyncCallback und ermöglicht
+		 * die Rückgabe eines Umfrageobjekts.
+		 * 
+		 * @author alina
+		 */
+		class UmfrageCallback implements AsyncCallback<Umfrage> {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Die Umfrage konnte nicht erstellt werden");
+
+			}
+
+			@Override
+			public void onSuccess(Umfrage result) {
+				// Wir informieren den Nutzer über den positiven Ausgang
+				Window.alert("Die Umfrage wurde erstellt. Die Teilnehmer wurden per E-Mail darüber informiert.");
+
+			}
+
+		}
 	}
 }
+

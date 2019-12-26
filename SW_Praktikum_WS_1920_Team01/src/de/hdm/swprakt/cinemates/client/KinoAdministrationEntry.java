@@ -24,7 +24,8 @@ public class KinoAdministrationEntry implements EntryPoint {
 	
 		
 		HeaderfürKinoAdministration headerPanel = new HeaderfürKinoAdministration();
-		RootPanel.get("HeaderPanelKinoAdministration").add(headerPanel);
+		headerPanel.getElement().setId("headerPanelKinoadministration");
+		RootPanel.get("Header").add(headerPanel);
 		
 		KinoketteForm kf = new KinoketteForm();
 		RootPanel.get("DetailsPanel").add(kf);

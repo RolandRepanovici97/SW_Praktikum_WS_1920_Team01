@@ -27,30 +27,24 @@ div#MenuBar {
 	margin-bottom: 1px;
 }
 
-.details {
+
+.gwt-DateBox {
+	padding: 5px 4px;
+	border: 1px solid #000000;
+	border-top: 1px solid #999;
+	font-size: 100%;
+}
+
+.gwt-DateBox input {
+	width: 8em;
+}
+
+.dateBoxFormatError {
+	background: #ffcccc;
+}
+
+.dateBoxPopup {
 	
-}
-
-.sendButton {
-	display: block;
-	font-size: 16pt;
-}
-
-/** Most GWT widgets already have a style name defined */
-.gwt-DialogBox {
-	width: 400px;
-}
-
-.dialogVPanel {
-	margin: 5px;
-}
-
-.serverResponseLabelError {
-	color: red;
-}
-
-.button {
-	background-color: #FFFFFF;
 }
 
 #planerbutton {

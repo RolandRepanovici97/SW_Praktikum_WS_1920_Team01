@@ -137,7 +137,7 @@ public class NutzerMapper extends OwnedBusinessObjectMapper{
 
 		try {
 			con.setAutoCommit(false);
-			
+
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT MAX(user_id) AS `maxid` FROM `nutzer`");
 
@@ -145,7 +145,7 @@ public class NutzerMapper extends OwnedBusinessObjectMapper{
 				nutzer.setID(rs.getInt("maxid") + 1);
 				nutzer.setOwnerID(nutzer.getID());
 			}	
-			
+
 			int bo_id = super.insert(nutzer, con);
 
 			PreparedStatement pstmt = con.prepareStatement("INSERT INTO `nutzer` (`user_id`,  `bo_id`, `Email`, `Nutzername`) VALUES (?, ?, ?, ?) ");
@@ -161,28 +161,28 @@ public class NutzerMapper extends OwnedBusinessObjectMapper{
 		catch(SQLException e) {
 			e.printStackTrace();
 			if (con != null) {
-	            try {
-	               // System.err.print("Transaktion wird nicht ausgeführt");
-	                con.rollback();
-	            } catch(SQLException exc) {
-	            	exc.printStackTrace();
-	            }
-			
-			return null;
+				try {
+					// System.err.print("Transaktion wird nicht ausgeführt");
+					con.rollback();
+				} catch(SQLException exc) {
+					exc.printStackTrace();
+				}
+
+				return null;
+			}
+
+		} finally {
+
+			try {
+				con.setAutoCommit(true);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
 		}
-			
-	} finally {
-		
-		try {
-			con.setAutoCommit(true);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-	}
 		return nutzer;
 	}
-	
+
 
 	public Nutzer update (Nutzer nutzer) {
 
@@ -209,40 +209,40 @@ public class NutzerMapper extends OwnedBusinessObjectMapper{
 
 		try {
 			con.setAutoCommit(false);
-			
+
 			int bo_id = findBoIDOf(nutzer);
 
 			super.delete(bo_id, con);
-			
+
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate("DELETE FROM `nutzer` WHERE (`user_id` = " + nutzer.getID() + ")");
-			
+
 			con.commit();
 
 
 		} catch(SQLException e) {
 			e.printStackTrace();
 			if (con != null) {
-	            try {
-	               // System.err.print("Transaktion wird nicht ausgeführt");
-	                con.rollback();
-	            } catch(SQLException exc) {
-	            	exc.printStackTrace();
-	            }
-			
+				try {
+					// System.err.print("Transaktion wird nicht ausgeführt");
+					con.rollback();
+				} catch(SQLException exc) {
+					exc.printStackTrace();
+				}
+
+			}
+
+		} finally {
+
+			try {
+				con.setAutoCommit(true);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
 		}
-			
-	} finally {
-		
-		try {
-			con.setAutoCommit(true);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
 	}
-	}
-	
+
 
 	public void deleteGruppenzugehörigkeiten(int nutzerid) {
 
@@ -286,21 +286,53 @@ public class NutzerMapper extends OwnedBusinessObjectMapper{
 		return nutzer;
 
 	}
-	
+
 	private int findBoIDOf (Nutzer nutzer) throws SQLException {
-		
+
 		Connection con = DBConnection.connection();
 		int bo_id = 0;
 
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT `bo_id` FROM `nutzer` WHERE (`user_id` = " +  nutzer.getID() + ")");
-			
-			if(rs.next()) {
-				bo_id = rs.getInt("bo_id");
-			}
-			
-		
+		Statement stmt = con.createStatement();
+		ResultSet rs = stmt.executeQuery("SELECT `bo_id` FROM `nutzer` WHERE (`user_id` = " +  nutzer.getID() + ")");
+
+		if(rs.next()) {
+			bo_id = rs.getInt("bo_id");
+		}
+
+
 		return bo_id;
 	}
 
-}
+
+
+
+	public Nutzer findByName (String nutzername) {
+
+
+		Connection con = DBConnection.connection();
+
+		try {
+
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `nutzer` LEFT JOIN `ownedbusinessobject` ON `nutzer`.`bo_id` = `ownedbusinessobject`.`bo_id` WHERE (`Nutzername= ' " + nutzername );
+
+			if(rs.next()) {
+				Nutzer n = new Nutzer();
+				n.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+				n.setID(rs.getInt("user_id"));
+				n.setOwnerID(rs.getInt("owner_id"));
+				n.setEmail(rs.getString("Email"));
+				n.setNutzername(rs.getString("Nutzername"));
+
+				return n;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+		}
+
+		return null;
+
+	}}
+

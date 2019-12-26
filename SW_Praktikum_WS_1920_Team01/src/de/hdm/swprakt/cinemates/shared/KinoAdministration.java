@@ -412,4 +412,8 @@ public interface KinoAdministration extends RemoteService {
 
 	//vorläufige Funktion für das Bekommen des Eingeloggten Nutzers
 	public Nutzer findNutzerByEmail(String email) throws IllegalArgumentException;
+	
+	public Boolean nameVerfügbarFilm(String filmtitel) throws IllegalArgumentException;
+	
+	public Boolean nameVerfügbarKino(String kinoname) throws IllegalArgumentException;
 }

@@ -84,6 +84,10 @@ public interface KinoAdministrationAsync {
 	void getKinoketteOf(Nutzer nutzer, AsyncCallback<Kinokette> callback);
 
 	void findNutzerByEmail(String email, AsyncCallback<Nutzer> callback);
+
+	void nameVerfügbarKino(String kinoname, AsyncCallback<Boolean> callback);
+
+	void nameVerfügbarFilm(String filmtitel, AsyncCallback<Boolean> callback);
 	
 
 }

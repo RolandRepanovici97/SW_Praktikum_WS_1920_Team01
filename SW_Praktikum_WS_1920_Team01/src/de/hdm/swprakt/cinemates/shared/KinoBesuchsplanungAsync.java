@@ -80,6 +80,12 @@ public interface KinoBesuchsplanungAsync {
 
 	public void findUmfrageByID(int id, AsyncCallback<Umfrage> callback);
 
+	public void nameVerfügbarGruppe(String gruppenname, AsyncCallback<Boolean> callback);
+
+	public void nameVerfügbarNutzer(String nutzername, AsyncCallback<Boolean> callback);
+
+	public void nameVerfügbarUmfrage(String umfragenname, AsyncCallback<Boolean> callback);
+
 
 
 

@@ -128,6 +128,31 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 		// Filmnummer wird hier richtig eingesetzt
 	}
 
+	
+	
+	/**
+	 * Diese Methode wird aufgerufen, wenn der Titel eines Films gesetzt werden soll.
+	 * Damit dieser nicht doppelt vergeben werden kann, erfolgt zunächst die Prüfung, 
+	 * ob dieser bereits vergeben ist. 
+	 * 
+	 * @param Der Filmtitel, welcher gesetzt werden soll
+	 * @throws IllegalArgumentException
+	 * @author alina
+	 */
+
+	public Boolean nameVerfügbarFilm(String filmtitel) throws IllegalArgumentException {
+		if (this.filmMapper.findByFilmtitel(filmtitel)==null) {
+
+			return true;
+
+		}
+		else {
+			return false;
+		}
+
+
+
+	}
 	/**
 	 * Löschen eines Films 
 	 */
@@ -240,6 +265,31 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 		return this.kinoMapper.findAll();
 	}
 
+	
+	/**
+	 * Diese Methode wird aufgerufen, wenn der Name eines Kinos gesetzt werden soll.
+	 * Damit dieser nicht doppelt vergeben werden kann, erfolgt zunächst die Prüfung, 
+	 * ob dieser bereits vergeben ist. 
+	 * 
+	 * @param Der Kinoname, welcher gesetzt werden soll
+	 * @throws IllegalArgumentException
+	 * @author alina
+	 */
+
+	public Boolean nameVerfügbarKino(String kinoname) throws IllegalArgumentException {
+		if (this.kinoMapper.findByKinoname(kinoname)==null) {
+
+			return true;
+
+		}
+		else {
+			return false;
+		}
+
+
+
+	}
+	
 	/**
 	 * Hinzfügen eines Kinos dieses Systems.
 	 */

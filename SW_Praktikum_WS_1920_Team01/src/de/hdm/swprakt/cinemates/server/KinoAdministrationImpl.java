@@ -84,7 +84,7 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 	 */
 
 	public Vector<Film> getAllFilme() throws IllegalArgumentException {
-		return this.filmMapper.findAll();
+		return this.filmMapper.findAllFilme();
 	}
 
 
@@ -97,6 +97,10 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 	}
 
 
+
+	public Film getFilmByID(int id) throws IllegalArgumentException {
+		return this.filmMapper.findByID(id);
+	}
 
 	/**
 	 * <p>
@@ -128,8 +132,8 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 		// Filmnummer wird hier richtig eingesetzt
 	}
 
-	
-	
+
+
 	/**
 	 * Diese Methode wird aufgerufen, wenn der Titel eines Films gesetzt werden soll.
 	 * Damit dieser nicht doppelt vergeben werden kann, erfolgt zunächst die Prüfung, 
@@ -231,10 +235,10 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 		// Kinookettennummer wird hier richtig eingesetzt
 
 	}
-	
-	
+
+
 	public Kinokette getKinoketteOf(Nutzer nutzer) throws IllegalArgumentException{
-		
+
 		return kinoketteMapper.findKinoketteByOwner(nutzer);
 	}
 
@@ -265,7 +269,7 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 		return this.kinoMapper.findAll();
 	}
 
-	
+
 	/**
 	 * Diese Methode wird aufgerufen, wenn der Name eines Kinos gesetzt werden soll.
 	 * Damit dieser nicht doppelt vergeben werden kann, erfolgt zunächst die Prüfung, 
@@ -288,6 +292,12 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 
 
 
+	}
+
+
+
+	public Kino getKinoByID(int id) throws IllegalArgumentException {
+		return this.kinoMapper.findByID(id);
 	}
 	
 	/**
@@ -429,6 +439,11 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 	}
 
 
+
+	public Spielzeit getSpielzeitByID(int id) throws IllegalArgumentException {
+		return this.spielzeitMapper.findByID(id);
+	}
+
 	/**
 	 * Hinzfügen einer Spielzeit
 	 */
@@ -521,19 +536,19 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 	@Override
 	public void save(Kino kino) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void saveNutzer(Nutzer nutzer) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
 	@Override
 	public Nutzer findNutzerByEmail(String email) throws IllegalArgumentException {
-		
+
 		return nutzerMapper.findByEmail(email);
 	}
 

@@ -69,7 +69,7 @@ public class KinoMapper extends OwnedBusinessObjectMapper {
  * @return Vector <Kino>, welcher alle Kinoeinträge beinhaltet
  */
 
-		public Vector<Kino> findAll() {
+		public Vector<Kino> findAllKino() {
 
 			Connection con = DBConnection.connection();
 			Vector<Kino> kino = new Vector<Kino>();

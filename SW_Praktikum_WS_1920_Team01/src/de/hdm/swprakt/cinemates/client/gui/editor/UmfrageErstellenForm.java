@@ -5,6 +5,7 @@ package de.hdm.swprakt.cinemates.client.gui.editor;
 
 import java.util.Vector;
 
+import com.google.gwt.dom.client.TitleElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -46,7 +47,8 @@ public class UmfrageErstellenForm extends HorizontalPanel {
 	// Nutzer nutzer = new Nutzer();
 
 	// Erzeugen der einzelnen Widgets
-	private TabBar tabBar;
+
+	private Label titel;
 	private Label umfragename = new Label("Umfragename: ");
 	private TextBox umfragenametext;
 	private Label gruppe = new Label("Gruppe: ");
@@ -69,13 +71,9 @@ public class UmfrageErstellenForm extends HorizontalPanel {
 		gruppebox = new ListBox();
 		filmbox = new ListBox();
 		datebox = new DateBox();
-		tabBar = new TabBar();
+		titel = new Label("Umfrage erstellen");
+		titel.getElement().setId("TitelElemente");
 		
-		
-		tabBar.addTab("Anzeigen");
-		tabBar.addTab("Editieren");
-		tabBar.addTab("Erstellen");
-	
 		/*
 		 * Formatierung des Datumformats in den deutschen Standard
 		 */
@@ -100,7 +98,7 @@ public class UmfrageErstellenForm extends HorizontalPanel {
 		tabelle.setWidget(3, 2, filmbox);
 		tabelle.setWidget(4, 1, datum);
 		tabelle.setWidget(4, 2, datebox);
-		panelfürumfrage.add(tabBar);
+		panelfürumfrage.add(titel);
 		panelfürumfrage.add(tabelle);
 		panelfürumfrage.add(erstellenButton);
 		this.add(panelfürumfrage);

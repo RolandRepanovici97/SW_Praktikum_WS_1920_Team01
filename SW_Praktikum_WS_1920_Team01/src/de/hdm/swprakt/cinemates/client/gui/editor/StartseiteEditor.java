@@ -48,7 +48,6 @@ public class StartseiteEditor extends HorizontalPanel {
 
 	private Vector<Umfrage> umfragen = new Vector<Umfrage>();
 	private Label label1 = new Label("Meine Umfragen");
-	private Label label2 = new Label("Neue Umfragen");
 	private Nutzer nutzer;
 	private VerticalPanel panelfürumfragen = new VerticalPanel();
 	private Button neueUmfrage = new Button();
@@ -60,6 +59,7 @@ public class StartseiteEditor extends HorizontalPanel {
 		super.onLoad();
 
 		neueUmfrage.setHTML("<i class=\"fas fa-plus\"></i>");
+		label1.getElement().setId("TitelElemente");
 
 		neueUmfrage.addClickHandler(new NeueUmfrageClickHandler());
 
@@ -72,12 +72,10 @@ public class StartseiteEditor extends HorizontalPanel {
 
 
 		panelfürumfragen.add(label1);
-		panelfürumfragen.add(label2);
+		panelfürumfragen.add(tabelle);
 		panelfürumfragen.add(neueUmfrage);
-
-		this.add(tabelle);
-
 		this.add(panelfürumfragen);
+		
 
 
 	}
@@ -123,16 +121,20 @@ public class StartseiteEditor extends HorizontalPanel {
 
 				tabelle.setText(rowCount, 0, u.getUmfragenname());
 				Button umfrageAnzeigen = new Button("Anzeigen");
+				Button abstimmungenAnsehen = new Button("Abstimmungen ansehen");
 				umfrageAnzeigen.addClickHandler(new ClickHandler() {
 
 					@Override
 					public void onClick(ClickEvent event) {
-						Window.alert("Umfrage " + u.getUmfragenname()+ " wird angezeigt.");
-
+						RootPanel.get("DetailsPanel").clear();
+						UmfrageAnzeige anzeige = new UmfrageAnzeige();
+						anzeige.setGewählteUmfrage(u);
+						RootPanel.get("DetailsPanel").add(anzeige);
 					}
 
 				});
 				tabelle.setWidget(rowCount, 1, umfrageAnzeigen);
+				tabelle.setWidget(rowCount, 2, abstimmungenAnsehen);
 				rowCount++;
 
 				// Wir instanttieren ein neues UmfrageAuswahl-Objekt und übergeben unsere

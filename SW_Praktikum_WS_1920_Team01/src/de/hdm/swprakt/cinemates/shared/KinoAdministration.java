@@ -416,4 +416,10 @@ public interface KinoAdministration extends RemoteService {
 	public Boolean nameVerfügbarFilm(String filmtitel) throws IllegalArgumentException;
 	
 	public Boolean nameVerfügbarKino(String kinoname) throws IllegalArgumentException;
+	
+	public Film getFilmByID(int id) throws IllegalArgumentException;
+	
+	public Spielzeit getSpielzeitByID(int id) throws IllegalArgumentException ;
+	
+	public Kino getKinoByID(int id) throws IllegalArgumentException;
 }

@@ -124,7 +124,7 @@ public class Kino extends OwnedBusinessObject{
 
 	public String toString() {
 		
-		return super.toString() +  "; Kinoname: " + this.kinoname + "; Beschreibung: " + this.beschreibung + "; Adresse: " + this.adresse + "; Spielplan-ID: " + this.spielplanID + "; Kinokette-ID: " + this.kinoketteID;
+		return  this.kinoname ;
 	}
 }
 

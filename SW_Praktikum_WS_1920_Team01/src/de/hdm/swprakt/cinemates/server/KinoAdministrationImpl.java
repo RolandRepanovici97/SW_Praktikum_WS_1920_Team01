@@ -262,7 +262,7 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 	 */
 
 	public Vector<Kino> getAllKinos() throws IllegalArgumentException {
-		return this.kinoMapper.findAll();
+		return this.kinoMapper.findAllKinos();
 	}
 
 	

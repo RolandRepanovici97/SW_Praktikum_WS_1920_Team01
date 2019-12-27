@@ -69,7 +69,7 @@ public class KinoMapper extends OwnedBusinessObjectMapper {
  * @return Vector <Kino>, welcher alle Kinoeinträge beinhaltet
  */
 
-		public Vector<Kino> findAll() {
+		public Vector<Kino> findAllKinos() {
 
 			Connection con = DBConnection.connection();
 			Vector<Kino> kino = new Vector<Kino>();
@@ -77,17 +77,17 @@ public class KinoMapper extends OwnedBusinessObjectMapper {
 			try {
 
 				Statement stmt = con.createStatement();
-				ResultSet rs = stmt.executeQuery("SELECT * FROM `kino` ORDER BY `kino_id`");
+				ResultSet rs = stmt.executeQuery("SELECT Kinoname FROM `kino` ORDER BY `kino_id`");
 
 				while (rs.next()) {
 					Kino k = new Kino();
-					k.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
-					k.setID(rs.getInt("kino_id"));
-					k.setKinoketteID(rs.getInt("kinokette_id"));
-					k.setSpielplanID(rs.getInt("spielplan_id"));
+				//	k.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+				//	k.setID(rs.getInt("kino_id"));
+				//	k.setKinoketteID(rs.getInt("kinokette_id"));
+				//	k.setSpielplanID(rs.getInt("spielplan_id"));
 					k.setKinoname(rs.getString("Kinoname"));
-					k.setAdresse(rs.getString("Adresse")); 
-					k.setBeschreibung(rs.getString("Beschreibung"));
+				//	k.setAdresse(rs.getString("Adresse")); 
+				//	k.setBeschreibung(rs.getString("Beschreibung"));
 					kino.add(k);
 				}
 			}

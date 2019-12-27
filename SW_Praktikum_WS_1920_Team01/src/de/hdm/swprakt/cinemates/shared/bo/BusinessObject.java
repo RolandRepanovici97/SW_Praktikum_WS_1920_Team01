@@ -45,10 +45,10 @@ public abstract class BusinessObject implements Serializable {
 	private Date erstellungszeitpunkt;
 
 	
-	public BusinessObject() {
+/*	public BusinessObject() {
 		
 		this.setErstellungszeitpunkt(new Date());
-	}
+	}*/
 	
 	/*
 	 * Aulesen des Attributs id
@@ -86,13 +86,13 @@ public abstract class BusinessObject implements Serializable {
 	/*
 	 * Erzeugen einer textuellen Darstellung der jeweiligen Instanz.
 	 */
-	@Override
-	public String toString() {
-		/*
+	//@Override
+	/*public String toString() {
+		
 		 * Wir geben den Klassennamen gefolgt von der ID des Objekts zurück.
-		 */
+		 
 		return this.getClass().getName() + " #" + this.id + "; Erstellungszeitpunkt: " + this.erstellungszeitpunkt;
-	}
+	}*/
 
 	/*
 	 * Diese Methode überprüft zwei Objekte auf Gleichheit.

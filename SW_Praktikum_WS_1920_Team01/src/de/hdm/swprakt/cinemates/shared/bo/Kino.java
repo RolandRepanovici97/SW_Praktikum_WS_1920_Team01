@@ -1,6 +1,6 @@
 package de.hdm.swprakt.cinemates.shared.bo;
 
-public class Kino extends OwnedBusinessObject{
+public class Kino extends BusinessObject{
 
 	/*
 	 * Diese Klasse stellt die Kinos dar.

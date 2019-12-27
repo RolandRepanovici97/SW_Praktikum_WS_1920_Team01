@@ -88,6 +88,7 @@ public class UmfrageeintragMapper {
 			if (rs.next()) {
 				// Ergebnis-Tupel in Objekt umwandeln
 				Umfrageeintrag umfrageeintrag = new Umfrageeintrag();
+				umfrageeintrag.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 				umfrageeintrag.setID(rs.getInt("umfrageeintrag_id"));
 				umfrageeintrag.setUmfrageID(rs.getInt("umfrage_id"));
 				umfrageeintrag.setKinoID(rs.getInt("kino_id"));
@@ -127,6 +128,7 @@ public class UmfrageeintragMapper {
 			while (rs.next()) {
 				// Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt
 				Umfrageeintrag umfrageeintrag = new Umfrageeintrag();
+				umfrageeintrag.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 				umfrageeintrag.setID(rs.getInt("umfrageeintrag_id"));
 				umfrageeintrag.setKinoID(rs.getInt("kino_id"));
 				umfrageeintrag.setUmfrageID(rs.getInt("umfrage_id"));
@@ -368,6 +370,9 @@ public class UmfrageeintragMapper {
 
 	}
 	
+	
+	//Diese Funktion ist nicht unbedingt notwendig, da über den VotumMapper alle Votums eines Benutzers zu einer Umfrage ausgegeben werden können, und daraus alle Umfrageeinträge, die nicht gevotet sind
+	//Auslagern der Funktion in die Applikationslogik
 	public Vector <Umfrageeintrag> findUmfrageeintragOhneVotum (Nutzer nutzer) {
 
 		//Verbindung zur Datenbank aufbauen.
@@ -379,7 +384,7 @@ public class UmfrageeintragMapper {
 
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM `votum` LEFT JOIN `umfrageeintrag` ON `votum`.`umfrageeintrag_id` = `umfrageeintrag`.`umfrageeintrag_id` LEFT JOIN `ownedbusinessobject` ON `votum`.`bo_id` = `ownedbusinessobject`.`bo_id` WHERE (`istMöglicherTermin` = NULL AND `ownedbusinessobject`.`owner_id` = " + nutzer.getID() + ") ORDER BY umfrageeintrag_id");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `votum` LEFT JOIN `umfrageeintrag` ON `votum`.`umfrageeintrag_id` = `umfrageeintrag`.`umfrageeintrag_id` LEFT JOIN `ownedbusinessobject` ON `votum`.`bo_id` = `ownedbusinessobject`.`bo_id` WHERE (`istMöglicherTermin` = 'NULL' AND `ownedbusinessobject`.`owner_id` = " + nutzer.getID() + ") ORDER BY `votum`.`umfrageeintrag_id`");
 			while (rs.next()) {
 				/** Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt.  Dazu wird ein Objekt der Klasse <code>Umfrageeintrag</code> angelegt und dessen Attribute werden gesetzt. 
 						Dies wird wiederholt. Das Ergebnis wird jeweils einem Vector hinzugefügt, welchen wir am Ende zurückgeben.

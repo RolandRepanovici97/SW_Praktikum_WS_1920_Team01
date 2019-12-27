@@ -98,10 +98,6 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 
 
 
-	public Film getFilmByID(int id) throws IllegalArgumentException {
-		return this.filmMapper.findByID(id);
-	}
-
 	/**
 	 * <p>
 	 * Anlegen eines neuen Films. Dies führt implizit zu einem Speichern des neuen
@@ -132,8 +128,8 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 		// Filmnummer wird hier richtig eingesetzt
 	}
 
-
-
+	
+	
 	/**
 	 * Diese Methode wird aufgerufen, wenn der Titel eines Films gesetzt werden soll.
 	 * Damit dieser nicht doppelt vergeben werden kann, erfolgt zunächst die Prüfung, 
@@ -266,10 +262,10 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 	 */
 
 	public Vector<Kino> getAllKinos() throws IllegalArgumentException {
-		return this.kinoMapper.findAllKinos();
+		return this.kinoMapper.findAllKino();
 	}
 
-
+	
 	/**
 	 * Diese Methode wird aufgerufen, wenn der Name eines Kinos gesetzt werden soll.
 	 * Damit dieser nicht doppelt vergeben werden kann, erfolgt zunächst die Prüfung, 
@@ -328,7 +324,7 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 	 */
 
 	public Spielplan getSpielplanOf(Kino k) throws IllegalArgumentException {
-		return this.spielplanMapper.findByKino(k); 
+		return this.spielplanMapper.findByID(k.getSpielplanID()); 
 	}
 
 

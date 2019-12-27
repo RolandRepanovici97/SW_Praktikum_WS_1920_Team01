@@ -84,7 +84,7 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 	 */
 
 	public Vector<Film> getAllFilme() throws IllegalArgumentException {
-		return this.filmMapper.findAll();
+		return this.filmMapper.findAllFilme();
 	}
 
 
@@ -262,7 +262,7 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 	 */
 
 	public Vector<Kino> getAllKinos() throws IllegalArgumentException {
-		return this.kinoMapper.findAll();
+		return this.kinoMapper.findAllKino();
 	}
 
 	
@@ -318,7 +318,7 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 	 */
 
 	public Spielplan getSpielplanOf(Kino k) throws IllegalArgumentException {
-		return this.spielplanMapper.findByKino(k); 
+		return this.spielplanMapper.findByID(k.getSpielplanID()); 
 	}
 
 

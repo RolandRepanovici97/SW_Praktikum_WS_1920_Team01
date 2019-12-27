@@ -63,7 +63,7 @@ public class FilmMapper extends OwnedBusinessObjectMapper {
 		return filmMapper;
 	}
 
-	public Vector<Film> findAll() {
+	public Vector<Film> findAllFilme() {
 
 		Connection con = DBConnection.connection();
 		Vector<Film> film = new Vector<Film>();

@@ -26,7 +26,7 @@ import de.hdm.swprakt.cinemates.shared.bo.Spielplan;
  *
  */
 
-public class KinoMapper extends OwnedBusinessObjectMapper {
+public class KinoMapper {
 
 /**Die Klasse <code>KinoMapper</code> wird wie jede andere Mapperklasse 
  * nur ein einziges mal instantiiert. 
@@ -69,7 +69,7 @@ public class KinoMapper extends OwnedBusinessObjectMapper {
  * @return Vector <Kino>, welcher alle Kinoeinträge beinhaltet
  */
 
-		public Vector<Kino> findAll() {
+		public Vector<Kino> findAllKino() {
 
 			Connection con = DBConnection.connection();
 			Vector<Kino> kino = new Vector<Kino>();
@@ -211,7 +211,7 @@ public class KinoMapper extends OwnedBusinessObjectMapper {
 				Statement stmt = con.createStatement();
 				ResultSet rs = stmt.executeQuery("SELECT * from `kino` WHERE (`spielplan_id` = " + spielplan.getID() + ")");
 				
-				while (rs.next()) {
+				if (rs.next()) {
 					Kino k = new Kino();
 					k.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 					k.setID(rs.getInt("kino_id"));
@@ -316,7 +316,7 @@ public class KinoMapper extends OwnedBusinessObjectMapper {
 /**
  * Löschen eines Kinos in der Kinokette	
  */
-		public void deleteKinosOf(Kinokette kinokette) {
+		public void deleteKinosOf (Kinokette kinokette) {
 			
 			//Verbindung zur Datenbank aufbauen.
 			

@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
+import de.hdm.swprakt.cinemates.shared.bo.Gruppe;
 import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 import de.hdm.swprakt.cinemates.shared.bo.Umfrage;
 import de.hdm.swprakt.cinemates.shared.bo.Umfrageeintrag;
@@ -118,7 +119,7 @@ public class UmfrageMapper extends OwnedBusinessObjectMapper {
 			 * Leeres SQL-Statement (JDBC) anelgen
 			 */
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM `umfrage`LEFT JOIN `ownedbusinessobject` ON `umfrage`.`bo_id` = `ownedbusinessobject`.`bo_id`  WHERE (`umfragename` = '" + umfragenname + "' )");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `umfrage` LEFT JOIN `ownedbusinessobject` ON `umfrage`.`bo_id` = `ownedbusinessobject`.`bo_id`  WHERE (`umfragename` = '" + umfragenname + "' )");
 
 			if(rs.next()) {
 				Umfrage umfrage = new Umfrage();
@@ -391,73 +392,39 @@ public class UmfrageMapper extends OwnedBusinessObjectMapper {
 		//Zuletzt geben wir unser Umfrageobjekt zurück.
 		return umfrage;
 	}
-
-
-
-	public Umfrage getUmfrageByUmfrageeintrag (Umfrageeintrag umfrageeintrag) {
-
-		/**
-		 * Verbindung zur Datenbank aufbauen.
-		 */
-		Connection con = DBConnection.connection();
-
-
-		try {
-			/**
-			 * Leeres SQL-Statement (JDBC) anelgen
-			 */
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery(" SELECT * FROM 'umfrage' JOIN 'umfrageeintrag' WHERE 'umfrage.umfrage_id' = 'umfrageeintrag.umfrage_id' ORDER BY 'umfrage_id' " );
-
-			if (rs.next()) {
-				Umfrage umfrage = new Umfrage();
-				umfrage.setID(rs.getInt("umfrage_id"));
-				umfrage.setOwnerID(rs.getInt("owner_id"));
-				umfrage.setBeschreibung(rs.getString("beschreibung"));
-				umfrage.setUmfragenname(rs.getString("umfragename"));
-
-				return umfrage;
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
-
-	}
-
-
 	
 
-	public Vector <Umfrage> findByGruppename (String gruppenname) {
+	public Vector <Umfrage> findByGruppe (Gruppe gruppe) {
 
 		/**
 		 * Verbindung zur Datenbank aufbauen.
 		 */
 		Connection con = DBConnection.connection();
-
+		Vector<Umfrage> vectorumfrage = new Vector<Umfrage>();
 		try {
 			/**
 			 * Leeres SQL-Statement (JDBC) anelgen
 			 */
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM 'umfrage' LEFT JOIN `gruppe` ON `umfrage`.`bo_id`= `gruppe`.`bo_id` ORDER BY 'gruppenname'");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `umfrage` LEFT JOIN `ownedbusinessobject` ON `umfrage`.`bo_id`= `ownedbusinessobject`.`bo_id` LEFT JOIN `umfrage_gruppe` ON `umfrage`.`umfrage_id`= `umfrage_gruppe`.`umfrage_id` WHERE (`gruppen_id` = + " + gruppe.getID() + " ) ORDER BY `gruppen_id`");
 
-			if(rs.next()) {
-				Vector <Umfrage> vectorumfrage = new Vector <Umfrage>();
+			while(rs.next()) {
 				Umfrage umfrage = new Umfrage();
+				umfrage.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+				umfrage.setOwnerID(rs.getInt("owner_id"));
 				umfrage.setID(rs.getInt("umfrage_id"));
-				umfrage.setOwnerID(rs.getInt("bo_id"));
+				umfrage.setBeschreibung(rs.getString("beschreibung"));
+				umfrage.setFilmID(rs.getInt("film_id"));
+				umfrage.setUmfragenname(rs.getString("Umfragename"));
+				umfrage.setDatum(dc.convertSQLDateToJavaDate(rs.getDate("Datum")));
 				vectorumfrage.add(umfrage);
-
-				return vectorumfrage;
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		return null;
+		return vectorumfrage;
 	}
 	/** Dies ist eine Hilfsmethode. Sie ermöglicht uns, die bo_id eines OwnedBusinessObjects zu ermitteln.
 	 * 

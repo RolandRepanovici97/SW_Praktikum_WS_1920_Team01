@@ -6,9 +6,13 @@ import java.util.Vector;
 
 import de.hdm.swprakt.cinemates.shared.bo.Film;
 import de.hdm.swprakt.cinemates.shared.bo.Gruppe;
+import de.hdm.swprakt.cinemates.shared.bo.Kino;
 import de.hdm.swprakt.cinemates.shared.bo.Kinokette;
 import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
+import de.hdm.swprakt.cinemates.shared.bo.Spielplan;
+import de.hdm.swprakt.cinemates.shared.bo.Spielzeit;
 import de.hdm.swprakt.cinemates.shared.bo.Umfrage;
+import de.hdm.swprakt.cinemates.shared.bo.Umfrageeintrag;
 
 public abstract class DBTester {
 	
@@ -277,6 +281,23 @@ public abstract class DBTester {
 //		testUmfrageUpdate.setBeschreibung("TestUmfrage nach Update Beschreibung");
 //		testUmfrageUpdate = umfrageMapper.update(testUmfrageUpdate);
 //		System.out.println(testUmfrageUpdate.toString());
+//		
+//		
+//		System.out.println("\ndelete()");
+//		Umfrage testdeleteUmfrage = umfrageMapper.findByUmfragenname("TestUmfrage nach Update");
+//		System.out.println(testdeleteUmfrage.toString());
+//		umfrageMapper.delete(testdeleteUmfrage);
+//		testdeleteUmfrage = umfrageMapper.findByUmfragenname("TestUmfrage nach Update");
+//		if(testdeleteUmfrage == null) System.out.println("Die Umfrage wurde gelöscht");
+//		
+//		
+//		System.out.println("\nfindByGruppe(Gruppe2)");
+//		Gruppe testGruppe = gruppeMapper.findByID(2);
+//		Vector<Umfrage> testUmfrageGruppe = umfrageMapper.findByGruppe(testGruppe);
+//		
+//		for(Umfrage u :testUmfrageGruppe) {
+//			System.out.println(u.toString());
+//		}
 		
 		
 		
@@ -287,12 +308,146 @@ public abstract class DBTester {
 		 * ***************************************************************************
 		 */
 		
+		
+//		System.out.println("\nfindByID(5)");
+//		Umfrageeintrag testUmfrageeintragId = umfrageeintragMapper.findByID(5);
+//		System.out.println(testUmfrageeintragId.toString());
+//		
+//		System.out.println("\nfindAllUmfrageeintrag()");
+//		Vector<Umfrageeintrag> testvectorUmfrageeintrag = umfrageeintragMapper.findAllUmfrageeintrag();
+//		
+//		for(Umfrageeintrag ue : testvectorUmfrageeintrag) {
+//			System.out.println(ue.toString());
+//		}
+//		
+//		
+//		System.out.println("\nfindByUmfrage(Umfrage 1)");
+//		Umfrage testUmfrage = umfrageMapper.findByID(1);
+//		Vector<Umfrageeintrag> testvectorUmfrageeinträge = umfrageeintragMapper.findByUmfrage(testUmfrage);
+//		
+//		for(Umfrageeintrag ue : testvectorUmfrageeinträge) {
+//			System.out.println(ue.toString());
+//		}
+//		
+//		
+//		System.out.println("\nfindBySpielzeit(5)");
+//		Spielzeit testSpielzeit = spielzeitMapper.findByID(5);
+//		Vector<Umfrageeintrag> testvectorUmfrageeinträgeSpielzeiten = umfrageeintragMapper.findBySpielzeit(testSpielzeit);
+//		
+//		for(Umfrageeintrag ue : testvectorUmfrageeinträgeSpielzeiten) {
+//			System.out.println(ue.toString());
+//		}
+//		
+//		
+//		
+//		System.out.println("\nfindByKino(Traumpalast Waiblingen)");
+//		Kino testKino = kinoMapper.findByKinoname("Traumpalast Waiblingen");
+//		Vector<Umfrageeintrag> testvectorUmfrageeinträgeKinos = umfrageeintragMapper.findByKino(testKino);
+//		
+//		for(Umfrageeintrag ue : testvectorUmfrageeinträgeKinos) {
+//			System.out.println(ue.toString());
+//		}
+//		
+//		
+//		System.out.println("\ninsert()");
+//		Umfrageeintrag testInsertUmfrageeintrag = new Umfrageeintrag();
+//		testInsertUmfrageeintrag.setKinoID(3);
+//		testInsertUmfrageeintrag.setSpielzeitID(23);
+//		testInsertUmfrageeintrag.setUmfrageID(2);
+//		System.out.println(testInsertUmfrageeintrag.toString());
+//		testInsertUmfrageeintrag = umfrageeintragMapper.insert(testInsertUmfrageeintrag);
+//		System.out.println(testInsertUmfrageeintrag.toString());
+//		
+//		
+//		System.out.println("\nupdate()");
+//		Umfrageeintrag testUmfrageeintragUpdate = umfrageeintragMapper.findByID(73);
+//		System.out.println(testUmfrageeintragUpdate.toString());
+//		testUmfrageeintragUpdate.setKinoID(144);
+//		testUmfrageeintragUpdate.setUmfrageID(12222);
+//		testUmfrageeintragUpdate = umfrageeintragMapper.update(testUmfrageeintragUpdate);
+//		System.out.println(testUmfrageeintragUpdate.toString());
+//		
+//		
+//		System.out.println("\ndelete()");
+//		Umfrageeintrag testUmfrageeintragDelete = umfrageeintragMapper.findByID(73);
+//		System.out.println(testUmfrageeintragDelete.toString());
+//		umfrageeintragMapper.delete(testUmfrageeintragDelete);
+//		testUmfrageeintragDelete = umfrageeintragMapper.findByID(73);
+//		if(testUmfrageeintragDelete == null) System.out.println("Der Umfrageeintrag wurde gelöscht");
+//		
+//		
+//		System.out.println("\nfindUmfrageeintragOhneVotum(Nutzer 2)");
+//		Nutzer testNutzer = nutzerMapper.findByID(2);
+//		Vector<Umfrageeintrag> nutzerOhneVotum = umfrageeintragMapper.findUmfrageeintragOhneVotum(testNutzer);
+//		for(Umfrageeintrag ue : nutzerOhneVotum) {
+//			System.out.println(ue.toString());
+//		}
+		
+		
 		/*
 		 * ***************************************************************************
 		 * Testen der Kino-Mapper Methoden
 		 * ***************************************************************************
 		 */
 		
+//		System.out.println("\nfindAllKino()");
+//		Vector<Kino> testVectorKino = kinoMapper.findAllKino();
+//		for(Kino k : testVectorKino) {
+//			System.out.println(k.toString());
+//		}
+//		
+//		
+//		System.out.println("\nfindById(3)");
+//		Kino testKinoId = kinoMapper.findByID(3);
+//		System.out.println(testKinoId.toString());
+//		
+//		
+//		System.out.println("\nfindByKinoname()");
+//		Kino testKinoName = kinoMapper.findByKinoname("Cinestar Hannover");
+//		System.out.println(testKinoName.toString());
+//		
+//		
+//		System.out.println("\nfindByKinokette(Cinestar)");
+//		Kinokette cinestar = kinoketteMapper.findByKinokettenname("Cinestar");
+//		Vector<Kino> kinosInKinoketten = kinoMapper.findByKinokette(cinestar);
+//		for(Kino k : kinosInKinoketten) {
+//			System.out.println(k.toString());
+//		}
+//		
+//		
+//		System.out.println("\nfindBySpielplan(1)");
+//		Spielplan testspielplan = spielplanMapper.findByID(1);
+//		Kino kinosZuSpielplan = kinoMapper.findBySpielplan(testspielplan);
+//		System.out.println(kinosZuSpielplan.toString());
+//		
+//		
+//		System.out.println("\ninsert()");
+//		Kino testKinoInsert = new Kino();
+//		testKinoInsert.setAdresse("Testadressse");
+//		testKinoInsert.setBeschreibung("Testbeschreibung Kino");
+//		testKinoInsert.setKinoketteID(2);
+//		testKinoInsert.setKinoname("Testkino");
+//		testKinoInsert.setSpielplanID(2);
+//		System.out.println(testKinoInsert.toString());
+//		testKinoInsert = kinoMapper.insert(testKinoInsert);
+//		System.out.println(testKinoInsert);
+//		
+//		
+//		System.out.println("\nupdate()");
+//		Kino testKinoUpdate = kinoMapper.findByKinoname("Testkino");
+//		System.out.println(testKinoUpdate.toString());
+//		testKinoUpdate.setBeschreibung("Update Beschreibung");
+//		testKinoUpdate.setAdresse(testKinoUpdate.getAdresse() + " und ein Update");
+//		testKinoUpdate = kinoMapper.update(testKinoUpdate);
+//		System.out.println(testKinoUpdate.toString());
+//		
+//		
+//		System.out.println("\ndelete()");
+//		Kino testKinoDelete = kinoMapper.findByKinoname("Testkino");
+//		System.out.println(testKinoDelete.toString());
+//		kinoMapper.delete(testKinoDelete);
+//		testKinoDelete = kinoMapper.findByKinoname("Testkino");
+//		if(testKinoDelete == null) System.out.println("Das Kino wurde gelöscht");
 		
 		
 		
@@ -303,7 +458,50 @@ public abstract class DBTester {
 		 */
 		
 		
-		
+//		System.out.println("\nfindAllKinoketten()");
+//		Vector<Kinokette> kinoketten = kinoketteMapper.findAllKinoketten();
+//		for(Kinokette kk : kinoketten) {
+//			System.out.println(kk.toString());
+//		}
+//			
+//		System.out.println("\nfindById()");
+//		Kinokette testKKId = kinoketteMapper.findByID(2);
+//		System.out.println(testKKId.toString());
+//		
+//		
+//		System.out.println("\nfindByKinokettenname()");
+//		Kinokette testKKName = kinoketteMapper.findByKinokettenname("Cinemaxx");
+//		System.out.println(testKKName.toString());
+//		
+//		
+//		System.out.println("\ninsert()");
+//		Kinokette testKKInsert = new Kinokette();
+//		testKKInsert.setBeschreibung("TestINsert Kinokette");
+//		testKKInsert.setKinokettenname("TestKinokette");
+//		System.out.println(testKKInsert.toString());
+//		testKKInsert = kinoketteMapper.insert(testKKInsert);
+//		System.out.println(testKKInsert.toString());
+//		
+//		System.out.println("\nupdate()");
+//		Kinokette testKKUpdate = kinoketteMapper.findByKinokettenname("TestKinokette");
+//		System.out.println(testKKUpdate.toString());
+//		testKKUpdate.setBeschreibung("kleines Update");
+//		testKKUpdate = kinoketteMapper.update(testKKUpdate);
+//		System.out.println(testKKUpdate.toString());
+//		
+//		
+//		System.out.println("\ndelete()");
+//		Kinokette testKKDelete = kinoketteMapper.findByKinokettenname("TestKinokette");
+//		System.out.println(testKKDelete.toString());
+//		kinoketteMapper.delete(testKKDelete);
+//		testKKDelete = kinoketteMapper.findByKinokettenname("TestKinokette");
+//		if(testKKDelete == null) System.out.println("Die Kinokette wurde gelöscht");
+//		
+//		
+//		System.out.println("\nfindKinoketteByOwner()");
+//		Nutzer testKKOwnerNutzer = nutzerMapper.findByID(14);
+//		Kinokette testKKOwner = kinoketteMapper.findKinoketteByOwner(testKKOwnerNutzer);
+//		System.out.println(testKKOwner.toString());
 		
 		/*
 		 * ***************************************************************************
@@ -320,7 +518,15 @@ public abstract class DBTester {
 		 * ***************************************************************************
 		 */
 		
-		
+//	System.out.println("\nfindById()");
+//	Spielzeit testspielzeitId = spielzeitMapper.findByID(2);
+//	System.out.println(testspielzeitId.toString());
+//	
+//	System.out.println("\nfindAllSpielzeit()");
+//	Vector<Spielzeit> spielzeiten = spielzeitMapper.findAllSpielzeit();
+//	for(Spielzeit sp : spielzeiten) {
+//		System.out.println(sp.toString());
+//	}
 		
 		
 		/*

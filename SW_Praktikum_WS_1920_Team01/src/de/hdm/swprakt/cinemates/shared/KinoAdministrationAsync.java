@@ -88,6 +88,12 @@ public interface KinoAdministrationAsync {
 	void nameVerfügbarKino(String kinoname, AsyncCallback<Boolean> callback);
 
 	void nameVerfügbarFilm(String filmtitel, AsyncCallback<Boolean> callback);
+
+	void getFilmByID(int id, AsyncCallback<Film> callback);
+
+	void getSpielzeitByID(int id, AsyncCallback<Spielzeit> callback);
+
+	void getKinoByID(int id, AsyncCallback<Kino> callback);
 	
 
 }

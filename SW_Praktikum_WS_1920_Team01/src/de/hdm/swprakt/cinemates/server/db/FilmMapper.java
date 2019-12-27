@@ -10,8 +10,6 @@ import java.util.Vector;
 import de.hdm.swprakt.cinemates.shared.bo.Film;
 import de.hdm.swprakt.cinemates.shared.bo.Kinokette;
 
-
-
 /**
  * Diese Mapperklasse bildet <code>Film</code> Objekte auf eine relationale
  * Datenbank ab. Sie beinhalte Methoden, um Filme anzeigen, anlegen, editieren
@@ -63,7 +61,7 @@ public class FilmMapper extends OwnedBusinessObjectMapper {
 		return filmMapper;
 	}
 
-	public Vector<Film> findAll() {
+	public Vector<Film> findAllFilme() {
 
 		Connection con = DBConnection.connection();
 		Vector<Film> film = new Vector<Film>();
@@ -114,8 +112,6 @@ public class FilmMapper extends OwnedBusinessObjectMapper {
 		return null;
 	}
 
-
-
 	public Film findByFilmtitel(String filmtitel) {
 
 		Connection con = DBConnection.connection();
@@ -139,7 +135,6 @@ public class FilmMapper extends OwnedBusinessObjectMapper {
 		}
 		return null;
 	}
-	
 
 	public Film insert(Film film) {
 
@@ -219,7 +214,8 @@ public class FilmMapper extends OwnedBusinessObjectMapper {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(
-					"SELECT * FROM `Kinokette_Film`LEFT JOIN `Film` ON `Kinokette_Film`.`film_id`=`Film`.`film_id` WHERE (`kinokette_id` = " + kinokette.getID() + " ) ORDER BY `Film`.`film_id`");
+					"SELECT * FROM `Kinokette_Film`LEFT JOIN `Film` ON `Kinokette_Film`.`film_id`=`Film`.`film_id` WHERE (`kinokette_id` = "
+							+ kinokette.getID() + " ) ORDER BY `Film`.`film_id`");
 
 			/*
 			 * Befüllen des result sets

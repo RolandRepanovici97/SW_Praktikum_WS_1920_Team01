@@ -33,58 +33,66 @@ public interface KinoBesuchsplanung extends RemoteService {
 
 	public void init() throws IllegalArgumentException;
 
-	public Nutzer findNutzerByEmail(String email);
+	public Nutzer findNutzerByEmail(String email) throws IllegalArgumentException;
 
-	public Nutzer createNutzer(String email, String nutzername);
+	public Nutzer createNutzer(String email, String nutzername) throws IllegalArgumentException;
 
-	public void save(Nutzer nutzer);
+	public void save(Nutzer nutzer) throws IllegalArgumentException;
 
-	public void save(Gruppe gruppe);
+	public void save(Gruppe gruppe) throws IllegalArgumentException;
 
 	public Vector <Umfrage> showAllUmfrage();
 
-	public Umfrage createUmfrage(String umfragenname);
+	public Umfrage createUmfrage(String umfragenname) throws IllegalArgumentException;
 
-	public Vector <Votum> showVotumOfUmfrageeintrag(Umfrageeintrag umfrageeintrag);
+	public Vector <Votum> showVotumOfUmfrageeintrag(Umfrageeintrag umfrageeintrag) throws IllegalArgumentException;
 
-	public void deleteUmfrage(Umfrage umfrage);
+	public void deleteUmfrage(Umfrage umfrage) throws IllegalArgumentException;
 
 
-	public Vector <Umfrageeintrag> umfrageergebnisseAnzeigen(Umfrage umfrage);
+	public Vector <Umfrageeintrag> umfrageergebnisseAnzeigen(Umfrage umfrage) throws IllegalArgumentException;
 
-	public Umfrageeintrag bestesErgebnisErmitteln(Umfrage umfrage);
+	public Umfrageeintrag bestesErgebnisErmitteln(Umfrage umfrage) throws IllegalArgumentException;
 
-	public void deleteUmfrageeintrag(Umfrageeintrag umfrageeintrag);
+	public void deleteUmfrageeintrag(Umfrageeintrag umfrageeintrag) throws IllegalArgumentException;
 
-	public void deleteVotum(Votum votum);
+	public void deleteVotum(Votum votum) throws IllegalArgumentException;
 
-	public Vector <Gruppe>getAllGruppen();
+	public Vector <Gruppe>getAllGruppen() throws IllegalArgumentException;
 
-	public Vector <Gruppe> getAllGruppenOfNutzer(Nutzer nutzer);
+	public Vector <Gruppe> getAllGruppenOfNutzer(Nutzer nutzer) throws IllegalArgumentException;
 
-	public Vector <Gruppe> getAllGruppenOfUmfrage(Umfrage umfrage);
+	public Vector <Gruppe> getAllGruppenOfUmfrage(Umfrage umfrage) throws IllegalArgumentException;
 
-	public Nutzer getOwnerOfGruppe(Gruppe gruppe);
+	public Nutzer getOwnerOfGruppe(Gruppe gruppe) throws IllegalArgumentException;
 
-	public void mitgliedEntfernen(Nutzer nutzer, Gruppe gruppe);
+	public void mitgliedEntfernen(Nutzer nutzer, Gruppe gruppe) throws IllegalArgumentException;
 
-	public Gruppe mitgliedHinzufügen(Nutzer nutzer, Gruppe gruppe);
+	public Gruppe mitgliedHinzufügen(Nutzer nutzer, Gruppe gruppe) throws IllegalArgumentException;
 
-	public Gruppe createGruppe(Nutzer nutzer, String gruppenname, Vector<Nutzer> gruppenmitglieder);
+	public Gruppe createGruppe(Nutzer nutzer, String gruppenname, Vector<Nutzer> gruppenmitglieder) throws IllegalArgumentException;
 
-	public void deleteGruppe(Gruppe gruppe);
+	public void deleteGruppe(Gruppe gruppe) throws IllegalArgumentException;
 
-	public Umfrage save(Umfrage umfrage);
+	public Umfrage save(Umfrage umfrage) throws IllegalArgumentException;
 
-	public Vector<Umfrage> showAllUmfragenOfGruppe(Gruppe gruppe);
+	public Vector<Umfrage> showAllUmfragenOfGruppe(Gruppe gruppe) throws IllegalArgumentException;
 
-	public Vector<Umfrage> showAllUmfrageOfNutzer(Nutzer nutzer);
+	public Vector<Umfrage> showAllUmfrageOfNutzer(Nutzer nutzer) throws IllegalArgumentException;
 
-	public Vector<Umfrage> showAllUmfragenOFilm(Film film);
+	public Vector<Umfrage> showAllUmfragenOFilm(Film film) throws IllegalArgumentException;
 
-	public Vector<Umfrage> showAllUmfrageOfNutzerOhneErgebnis(Nutzer nutzer);
+	public Vector<Umfrage> showAllUmfrageOfNutzerOhneErgebnis(Nutzer nutzer) throws IllegalArgumentException;
 
-	public Vector <Umfrageeintrag> showUmfrageeinträgeofUmfrage(Umfrage umfrage);
+	public Vector <Umfrageeintrag> showUmfrageeinträgeofUmfrage(Umfrage umfrage) throws IllegalArgumentException;
+
+	public Umfrage findUmfrageByID(int id) throws IllegalArgumentException;
+
+	public Boolean nameVerfügbarGruppe(String gruppenname) throws IllegalArgumentException;
+
+	public Boolean nameVerfügbarNutzer(String nutzername) throws IllegalArgumentException;
+
+	public Boolean nameVerfügbarUmfrage(String umfragenname) throws IllegalArgumentException;
 
 
 

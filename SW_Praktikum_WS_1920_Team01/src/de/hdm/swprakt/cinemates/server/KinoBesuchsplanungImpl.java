@@ -18,6 +18,7 @@ import de.hdm.swprakt.cinemates.server.db.UmfrageMapper;
 import de.hdm.swprakt.cinemates.server.db.UmfrageeintragMapper;
 import de.hdm.swprakt.cinemates.server.db.VotumMapper;
 import de.hdm.swprakt.cinemates.shared.KinoAdministration;
+import de.hdm.swprakt.cinemates.shared.KinoAdministrationAsync;
 import de.hdm.swprakt.cinemates.shared.KinoBesuchsplanung;
 import de.hdm.swprakt.cinemates.shared.bo.Film;
 import de.hdm.swprakt.cinemates.shared.bo.Gruppe;
@@ -149,7 +150,7 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 * Diese Methode wird aufgerufen, wenn wir ein Nutzerobjekt anhand seiner E-Mail
 	 * finden möchten.
 	 * 
-	 * @param Email des Nutzers der gefunden werden sol
+	 * @param Email des Nutzers der gefunden werden soll
 	 * @throws IllegalArgumentException
 	 * @author alina
 	 */
@@ -158,6 +159,31 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 		return this.nutzerMapper.findByEmail(email);
 	}
 
+
+
+	/**
+	 * Diese Methode wird aufgerufen, wenn der Nutzer seinen Nutzernamen setzen möchten.
+	 * Damit dieser nicht doppelt vergeben werden kann, erfolgt zunächst die Prüfung, 
+	 * ob dieser bereits vergeben ist. 
+	 * 
+	 * @param Der Nutzername, welcher gesetzt werden soll
+	 * @throws IllegalArgumentException
+	 * @author alina
+	 */
+
+	public Boolean nameVerfügbarNutzer(String nutzername) throws IllegalArgumentException {
+		if (this.nutzerMapper.findByName(nutzername) ==null) {
+
+			return true;
+
+		}
+		else {
+			return false;
+		}
+
+
+
+	}
 	/**
 	 * Diese Methode wird aufgerufen wenn ein neuer Nutzer erstellt wird.
 	 * 
@@ -166,6 +192,8 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 * @author roland
 	 * 
 	 */
+
+
 	public Nutzer createNutzer(String email, String nutzername) throws IllegalArgumentException {
 
 		Nutzer nutzer = new Nutzer();
@@ -216,7 +244,7 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 */
 
 	public Vector<Gruppe> getAllGruppen() throws IllegalArgumentException {
-		return this.getAllGruppen();
+		return this.gruppeMapper.findAllGruppe();
 	}
 
 	/**
@@ -270,7 +298,7 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 * @author alina
 	 */
 	public Nutzer getOwnerOfGruppe(Gruppe gruppe) throws IllegalArgumentException {
-		int ownerid = this.gruppeMapper.getOwnerIDOf(gruppe);
+		int ownerid = this.gruppeMapper.getOwnerOf(gruppe.getID());
 		Nutzer nutzer = this.nutzerMapper.findByID(ownerid);
 		return nutzer;
 
@@ -303,6 +331,31 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 		return gruppe;
 	}
 
+
+
+	/**
+	 * Diese Methode wird aufgerufen, wenn der Name einer Gruppe gesetzt werden soll.
+	 * Damit dieser nicht doppelt vergeben werden kann, erfolgt zunächst die Prüfung, 
+	 * ob dieser bereits vergeben ist. 
+	 * 
+	 * @param Der Gruppenname, welcher gesetzt werden soll
+	 * @throws IllegalArgumentException
+	 * @author alina
+	 */
+
+	public Boolean nameVerfügbarGruppe(String gruppenname) throws IllegalArgumentException {
+		if (this.gruppeMapper.findByGruppenname(gruppenname) ==null) {
+
+			return true;
+
+		}
+		else {
+			return false;
+		}
+
+
+
+	}
 	/**
 	 * Diese Methode wird aufgerufen, wenn eine Gruppe erstellt wird. Diese
 	 * Realisierung ist nicht besonders elegant, aber das Attribut gruppenmitglieder
@@ -315,6 +368,8 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 * @throws IllegalArgumentException
 	 * @author alina
 	 */
+
+
 
 	public Gruppe createGruppe(Nutzer nutzer, String gruppenname, Vector<Nutzer> gruppenmitglieder)
 			throws IllegalArgumentException {
@@ -423,6 +478,19 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 
 	}
 
+
+	/**
+	 * Diese Methode wird aufgerufen, wenn nach einer Umfrage mittels ihrer ID gesucht werden soll.
+	 * 
+	 * @param Umfrageobjekt, welches gespeichert werden soll
+	 * @throws IllegalArgumentException
+	 * @author alina
+	 */
+
+	public Umfrage findUmfrageByID(int id) throws IllegalArgumentException {
+		return this.umfrageMapper.findByID(id);
+	}
+
 	/**
 	 * Diese Methode wird aufgerufen, wenn eine neue Umfrage erstellt wird. Es wird
 	 * hier lediglich der Umfragenname übergeben, da wir diesen benötigen um ein
@@ -434,6 +502,32 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 * @author alina
 	 */
 
+
+
+
+	/**
+	 * Diese Methode wird aufgerufen, wenn der Name einer Umfrage gesetzt werden soll.
+	 * Damit dieser nicht doppelt vergeben werden kann, erfolgt zunächst die Prüfung, 
+	 * ob dieser bereits vergeben ist. 
+	 * 
+	 * @param Der Umfragenname, welcher gesetzt werden soll
+	 * @throws IllegalArgumentException
+	 * @author alina
+	 */
+
+	public Boolean nameVerfügbarUmfrage(String umfragenname) throws IllegalArgumentException {
+		if (this.umfrageMapper.findByUmfragenname(umfragenname) ==null) {
+
+			return true;
+
+		}
+		else {
+			return false;
+		}
+
+
+
+	}
 	public Umfrage createUmfrage(String umfragenname) throws IllegalArgumentException {
 
 		Umfrage umfrage = new Umfrage();

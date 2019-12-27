@@ -24,7 +24,7 @@ import de.hdm.swprakt.cinemates.shared.bo.Kinokette;
  *
  */
 
-public class FilmMapper {
+public class FilmMapper extends OwnedBusinessObjectMapper {
 
 	/**
 	 * Die Klasse <code>FilmMapper</code> wird wie jede andere Mapperklasse nur ein
@@ -114,7 +114,33 @@ public class FilmMapper {
 		return null;
 	}
 
+
+
+	public Film findByFilmtitel(String filmtitel) {
+
+		Connection con = DBConnection.connection();
+
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `film` WHERE (`filmtitel` = " + filmtitel);
+
+			if (rs.next()) {
+				Film f = new Film();
+				f.setID(rs.getInt("film_id"));
+				f.setFilmtitel(rs.getString("filmtitel"));
+				f.setBeschreibung(rs.getString("Beschreibung"));
+				f.setDetails(rs.getString("Details"));
+
+				return f;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
+
 	public Film insert(Film film) {
 
 		Connection con = DBConnection.connection();
@@ -135,7 +161,7 @@ public class FilmMapper {
 			pstmt.setString(3, film.getBeschreibung());
 			pstmt.setString(4, film.getDetails());
 			pstmt.executeUpdate();
-			
+
 			return film;
 		} catch (SQLException e) {
 			e.printStackTrace();

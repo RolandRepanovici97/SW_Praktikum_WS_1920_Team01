@@ -11,8 +11,11 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+
+import de.hdm.swprakt.cinemates.client.gui.editor.NutzerkontoForm;
 
 /**
  * Diese Klasse dient zur Darstellung des Headers der Applikation. Sie beinhaltet das Logo der Applikation,
@@ -29,8 +32,8 @@ public class HeaderfürKinoAdministration extends HorizontalPanel {
 	 */
 	private Button adminButton;
 	private Button planerButton;
-	private ListBox nutzerkontolistbox;
-	private ListBox nutzerkontolistbox2;
+	private Button nutzer;
+	private Button logout;
 	private Label nutzerbeschriftung;
 	private Image logo;
 
@@ -43,22 +46,32 @@ public class HeaderfürKinoAdministration extends HorizontalPanel {
 	 */
 
 	public void onLoad() {
+
+		super.onLoad();
+
 		/*+ Zunächst die Instantiierung der einzelenen Widgets/Buttons
 		 * 
 		 */
 		adminButton = new Button("Kinoadministration");
+		adminButton.getElement().setId("adminbutton");
 		planerButton = new Button("Kinobesuchsplanung");
-		nutzerbeschriftung = new Label("Nutzerkonto");
 
-		nutzerkontolistbox = new ListBox(true);
-		nutzerkontolistbox2 = new ListBox(false);
+		nutzer = new Button("Nutzer");
+		nutzer.setStyleName("nutzer");
+		nutzer.setHTML("<i class=\"fas fa-user\"></i>");
+		nutzer.setHeight("60x");
+		nutzer.setWidth("60px");
+		nutzer.getElement().setId("NutzerButton");
+		planerButton = new Button("Kinobesuchsplanung");
+		planerButton.getElement().setId("planerbutton");
+		logo = new Image("images/CineMates Logo.jpg");
+		logo.setWidth("80px");
+		logout = new Button("Logout");
+		logout.setHTML("<i class=\"fas fa-sign-out-alt\"></i>");
+		logout.setHeight("60px");
+		logout.setWidth("60px");
+		logout.getElement().setId("LogoutButton");
 
-		nutzerkontolistbox2.setTitle("Nutzerkonto");
-		nutzerkontolistbox2.addItem("--Bitte auswählen--");
-		nutzerkontolistbox2.addItem("Nutzerkonto bearbeiten");
-		nutzerkontolistbox2.addItem("Logout");
-		nutzerkontolistbox.setVisibleItemCount(2);
-		nutzerkontolistbox2.setVisibleItemCount(1);
 		logo = new Image("images/CineMates Logo.jpg");
 		logo.setWidth("100px");
 
@@ -69,12 +82,11 @@ public class HeaderfürKinoAdministration extends HorizontalPanel {
 		 * 
 		 */
 		this.add(logo);
-		this.add(planerButton);
 		this.add(adminButton);
-	
-		this.add(nutzerbeschriftung);
+		this.add(planerButton);
+		RootPanel.get("MenuBar").add(nutzer);
+		RootPanel.get("MenuBar").add(logout);
 
-		this.add(nutzerkontolistbox2);
 
 
 		/** Auf den Button, welcher zunächst den Nutzernamen darstellen soll, soll ein Panel "gelegt" werden,
@@ -88,6 +100,8 @@ public class HeaderfürKinoAdministration extends HorizontalPanel {
 		 */
 		adminButton.addClickHandler(new AdminClickHandler());
 		planerButton.addClickHandler(new PlanerClickHandler());
+		nutzer.addClickHandler(new NutzerClickHandler());
+
 
 
 	}
@@ -128,39 +142,23 @@ public class HeaderfürKinoAdministration extends HorizontalPanel {
 		}
 
 
+
+
 	}
-	/** Klickt der Nutzer auf den Button der mit "Nutzerkonto anzeigen" beschriftet ist,
-	 *  so wird ihm sein Nutzerkonto angezeigt.
+	/**
+	 * Klickt der Nutzer auf den Nutzerbutton, so wird ihm sein Nutzerkonto
+	 * angezeigt und er kann hier seinen Nutzernamen bearbeiten.
 	 */
-	private class NutzerAnzeigenClickHandler implements ClickHandler {
+	private class NutzerClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			// TODO Auto-generated method stub
+
+			RootPanel.get("DetailsPanel").clear();
+			NutzerkontoForm nutzerkontoform = new NutzerkontoForm();
+
+			RootPanel.get("DetailsPanel").add(nutzerkontoform);
 
 		}
-
-	}			/** Klickt der Nutzer auf den Button der mit "Nutzerkonto bearbeiten" beschriftet ist,
-	 *      so bekommt er die Möglichkeit, sein Nutzerkonto zu bearbeiten.
-	 */
-	private class NutzerBearbeitenClickHandler implements ClickHandler{
-
-		@Override
-		public void onClick(ClickEvent event) {
-			// TODO Auto-generated method stub
-
-
-
-		}
-		/** Klickt der Nutzer auf den Button der mit "Logout" beschriftet ist,
-		 *  so wird er ausgeloggt und landet wieder auf der Login-Page. 
-		 */
-		private class LogoutClickHandler implements ClickHandler {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				Window.Location.assign("Loginpage.html");
-
-			}
-
-		}}}
+	}
+}

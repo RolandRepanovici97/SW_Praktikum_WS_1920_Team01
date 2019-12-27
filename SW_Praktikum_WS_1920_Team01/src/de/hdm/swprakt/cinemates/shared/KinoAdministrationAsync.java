@@ -25,9 +25,13 @@ import de.hdm.swprakt.cinemates.shared.bo.Spielzeit;
  */
 public interface KinoAdministrationAsync {
 
+	void init(AsyncCallback<Void> callback);
+	
 	void createFilm(String filmtitel, String beschreibung, String details, AsyncCallback<Film> callback);
 
 	void createKino(String kinoname, String adresse, String beschreibung, AsyncCallback<Kino> callback);
+
+
 
 	// void editSpielplan(Spielplan spielplan, AsyncCallback<Void> callback);
 
@@ -47,7 +51,7 @@ public interface KinoAdministrationAsync {
 
 	void saveFilm(Film film, AsyncCallback<Void> callback);
 
-	void saveNutzer(Nutzer nutzer, AsyncCallback<Nutzer> callback);
+	void saveNutzer(Nutzer nutzer, AsyncCallback<Void> callback);
 
 	void deleteSpielzeit(Spielzeit sz, AsyncCallback<Void> callback);
 
@@ -74,5 +78,16 @@ public interface KinoAdministrationAsync {
 	void getAllSpielplan(AsyncCallback<Vector<Spielplan>> callback);
 
 	void saveSpielplan(Spielplan spielplan, AsyncCallback<Void> callback);
+
+	void save(Kino kino, AsyncCallback<Void> callback);
+
+	void getKinoketteOf(Nutzer nutzer, AsyncCallback<Kinokette> callback);
+
+	void findNutzerByEmail(String email, AsyncCallback<Nutzer> callback);
+
+	void nameVerfügbarKino(String kinoname, AsyncCallback<Boolean> callback);
+
+	void nameVerfügbarFilm(String filmtitel, AsyncCallback<Boolean> callback);
+	
 
 }

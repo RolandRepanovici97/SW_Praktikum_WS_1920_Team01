@@ -1,7 +1,7 @@
 package de.hdm.swprakt.cinemates.shared.bo;
 
 
-public class Film extends BusinessObject {
+public class Film extends OwnedBusinessObject {
 
 	/*
 	 * Diese Klasse stellt die Filme dar....

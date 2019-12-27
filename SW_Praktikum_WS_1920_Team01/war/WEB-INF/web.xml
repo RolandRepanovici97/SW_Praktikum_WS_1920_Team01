@@ -43,6 +43,16 @@
 		<servlet-name>KinoAdministrationImpl</servlet-name>
 		<url-pattern>/KinoAdministration/kinoadministration</url-pattern>
 	</servlet-mapping>
+	
+		<servlet>
+		<servlet-name>KinoAdministrationfürKinobesuchsplanung</servlet-name>
+		<servlet-class>de.hdm.swprakt.cinemates.server.KinoAdministrationImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>KinoAdministrationfürKinobesuchsplanung</servlet-name>
+		<url-pattern>/Kinobesuchsplanung/kinoadministration</url-pattern>
+	</servlet-mapping>
 
 
 

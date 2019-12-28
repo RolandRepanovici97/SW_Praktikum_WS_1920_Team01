@@ -81,13 +81,13 @@ public class KinoMapper {
 
 				while (rs.next()) {
 					Kino k = new Kino();
-				//	k.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
-				//	k.setID(rs.getInt("kino_id"));
-				//	k.setKinoketteID(rs.getInt("kinokette_id"));
-				//	k.setSpielplanID(rs.getInt("spielplan_id"));
+					k.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+					k.setID(rs.getInt("kino_id"));
+					k.setKinoketteID(rs.getInt("kinokette_id"));
+					k.setSpielplanID(rs.getInt("spielplan_id"));
 					k.setKinoname(rs.getString("Kinoname"));
-				//	k.setAdresse(rs.getString("Adresse")); 
-				//	k.setBeschreibung(rs.getString("Beschreibung"));
+					k.setAdresse(rs.getString("Adresse")); 
+					k.setBeschreibung(rs.getString("Beschreibung"));
 					kino.add(k);
 				}
 			}

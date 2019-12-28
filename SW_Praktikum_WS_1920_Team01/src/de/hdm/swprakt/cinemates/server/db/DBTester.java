@@ -13,6 +13,7 @@ import de.hdm.swprakt.cinemates.shared.bo.Spielplan;
 import de.hdm.swprakt.cinemates.shared.bo.Spielzeit;
 import de.hdm.swprakt.cinemates.shared.bo.Umfrage;
 import de.hdm.swprakt.cinemates.shared.bo.Umfrageeintrag;
+import de.hdm.swprakt.cinemates.shared.bo.Votum;
 
 public abstract class DBTester {
 	
@@ -614,7 +615,50 @@ public abstract class DBTester {
 		 * ***************************************************************************
 		 */
 
-
+//		System.out.println("\nfindById()");
+//		Votum testVotumId = votumMapper.findByID(10);
+//		System.out.println(testVotumId.toString());
+//		
+//		
+//		System.out.println("\nfindAllVotum()");
+//		Vector<Votum> votums = votumMapper.findAllVotum();
+//		for(Votum v : votums) {
+//			System.out.println(v.toString());
+//		}
+//		
+//		System.out.println("\nfindVotumByUmfrageeintrag()");
+//		Umfrageeintrag testUe = umfrageeintragMapper.findByID(1);
+//		Vector<Votum> votumsFromUmfrageeintrag = votumMapper.findVotumByUmfrageeintrag(testUe);
+//		for(Votum v : votumsFromUmfrageeintrag) {
+//			System.out.println(v.toString());
+//		}
+//		
+//		
+//		System.out.println("\ninsert()");
+//		Votum testInsert = new Votum();
+//		testInsert.setIstMöglicherTermin(true);
+//		testInsert.setUmfrageeintragID(2);
+//		testInsert.setOwnerID(14);
+//		System.out.println(testInsert.toString());
+//		testInsert = votumMapper.insert(testInsert);
+//		System.out.println(testInsert.toString());
+//		
+//		System.out.println("\nupdate()");
+//		Votum testUpdate = votumMapper.findByID(67);
+//		System.out.println(testUpdate.toString());
+//		testUpdate.setIstMöglicherTermin(false);
+//		System.out.println(testUpdate.toString());
+//		testUpdate = votumMapper.update(testUpdate);
+//		System.out.println(testUpdate.toString());
+//		
+//		
+//		System.out.println("\ndelete()");
+//		Votum testDeleteVotum = votumMapper.findByID(67);
+//		System.out.println(testDeleteVotum.toString());
+//		votumMapper.delete(testDeleteVotum);
+//		testDeleteVotum = testDeleteVotum = votumMapper.findByID(67);
+//		if(testDeleteVotum == null) System.out.println("Das Votum wurde gelöscht");
+		
 		
 		/*
 		 * ***************************************************************************

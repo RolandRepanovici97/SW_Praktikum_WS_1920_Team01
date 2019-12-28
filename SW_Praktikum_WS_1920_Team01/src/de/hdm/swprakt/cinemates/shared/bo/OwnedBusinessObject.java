@@ -55,11 +55,11 @@ public class OwnedBusinessObject extends BusinessObject {
 		this.ownerID = ownerID;
 	}	
 
-/*
+
 	public String toString() {
 
 		return super.toString() + "; Owner-ID: " + this.ownerID;
-	}*/
+	}
 
 
 

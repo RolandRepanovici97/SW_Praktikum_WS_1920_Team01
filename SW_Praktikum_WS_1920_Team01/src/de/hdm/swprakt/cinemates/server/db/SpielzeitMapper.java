@@ -287,6 +287,7 @@ public class SpielzeitMapper extends OwnedBusinessObjectMapper {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate("DELETE FROM `spielzeit` WHERE (`spielzeit_id` = " + spielzeit.getID() + ")");
+			stmt.executeUpdate("DELETE FROM `spielplan_spielzeit` WHERE (`spielzeit_id` = " + spielzeit.getID() + ")");
 			con.commit();
 
 		}  catch(SQLException e) {
@@ -330,7 +331,7 @@ public class SpielzeitMapper extends OwnedBusinessObjectMapper {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(
-					"SELECT * FROM `Spielplan_Spielzeit`LEFT JOIN `spielzeit` ON `Spielplan_Spielzeit`.`spielzeit_id`= `Spielzeit`.`spielzeit_id` LEFT JOIN `ownedbusinessobject` ON `spielzeit`.`bo_id` = `ownedbusinessobject`.`bo_id`  WHERE (`spielplan_id` = " + spielplan.getID() + " ) ORDER BY `spielzeit_id`");
+					"SELECT * FROM `Spielplan_Spielzeit`LEFT JOIN `spielzeit` ON `Spielplan_Spielzeit`.`spielzeit_id` = `Spielzeit`.`spielzeit_id` LEFT JOIN `ownedbusinessobject` ON `spielzeit`.`bo_id` = `ownedbusinessobject`.`bo_id`  WHERE (`spielplan_id` = " + spielplan.getID() + " ) ORDER BY `spielzeit`.`spielzeit_id`");
 
 			/*
 			 * Befüllen des result sets
@@ -376,7 +377,7 @@ public class SpielzeitMapper extends OwnedBusinessObjectMapper {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(
-					"SELECT * FROM 'spielzeit' WHERE film_id = " + film.getID() + " AND datum = " + dc.convertJavaDateToSQLDate(datum) + " ORDER BY `spielzeit_id`");
+					"SELECT * FROM `spielzeit` LEFT JOIN `ownedbusinessobject` ON `spielzeit`.`bo_id` = `ownedbusinessobject`.`bo_id`  WHERE (`film_id` = " + film.getID() + " AND `datum` = '" + dc.convertJavaDateToSQLDate(datum) + "') ORDER BY `spielzeit_id`");
 
 			/*
 			 * Befüllen des result sets

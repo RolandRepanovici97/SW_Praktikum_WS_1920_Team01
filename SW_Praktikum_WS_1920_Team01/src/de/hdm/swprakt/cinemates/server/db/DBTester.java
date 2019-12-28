@@ -13,6 +13,7 @@ import de.hdm.swprakt.cinemates.shared.bo.Spielplan;
 import de.hdm.swprakt.cinemates.shared.bo.Spielzeit;
 import de.hdm.swprakt.cinemates.shared.bo.Umfrage;
 import de.hdm.swprakt.cinemates.shared.bo.Umfrageeintrag;
+import de.hdm.swprakt.cinemates.shared.bo.Votum;
 
 public abstract class DBTester {
 	
@@ -503,14 +504,45 @@ public abstract class DBTester {
 //		Kinokette testKKOwner = kinoketteMapper.findKinoketteByOwner(testKKOwnerNutzer);
 //		System.out.println(testKKOwner.toString());
 		
+		
+		
 		/*
 		 * ***************************************************************************
 		 * Testen der Spielplan-Mapper Methoden
 		 * ***************************************************************************
 		 */
 		
-		
-		
+//		System.out.println("\nfindAllSpielplan()");
+//		Vector <Spielplan> spielpläne = spielplanMapper.findAllSpielplan();
+//		for(Spielplan sp : spielpläne) {
+//			System.out.println(sp.toString());
+//		}
+//		
+//		System.out.println("\nfindById()");
+//		Spielplan testSpId = spielplanMapper.findByID(2);
+//		System.out.println(testSpId.toString());
+//		
+//		System.out.println("\ninsert()");
+//		Spielplan testSpielplaninsert = new Spielplan();
+//		testSpielplaninsert.setOwnerID(14);
+//		testSpielplaninsert.setSpielplanname("TestSpielplan");
+//		System.out.println(testSpielplaninsert.toString());
+//		testSpielplaninsert = spielplanMapper.insert(testSpielplaninsert);
+//		System.out.println(testSpielplaninsert);
+//		
+//		System.out.println("\nupdate()");
+//		Spielplan testSpielplanUpdate = spielplanMapper.findByID(4);
+//		System.out.println(testSpielplanUpdate.toString());
+//		testSpielplanUpdate.setSpielplanname("Spielplanname nach Update");
+//		testSpielplanUpdate = spielplanMapper.update(testSpielplanUpdate);
+//		System.out.println(testSpielplanUpdate.toString());
+//		
+//		System.out.println("\ndelete()");
+//		Spielplan testSpielplanDelete = spielplanMapper.findByID(4);
+//		System.out.println(testSpielplanDelete.toString());
+//		spielplanMapper.delete(testSpielplanDelete);
+//		testSpielplanDelete = spielplanMapper.findByID(4);
+//		if(testSpielplanDelete == null) System.out.println("Der Spielplan wurde gelöscht");
 		
 		/*
 		 * ***************************************************************************
@@ -518,24 +550,115 @@ public abstract class DBTester {
 		 * ***************************************************************************
 		 */
 		
-//	System.out.println("\nfindById()");
-//	Spielzeit testspielzeitId = spielzeitMapper.findByID(2);
-//	System.out.println(testspielzeitId.toString());
-//	
-//	System.out.println("\nfindAllSpielzeit()");
-//	Vector<Spielzeit> spielzeiten = spielzeitMapper.findAllSpielzeit();
-//	for(Spielzeit sp : spielzeiten) {
-//		System.out.println(sp.toString());
-//	}
 		
+//			System.out.println("\nfindById()");
+//			Spielzeit testspielzeitId = spielzeitMapper.findByID(2);
+//			System.out.println(testspielzeitId.toString());
+			
+//			System.out.println("\nfindAllSpielzeit()");
+//			Vector<Spielzeit> spielzeiten = spielzeitMapper.findAllSpielzeit();
+//			for(Spielzeit sp : spielzeiten) {
+//				System.out.println(sp.toString());
+//								
+//			}
+//			
+//			
+//			System.out.println("\ninsert()");
+//			Spielzeit testspielzeit = new Spielzeit();
+//			testspielzeit.setFilmID(25);
+//			testspielzeit.setOwnerID(800);
+//			java.util.Date zeitpunkt = new java.util.Date();
+//			Calendar cal = Calendar.getInstance();
+//			cal.set(Calendar.DAY_OF_MONTH,17);
+//			cal.set(Calendar.MONTH, Calendar.FEBRUARY);
+//			cal.set(Calendar.YEAR, 2020);
+//			cal.set(Calendar.HOUR, 18);
+//			cal.set(Calendar.MINUTE, 45);
+//			zeitpunkt = cal.getTime();
+//			testspielzeit.setZeitpunkt(zeitpunkt);
+//			System.out.println(testspielzeit.toString());
+//			testspielzeit = spielzeitMapper.insert(testspielzeit);
+//			System.out.println(testspielzeit.toString());
+//			
+//			System.out.println("\nupdate()");
+//			Spielzeit testSpielzeitDelete = spielzeitMapper.findByID(31);
+//			System.out.println(testSpielzeitDelete);
+//			spielzeitMapper.delete(testSpielzeitDelete);
+//			testSpielzeitDelete = spielzeitMapper.findByID(31);
+//			if(testSpielzeitDelete == null) System.out.println("Die Spielzeit wurde gelöscht");
+//				
+//			System.out.println("\nfindSpielzeitenBySpielplan()");
+//			Spielplan testSpielplan = spielplanMapper.findByID(2);
+//			Vector<Spielzeit> spielzeitenOfSpielplan = spielzeitMapper.findSpielzeitenBySpielplan(testSpielplan);
+//			for(Spielzeit sp : spielzeitenOfSpielplan) {
+//				System.out.println(sp.toString());
+//			}
+//		
+//		
+//			System.out.println("\nfindSpielzeitenByFilmAndDate()");
+//			java.util.Date date = new java.util.Date();
+//			Calendar cal = Calendar.getInstance();
+//			cal.set(Calendar.DAY_OF_MONTH,14);
+//			cal.set(Calendar.MONTH, Calendar.DECEMBER);
+//			date = cal.getTime();
+//			Film testFilm = filmMapper.findByID(84);
+//			
+//			Vector<Spielzeit> spielzeitenZuUmfrage = spielzeitMapper.findSpielzeitenByFilmAndByDate(testFilm, date);
+//			for(Spielzeit sp : spielzeitenZuUmfrage) {
+//				System.out.println(sp.toString());
+//			}
+			
 		
 		/*
-		 * ***************************************************************************
+		 * ****************************3***********************************************
 		 * Testen der Votum-Mapper Methoden
 		 * ***************************************************************************
 		 */
 
-
+//		System.out.println("\nfindById()");
+//		Votum testVotumId = votumMapper.findByID(10);
+//		System.out.println(testVotumId.toString());
+//		
+//		
+//		System.out.println("\nfindAllVotum()");
+//		Vector<Votum> votums = votumMapper.findAllVotum();
+//		for(Votum v : votums) {
+//			System.out.println(v.toString());
+//		}
+//		
+//		System.out.println("\nfindVotumByUmfrageeintrag()");
+//		Umfrageeintrag testUe = umfrageeintragMapper.findByID(1);
+//		Vector<Votum> votumsFromUmfrageeintrag = votumMapper.findVotumByUmfrageeintrag(testUe);
+//		for(Votum v : votumsFromUmfrageeintrag) {
+//			System.out.println(v.toString());
+//		}
+//		
+//		
+//		System.out.println("\ninsert()");
+//		Votum testInsert = new Votum();
+//		testInsert.setIstMöglicherTermin(true);
+//		testInsert.setUmfrageeintragID(2);
+//		testInsert.setOwnerID(14);
+//		System.out.println(testInsert.toString());
+//		testInsert = votumMapper.insert(testInsert);
+//		System.out.println(testInsert.toString());
+//		
+//		System.out.println("\nupdate()");
+//		Votum testUpdate = votumMapper.findByID(67);
+//		System.out.println(testUpdate.toString());
+//		testUpdate.setIstMöglicherTermin(false);
+//		System.out.println(testUpdate.toString());
+//		testUpdate = votumMapper.update(testUpdate);
+//		System.out.println(testUpdate.toString());
+//		
+//		
+//		System.out.println("\ndelete()");
+//		Votum testDeleteVotum = votumMapper.findByID(67);
+//		System.out.println(testDeleteVotum.toString());
+//		votumMapper.delete(testDeleteVotum);
+//		testDeleteVotum = testDeleteVotum = votumMapper.findByID(67);
+//		if(testDeleteVotum == null) System.out.println("Das Votum wurde gelöscht");
+		
 		
 		/*
 		 * ***************************************************************************

@@ -548,6 +548,11 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 		return nutzerMapper.findByEmail(email);
 	}
 
+	@Override
+	public Film getFilmByID(int id) throws IllegalArgumentException {
+		return filmMapper.findByID(id);
+	}
+
 
 
 	/*

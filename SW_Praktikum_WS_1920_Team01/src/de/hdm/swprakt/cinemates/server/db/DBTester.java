@@ -665,6 +665,15 @@ public abstract class DBTester {
 		 * Testen der OwnedBusinessObject-Mapper Methoden
 		 * ***************************************************************************
 		 */
+//		
+//		System.out.println("\nfindAll()");
+//		System.out.println("\nfindByOwner()");
+//		System.out.println("\nfindById()");
+//		System.out.println("\ninsert()");
+//		System.out.println("\ndelete()");
+//		System.out.println("\ngetOwnerOf()");
+		
+		
 		
 	}
 }

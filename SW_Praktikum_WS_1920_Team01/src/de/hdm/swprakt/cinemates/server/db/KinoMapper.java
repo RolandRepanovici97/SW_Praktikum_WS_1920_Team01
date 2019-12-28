@@ -77,7 +77,7 @@ public class KinoMapper {
 			try {
 
 				Statement stmt = con.createStatement();
-				ResultSet rs = stmt.executeQuery("SELECT Kinoname FROM `kino` ORDER BY `kino_id`");
+				ResultSet rs = stmt.executeQuery("SELECT * FROM `kino` ORDER BY `kino_id`");
 
 				while (rs.next()) {
 					Kino k = new Kino();

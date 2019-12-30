@@ -115,7 +115,7 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 * @link OwnedBusinessObjectMapper
 	 */
 	private OwnedBusinessObjectMapper ownedBusinessObjectMapper = null;
-	
+
 	/**
 	 * Default-Konstruktor
 	 * @throws IllegalArgumentException
@@ -200,10 +200,13 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 
 
 	public Nutzer createNutzer(String email, String nutzername) throws IllegalArgumentException {
-
+		//Erzeugen eines neuen Nutzerobjekts
 		Nutzer nutzer = new Nutzer();
 		nutzer.setEmail(email);
-		nutzer.setNutzername(nutzername);
+		if(nameVerfügbarNutzer(nutzername)){
+			nutzer.setNutzername(nutzername);
+		}
+
 		this.nutzerMapper.insert(nutzer);
 
 		return nutzer;

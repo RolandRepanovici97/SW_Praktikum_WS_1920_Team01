@@ -28,398 +28,464 @@ import de.hdm.swprakt.cinemates.shared.bo.Spielzeit;
 @RemoteServiceRelativePath("kinoadministration")
 public interface KinoAdministration extends RemoteService {
 
+	/*
+	 * Initalisierung der Variablen, welche die Referenzen auf die Mapeprklassen
+	 * darstellen. Wir initialisieren diese durch den Aufruf des
+	 * protected-Konstruktors. Dieser ermöglicht uns, dass jeweils nur eine Instanz
+	 * dieser Klasse erzeugt werden kann.
+	 */
 	public void init() throws IllegalArgumentException;
-	///**
-	// * Initialisierung des Objekts. Diese Methode ist vor dem Hintergrund von GWT
-	// * RPC zusaetzlich zum No Argument Constructor der implementierenden Klasse
-	// * notwendig. Bitte diese Methode direkt nach der Instantiierung aufrufen.
-	// * 
-	// * @throws IllegalArgumentException
-	// */
-	//public void init() throws IllegalArgumentException;	
-	//
-	///**
-	//
-	///**
-	// * Abschnitt aller create-Methoden (Ömer)
-	// */
-	//
 
 	/**
-	 * Abschnitt aller create-Methoden Erstellen des uebergebenen Film-Objekts
+	 * Diese Methode wird aufgerufen, wenn ein Film anhand seiner ID gefunden werden
+	 * soll
 	 * 
-	 * @param film Film-Objekt, welches in der Datenbank erstellt werden soll
-	 * @return
+	 * @param Integer Wert, welcher die ID des Films repräsentiert
 	 * @throws IllegalArgumentException
+	 * @author alina
 	 */
+
+	public Film getFilmByID(int id) throws IllegalArgumentException;
+
+	/**
+	 * Diese Methode wird aufgerufen, wenn ein Film anhand seines Titels gefunden
+	 * werden soll
+	 * 
+	 * @param Filmtitel
+	 * @throws IllegalArgumentException
+	 * @author alina
+	 */
+
+	public Film getFilmByTitel(String filmtitel) throws IllegalArgumentException;
+
+	/**
+	 * Diese Methode wird aufgerufen, wenn wir alle in der Datenbank gespeicherten
+	 * Filme erhalten möchten.
+	 * 
+	 * @throws IllegalArgumentException
+	 * @author Ömer
+	 */
+
+	public Vector<Film> getAllFilme() throws IllegalArgumentException;
+
+	/**
+	 * Diese Methode wird aufgerufen, wenn ein Filmobjekt in der Datenbank
+	 * gespeichert werden soll.
+	 * 
+	 * @param Filmobjekt, welches gespeichert werden soll
+	 * @throws IllegalArgumentException
+	 * @author Ömer
+	 */
+
+	public void save(Film film) throws IllegalArgumentException;
+
+	/**
+	 * Diese Methode wird aufgerufen, wenn ein Film erstellt wird.
+	 * 
+	 * @param Filmtitel, Filmbeschreibung und Details (Die Details repräsentieren im
+	 *                   Grunde lediglich die Länge des Films)
+	 * @throws IllegalArgumentException
+	 * @author Ömer
+	 * @author alina
+	 */
+
 	public Film createFilm(String filmtitel, String beschreibung, String details) throws IllegalArgumentException;
 
-	///**
-	// * Abschnitt aller create-Methoden
-	// * Erstellen des uebergebenen Kinokette-Objekts
-	// * @param kinokette Kinokette-Objekt, welches in der Datenbank erstellt werden soll
-	// * @throws IllegalArgumentException
-	// */
+	/**
+	 * Diese Methode wird aufgerufen, wenn der Titel eines Films gesetzt werden
+	 * soll. Damit dieser nicht doppelt vergeben werden kann, erfolgt zunächst die
+	 * Prüfung, ob dieser bereits vergeben ist.
+	 * 
+	 * @param Der Filmtitel, welcher gesetzt werden soll
+	 * @throws IllegalArgumentException
+	 * @author alina
+	 */
 
-	// public Kinokette createKinokette(String kinokettenname,String beschreibung )
-	// throws IllegalArgumentException;
-	//
-	///**
-	// * Abschnitt aller create-Methoden
-	// * Erstellen des uebergebenen Kino-Objekts
-	// * @param kino Kino-Objekt, welches in der Datenbank erstellt werden soll
-	// * @throws IllegalArgumentException
-	// */
-	public Kino createKino(String kinoname, String adresse, String beschreibung) throws IllegalArgumentException;
+	public Boolean nameVerfügbarFilm(String filmtitel) throws IllegalArgumentException;
 
-	///**
-	// * Abschnitt aller create-Methoden
-	// * Erstellen des uebergebenen Spielplan-Objekts
-	// * @param spielplan Spielplan-Objekt, welches in der Datenbank erstellt werden soll
-	// * @throws IllegalArgumentException
-	// */
-	// public void createSpielplan(Spielplan spielplan) throws
-	// IllegalArgumentException;
-	//
-	//
-	///**
-	// * Abschnitt aller create-Methoden
-	// * Erstellen des uebergebenen Spielzeit-Objekts
-	// * @param spielzeit Spielzeit-Objekt, welches in der Datenbank erstellt werden soll
-	// * @throws IllegalArgumentException
-	// */
-	public Spielzeit createSpielzeit(int filmID, Date zeitpunkt) throws IllegalArgumentException;
-
-	///**
-	// * Abschnitt aller save/update-Methoden (Ömer)
-	// */
-	//
-	//
-	///**
-	// * Abschnitt aller save/update-Methoden
-	// * Speichern des uebergebenen Film-Objekts
-	// * @param film Film-Objekt, welches in der Datenbank gespeichert werden soll
-	// * @throws IllegalArgumentException
-	// */
-	public void saveFilm(Film film) throws IllegalArgumentException;
-
-	//
-	///**
-	// * Abschnitt aller save/update-Methoden
-	// * Speichern des uebergebenen Kinokette-Objekts
-	// * @param kinokette Kinokette-Objekt, welches in der Datenbank gespeichert werden soll
-	// * @throws IllegalArgumentException
-	// */
-	//public void editKinokette(Kinokette kinokette) throws IllegalArgumentException;
-	//
-	//
-	///**
-	// * Abschnitt aller save/update-Methoden
-	// * Speichern des uebergebenen Kino-Objekts
-	// * @param kino Kino-Objekt, welches in der Datenbank gespeichert werden soll
-	// * @throws IllegalArgumentException
-	// */
-	public void save(Kino kino) throws IllegalArgumentException;
-	//
-	//
-	///**
-	// * Abschnitt aller save/update-Methoden
-	// * Speichern des uebergebenen Nutzer-Objekts
-	// * @param nutzer Nutzer-Objekt, welches in der Datenbank gespeichert werden soll
-	// * @throws IllegalArgumentException
-	// */
-	public void saveNutzer(Nutzer nutzer) throws IllegalArgumentException;
-	//
-	///**
-	// * Abschnitt aller save/update-Methoden
-	// * Speichern des uebergebenen Kinokette-Objekts
-	// * @param kinokette Kinokette-Objekt, welches in der Datenbank gespeichert werden soll
-	// * @throws IllegalArgumentException
-	// */
-	//public void editKinokette(Kinokette kinokette) throws IllegalArgumentException;
-	//
-	//
-	///**
-	// * Abschnitt aller save/update-Methoden
-	// * Speichern des uebergebenen Kino-Objekts
-	// * @param kino Kino-Objekt, welches in der Datenbank gespeichert werden soll
-	// * @throws IllegalArgumentException
-	// */
-	//public void save(Kino kino) throws IllegalArgumentException;
-	//
-	//
-	///**
-	// * Abschnitt aller save/update-Methoden
-	// * Speichern des uebergebenen Nutzer-Objekts
-	// * @param nutzer Nutzer-Objekt, welches in der Datenbank gespeichert werden soll
-	// * @throws IllegalArgumentException
-	// */
-
-	//
-	//
-	///**
-	// * Abschnitt aller save/edit-Methoden
-	// * Speichern des uebergebenen Spielplan-Objekts
-	// * @param spielplan Spielplan-Objekt, welches in der Datenbank gespeichert werden soll
-	// * @throws IllegalArgumentException
-	// */
-	public void saveSpielplan(Spielplan spielplan) throws IllegalArgumentException;
-
-	//
-	///**
-	// * Abschnitt aller delete-Methoden
-	// * Loeschen des uebergebenen Film-Objekts
-	// * @param film Film-Objekt, welches in der Datenbank geloescht werden soll
-	// * @throws IllegalArgumentException
-	// */
+	/**
+	 * Diese Methode realisiert das Löschen eines Films. Hier wird auch die
+	 * Löschweitergabe betrachtet. Unserer Logik nach gehören Spielzeiten zu Filmen.
+	 * Wird ein Film gelöscht, so müssen auch alle Spielzeiten, zu denen dieser Film
+	 * angeboten wird gelöscht werden. Außerdem gehört eine Umfrage zu einem Film.
+	 * Wird der Film gelöscht, so müssen auch alle Umfragen gelöscht werden, welche
+	 * zu diesem Film gehören. Um dies zu realisieren bedienen wir uns der Klasse,
+	 * welche die Applikationslogik für Umfragen bereitstellt und rufen die dort
+	 * definierte Löschmethode für Umfragen auf.
+	 * 
+	 * @param Filmobjekt, welches gelöscht werden soll
+	 * @throws IllegalArgumentException
+	 * @author alina
+	 */
 
 	public void deleteFilm(Film film) throws IllegalArgumentException;
 
-	///**
-	// * Loeschen des uebergebenen Gruppen-Objekts
-	// * @param gruppe Gruppe-Objekt, welches in der Datenbank geloescht werden soll
-	// * @throws IllegalArgumentException
-	// */
-	//public void delete(Gruppe gruppe) throws IllegalArgumentException;
-	//
-	///**
-	// * Loeschen des uebergebenen Kinokette-Objekts
-	// * @param kinokette Kinokette-Objekt, welches in der Datenbank geloescht werden soll
-	// * @throws IllegalArgumentException
-	// */
-	//public void delete(Kinokette kinokette) throws IllegalArgumentException;
-	//
-	///**
-	// * Loeschen des uebergebenen Kino-Objekts
-	// * @param kino Kino-Objekt, welches in der Datenbank geloescht werden soll
-	// * @throws IllegalArgumentException
-	// */
-	public void deleteKino(Kino k) throws IllegalArgumentException;
+	/**
+	 * Diese Methode wird aufgerufen, wenn eine Kinokette anhand ihrer ID gefunden
+	 * werden soll
+	 * 
+	 * @param Integer Wert, welcher die ID der Kinokette repräsentiert
+	 * @throws IllegalArgumentException
+	 * @author Ömer
+	 */
 
-	///**
-	// * Loeschen des uebergebenen Spielplan-Objekts
-	// * @param nutzer Spielplan-Objekt, welches in der Datenbank geloescht werden soll
-	// * @throws IllegalArgumentException
-	// */
-	public void deleteSpielplan(Spielplan sp) throws IllegalArgumentException;
-
-	///**
-	// * Loeschen des uebergebenen Spielzeit-Objekts
-	// * @param nutzer Spielzeit-Objekt, welches in der Datenbank geloescht werden soll
-	// * @throws IllegalArgumentException
-	// */
-	public void deleteSpielzeit(Spielzeit sz) throws IllegalArgumentException;
-
-	//
-	///**
-	// * Saemtliche filme eines Film-Objekts ausgeben
-	// * @param film Film, dessen Filme angezeigt werden sollen
-	// * @return ArrayList saemtlicher Filme
-	// * @throws IllegalArgumentException
-	// */
-	public Vector<Film> getAllFilme() throws IllegalArgumentException;
-	//
-
-	///**
-	// * Saemtliche kinoketten eines Kinokette-Objekts ausgeben
-	// * @param kinokette Kinokette, dessen kinoketten angezeigt werden sollen
-	// * @return ArrayList saemtlicher Kinoketten
-	// * @throws IllegalArgumentException
-	// */
-	//public Vector<Kinokette> findAllKinokette() throws IllegalArgumentException;
-	//
-	///**
-	// * Saemtliche kinos eines Kino-Objekts ausgeben
-	// * @param kino Kino, dessen kinos angezeigt werden sollen
-	// * @return ArrayList saemtlicher Kinos
-	// * @throws IllegalArgumentException
-	// */
-	//public Vector<Kino> findAllKino()throws IllegalArgumentException;
-	//
-	///**
-	// * Saemtliche nutzer eines Nutzer-Objekts ausgeben
-	// * @param nutzer Nutzer, dessen nutzer angezeigt werden sollen
-	// * @return ArrayList saemtlicher Nutzer
-	// * @throws IllegalArgumentException
-	// */
-	//public Vector <Nutzer> findAllNutzer() throws IllegalArgumentException;
-	//
-	///**
-	// * Saemtliche spielpläne eines Spielplan-Objekts ausgeben
-	// * @param spielplan Spielplan, dessen spielpläne angezeigt werden sollen
-	// * @return ArrayList saemtliche Spielpläne
-	// * @throws IllegalArgumentException
-	// */
-	public Vector<Spielplan> getAllSpielplan() throws IllegalArgumentException;
-	//
-	///**
-	// * Saemtliche spielzeiten eines Spielzeit-Objekts ausgeben
-	// * @param spielzeit Spielzeit, dessen spielzeiten angezeigt werden sollen
-	// * @return ArrayList saemtliche Spielzeiten
-	// * @throws IllegalArgumentException
-	// */
-	//public Vector<Spielzeit> findAllSpielzeit() throws IllegalArgumentException;
-	//
-	///**
-	// * Saemtliche umfrageeinträge eines Umfrage-Objekts ausgeben
-	// * @param umfrage Umfrage, dessen spielzeiten angezeigt werden sollen
-	// * @return ArrayList saemtlicher Umfragen
-	// * @throws IllegalArgumentException
-	// */
-	//public Vector<Umfrageeintrag> findAllUmfrageeintrag() throws IllegalArgumentException;
-	//
-	///**
-	// * Saemtliche Umfragen eines Spielzeit-Objekts ausgeben
-	// * @param spielzeit Spielzeit, dessen Gruppen angezeigt werden sollen
-	// * @return ArrayList saemtlicher Umfrageeinträge einer Spielzeit
-	// * @throws IllegalArgumentException
-	// */
-	//public Vector<Umfrageeintrag> findUmfrageeintragOf(Spielzeit spielzeit) throws IllegalArgumentException;
-	//
-	///**
-	// * Saemtliche Umfragen eines Kino-Objekts ausgeben
-	// * @param kino Kino, dessen Umfrageeinträge angezeigt werden sollen
-	// * @return ArrayList saemtlicher Umfrageeinträge eines Kinos
-	// * @throws IllegalArgumentException
-	// */
-	//public Vector<Umfrageeintrag> findUmfrageeintragOf(Kino kino) throws IllegalArgumentException;
-	//
-	///**
-	// * Saemtliche Umfragen eines Umfrage-Objekts ausgeben
-	// * @param umfrage Umfrage, dessen Umfragen angezeigt werden sollen
-	// * @return ArrayList saemtlicher Umfragen
-	// * @throws IllegalArgumentException
-	// */
-	//public Vector<Umfrage> findAllUmfrage() throws IllegalArgumentException;
-
-	///**
-	// * Rueckgabe eines bestimmten Film-Objekts
-	// * @param id ID des gesuchten Films
-	// * @return Das erste Film-Objekt, welches den Suchkriterien entspricht
-	// * @throws IllegalArgumentException
-	// */
-	//public Film findFilmByID(int id) throws IllegalArgumentException;
-	//
-	///**
-	// * Rueckgabe eines bestimmten Gruppen-Objekts
-	// * @param id ID der gesuchten Gruppe
-	// * @return Das erste Gruppen-Objekt, welches den Suchkriterien entspricht
-	// * @throws IllegalArgumentException
-	// */
-	//public Gruppe findGruppeByID(int id) throws IllegalArgumentException;
-	//
-	///**
-	// * Rueckgabe eines bestimmten Kinokette-Objekts
-	// * @param id ID der gesuchten Kinokette
-	// * @return Das erste Kinokette-Objekt, welches den Suchkriterien entspricht
-	// * @throws IllegalArgumentException
-	// */
-	//public Kinokette findKinoketteByID(int id) throws IllegalArgumentException;
-	//
-	///**
-	// * Rueckgabe eines bestimmten Kino-Objekts
-	// * @param id ID des gesuchten Kinos
-	// * @return Das erste Kino-Objekt, welches den Suchkriterien entspricht
-	// * @throws IllegalArgumentException
-	// */
-	//public Kino findKinoByID(int id) throws IllegalArgumentException;
-	//
-	///**
-	// * Rueckgabe eines bestimmten Nutzer-Objekts
-	// * @param id ID des gesuchten Nutzers
-	// * @return Das erste Nutzer-Objekt, welches den Suchkriterien entspricht
-	// * @throws IllegalArgumentException
-	// */
-	//public Nutzer findNutzerByID(int id) throws IllegalArgumentException;
-	//
-	///**
-	// * Rueckgabe eines bestimmten Spielplan-Objekts
-	// * @param id ID des gesuchten Spielplans
-	// * @return Das erste Spielplan-Objekt, welches den Suchkriterien entspricht
-	// * @throws IllegalArgumentException
-	// */
-	//public Spielplan findSpielplanByID(int id) throws IllegalArgumentException;
-	//
-
-	///**
-	// * Rueckgabe eines bestimmten Spielzeit-Objekts
-	// * @param id ID der gesuchten Spielzeit
-	// * @return Das erste Spielzeit-Objekt, welches den Suchkriterien entspricht
-	// * @throws IllegalArgumentException
-	// */
-	//public Spielzeit findSpielzeitByID(int id)throws IllegalArgumentException;
+	public Kinokette findKinoketteByID(int id) throws IllegalArgumentException;
 
 	/**
-	 * Auslesen aller Kinos der Kinokette Diese Methode wird bei delete Kinokette
-	 * verwendet
+	 * Diese Methode wird aufgerufen, wenn eine Kinokette anhand ihres Namens
+	 * gefunden werden soll
+	 * 
+	 * @param Kinokettenname
+	 * @throws IllegalArgumentException
+	 * @author Ömer
 	 */
-	public Vector<Kino> getKinosOf(Kinokette kk) throws IllegalArgumentException;
+
+	public Kinokette findKinoketteByName(String kinokettenname) throws IllegalArgumentException;
 
 	/**
-	 * Auslesen sämtliche Kinoketten dieses Systems.
+	 * Diese Methode wird aufgerufen, wenn alle Kinoketten, welche dem System
+	 * bekannt sind, ausgegeben werden sollen
+	 * 
+	 * @throws IllegalArgumentException
+	 * @author Ömer
 	 */
+
 	public Vector<Kinokette> getAllKinokette() throws IllegalArgumentException;
 
 	/**
-	 * Löschen einer Kinokette
+	 * Diese Methode wird aufgerufen, wenn sich ein Kinobetreiber das erste mal auf
+	 * dem CineMates Admin-Client einloggt. Unserer Logik nach gehört einem
+	 * Kinobetreiber eine Kinokette, welche mehrere Kinos enthalten kann. Loggt er
+	 * sich zum ersten Mal auf dem Admin-Client ein, so wird neben dem Nutzerobjekt
+	 * auch als default eine Kinokette angelegt, welche zunächst leer ist, aber der
+	 * er später Kinos hinzufügen kann.
+	 * 
+	 * @param Aktueller Nutzer: Kinobetreiber
+	 * @throws IllegalArgumentException
+	 * @author alina
 	 */
 
-	public void deleteKinokette(Kinokette kk) throws IllegalArgumentException;
+	public Kinokette createKinokette(Nutzer nutzer) throws IllegalArgumentException;
 
 	/**
-	 * Hinzufügen eines Kinos zur Kinokette
+	 * Diese Methode realisiert das Löschen einer Kinokette. Hier wird auch die
+	 * Löschweitergabe betrachtet. Unserer Logik nach gehören Kinos zu Kinoketten.
+	 * Wird eine Kinokette gelöscht, so müssen auch alle Kinos, welche zu dieser
+	 * Kinokette gehören, gelöscht werden.
+	 * 
+	 * @param Kinoketteobjekt, welches gelöscht werden soll
+	 * @throws IllegalArgumentException
+	 * @author Ömer
 	 */
-	public Kino addKinoToKinokette(Kinokette kinokette) throws IllegalArgumentException;
+
+	public void deleteKinokette(Kinokette kinokette) throws IllegalArgumentException;
 
 	/**
-	 * Auslesen sämtliche Kinos dieses Systems.
+	 * Diese Methode wird aufgerufen, wenn die Kinokette eines Nutzers zurückgegeben
+	 * werden soll.
+	 * 
+	 * @param Nutzer dessen Kinokette benötigt wird
+	 * @throws IllegalArgumentException
+	 * @author Ömer
+	 */
+
+	public Kinokette getKinoketteOf(Nutzer nutzer) throws IllegalArgumentException;
+
+	/**
+	 * Diese Methode wird aufgerufen, wenn ein Kinoketteobjekt aktualisiert werden
+	 * soll.
+	 * 
+	 * @param Kinoketteobjekt, welches aktualisiert werden soll
+	 * @throws IllegalArgumentException
+	 * @author alina
+	 */
+
+	public void save(Kinokette kinokette) throws IllegalArgumentException;
+
+	/**
+	 * Diese Methode wird aufgerufen, wenn ein Kino anhand seiner ID gefunden werden
+	 * soll
+	 * 
+	 * @param Integerwert, welcher die ID des Kinos repräsentiert
+	 * @throws IllegalArgumentException
+	 * @author alina
+	 */
+
+	public Kino getKinoByID(int id) throws IllegalArgumentException;
+
+	/**
+	 * Diese Methode wird aufgerufen, wenn ein Kino anhand seines Namens gefunden
+	 * werden soll
+	 * 
+	 * @param Name des Kinos
+	 * @throws IllegalArgumentException
+	 * @author alina
+	 */
+
+	public Kino getKinoByName(String kinoname) throws IllegalArgumentException;
+
+	/**
+	 * Diese Methode wird aufgerufen, wenn alle Kinos einer Kinokette ausgegeben
+	 * werden sollen
+	 * 
+	 * @param Kinokette, deren Kinos gefunden werden sollen
+	 * @throws IllegalArgumentException
+	 * @author Ömer
+	 */
+
+	public Vector<Kino> getKinosOfKinokette(Kinokette kinokette) throws IllegalArgumentException;
+
+	/**
+	 * Diese Methode wird aufgerufen, wenn alle Kinos, welche CineMates bekannt
+	 * sind, ausgegeben werden sollen.
+	 * 
+	 * @throws IllegalArgumentException
+	 * @author Ömer
 	 */
 
 	public Vector<Kino> getAllKinos() throws IllegalArgumentException;
 
 	/**
-	 * Auslesen des Spielplans des Kinos Diese Methode wird bei deleteKino verwendet
-	 */
-	public Spielplan getSpielplanOf(Kino k) throws IllegalArgumentException;
-
-	/**
-	 * Auslesen der Spielzeiten des Spielplans Diese Methode wird bei
-	 * deleteSpielplan verwendet.
-	 */
-	public Vector<Spielzeit> getSpielzeitOf(Spielplan sp) throws IllegalArgumentException;
-
-	/**
-	 * Diese Methode wird aufgerufen,um alle Kinos die zu einer Kinokette gehört
-	 * angezeigt werden sollen. Die Mapper Methode findKinosByKinokette wird
-	 * aufgerufen.
+	 * Diese Methode wird aufgerufen, wenn ein neues Kinoobjekt erstellt wird.
+	 * 
+	 * @param Kinoname, Adresse, Beschreibung und Kinokette des aktuellen Nutzers
+	 * @throws IllegalArgumentException
+	 * @author Ömer
+	 * @author alina
 	 */
 
-	public Vector<Kino> getAllKinoOfKinokette(Kinokette kinokette) throws IllegalArgumentException;
+	public Kino createKino(String kinoname, String adresse, String beschreibung, Kinokette kinokette)
+			throws IllegalArgumentException;
 
 	/**
-	 * Speichern eines Kinos.
+	 * Diese Methode wird aufgerufen, wenn der Name eines Kinos gesetzt werden soll.
+	 * Damit dieser nicht doppelt vergeben werden kann, erfolgt zunächst die
+	 * Prüfung, ob dieser bereits vergeben ist.
+	 * 
+	 * @param Der Kinoname, welcher gesetzt werden soll
+	 * @throws IllegalArgumentException
+	 * @author alina
 	 */
-	public void saveKino(Kino k) throws IllegalArgumentException;
+
+	public Boolean nameVerfügbarKino(String kinoname) throws IllegalArgumentException;
 
 	/**
-	 * Auslesen sämtliche Spielzeiten dieses Systems.
+	 * Diese Methode wird aufgerufen, wenn ein neues Kino angelegt wird.
+	 * 
+	 * @param Kino, Kinokette
+	 * @throws IllegalArgumentException
+	 * @author Ömer
+	 */
+
+	public void addKinoToKinokette(Kino kino, Kinokette kinokette) throws IllegalArgumentException;
+
+	/**
+	 * Diese Methode realisiert das Löschen eines Kinos. Hier wird die
+	 * Löschweitergabe realisiert. Unserer Logik nach besitzt ein Kino einen
+	 * Spielplan, welcher wiederum aus Spielzeit besteht. Wird ein Kino gelöscht, so
+	 * muss auch der dazugehörige Spielplan gelöscht werden. Durch den Aufruf der
+	 * Löschmethode des Spieplans werden anschließend alle Spielzeiten dieses
+	 * Spielplans gelöscht.
+	 * 
+	 * @param Kinoobjekt, welches gelöscht werden soll
+	 * @throws IllegalArgumentException
+	 * @author Ömer
+	 * @author alina
+	 * 
+	 */
+
+	public void deleteKino(Kino kino) throws IllegalArgumentException;
+
+	/**
+	 * Diese Methode wird aufgerufen, wenn ein Kinoobjekt aktualisiert werden soll.
+	 * 
+	 * @param Spielplanobjekt, welches aktualisiert werden soll
+	 * @throws IllegalArgumentException
+	 */
+
+	public void save(Kino kino) throws IllegalArgumentException;
+
+	/**
+	 * Diese Methode wird aufgerufen, wenn der Spielplan eines übergebenen Kinos
+	 * gefunden werden soll.
+	 * 
+	 * @param Kino dessen Spielplan gefunden werden soll
+	 * @throws IllegalArgumentException
+	 * @author Ömer
+	 */
+
+	public Spielplan getSpielplanOfKino(Kino kino) throws IllegalArgumentException;
+
+	/**
+	 * Diese Methode wird aufgerufen, wenn alle Spielpläne, welche CineMates bekannt
+	 * sind, ausgegeben werden sollen
+	 * 
+	 * @throws IllegalArgumentException
+	 * @author Ömer
+	 */
+
+	public Vector<Spielplan> getAllSpielplan() throws IllegalArgumentException;
+
+	/**
+	 * Diese Methode wird aufgerufen, wenn der Spielplan eines übergebenen Kinos
+	 * gefunden werden soll.
+	 * 
+	 * @param Integerwert, welcher die ID des Spielplans repräsentiert
+	 * @throws IllegalArgumentException
+	 * @author alina
+	 */
+
+	public Spielplan getSpielplanByID(int id) throws IllegalArgumentException;
+
+	/**
+	 * Diese Methode wird aufgerufen, wenn ein Spielplanobjekt aktualisiert werden
+	 * soll.
+	 * 
+	 * @param Spielplanobjekt, welches aktualisiert werden soll
+	 * @throws IllegalArgumentException
+	 * @author Ömer
+	 */
+
+	public void save(Spielplan spielplan) throws IllegalArgumentException;
+
+	/**
+	 * Diese Methode wird immer dann aufgerufen, wenn ein neues Kino erstellt wird.
+	 * Unserer Logik nach besitzt jedes Kino einen Spielplan. Wird ein neues Kino
+	 * erstellt, so muss für dieses auch ein Spielplan erstellt werden. Dieser ist
+	 * standardmäßig leer, kann aber durch hinzufügen von Spielzeiten befüllt
+	 * werden. Hier geht es nur darum, ein lebensfähiges Spielplanobjekt zu
+	 * erstellen.
+	 * 
+	 * @param Kino
+	 * @throws IllegalArgumentException
+	 * @author alina
+	 */
+
+	public Spielplan createSpielplan(Kino kino) throws IllegalArgumentException;
+
+	/**
+	 * Diese Methode realisiert das Löschen eines Kinos. Hier wird die
+	 * Löschweitergabe realisiert. Unserer Logik nach besteht ein Spielplan aus
+	 * Spielzeiten. Wird ein Spielplan gelöscht, so werden alle dort enthaltenen
+	 * Spielzeiten gelöscht.
+	 * 
+	 * @param Spielplanobjekt, welches gelöscht werden soll
+	 * @throws IllegalArgumentException
+	 * @author Ömer
+	 * 
+	 */
+
+	public void deleteSpielplan(Spielplan spielplan) throws IllegalArgumentException;
+
+	/**
+	 * Diese Methode wird aufgerufen, wenn alle CineMates bekannten Spielpläne
+	 * ausgegeben werden sollen
+	 * 
+	 * @param Integerwert, welcher die ID der Spielzeit repräsentiert
+	 * @throws IllegalArgumentException
+	 * @author Ömer
 	 */
 
 	public Vector<Spielzeit> getAllSpielzeiten() throws IllegalArgumentException;
 
-	public Kinokette getKinoketteOf(Nutzer nutzer) throws IllegalArgumentException;
+	/**
+	 * Diese Methode wird aufgerufen, wenn ein Spielzeitobjekt anhand seiner ID
+	 * gefunden werden soll
+	 * 
+	 * @param Integerwert, welcher die ID der Spielzeit repräsentiert
+	 * @throws IllegalArgumentException
+	 * @author Ömer
+	 */
 
+	public Spielzeit getSpielzeitByID(int id) throws IllegalArgumentException;
 
-	//vorläufige Funktion für das Bekommen des Eingeloggten Nutzers
+	/**
+	 * Diese Methode wird aufgerufen, wenn alle Spielzeiten eines Films gefunden
+	 * werden sollen
+	 * 
+	 * @param Film dessen Spielzeiten gefunden werden sollen
+	 * @throws IllegalArgumentException
+	 * @author alina
+	 */
+
+	public Vector<Spielzeit> getSpielzeitenByFilm(Film film) throws IllegalArgumentException;
+
+	/**
+	 * Diese Methode wird aufgerufen, wenn eine neue Spielzeit erstellt werden soll.
+	 * 
+	 * @param Spielplan, filmID (Referenz auf den Film) und Zeitpunkt, zu welchem
+	 *                   der Film vorgeführt werden soll
+	 * @throws IllegalArgumentException
+	 * @author Ömer
+	 * @author alina
+	 */
+
+	public Spielzeit createSpielzeit(Spielplan spielplan, int filmID, Date zeitpunkt) throws IllegalArgumentException;
+
+	/**
+	 * Diese Methode wird aufgerufen, wenn eine Spielzeit gelöscht werden soll
+	 * 
+	 * @param Spielzeit welche gelöscht werden soll
+	 * @throws IllegalArgumentException
+	 * @author Ömer
+	 */
+
+	public void deleteSpielzeit(Spielzeit spielzeit) throws IllegalArgumentException;
+
+	/**
+	 * Diese Methode wird aufgerufen, wenn ein Spielzeitobjekt in der Datenbank
+	 * gespeichert werden soll.
+	 * 
+	 * @param Spielzeitobjekt, welches gespeichert werden soll
+	 * @throws IllegalArgumentException
+	 * @author alina
+	 */
+
+	public void save(Spielzeit spielzeit) throws IllegalArgumentException;
+
+	/**
+	 * Diese Methode wird aufgerufen, wenn wir ein Nutzerobjekt anhand seiner E-Mail
+	 * finden möchten.
+	 * 
+	 * @param Email des Nutzers der gefunden werden soll
+	 * @throws IllegalArgumentException
+	 * @author alina
+	 */
+
 	public Nutzer findNutzerByEmail(String email) throws IllegalArgumentException;
-	
-	public Boolean nameVerfügbarFilm(String filmtitel) throws IllegalArgumentException;
-	
-	public Boolean nameVerfügbarKino(String kinoname) throws IllegalArgumentException;
-	
-	public Film getFilmByID(int id) throws IllegalArgumentException;
-	
-	public Spielzeit getSpielzeitByID(int id) throws IllegalArgumentException ;
-	
-	public Kino getKinoByID(int id) throws IllegalArgumentException;
+
+	/**
+	 * Diese Methode wird aufgerufen, wenn der Nutzer seinen Nutzernamen setzen
+	 * möchten. Damit dieser nicht doppelt vergeben werden kann, erfolgt zunächst
+	 * die Prüfung, ob dieser bereits vergeben ist.
+	 * 
+	 * @param Der Nutzername, welcher gesetzt werden soll
+	 * @throws IllegalArgumentException
+	 * @author alina
+	 */
+
+	public Boolean nameVerfügbarNutzer(String nutzername) throws IllegalArgumentException;
+
+	/**
+	 * Diese Methode wird aufgerufen wenn ein neuer Nutzer erstellt wird.
+	 * 
+	 * @param Email und Nutzername des neu zu erstellenden Nutzers
+	 * @throws IllegalArgumentException
+	 * @author roland
+	 * @author alina
+	 * 
+	 */
+
+	public Nutzer createNutzer(String email, String nutzername) throws IllegalArgumentException;
+
+	/**
+	 * Diese Methode wird aufgerufen, wenn ein Nutzerobjekt in der Datenbank
+	 * gespeichert werden soll.
+	 * 
+	 * @param Nutzerobjekt, welches gespeichert werden soll
+	 * @throws IllegalArgumentException
+	 * @author alina
+	 */
+
+	public void save(Nutzer nutzer) throws IllegalArgumentException;
 }

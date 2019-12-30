@@ -18,7 +18,9 @@ import de.hdm.swprakt.cinemates.shared.bo.Spielzeit;
 
 /**
  * Das asynchrone Gegenstück des Interface {@link KinoAdministration}
- * 
+ * Für die konkrete Dokumentation der einzelnen Methoden, empfiehlt es sich in das synchrone
+ * Interface @link KinoAdministration und in dessen Implementationsklasse @link KinoAdministrationImpl 
+ * zu sehen.
  * @author alina
  * @version 1.o
  *
@@ -26,16 +28,11 @@ import de.hdm.swprakt.cinemates.shared.bo.Spielzeit;
 public interface KinoAdministrationAsync {
 
 	void init(AsyncCallback<Void> callback);
-	
+
 	void createFilm(String filmtitel, String beschreibung, String details, AsyncCallback<Film> callback);
 
-	void createKino(String kinoname, String adresse, String beschreibung, AsyncCallback<Kino> callback);
-
-
-
-	// void editSpielplan(Spielplan spielplan, AsyncCallback<Void> callback);
-
-	// void editSpielzeit(Spielzeit spielzeit, AsyncCallback<Void> callback);
+	void createKino(String kinoname, String adresse, String beschreibung, Kinokette kinokette,
+			AsyncCallback<Kino> callback);
 
 	void deleteFilm(Film film, AsyncCallback<Void> callback);
 
@@ -45,39 +42,21 @@ public interface KinoAdministrationAsync {
 
 	void getAllFilme(AsyncCallback<Vector<Film>> callback);
 
-	// void findAllSpielplan(AsyncCallback<Vector<Spielplan>> callback);
-
-	void createSpielzeit(int filmID, Date zeitpunkt, AsyncCallback<Spielzeit> callback);
-
-	void saveFilm(Film film, AsyncCallback<Void> callback);
-
-	void saveNutzer(Nutzer nutzer, AsyncCallback<Void> callback);
+	void createSpielzeit(Spielplan spielplan, int filmID, Date zeitpunkt, AsyncCallback<Spielzeit> callback);
 
 	void deleteSpielzeit(Spielzeit sz, AsyncCallback<Void> callback);
-
-	void getKinosOf(Kinokette kk, AsyncCallback<Vector<Kino>> callback);
 
 	void getAllKinokette(AsyncCallback<Vector<Kinokette>> callback);
 
 	void deleteKinokette(Kinokette kk, AsyncCallback<Void> callback);
 
-	void addKinoToKinokette(Kinokette kinokette, AsyncCallback<Kino> callback);
+	void addKinoToKinokette(Kino kino, Kinokette kinokette, AsyncCallback<Void> callback);
 
 	void getAllKinos(AsyncCallback<Vector<Kino>> callback);
-
-	void getSpielplanOf(Kino k, AsyncCallback<Spielplan> callback);
-
-	void getSpielzeitOf(Spielplan sp, AsyncCallback<Vector<Spielzeit>> callback);
-
-	void getAllKinoOfKinokette(Kinokette kinokette, AsyncCallback<Vector<Kino>> callback);
-
-	void saveKino(Kino k, AsyncCallback<Void> callback);
 
 	void getAllSpielzeiten(AsyncCallback<Vector<Spielzeit>> callback);
 
 	void getAllSpielplan(AsyncCallback<Vector<Spielplan>> callback);
-
-	void saveSpielplan(Spielplan spielplan, AsyncCallback<Void> callback);
 
 	void save(Kino kino, AsyncCallback<Void> callback);
 
@@ -94,6 +73,40 @@ public interface KinoAdministrationAsync {
 	void getSpielzeitByID(int id, AsyncCallback<Spielzeit> callback);
 
 	void getKinoByID(int id, AsyncCallback<Kino> callback);
-	
+
+	void getFilmByTitel(String filmtitel, AsyncCallback<Film> callback);
+
+	void save(Film film, AsyncCallback<Void> callback);
+
+	void findKinoketteByID(int id, AsyncCallback<Kinokette> callback);
+
+	void findKinoketteByName(String kinokettenname, AsyncCallback<Kinokette> callback);
+
+	void createKinokette(Nutzer nutzer, AsyncCallback<Kinokette> callback);
+
+	void save(Kinokette kinokette, AsyncCallback<Void> callback);
+
+	void getKinoByName(String kinoname, AsyncCallback<Kino> callback);
+
+	void getKinosOfKinokette(Kinokette kinokette, AsyncCallback<Vector<Kino>> callback);
+
+	void getSpielplanOfKino(Kino kino, AsyncCallback<Spielplan> callback);
+
+	void getSpielplanByID(int id, AsyncCallback<Spielplan> callback);
+
+	void save(Spielplan spielplan, AsyncCallback<Void> callback);
+
+	void createSpielplan(Kino kino, AsyncCallback<Spielplan> callback);
+
+	void getSpielzeitenByFilm(Film film, AsyncCallback<Vector<Spielzeit>> callback);
+
+	void save(Spielzeit spielzeit, AsyncCallback<Void> callback);
+
+	void nameVerfügbarNutzer(String nutzername, AsyncCallback<Boolean> callback);
+
+	void createNutzer(String email, String nutzername, AsyncCallback<Nutzer> callback);
+
+	void save(Nutzer nutzer, AsyncCallback<Void> callback);
+
 
 }

@@ -92,6 +92,11 @@ public class SpielplanMapper extends OwnedBusinessObjectMapper {
 		return spielplan;
 
 	}
+	
+	/**
+	 * Suchen eines Spielplans mithilfe seiner ID. Die ID ist eindeutig, es wird genau
+	 * ein Spielplan der Klasse <code >SPielplan</code>zurückgegeben. 
+	 */
 
 	public Spielplan findByID(int id) {
 
@@ -173,6 +178,11 @@ public class SpielplanMapper extends OwnedBusinessObjectMapper {
 		return spielplan;
 	}
 
+	
+	/**Aktualisieren eines Spielplans in der Datenbank. 
+	 * @param spielplan
+	 * @return Ein aktualisiertes Objekt der Klasse <Spielplan>
+	 */
 	public Spielplan update(Spielplan spielplan) {
 
 		Connection con = DBConnection.connection();
@@ -194,6 +204,11 @@ public class SpielplanMapper extends OwnedBusinessObjectMapper {
 		}
 
 	}
+	
+	/** Löschen  eines Spielplans in der Datenbank. 
+	 * @param spielplan
+	 * 
+	 */
 
 	public void delete (Spielplan spielplan) {
 
@@ -233,7 +248,7 @@ public class SpielplanMapper extends OwnedBusinessObjectMapper {
 		}
 		
 	}
-	}
+	} 
 	
 	public void deleteSpielzeitenFromSpielplan (Spielplan spielplan) {
 		

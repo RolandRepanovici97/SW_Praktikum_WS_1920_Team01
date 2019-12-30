@@ -61,6 +61,11 @@ public class FilmMapper extends OwnedBusinessObjectMapper {
 		return filmMapper;
 	}
 
+	
+	/**Ausgabe aller Filme aus der Datenbank. 
+	 * @param Vector<Film>
+	 * @return film
+	 */
 	public Vector<Film> findAllFilme() {
 
 		Connection con = DBConnection.connection();
@@ -87,6 +92,14 @@ public class FilmMapper extends OwnedBusinessObjectMapper {
 		return film;
 
 	}
+
+	
+	
+	/**
+	 * Suchen eines Films mithilfe seiner ID. Die ID ist eindeutig, es wird genau
+	 * ein Film der Klasse <code >Film</code>zurückgegeben. 
+	 * 
+	 */
 
 	public Film findByID(int id) {
 
@@ -135,6 +148,13 @@ public class FilmMapper extends OwnedBusinessObjectMapper {
 		}
 		return null;
 	}
+	
+	/**
+	 * Einfügen eines Film-Objekts in die Datenbank.
+	 * @return Ein Objekt der Klasse <Film>
+	 * 
+	 */
+	
 
 	public Film insert(Film film) {
 
@@ -164,6 +184,11 @@ public class FilmMapper extends OwnedBusinessObjectMapper {
 		}
 
 	}
+	
+	/** Aktualisieren eines Films in der Datenbank. 
+	 * @param film
+	 * @return Ein aktualisiertes Objekt der Klasse <Film>
+	 */
 
 	public Film update(Film film) {
 
@@ -186,6 +211,11 @@ public class FilmMapper extends OwnedBusinessObjectMapper {
 		}
 
 	}
+	
+	/**Löschen eines Films aus der Datenbank. 
+	 * @param Film
+	 * 
+	 */
 
 	public void delete(Film film) {
 

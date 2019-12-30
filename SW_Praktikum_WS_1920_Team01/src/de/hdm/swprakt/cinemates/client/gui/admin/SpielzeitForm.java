@@ -74,23 +74,23 @@ public class SpielzeitForm extends HorizontalPanel {
 
 		RootPanel.get("DetailsPanel").add(detailsPanel);
 		this.add(detailsPanel);
-		
+
 		/*
 		 * Formatierung des Datumformats in den deutschen Standard
 		 */
 		DateTimeFormat dateFormat = DateTimeFormat.getFormat("dd.MM.yyyy");
 		datebox.setFormat(new DateBox.DefaultFormat(dateFormat));
 		datebox.getDatePicker().setYearArrowsVisible(true);
-		
+
 		/*
 		 * Uhrzeit fehllt hier noch..
 		 */
-		
 
-		kinoAdministration.getAllKinoOfKinokette(kinokette, new Kinocallback());
+		kinoAdministration.getKinosOfKinokette(kinokette, new Kinocallback());
 		// Aufruf um CallbackObjekte KinoCallback und FilmCallback zu erhalten
-		kinoAdministration.getAllKinos(new Kinocallback());   //Hier muss AllKinoofKinokette implmentiert werden.aktuell nur test
-		kinoAdministration.getAllFilme(new Filmcallback());	
+		kinoAdministration.getAllKinos(new Kinocallback()); // Hier muss AllKinoofKinokette implmentiert werden.aktuell
+															// nur test
+		kinoAdministration.getAllFilme(new Filmcallback());
 	}
 
 	/**
@@ -137,9 +137,8 @@ public class SpielzeitForm extends HorizontalPanel {
 		public void onSuccess(Vector<Film> result) {
 			ClientSideSettings.getLogger().severe("Die Filme wurden geladen.");
 			for (Film film : result) {
-				
+
 				filmlistbox.addItem(film.getFilmtitel());
-				
 
 			}
 		}
@@ -155,14 +154,14 @@ public class SpielzeitForm extends HorizontalPanel {
 
 				// Spielzeit-Objekt wird erstellt
 				Spielzeit spielzeit = new Spielzeit();
-				
+
 				// setSpielzeitName
-	//			spielzeit
+				// spielzeit
 
 			}
 			// Falls Angaben gefehlt haben,wird folgendes ausgegeben:
-				Window.alert("Bitte geben Sie alle Informationen an.");
+			Window.alert("Bitte geben Sie alle Informationen an.");
 
-			}
 		}
 	}
+}

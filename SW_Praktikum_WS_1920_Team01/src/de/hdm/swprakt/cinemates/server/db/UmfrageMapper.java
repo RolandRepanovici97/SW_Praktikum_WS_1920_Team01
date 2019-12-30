@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
+import de.hdm.swprakt.cinemates.shared.bo.Film;
 import de.hdm.swprakt.cinemates.shared.bo.Gruppe;
 import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 import de.hdm.swprakt.cinemates.shared.bo.Umfrage;
@@ -407,6 +408,46 @@ public class UmfrageMapper extends OwnedBusinessObjectMapper {
 			 */
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM `umfrage` LEFT JOIN `ownedbusinessobject` ON `umfrage`.`bo_id`= `ownedbusinessobject`.`bo_id` LEFT JOIN `umfrage_gruppe` ON `umfrage`.`umfrage_id`= `umfrage_gruppe`.`umfrage_id` WHERE (`gruppen_id` = + " + gruppe.getID() + " ) ORDER BY `gruppen_id`");
+
+			while(rs.next()) {
+				Umfrage umfrage = new Umfrage();
+				umfrage.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+				umfrage.setOwnerID(rs.getInt("owner_id"));
+				umfrage.setID(rs.getInt("umfrage_id"));
+				umfrage.setBeschreibung(rs.getString("beschreibung"));
+				umfrage.setFilmID(rs.getInt("film_id"));
+				umfrage.setUmfragenname(rs.getString("Umfragename"));
+				umfrage.setDatum(dc.convertSQLDateToJavaDate(rs.getDate("Datum")));
+				vectorumfrage.add(umfrage);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return vectorumfrage;
+	}
+	
+	
+	/**
+	 * Suchen von Umfrage-Objekten in der Datenbank.
+	 * @param Film, zu welchem die Umfragen gesucht werden sollen
+	 * @return Vector aus Objekten der Klasse <Umfrage>
+	 */
+
+	public Vector <Umfrage> findByFilm (Film film) {
+
+		/**
+		 * Verbindung zur Datenbank aufbauen.
+		 */
+		Connection con = DBConnection.connection();
+		Vector<Umfrage> vectorumfrage = new Vector<Umfrage>();
+		try {
+			/**
+			 * Leeres SQL-Statement (JDBC) anelgen
+			 */
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `umfrage` LEFT JOIN `ownedbusinessobject` ON `umfrage`.`bo_id`= `ownedbusinessobject`.`bo_id` LEFT JOIN `umfrage_gruppe` ON `umfrage`.`umfrage_id`= `umfrage_gruppe`.`umfrage_id` WHERE (`film_id` = + " + film.getID());
 
 			while(rs.next()) {
 				Umfrage umfrage = new Umfrage();

@@ -356,7 +356,7 @@ public class SpielzeitMapper extends OwnedBusinessObjectMapper {
 
 
 	/**
-	 * Suchen aller Spielzeit-Objekte, welche die Vorstellung eines Filmes repräsentieren.
+	 * Suchen aller Spielzeit-Objekte, welche die Vorstellung eines Filmes zu einem bestimmten Datum repräsentieren.
 	 *
 	 *
 	 *@param Objekt der Klasse <code>Film</code>
@@ -383,7 +383,7 @@ public class SpielzeitMapper extends OwnedBusinessObjectMapper {
 			 * Befüllen des result sets
 			 */
 			while (rs.next()) {
-				// Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt
+				// Es werden für jedes Spielzeit-Objekt die nötigen Attribute gesetzt
 				Spielzeit sz = new Spielzeit();
 				sz.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
 				sz.setID(rs.getInt("spielzeit_id"));
@@ -401,6 +401,55 @@ public class SpielzeitMapper extends OwnedBusinessObjectMapper {
 		return vectorspielzeit;
 	}
 
+
+	
+	
+
+	/**
+	 * Suchen aller Spielzeit-Objekte, welche die Vorstellung eines Filmes repräsentieren.
+	 *
+	 *
+	 *@param Objekt der Klasse <code>Film</code>
+	 *@author alina
+	 * 
+	 */
+
+	public Vector<Spielzeit> findSpielzeitenByFilm (Film film) {
+
+		// Verbindung zur Datenbank aufbauen.
+
+		Connection con = DBConnection.connection();
+		// Neuen Vector instantiieren, in welchem Film-Objekte gespeichert werden.
+
+		Vector<Spielzeit> vectorspielzeit = new Vector<Spielzeit>();
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(
+					"SELECT * FROM `spielzeit` LEFT JOIN `ownedbusinessobject` ON `spielzeit`.`bo_id` = `ownedbusinessobject`.`bo_id`  WHERE (`film_id` = " + film.getID()+ "ORDER BY `spielzeit_id`");
+
+			/*
+			 * Befüllen des result sets
+			 */
+			while (rs.next()) {
+				// Es werden für jedes Umfrageeintrag-Objekt die nötigen Attribute gesetzt
+				Spielzeit sz = new Spielzeit();
+				sz.setErstellungszeitpunkt(dc.convertTimestampToDate(rs.getTimestamp("Erstellungszeitpunkt")));
+				sz.setID(rs.getInt("spielzeit_id"));
+				sz.setOwnerID(rs.getInt("owner_id"));
+				sz.setFilmID(rs.getInt("film_id"));
+				sz.setZeitpunkt(dc.convertDatumUndUhrzeitToDate(rs.getDate("Datum"), rs.getTime("Uhrzeit")));
+				vectorspielzeit.add(sz);
+
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return vectorspielzeit;
+	}
 
 	/** Dies ist eine Hilfsmethode. Sie ermöglicht uns, die bo_id eines OwnedBusinessObjects zu ermitteln.
 	 * 

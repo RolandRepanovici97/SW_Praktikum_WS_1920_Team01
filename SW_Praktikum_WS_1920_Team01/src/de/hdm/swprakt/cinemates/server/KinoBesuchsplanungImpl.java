@@ -115,6 +115,11 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 * @link OwnedBusinessObjectMapper
 	 */
 	private OwnedBusinessObjectMapper ownedBusinessObjectMapper = null;
+	
+	/**
+	 * Default-Konstruktor
+	 * @throws IllegalArgumentException
+	 */
 
 	public KinoBesuchsplanungImpl() throws IllegalArgumentException {
 

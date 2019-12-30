@@ -39,6 +39,7 @@ import de.hdm.swprakt.cinemates.shared.bo.Votum;
  * 
  * @author alina
  * @version 1.0
+ * @see KinoBesuchsplanung, KinoBesuchsplanungAsync
  *
  */
 public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements KinoBesuchsplanung {
@@ -195,14 +196,16 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 * @param Email und Nutzername des neu zu erstellenden Nutzers
 	 * @throws IllegalArgumentException
 	 * @author roland
+	 * @author alina
 	 * 
 	 */
 
 
 	public Nutzer createNutzer(String email, String nutzername) throws IllegalArgumentException {
 		//Erzeugen eines neuen Nutzerobjekts
-		Nutzer nutzer = new Nutzer();
+		Nutzer nutzer = new Nutzer();	
 		nutzer.setEmail(email);
+		//Wenn der Name verfügbar ist...
 		if(nameVerfügbarNutzer(nutzername)){
 			nutzer.setNutzername(nutzername);
 		}
@@ -377,8 +380,6 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 * @author alina
 	 */
 
-
-
 	public Gruppe createGruppe(Nutzer nutzer, String gruppenname, Vector<Nutzer> gruppenmitglieder)
 			throws IllegalArgumentException {
 
@@ -389,9 +390,12 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 
 		gruppe.setOwnerID(nutzer.getID());
 
-		// Setzen des Namens der Gruppe
-		gruppe.setGruppenname(gruppenname);
+		//Wenn der Name verfügbar ist
+		if(nameVerfügbarGruppe(gruppenname)) {
 
+			// Setzen des Namens der Gruppe
+			gruppe.setGruppenname(gruppenname);
+		}
 		/**
 		 * Erstellung eines leeren Vectors mit Integer Objekten, in welchem später die
 		 * IDs der Gruppenmitglieder gespeichert werden
@@ -499,17 +503,6 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 		return this.umfrageMapper.findByID(id);
 	}
 
-	/**
-	 * Diese Methode wird aufgerufen, wenn eine neue Umfrage erstellt wird. Es wird
-	 * hier lediglich der Umfragenname übergeben, da wir diesen benötigen um ein
-	 * Umfrageeobjekt initial lebensfähig zu machen. Alle anderen Attribute können
-	 * wir später vergeben.
-	 * 
-	 * @param Name der Umfrage
-	 * @throws IllegalArgumentException
-	 * @author alina
-	 */
-
 
 
 
@@ -536,12 +529,34 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 
 
 	}
-	public Umfrage createUmfrage(String umfragenname) throws IllegalArgumentException {
 
+	/**
+	 * Diese Methode wird aufgerufen, wenn eine neue Umfrage erstellt wird. Es wird
+	 * hier lediglich der Umfragenname übergeben, da wir diesen benötigen um ein
+	 * Umfrageeobjekt initial lebensfähig zu machen. Alle anderen Attribute können
+	 * wir später vergeben.
+	 * 
+	 * @param Name der Umfrage
+	 * @throws IllegalArgumentException
+	 * @author alina
+	 */
+
+
+	public Umfrage createUmfrage(String umfragenname, Film film, Date datum) throws IllegalArgumentException {
+		//Erzeugen eines neuen Umfrageobjekts
 		Umfrage umfrage = new Umfrage();
-		umfrage.setUmfragenname(umfragenname);
+
+		//Wenn der Name verfügbar ist...
+		if(nameVerfügbarUmfrage(umfragenname)) {
+
+			umfrage.setUmfragenname(umfragenname);
+		}
 		umfrage.setOwnerID(nutzer.getID());
+		umfrage.setFilmID(film.getID());
+		umfrage.setDatum(datum);
 		this.umfrageMapper.insert(umfrage);
+
+		createUmfrageeinträge(umfrage, film, datum);
 
 		return umfrage;
 
@@ -554,7 +569,7 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 * @throws IllegalArgumentException
 	 * @author alina
 	 */
-	public Vector<Umfrage> showAllUmfrage() {
+	public Vector<Umfrage> showAllUmfrage() throws IllegalArgumentException{
 
 		return this.umfrageMapper.findAllUmfrage();
 
@@ -857,7 +872,7 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 		return votum;
 	}
 
-	/*
+	/**
 	 * Diese Methode realisiert das Löschen eines Votumobjekts.
 	 * 
 	 * @param Votumobjekt, welches gelöscht werden soll
@@ -909,7 +924,7 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 * @throws IllegalArgumentException
 	 * @author alina
 	 */
-	public Vector<Votum> showAllVotum() {
+	public Vector<Votum> showAllVotum() throws IllegalArgumentException {
 		return this.votumMapper.findAllVotum();
 
 	}

@@ -23,6 +23,7 @@ import de.hdm.swprakt.cinemates.shared.bo.Spielzeit;
  * zu sehen.
  * @author alina
  * @version 1.o
+ * @see KinoAdministration, KinoAdministrationImpl
  *
  */
 public interface KinoAdministrationAsync {

@@ -34,6 +34,7 @@ import de.hdm.swprakt.cinemates.shared.bo.Umfrage;
  * @author Ömer
  * @author alina
  * @version 1.0
+ * @see KinoAdministration, KinoAdministrationAsync
  */
 public class KinoAdministrationImpl extends RemoteServiceServlet implements KinoAdministration {
 

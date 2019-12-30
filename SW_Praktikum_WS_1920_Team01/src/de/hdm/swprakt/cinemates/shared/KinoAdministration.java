@@ -22,6 +22,7 @@ import de.hdm.swprakt.cinemates.shared.bo.Spielzeit;
  * 
  * @author alina
  * @version 1.0
+ * @see KinoAdministrationImpl, KinoAdministrationAsync
  *
  */
 

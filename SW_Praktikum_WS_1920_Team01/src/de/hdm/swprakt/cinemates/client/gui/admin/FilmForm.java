@@ -26,8 +26,17 @@ import de.hdm.swprakt.cinemates.shared.KinoAdministrationAsync;
 import de.hdm.swprakt.cinemates.shared.bo.Film;
 import de.hdm.swprakt.cinemates.shared.bo.Kino;
 
+
+/**
+ * Die Klasse erweitert das HorizontalPanel.Die Klasse wird benötigt um neue Film zu erstellen und diese
+ * dann weiter unten als Tabelle auszugeben. Hier werden alle Filme aus Datenbank angezeigt.
+ * @author oemer
+ *
+ */
+
 public class FilmForm extends HorizontalPanel {
 
+	//Erzeugen der Widgets
 	TextBox filmname = new TextBox();
 	TextBox filmbeschreibung = new TextBox();
 	TextBox spiellange = new TextBox();
@@ -35,21 +44,26 @@ public class FilmForm extends HorizontalPanel {
 
 	VerticalPanel detailsPanel = new VerticalPanel();
 
-	// Create a data provider.
+	// Ein ListDataProvider wird erstellt um die Daten auszugeebn
 //	private ListDataProvider<Film> dataProvider = new ListDataProvider<Film>();
 
+	
+	// Setzen der asynchronen Interfaces
 	KinoAdministrationAsync kinoAdministration = ClientSideSettings.getKinoAdministration();
 
-
-	
-
+// bisher leerer Konstruktor 
 	public FilmForm() {
 
 	}
 
-	// The list of data to display.
+	// Die Liste der Daten anzeigen
 	private static List<Film> FILMS = Arrays.asList();
 
+	
+	
+	/**
+	 * onload()-Methode 
+	 */
 	public void onLoad() {
 
 		super.onLoad();

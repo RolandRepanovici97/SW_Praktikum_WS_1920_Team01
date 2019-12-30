@@ -2,6 +2,9 @@ package de.hdm.swprakt.cinemates.client.gui.admin;
 
 import java.util.Vector;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -21,6 +24,7 @@ import de.hdm.swprakt.cinemates.shared.KinoAdministrationAsync;
 import de.hdm.swprakt.cinemates.shared.bo.Film;
 import de.hdm.swprakt.cinemates.shared.bo.Kino;
 import de.hdm.swprakt.cinemates.shared.bo.Kinokette;
+import de.hdm.swprakt.cinemates.shared.bo.Spielzeit;
 
 /**
  * Diese Klasse erweitert das HorizontalPanel und wird benötigt, um eine neue
@@ -70,6 +74,18 @@ public class SpielzeitForm extends HorizontalPanel {
 
 		RootPanel.get("DetailsPanel").add(detailsPanel);
 		this.add(detailsPanel);
+		
+		/*
+		 * Formatierung des Datumformats in den deutschen Standard
+		 */
+		DateTimeFormat dateFormat = DateTimeFormat.getFormat("dd.MM.yyyy");
+		datebox.setFormat(new DateBox.DefaultFormat(dateFormat));
+		datebox.getDatePicker().setYearArrowsVisible(true);
+		
+		/*
+		 * Uhrzeit fehllt hier noch..
+		 */
+		
 
 		kinoAdministration.getAllKinoOfKinokette(kinokette, new Kinocallback());
 		// Aufruf um CallbackObjekte KinoCallback und FilmCallback zu erhalten
@@ -128,4 +144,25 @@ public class SpielzeitForm extends HorizontalPanel {
 			}
 		}
 	}
-}
+
+	private class SpielzeitSpeichernClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			// Prüfen ob alle Anngaben ausgefüllt sind
+			if (kinolistbox != null && filmlistbox != null && datebox != null) {
+				;
+
+				// Spielzeit-Objekt wird erstellt
+				Spielzeit spielzeit = new Spielzeit();
+				
+				// setSpielzeitName
+	//			spielzeit
+
+			}
+			// Falls Angaben gefehlt haben,wird folgendes ausgegeben:
+				Window.alert("Bitte geben Sie alle Informationen an.");
+
+			}
+		}
+	}

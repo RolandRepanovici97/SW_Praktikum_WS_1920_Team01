@@ -15,10 +15,10 @@ import de.hdm.swprakt.cinemates.shared.KinoBesuchsplanungAsync;
 import de.hdm.swprakt.cinemates.shared.LoginService;
 import de.hdm.swprakt.cinemates.shared.LoginServiceAsync;
 
-
 /**
- * Diese Klasse beinhaltet Eigenschaften, die für alle clientseitigen Klassen relevant sind. 
- * Subklasse von <code>CommonSettings</code>
+ * Diese Klasse beinhaltet Eigenschaften, die für alle clientseitigen Klassen
+ * relevant sind. Subklasse von <code>CommonSettings</code>
+ * 
  * @author alina
  * @version 1.0
  *
@@ -55,15 +55,14 @@ public class ClientSideSettings {
 	 */
 	private static final Logger log = Logger.getLogger(LOGGER_NAME);
 
-
-	/** Auslesen des applikationsweiten clientseitig zentralen Loggers.
+	/**
+	 * Auslesen des applikationsweiten clientseitig zentralen Loggers.
 	 * 
 	 * @return Logger-Instanz
 	 */
 	public static Logger getLogger() {
 		return log;
 	}
-
 
 	/**
 	 * <p>
@@ -90,43 +89,38 @@ public class ClientSideSettings {
 			// Instantiierung der Kinoadministration
 
 			kinoAdministration = GWT.create(KinoAdministration.class);
+
+
+			final AsyncCallback<Void> initKinoAdministrationCallBack = new AsyncCallback<Void>() {
+				@Override
+				public void onFailure(Throwable caught) {
+
+					ClientSideSettings.getLogger().severe(
+							"Die Kinoadministration konnte nicht initialisiert werden!");
+				}
+
+				@Override
+				public void onSuccess(Void result) {
+					ClientSideSettings.getLogger().info(
+							"Die Kinoadministration wurde initialisiert.");
+
+
+				}};
+				kinoAdministration.init(initKinoAdministrationCallBack);
+
+
+
 		}
-
-
-	/*	final AsyncCallback<Void> initKinoAdministrationCallBack = new AsyncCallback<Void>() {
-			@Override
-			public void onFailure(Throwable caught) {
-
-				ClientSideSettings.getLogger().severe(
-						"Die Kinoadministration konnte nicht initialisiert werden!");
-			}
-
-			@Override
-			public void onSuccess(Void result) {
-				ClientSideSettings.getLogger().info(
-						"Die Kinoadministration wurde initialisiert.");
-			}
-		};*/
-
-		//kinoBesuchsplanung.init(initKinoAdministrationCallBack);
-
-
-
-
 		// Hier geben wir die Kinoadministration zurück
-		return kinoAdministration;
-
-
-	}
-
+		return kinoAdministration;}
 
 	/**
 	 * <p>
 	 * Anlegen und Auslesen der applikationsweiten eindeutigen Kinobesuchsplanung.
 	 * Diese Methode erstellt die Kinobesuchsplanung, sofern diese noch nicht
 	 * existiert. Bei wiederholtem Aufruf dieser Methode wird stets das bereits
-	 * zuvor angelegte Objekt zurückgegeben.
-	 * Der Aufruf dieser Methode erfolgt im Client z.B. durch
+	 * zuvor angelegte Objekt zurückgegeben. Der Aufruf dieser Methode erfolgt im
+	 * Client z.B. durch
 	 * <code>KinoBesuchsplanungAsync kinoBesuchsplanung = ClientSideSettings.getKinobesuchsplanung()</code>
 	 * </p>
 	 * 
@@ -135,8 +129,9 @@ public class ClientSideSettings {
 	 */
 	public static KinoBesuchsplanungAsync getKinobesuchsplanung() {
 
-		/** Wir prüfen, ob es bisher eine Instanz der Kinobesuchsplanung gab, wenn nicht, dann
-		 * erstellen wir diese... 
+		/**
+		 * Wir prüfen, ob es bisher eine Instanz der Kinobesuchsplanung gab, wenn nicht,
+		 * dann erstellen wir diese...
 		 * 
 		 */
 		if (kinoBesuchsplanung == null) {
@@ -149,14 +144,12 @@ public class ClientSideSettings {
 				@Override
 				public void onFailure(Throwable caught) {
 
-					ClientSideSettings.getLogger().severe(
-							"Die Kinobesuchsplanung konnte nicht initialisiert werden!");
+					ClientSideSettings.getLogger().severe("Die Kinobesuchsplanung konnte nicht initialisiert werden!");
 				}
 
 				@Override
 				public void onSuccess(Void result) {
-					ClientSideSettings.getLogger().info(
-							"Die Kinobesuchsplanung wurde initialisiert.");
+					ClientSideSettings.getLogger().info("Die Kinobesuchsplanung wurde initialisiert.");
 				}
 			};
 
@@ -167,14 +160,12 @@ public class ClientSideSettings {
 		return kinoBesuchsplanung;
 	}
 
-
 	/**
 	 * <p>
-	 * Anlegen und Auslesen des applikationsweiten eindeutigen Login-Services.
-	 * Diese Methode erstellt den Login-Service, sofern dieser noch nicht
-	 * existiert. Bei wiederholtem Aufruf dieser Methode wird stets das bereits
-	 * zuvor angelegte Objekt zurückgegeben.
-	 * Der Aufruf dieser Methode erfolgt im Client z.B. durch
+	 * Anlegen und Auslesen des applikationsweiten eindeutigen Login-Services. Diese
+	 * Methode erstellt den Login-Service, sofern dieser noch nicht existiert. Bei
+	 * wiederholtem Aufruf dieser Methode wird stets das bereits zuvor angelegte
+	 * Objekt zurückgegeben. Der Aufruf dieser Methode erfolgt im Client z.B. durch
 	 * <code>LoginServiceAsync loginService = ClientSideSettings.getLoginService()</code>
 	 * </p>
 	 * 
@@ -184,8 +175,9 @@ public class ClientSideSettings {
 
 	public static LoginServiceAsync getLoginService() {
 
-		/** Wir prüfen, ob es bisher eine Instanz des Loginservices gab, wenn nicht, dann
-		 * erstellen wir diese... 
+		/**
+		 * Wir prüfen, ob es bisher eine Instanz des Loginservices gab, wenn nicht, dann
+		 * erstellen wir diese...
 		 * 
 		 */
 		if (loginService == null) {
@@ -199,14 +191,12 @@ public class ClientSideSettings {
 				@Override
 				public void onFailure(Throwable caught) {
 
-					ClientSideSettings.getLogger().severe(
-							"Der Login-Service konnte nicht initialisiert werden!");
+					ClientSideSettings.getLogger().severe("Der Login-Service konnte nicht initialisiert werden!");
 				}
 
 				@Override
 				public void onSuccess(Void result) {
-					ClientSideSettings.getLogger().info(
-							"Der Login-Service wurde initialisiert.");
+					ClientSideSettings.getLogger().info("Der Login-Service wurde initialisiert.");
 				}
 			};
 

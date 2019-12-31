@@ -132,6 +132,8 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 * protected-Konstruktors. Dieser ermöglicht uns, dass jeweils nur eine Instanz
 	 * dieser Klasse erzeugt werden kann.
 	 */
+	
+	@Override
 	public void init() throws IllegalArgumentException {
 
 		this.nutzerMapper = NutzerMapper.nutzerMapper();

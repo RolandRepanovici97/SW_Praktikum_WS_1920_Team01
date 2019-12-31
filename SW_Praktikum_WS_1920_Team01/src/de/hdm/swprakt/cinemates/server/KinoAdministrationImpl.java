@@ -129,6 +129,8 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 	 * protected-Konstruktors. Dieser ermöglicht uns, dass jeweils nur eine Instanz
 	 * dieser Klasse erzeugt werden kann.
 	 */
+
+	@Override
 	public void init() throws IllegalArgumentException {
 
 		this.kinoMapper = KinoMapper.kinoMapper();
@@ -160,7 +162,7 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 	 * @author alina
 	 */
 	public Film getFilmByID(int id) throws IllegalArgumentException {
-		return filmMapper.findByID(id);
+		return this.filmMapper.findByID(id);
 	}
 
 	/**
@@ -172,7 +174,7 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 	 * @author alina
 	 */
 	public Film getFilmByTitel(String filmtitel) throws IllegalArgumentException {
-		return filmMapper.findByFilmtitel(filmtitel);
+		return this.filmMapper.findByFilmtitel(filmtitel);
 	}
 
 	/**

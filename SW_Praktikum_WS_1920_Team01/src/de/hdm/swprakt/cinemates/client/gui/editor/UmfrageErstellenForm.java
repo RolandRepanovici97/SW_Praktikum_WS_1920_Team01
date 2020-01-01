@@ -136,13 +136,12 @@ public class UmfrageErstellenForm extends HorizontalPanel {
 
 	}
 
-	//
-	// /**
-	// * Diese Nested Class implementiert das Interface AsyncCallback und ermöglicht
-	// * die Rückgabe der Gruppenobjekte eines Nutzers.
-	// *
-	// * @author alina
-	// */
+	/**
+	 * Diese Nested Class implementiert das Interface AsyncCallback und ermöglicht
+	 * die Rückgabe der Gruppenobjekte eines Nutzers.
+	 *
+	 * @author alina
+	 */
 	class GruppeCallback implements AsyncCallback<Vector<Gruppe>> {
 
 		@Override

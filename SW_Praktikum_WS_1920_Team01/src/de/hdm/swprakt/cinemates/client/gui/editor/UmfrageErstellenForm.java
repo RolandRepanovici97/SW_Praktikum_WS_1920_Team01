@@ -51,6 +51,8 @@ public class UmfrageErstellenForm extends HorizontalPanel {
 	private Label titel;
 	private Label umfragename = new Label("Umfragename: ");
 	private TextBox umfragenametext;
+	private Label beschreibungLabel = new Label("Beschreibung: ");
+	private TextBox beschreibungtext = new TextBox();
 	private Label gruppe = new Label("Gruppe: ");
 	private ListBox gruppebox;
 	private Label film = new Label("Film: ");
@@ -66,7 +68,7 @@ public class UmfrageErstellenForm extends HorizontalPanel {
 
 		// Instanttierung der Widgets
 		panelfürumfrage = new VerticalPanel();
-		tabelle = new Grid(5, 3);
+		tabelle = new Grid(6, 3);
 		umfragenametext = new TextBox();
 		gruppebox = new ListBox();
 		filmbox = new ListBox();
@@ -91,12 +93,14 @@ public class UmfrageErstellenForm extends HorizontalPanel {
 		// Hinzufügen unserer Widgets zur Tabelle
 		tabelle.setWidget(1, 1, umfragename);
 		tabelle.setWidget(1, 2, umfragenametext);
-		tabelle.setWidget(2, 1, gruppe);
-		tabelle.setWidget(2, 2, gruppebox);
-		tabelle.setWidget(3, 1, film);
-		tabelle.setWidget(3, 2, filmbox);
-		tabelle.setWidget(4, 1, datum);
-		tabelle.setWidget(4, 2, datebox);
+		tabelle.setWidget(2, 1, beschreibungLabel);
+		tabelle.setWidget(2, 2, beschreibungtext);
+		tabelle.setWidget(3, 1, gruppe);
+		tabelle.setWidget(3, 2, gruppebox);
+		tabelle.setWidget(4, 1, film);
+		tabelle.setWidget(4, 2, filmbox);
+		tabelle.setWidget(5, 1, datum);
+		tabelle.setWidget(5, 2, datebox);
 		panelfürumfrage.add(titel);
 		panelfürumfrage.add(tabelle);
 		panelfürumfrage.add(erstellenButton);
@@ -172,6 +176,22 @@ public class UmfrageErstellenForm extends HorizontalPanel {
 	 */
 
 	private class ErstellenClickHandler implements ClickHandler {
+		
+		private Film selektierterFilm;
+
+		/**
+		 * @return the selektierterFilm
+		 */
+		public Film getSelektierterFilm() {
+			return selektierterFilm;
+		}
+
+		/**
+		 * @param selektierterFilm the selektierterFilm to set
+		 */
+		public void setSelektierterFilm(Film selektierterFilm) {
+			this.selektierterFilm = selektierterFilm;
+		}
 
 		@Override
 		public void onClick(ClickEvent event) {
@@ -184,21 +204,22 @@ public class UmfrageErstellenForm extends HorizontalPanel {
 				// Setzen der Attribute
 				umfrage.setUmfragenname(umfragenametext.getText());
 				umfrage.setDatum(datebox.getValue());
-				// Wir entnehmen den Inhalt der Listbox zur Gruppe
-				int index = gruppebox.getSelectedIndex();
-				String gruppewert = gruppebox.getSelectedValue();
-				// Umwandeln des Inhalts in einen Integer-Wert
-				int gruppenwertalsint = Integer.parseInt(gruppewert);
-				Vector<Integer> vectorgruppenwert = new Vector<Integer>();
-				// Das ist jetzt dumm. Werden wir noch ändern
-				vectorgruppenwert.add(gruppenwertalsint);
-				// Setzen des Attributs
-				umfrage.setGruppenIDs(vectorgruppenwert);
-				// Aufruf des asynchronen Kinobesuchsplanung Interface
-				KinoBesuchsplanungAsync kinobesuchsplanung = ClientSideSettings.getKinobesuchsplanung();
+				umfrage.setBeschreibung(beschreibungtext.getText());
+//				// Wir entnehmen den Inhalt der Listbox zur Gruppe
+//				int index = gruppebox.getSelectedIndex();
+//				String gruppewert = gruppebox.getSelectedValue();
+//				// Umwandeln des Inhalts in einen Integer-Wert
+//				int gruppenwertalsint = Integer.parseInt(gruppewert);
+//				Vector<Integer> vectorgruppenwert = new Vector<Integer>();
+//				// Das ist jetzt dumm. Werden wir noch ändern
+//				vectorgruppenwert.add(gruppenwertalsint);
+//				// Setzen des Attributs
+//				umfrage.setGruppenIDs(vectorgruppenwert);
+				kinoadministration.getFilmByTitel(filmbox.getSelectedItemText(), new SelektierterFilmCallback());
+				
 				// Aufruf der Methode createUmfrage: Hierdurch wird implizit das neue
 				// Umfrageobjekt in der DB gespeichert
-				kinobesuchsplanung.createUmfrage(umfragenametext.getText(), null, null, new UmfrageCallback());
+				kinobesuchsplanung.createUmfrage(umfragenametext.getText(), selektierterFilm, datebox.getValue(), new UmfrageCallback());
 
 			}
 			// Falls Angaben gefehlt haben, geben wir folgendes aus:
@@ -206,6 +227,9 @@ public class UmfrageErstellenForm extends HorizontalPanel {
 				Window.alert("Bitte geben Sie alle Informationen an.");
 			}
 		}
+		
+		
+		
 
 		/**
 		 * Diese Nested Class implementiert das Interface AsyncCallback und ermöglicht
@@ -229,5 +253,27 @@ public class UmfrageErstellenForm extends HorizontalPanel {
 			}
 
 		}
+		
+		/**
+		 * Diese Nested Class implementiert das Interface AsyncCallback und ermöglicht
+		 * die Rückgabe eines Umfrageobjekts.
+		 * 
+		 * @author alina
+		 */
+		class SelektierterFilmCallback implements AsyncCallback<Film> {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onSuccess(Film result) {
+				Window.alert("Der Film wurde gefunden");
+				setSelektierterFilm(result);
+				
+			}
+		
 	}
-}
+}}

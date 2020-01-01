@@ -44,6 +44,7 @@ public class UmfrageAnzeige extends VerticalPanel {
 
 	// Erzeugen der Widgets
 	private Label umfragename;
+	private Label beschreibungLabel = new Label("Beschreibung: ");
 	private Label beschreibung;
 	private Button editierenButton = new Button("Umfrage editieren");
 	private Button abstimmenButton = new Button("Zur Abstimmung");
@@ -53,6 +54,7 @@ public class UmfrageAnzeige extends VerticalPanel {
 	private Label filmbeschreibung;
 	private Label filmdetails;
 	private HorizontalPanel horizontalPanel;
+	private HorizontalPanel horizontalPanel2;
 
 	// Setzen der asynchronen Interfaces
 	KinoBesuchsplanungAsync kinobesuchsplanung = ClientSideSettings.getKinobesuchsplanung();
@@ -83,6 +85,7 @@ public class UmfrageAnzeige extends VerticalPanel {
 	public void onLoad() {
 
 		horizontalPanel = new HorizontalPanel();
+		horizontalPanel2 = new HorizontalPanel();
 		editierenButton.addClickHandler(new EditierenClickHandler());
 
 		// Tag soll angezeigt werden
@@ -114,11 +117,13 @@ public class UmfrageAnzeige extends VerticalPanel {
 		horizontalPanel.add(umfragename);
 		horizontalPanel.add(editierenButton);
 		horizontalPanel.add(abstimmenButton);
+		horizontalPanel2.add(beschreibungLabel);
+		horizontalPanel2.add(beschreibung);
 		this.add(horizontalPanel);
+		this.add(horizontalPanel2);
 		this.add(film);
 		this.add(filmbeschreibung);
 		this.add(filmdetails);
-		this.add(beschreibung);
 		this.add(datum);
 		this.add(einträge);
 

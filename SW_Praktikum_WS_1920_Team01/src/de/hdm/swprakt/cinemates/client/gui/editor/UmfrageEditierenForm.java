@@ -47,6 +47,8 @@ public class UmfrageEditierenForm extends VerticalPanel {
 	private Grid tabelle;
 	private Label umfragename = new Label("Neuer Umfragename: ");
 	private TextBox umfragennameText = new TextBox();
+	private Label beschreibungLabel = new Label("Neue Beschreibung: ");
+	private TextBox neueBeschreibungText = new TextBox();
 	private Button speichernButton = new Button("Umfrage speichern");
 	private Button löschenButton = new Button();
 	private Label neueGruppe = new Label("Neue Gruppe: ");
@@ -87,7 +89,8 @@ public class UmfrageEditierenForm extends VerticalPanel {
 		titel = new Label("Umfrage: " + gewählteUmfrage.getUmfragenname() + " bearbeiten");
 		titel.getElement().setId("TitelElemente");
 		umfragennameText.setText(gewählteUmfrage.getUmfragenname());
-
+		
+		neueBeschreibungText.setText(gewählteUmfrage.getBeschreibung());
 		/*
 		 * Formatierung des Datumformats in den deutschen Standard
 		 */
@@ -103,15 +106,17 @@ public class UmfrageEditierenForm extends VerticalPanel {
 		kinobesuchsplanung.getAllGruppen(new GruppeCallback());
 
 		//Befüllen der Tabelle
-		tabelle = new Grid(5, 3);
+		tabelle = new Grid(6, 3);
 		tabelle.setWidget(1, 1, umfragename);
 		tabelle.setWidget(1, 2, umfragennameText);
-		tabelle.setWidget(2, 1, neueGruppe);
-		tabelle.setWidget(2, 2, gruppebox);
-		tabelle.setWidget(3, 1, neuerFilm);
-		tabelle.setWidget(3, 2, filmbox);
-		tabelle.setWidget(4, 1, datum);
-		tabelle.setWidget(4, 2, datebox);
+		tabelle.setWidget(2, 1, beschreibungLabel);
+		tabelle.setWidget(2, 2, neueBeschreibungText);
+		tabelle.setWidget(3, 1, neueGruppe);
+		tabelle.setWidget(3, 2, gruppebox);
+		tabelle.setWidget(4, 1, neuerFilm);
+		tabelle.setWidget(4, 2, filmbox);
+		tabelle.setWidget(5, 1, datum);
+		tabelle.setWidget(5, 2, datebox);
 
 		// Hinzufügen des ClickHandlers zum Speichern Button
 		speichernButton.addClickHandler(new SpeichernClickHandler());
@@ -242,6 +247,7 @@ public class UmfrageEditierenForm extends VerticalPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			gewählteUmfrage.setUmfragenname(umfragennameText.getText());
+			gewählteUmfrage.setBeschreibung(neueBeschreibungText.getText());
 			//			gewählteUmfrage.setGruppenIDs(gruppebox.getValue());
 			//			gewählteUmfrage.setFilmID(filmbox.getValue());
 			gewählteUmfrage.setDatum(datebox.getValue());

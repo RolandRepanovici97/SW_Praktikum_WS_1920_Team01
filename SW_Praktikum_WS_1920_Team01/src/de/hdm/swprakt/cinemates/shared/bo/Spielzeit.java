@@ -5,7 +5,7 @@ import java.util.Date;
 
 
 public class Spielzeit extends OwnedBusinessObject{
-	
+
 	/*
 	 * Diese Klasse stellt die Spielzeit der Filme dar....
 	 * 
@@ -17,16 +17,22 @@ public class Spielzeit extends OwnedBusinessObject{
 	// Attribut serialVersionUID
 
 	private static final long serialVersionUID = 1L;
-	
+
 	// Attribut datum
-	
+
 	private Date zeitpunkt;
-	
+
 	// Attribut filmID 
-	
+
 	private int filmID;
-	
-private int spielplanID;
+
+	private int spielplanID;
+
+	/*default Konstruktor 
+	 */
+	public Spielzeit() {
+		super();
+	}
 
 	public Date getZeitpunkt() {
 		return zeitpunkt;
@@ -44,8 +50,8 @@ private int spielplanID;
 		this.filmID = filmID;
 	}
 
-	
-	
+
+
 	/*
 	 * Diese Methode überprüft zwei Objekte auf Gleichheit
 	 * 
@@ -59,14 +65,14 @@ private int spielplanID;
 	 * kann.
 	 * 
 	 */
-		
+
 	/*
 	 * Wenn keine Gleichheit festgestellt wurde, geben wir false zurück.
 	 */
-	
-	
-	
-	
+
+
+
+
 	/**
 	 * Erzeugen einer textuellen Darstellung der jeweiligen Instanz der Klasse
 	 * <code> Spielzeit </code>. Diese besteht aus dem Text, der durch die
@@ -79,7 +85,7 @@ private int spielplanID;
 				+ "; Film-ID: " + this.filmID;
 	}
 
-	
+
 	/**
 	 * Diese Methode erzeugt eine ganze Zahl, die für die Instanz von
 	 * <code>Spielzeit</code> charakteristisch ist.
@@ -99,5 +105,5 @@ private int spielplanID;
 	public void setSpielplanID(int spielplanID) {
 		this.spielplanID = spielplanID;
 	}
-	
+
 }

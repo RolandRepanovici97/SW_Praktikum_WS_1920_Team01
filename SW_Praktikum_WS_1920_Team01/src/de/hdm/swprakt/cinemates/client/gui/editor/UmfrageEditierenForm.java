@@ -117,7 +117,7 @@ public class UmfrageEditierenForm extends VerticalPanel {
 		speichernButton.addClickHandler(new SpeichernClickHandler());
 
 		// Hinzufügen des ClickHandlers zum Löschen Button
-		speichernButton.addClickHandler(new LöschenClickHandler());
+		löschenButton.addClickHandler(new LöschenClickHandler());
 		
 		//Hinzufügen der Widgets zu den Panels
 

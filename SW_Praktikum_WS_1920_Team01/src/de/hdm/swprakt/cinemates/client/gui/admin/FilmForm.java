@@ -11,6 +11,7 @@ import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -21,6 +22,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ListDataProvider;
 
 import de.hdm.swprakt.cinemates.client.ClientSideSettings;
+
 import de.hdm.swprakt.cinemates.shared.KinoAdministration;
 import de.hdm.swprakt.cinemates.shared.KinoAdministrationAsync;
 import de.hdm.swprakt.cinemates.shared.bo.Film;
@@ -41,6 +43,8 @@ public class FilmForm extends HorizontalPanel {
 	TextBox filmbeschreibung = new TextBox();
 	TextBox spiellange = new TextBox();
 	Button filmanlegen = new Button("Film anlegen");
+	private Button ja = new Button("JA");
+	private Button nein = new Button("NEIN");
 
 	VerticalPanel detailsPanel = new VerticalPanel();
 
@@ -172,6 +176,33 @@ public class FilmForm extends HorizontalPanel {
 
 			kinoAdministration.getAllFilme(new AlleFilmeCallback());
 
+		}
+	}
+	
+	
+	
+	class FilmLöschenClickHandler extends DialogBox implements ClickHandler {
+
+		public FilmLöschenClickHandler() {
+			setText("Möchten Sie das Kino wirklich löschen?");
+			Grid jaNein = new Grid(3, 3);
+			jaNein.setWidget(0, 1, ja);
+			jaNein.setWidget(0, 2, nein);
+			nein.addClickHandler(new neinClickHandler());
+			setAnimationEnabled(false);
+			setGlassEnabled(false);
+			this.add(jaNein);
+		}
+
+		public void onClick(ClickEvent event) {
+			new FilmLöschenClickHandler().show();
+		}
+
+		private class neinClickHandler implements ClickHandler {
+			@Override
+			public void onClick(ClickEvent event) {
+				RootPanel.get().clear();
+			}
 		}
 	}
 

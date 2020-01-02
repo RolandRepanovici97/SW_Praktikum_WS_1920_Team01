@@ -119,6 +119,7 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 
 	/**
 	 * Default-Konstruktor
+	 * 
 	 * @throws IllegalArgumentException
 	 */
 
@@ -132,7 +133,7 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 * protected-Konstruktors. Dieser ermöglicht uns, dass jeweils nur eine Instanz
 	 * dieser Klasse erzeugt werden kann.
 	 */
-	
+
 	@Override
 	public void init() throws IllegalArgumentException {
 
@@ -167,12 +168,10 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 		return this.nutzerMapper.findByEmail(email);
 	}
 
-
-
 	/**
-	 * Diese Methode wird aufgerufen, wenn der Nutzer seinen Nutzernamen setzen möchten.
-	 * Damit dieser nicht doppelt vergeben werden kann, erfolgt zunächst die Prüfung, 
-	 * ob dieser bereits vergeben ist. 
+	 * Diese Methode wird aufgerufen, wenn der Nutzer seinen Nutzernamen setzen
+	 * möchten. Damit dieser nicht doppelt vergeben werden kann, erfolgt zunächst
+	 * die Prüfung, ob dieser bereits vergeben ist.
 	 * 
 	 * @param Der Nutzername, welcher gesetzt werden soll
 	 * @throws IllegalArgumentException
@@ -180,18 +179,16 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 */
 
 	public Boolean nameVerfügbarNutzer(String nutzername) throws IllegalArgumentException {
-		if (this.nutzerMapper.findByName(nutzername) ==null) {
+		if (this.nutzerMapper.findByName(nutzername) == null) {
 
 			return true;
 
-		}
-		else {
+		} else {
 			return false;
 		}
 
-
-
 	}
+
 	/**
 	 * Diese Methode wird aufgerufen wenn ein neuer Nutzer erstellt wird.
 	 * 
@@ -202,13 +199,12 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 * 
 	 */
 
-
 	public Nutzer createNutzer(String email, String nutzername) throws IllegalArgumentException {
-		//Erzeugen eines neuen Nutzerobjekts
-		Nutzer nutzer = new Nutzer();	
+		// Erzeugen eines neuen Nutzerobjekts
+		Nutzer nutzer = new Nutzer();
 		nutzer.setEmail(email);
-		//Wenn der Name verfügbar ist...
-		if(nameVerfügbarNutzer(nutzername)){
+		// Wenn der Name verfügbar ist...
+		if (nameVerfügbarNutzer(nutzername)) {
 			nutzer.setNutzername(nutzername);
 		}
 
@@ -273,10 +269,9 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 		return this.gruppeMapper.getGruppenOf(nutzer);
 	}
 
-
 	/**
-	 * Diese Methode wird aufgerufen, wenn alle Gruppenmitglieder einer Gruppe angezeigt
-	 * werden sollen.
+	 * Diese Methode wird aufgerufen, wenn alle Gruppenmitglieder einer Gruppe
+	 * angezeigt werden sollen.
 	 * 
 	 * @param Gruppenobjekt, dessen Nutzer gefunden werden sollen
 	 * @throws IllegalArgumentException
@@ -286,7 +281,6 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	public Vector<Nutzer> getAllNutzerOfGruppe(Gruppe gruppe) throws IllegalArgumentException {
 		return this.nutzerMapper.getGruppenmitgliederOf(gruppe);
 	}
-
 
 	/**
 	 * Diese Methode wird aufgerufen, wenn alle Gruppen angezeigt werden sollen, die
@@ -344,12 +338,10 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 		return gruppe;
 	}
 
-
-
 	/**
-	 * Diese Methode wird aufgerufen, wenn der Name einer Gruppe gesetzt werden soll.
-	 * Damit dieser nicht doppelt vergeben werden kann, erfolgt zunächst die Prüfung, 
-	 * ob dieser bereits vergeben ist. 
+	 * Diese Methode wird aufgerufen, wenn der Name einer Gruppe gesetzt werden
+	 * soll. Damit dieser nicht doppelt vergeben werden kann, erfolgt zunächst die
+	 * Prüfung, ob dieser bereits vergeben ist.
 	 * 
 	 * @param Der Gruppenname, welcher gesetzt werden soll
 	 * @throws IllegalArgumentException
@@ -357,18 +349,16 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 */
 
 	public Boolean nameVerfügbarGruppe(String gruppenname) throws IllegalArgumentException {
-		if (this.gruppeMapper.findByGruppenname(gruppenname) ==null) {
+		if (this.gruppeMapper.findByGruppenname(gruppenname) == null) {
 
 			return true;
 
-		}
-		else {
+		} else {
 			return false;
 		}
 
-
-
 	}
+
 	/**
 	 * Diese Methode wird aufgerufen, wenn eine Gruppe erstellt wird. Diese
 	 * Realisierung ist nicht besonders elegant, aber das Attribut gruppenmitglieder
@@ -392,8 +382,8 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 
 		gruppe.setOwnerID(nutzer.getID());
 
-		//Wenn der Name verfügbar ist
-		if(nameVerfügbarGruppe(gruppenname)) {
+		// Wenn der Name verfügbar ist
+		if (nameVerfügbarGruppe(gruppenname)) {
 
 			// Setzen des Namens der Gruppe
 			gruppe.setGruppenname(gruppenname);
@@ -492,9 +482,9 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 
 	}
 
-
 	/**
-	 * Diese Methode wird aufgerufen, wenn nach einer Umfrage mittels ihrer ID gesucht werden soll.
+	 * Diese Methode wird aufgerufen, wenn nach einer Umfrage mittels ihrer ID
+	 * gesucht werden soll.
 	 * 
 	 * @param Umfrageobjekt, welches gespeichert werden soll
 	 * @throws IllegalArgumentException
@@ -505,13 +495,10 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 		return this.umfrageMapper.findByID(id);
 	}
 
-
-
-
 	/**
-	 * Diese Methode wird aufgerufen, wenn der Name einer Umfrage gesetzt werden soll.
-	 * Damit dieser nicht doppelt vergeben werden kann, erfolgt zunächst die Prüfung, 
-	 * ob dieser bereits vergeben ist. 
+	 * Diese Methode wird aufgerufen, wenn der Name einer Umfrage gesetzt werden
+	 * soll. Damit dieser nicht doppelt vergeben werden kann, erfolgt zunächst die
+	 * Prüfung, ob dieser bereits vergeben ist.
 	 * 
 	 * @param Der Umfragenname, welcher gesetzt werden soll
 	 * @throws IllegalArgumentException
@@ -519,16 +506,13 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 */
 
 	public Boolean nameVerfügbarUmfrage(String umfragenname) throws IllegalArgumentException {
-		if (this.umfrageMapper.findByUmfragenname(umfragenname) ==null) {
+		if (this.umfrageMapper.findByUmfragenname(umfragenname) == null) {
 
 			return true;
 
-		}
-		else {
+		} else {
 			return false;
 		}
-
-
 
 	}
 
@@ -543,25 +527,24 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 * @author alina
 	 */
 
-
 	public Umfrage createUmfrage(String umfragenname, Film film, Date datum) throws IllegalArgumentException {
-		//Erzeugen eines neuen Umfrageobjekts
+		// Erzeugen eines neuen Umfrageobjekts
 		Umfrage umfrage = new Umfrage();
 
-		//Wenn der Name verfügbar ist...
-		if(nameVerfügbarUmfrage(umfragenname)) {
+		// Wenn der Name verfügbar ist...
+		if (nameVerfügbarUmfrage(umfragenname)) {
 
 			umfrage.setUmfragenname(umfragenname);
+
+			umfrage.setOwnerID(nutzer.getID());
+			umfrage.setFilmID(film.getID());
+			umfrage.setDatum(datum);
+			this.umfrageMapper.insert(umfrage);
+
+			createUmfrageeinträge(umfrage, film, datum);
+
 		}
-		umfrage.setOwnerID(nutzer.getID());
-		umfrage.setFilmID(film.getID());
-		umfrage.setDatum(datum);
-		this.umfrageMapper.insert(umfrage);
-
-		createUmfrageeinträge(umfrage, film, datum);
-
 		return umfrage;
-
 	}
 
 	/**
@@ -571,19 +554,18 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 * @throws IllegalArgumentException
 	 * @author alina
 	 */
-	public Vector<Umfrage> showAllUmfrage() throws IllegalArgumentException{
+	public Vector<Umfrage> showAllUmfrage() throws IllegalArgumentException {
 
 		return this.umfrageMapper.findAllUmfrage();
 
 	}
 
-
-
 	/**
 	 * Diese Methode wird aufgerufen, wenn der Owner einer Umfrage ermittelt werden
 	 * soll.
 	 * 
-	 * @param Umfrageobjekt zu welchem der zugehörige Besitzer ermittelt werrden soll
+	 * @param Umfrageobjekt zu welchem der zugehörige Besitzer ermittelt werrden
+	 *                      soll
 	 * @throws IllegalArgumentException
 	 * @author alina
 	 */
@@ -593,7 +575,6 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 		return nutzer;
 
 	}
-
 
 	/**
 	 * Diese Methode wird aufgerufen, wenn wir alle Umfragen eines Nutzers ausgeben
@@ -1094,7 +1075,9 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	}
 
 	/**
-	 * Diese Methode wird aufgerufen, wenn wir den Umfrageeintrag einer Umfrage mit den meisten Stimmen ermitteln wollen.
+	 * Diese Methode wird aufgerufen, wenn wir den Umfrageeintrag einer Umfrage mit
+	 * den meisten Stimmen ermitteln wollen.
+	 * 
 	 * @param Umfrage deren Ergebnis ermittelt werden soll
 	 * @author alina
 	 */
@@ -1155,23 +1138,26 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 			}
 
 		}
-		//Rückgabe des Umfrageeintrags mit den meisten positiven Abstimmungen
+		// Rückgabe des Umfrageeintrags mit den meisten positiven Abstimmungen
 
 		return max;
 	}
 
-
 	/**
-	 * Diese Methode wird aufgerufen, wenn es kein eindeutiges Ergebnis einer Umfrage gegeben hat und nun der Owner der Umfrage 
-	 * über deren Ausgang entscheidet. Das finale Ergebnis wird zurückgegeben.
-	 * @param Umfrage deren Ergebnis bestimmt werden soll und Umfrageeintrag der als Ergebnis markiert wird
+	 * Diese Methode wird aufgerufen, wenn es kein eindeutiges Ergebnis einer
+	 * Umfrage gegeben hat und nun der Owner der Umfrage über deren Ausgang
+	 * entscheidet. Das finale Ergebnis wird zurückgegeben.
+	 * 
+	 * @param Umfrage deren Ergebnis bestimmt werden soll und Umfrageeintrag der als
+	 *                Ergebnis markiert wird
 	 * @author alina
 	 */
-	public Umfrageeintrag finalesErgebnisBestimmen(Umfrage umfrage, Umfrageeintrag umfrageeintrag) throws IllegalArgumentException {
-		//Nur der Owner der Umfrage soll die Möglichkeit bekommen, das finale Ergebnis einer Umfrage zu bestimmen
-		if(getOwnerOfUmfrage(umfrage) == nutzer) {
+	public Umfrageeintrag finalesErgebnisBestimmen(Umfrage umfrage, Umfrageeintrag umfrageeintrag)
+			throws IllegalArgumentException {
+		// Nur der Owner der Umfrage soll die Möglichkeit bekommen, das finale Ergebnis
+		// einer Umfrage zu bestimmen
+		if (getOwnerOfUmfrage(umfrage) == nutzer) {
 			umfrageeintrag.setFinalesErgebnis(true);
-
 
 		}
 		return umfrageeintrag;

@@ -1,7 +1,7 @@
 package de.hdm.swprakt.cinemates.shared.bo;
 
 public class Kinokette extends OwnedBusinessObject {
-	
+
 	/*Diese Klasse dient der Darstellung der Kinoketten,
 	 *somit besitzt ein Kino beispielsweise mehrere Standorte. 
 	 *
@@ -11,22 +11,30 @@ public class Kinokette extends OwnedBusinessObject {
 	 * 
 	 */
 
-	 private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-	 
+
 	/**
 	 * Jede Kinokette besitzt eine eindeutige Beschreibung, 
 	 * wie beispielsweise den Ort
 	 */
-		
-	 private String beschreibung;
-	 
+
+	private String beschreibung;
+
 	/**
-	  * Name der Kinokette
-	  */
-	 
-	 private String kinokettenname;
-	
+	 * Name der Kinokette
+	 */
+
+	private String kinokettenname;
+
+
+
+	/*default Konstruktor 
+	 */
+	public Kinokette() {
+		super();
+	}
+
 	/**
 	 * Auslesen der Kinobeschreibung
 	 */
@@ -58,12 +66,12 @@ public class Kinokette extends OwnedBusinessObject {
 	public void setKinokettenname(String kinokettenname) {
 		this.kinokettenname = kinokettenname;
 	}
-	
-	
+
+
 	public String toString() {
-		
+
 		return super.toString() +  "; Kinokettenname: " + this.kinokettenname + "; Beschreibung: " + this.beschreibung;
 	}
-	 
+
 }
 

@@ -30,6 +30,14 @@ public class Spielplan extends OwnedBusinessObject {
 	 */
 	Vector<Integer> spielzeitIDs = new Vector<>();
 
+	
+
+	/*default Konstruktor 
+	 */
+	public Spielplan() {
+		super();
+	}
+
 
 	// Aulesen des Attributs spielplanname
 	

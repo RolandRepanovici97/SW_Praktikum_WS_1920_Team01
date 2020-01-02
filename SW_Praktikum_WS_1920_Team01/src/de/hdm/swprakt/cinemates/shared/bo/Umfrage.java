@@ -34,9 +34,9 @@ public class Umfrage extends OwnedBusinessObject {
 	 * Der Name der Umfrage
 	 */
 	private String umfragenname;
-	
+
 	private Date datum;
-	
+
 	private int filmID;
 
 	/**
@@ -56,6 +56,13 @@ public class Umfrage extends OwnedBusinessObject {
 	 * 
 	 * @return
 	 */
+
+
+	/*default Konstruktor 
+	 */
+	public Umfrage() {
+		super();
+	}
 	public String getBeschreibung() {
 		return beschreibung;
 	}
@@ -120,8 +127,8 @@ public class Umfrage extends OwnedBusinessObject {
 	public void setGruppenIDs(Vector<Integer> gruppenIDs) {
 		this.gruppenIDs = gruppenIDs;
 	}
-	
-	
+
+
 
 	public Date getDatum() {
 		return datum;
@@ -168,6 +175,6 @@ public class Umfrage extends OwnedBusinessObject {
 		return false;
 
 	}
-	
+
 }
 

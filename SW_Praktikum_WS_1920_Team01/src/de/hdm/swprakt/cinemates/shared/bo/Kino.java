@@ -36,8 +36,16 @@ public class Kino extends BusinessObject{
 	 */
 
 	private int spielplanID;
-	
+
 	private int kinoketteID;
+
+
+
+	/*default Konstruktor 
+	 */
+	public Kino() {
+		super();
+	}
 
 	/**
 	 * Auslesen der Kinobeschreibung
@@ -86,8 +94,8 @@ public class Kino extends BusinessObject{
 	public void setAdresse(String adresse) {
 		this.adresse = adresse;
 	}
-	
-	
+
+
 
 	/**
 	 * Auslesen der Kinospielpläne
@@ -123,7 +131,7 @@ public class Kino extends BusinessObject{
 	 */
 
 	public String toString() {
-		
+
 		return  this.kinoname ;
 	}
 }

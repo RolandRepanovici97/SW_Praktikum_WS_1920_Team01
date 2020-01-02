@@ -66,12 +66,12 @@ public class HeaderfürKinobesuchsplanung extends HorizontalPanel {
 		logo = new Image("images/CineMates Logo.jpg");
 		logo.setWidth("80px");
 		gruppe = new Button("Gruppe");
-		gruppe.setHTML("<i class=\"fas fa-users\"></i>");
+		gruppe.setHTML("<i class=\"fas fa-users\"> </i>");
 		gruppe.setHeight("60px");
 		gruppe.setWidth("60px");
 		gruppe.getElement().setId("GruppeButton");
 		logout = new Button("Logout");
-		logout.setHTML("<i class=\"fas fa-sign-out-alt\"></i>");
+		logout.setHTML("<i class=\"fas fa-sign-out-alt\"> </i>");
 		logout.setHeight("60px");
 		logout.setWidth("60px");
 		logout.getElement().setId("LogoutButton");

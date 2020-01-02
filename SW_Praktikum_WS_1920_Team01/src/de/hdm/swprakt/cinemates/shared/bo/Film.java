@@ -26,6 +26,16 @@ public class Film extends OwnedBusinessObject {
 	// Attribut spiellänge
 
 	private String details;
+	
+	
+	
+
+	/*default Konstruktor 
+	 */
+	public Film() {
+		super();
+	}
+
 
 	// Aulesen des Attributs filmtitel
 

@@ -13,6 +13,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Grid;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -43,15 +44,17 @@ public class UmfrageAnzeige extends VerticalPanel {
 
 	// Erzeugen der Widgets
 	private Label umfragename;
+	private Label beschreibungLabel = new Label("Beschreibung: ");
 	private Label beschreibung;
-	private Button editierenButton = new Button("Editieren");
-	private Button abstimmenButton = new Button("Abstimmen");
-	private Button abtimmungenAnsehenButton = new Button("Abstimmungen ansehen");
+	private Button editierenButton = new Button("Umfrage editieren");
+	private Button abstimmenButton = new Button("Zur Abstimmung");
 	private FlexTable einträge;
 	private Label film;
 	private Label datum;
 	private Label filmbeschreibung;
 	private Label filmdetails;
+	private HorizontalPanel horizontalPanel;
+	private HorizontalPanel horizontalPanel2;
 
 	// Setzen der asynchronen Interfaces
 	KinoBesuchsplanungAsync kinobesuchsplanung = ClientSideSettings.getKinobesuchsplanung();
@@ -81,6 +84,10 @@ public class UmfrageAnzeige extends VerticalPanel {
 	 */
 	public void onLoad() {
 
+		horizontalPanel = new HorizontalPanel();
+		horizontalPanel2 = new HorizontalPanel();
+		editierenButton.addClickHandler(new EditierenClickHandler());
+
 		// Tag soll angezeigt werden
 		datum = new Label("Geplanter Tag: \n" + gewählteUmfrage.getDatum().toString());
 
@@ -107,11 +114,16 @@ public class UmfrageAnzeige extends VerticalPanel {
 		kinobesuchsplanung.showUmfrageeinträgeofUmfrage(gewählteUmfrage, new UmfrageeintragCallback());
 
 		// Hinzufügen der Widgets zu unserem Panel
-		this.add(umfragename);
+		horizontalPanel.add(umfragename);
+		horizontalPanel.add(editierenButton);
+		horizontalPanel.add(abstimmenButton);
+		horizontalPanel2.add(beschreibungLabel);
+		horizontalPanel2.add(beschreibung);
+		this.add(horizontalPanel);
+		this.add(horizontalPanel2);
 		this.add(film);
 		this.add(filmbeschreibung);
 		this.add(filmdetails);
-		this.add(beschreibung);
 		this.add(datum);
 		this.add(einträge);
 
@@ -137,8 +149,12 @@ public class UmfrageAnzeige extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
+			RootPanel.get("DetailsPanel").clear();
 			UmfrageEditierenForm editierenForm = new UmfrageEditierenForm();
-			RootPanel.get("Details").add(editierenForm);
+			editierenForm.setGewählteUmfrage(gewählteUmfrage);
+			RootPanel.get("DetailsPanel").add(editierenForm);
+
+
 		}
 
 	}
@@ -201,7 +217,6 @@ public class UmfrageAnzeige extends VerticalPanel {
 
 		}
 
-
 		class Kinocallback implements AsyncCallback<Kino> {
 
 			@Override
@@ -215,11 +230,12 @@ public class UmfrageAnzeige extends VerticalPanel {
 
 			@Override
 			public void onSuccess(Kino result) {
-				//				kinostring = result.getKinoname() + "/n" + result.getAdresse();
+				// kinostring = result.getKinoname() + "/n" + result.getAdresse();
 
 			}
 
-		}}
+		}
+	}
 
 	class FilmCallback implements AsyncCallback<Film> {
 
@@ -237,7 +253,7 @@ public class UmfrageAnzeige extends VerticalPanel {
 
 			ClientSideSettings.getLogger().severe("Der Film wurde geladen");
 			film.setText("Film: \n" + result.getFilmtitel());
-			filmbeschreibung.setText("Filmbeschreibung: \n " +result.getBeschreibung());
+			filmbeschreibung.setText("Filmbeschreibung: \n " + result.getBeschreibung());
 			filmdetails.setText("Filmdetails: \n" + result.getDetails());
 		}
 

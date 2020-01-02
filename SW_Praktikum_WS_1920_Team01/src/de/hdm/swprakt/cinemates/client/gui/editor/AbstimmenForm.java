@@ -1,25 +1,24 @@
 /**
+ * Diese Klasse erweitert das VerticalPanel und wird verwendet, um die Abstimmung einer
+ * Umfrage zu realisieren. Die Umfrage wurde in einem vorherigen Schritt selektiert.
  * 
+ * @author alina
  */
 package de.hdm.swprakt.cinemates.client.gui.editor;
 
-import java.util.Date;
 import java.util.Vector;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
+
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.swprakt.cinemates.client.ClientSideSettings;
-import de.hdm.swprakt.cinemates.server.db.KinoMapper;
 import de.hdm.swprakt.cinemates.shared.KinoAdministrationAsync;
 import de.hdm.swprakt.cinemates.shared.KinoBesuchsplanungAsync;
 import de.hdm.swprakt.cinemates.shared.bo.Film;
@@ -29,39 +28,17 @@ import de.hdm.swprakt.cinemates.shared.bo.Umfrage;
 import de.hdm.swprakt.cinemates.shared.bo.Umfrageeintrag;
 
 /**
- * Diese Klasse erweitert das VerticalPanel und wird verwendet, um Details einer
- * Umfrage anzuzeigen. Die Umgfrage wurde in einem vorherigen Schritt selektiert
- * und kann nun detaillierter angesehen werden. Von hier aus kann zur
- * Bearbeitung der Umfrage oder zur Abstimmung navigiert werden.
- * 
  * @author alina
  *
  */
-public class UmfrageAnzeige extends VerticalPanel {
+public class AbstimmenForm extends VerticalPanel {
 
-	// Benötigte Klassenvariable
+	// Benötigte Klassenvariable, stellt die selektierte Umfrage dar
 	private Umfrage gewählteUmfrage;
 
-	// Erzeugen der Widgets
-	private Label umfragename;
-	private Label beschreibungLabel = new Label("Beschreibung: ");
-	private Label beschreibung;
-	private Button editierenButton = new Button("Umfrage editieren");
-	private Button abstimmenButton = new Button("Zur Abstimmung");
-	private FlexTable einträge;
-	private Label film;
-	private Label datum;
-	private Label filmbeschreibung;
-	private Label filmdetails;
-	private HorizontalPanel horizontalPanel;
-	private HorizontalPanel horizontalPanel2;
+	// Getter & Setter für die Variable Umfrage: Wird benötigt, wenn Umfrage
+	// selektiert wurde
 
-	// Setzen der asynchronen Interfaces
-	KinoBesuchsplanungAsync kinobesuchsplanung = ClientSideSettings.getKinobesuchsplanung();
-	KinoAdministrationAsync kinoadministration = ClientSideSettings.getKinoAdministration();
-
-	// Getter & Setter für die Variable Umfrage: Wird benötigt, wenn Umfrage aus
-	// Liste selektiert wird
 	/**
 	 * @return the gewählteUmfrage
 	 */
@@ -76,18 +53,29 @@ public class UmfrageAnzeige extends VerticalPanel {
 		this.gewählteUmfrage = gewählteUmfrage;
 	}
 
-	/**
-	 * onLoad() Methode: Hier wird das Umfrageobjekt übergeben!
-	 * 
-	 * @param Umfrageobjekt, zu welchem uns die Details interessieren
-	 * @author alina
-	 */
+	// Initialisierung der benötigten Widgets
+	private Label titel;
+	// Erzeugen der Widgets
+	private Label beschreibungLabel = new Label("Beschreibung: ");
+	private Label beschreibung;
+	private FlexTable einträge;
+	private Label film;
+	private Label datum;
+	private Label filmbeschreibung;
+	private Label filmdetails;
+	private HorizontalPanel horizontalPanel;
+
+	// Setzen der asynchronen Interfaces
+	KinoBesuchsplanungAsync kinobesuchsplanung = ClientSideSettings.getKinobesuchsplanung();
+	KinoAdministrationAsync kinoadministration = ClientSideSettings.getKinoAdministration();
+
 	public void onLoad() {
+		super.onLoad();
+
+		titel = new Label("Abstimmung zur Umfrage: " + gewählteUmfrage.getUmfragenname());
+		titel.getElement().setId("TitelElemente");
 
 		horizontalPanel = new HorizontalPanel();
-		horizontalPanel2 = new HorizontalPanel();
-		editierenButton.addClickHandler(new EditierenClickHandler());
-		abstimmenButton.addClickHandler(new AbstimmenClickHandler());
 
 		// Tag soll angezeigt werden
 		datum = new Label("Geplanter Tag: \n" + gewählteUmfrage.getDatum().toString());
@@ -101,10 +89,6 @@ public class UmfrageAnzeige extends VerticalPanel {
 		filmbeschreibung = new Label();
 		filmdetails = new Label();
 
-		// Wir stellen den Namen der Umfrage dar
-		umfragename = new Label(gewählteUmfrage.getUmfragenname());
-		umfragename.getElement().setId("Umfragename");
-
 		// Wir stellen die Beschreibung der Umfrage dar
 		beschreibung = new Label(gewählteUmfrage.getBeschreibung());
 
@@ -115,72 +99,15 @@ public class UmfrageAnzeige extends VerticalPanel {
 		kinobesuchsplanung.showUmfrageeinträgeofUmfrage(gewählteUmfrage, new UmfrageeintragCallback());
 
 		// Hinzufügen der Widgets zu unserem Panel
-		horizontalPanel.add(umfragename);
-		horizontalPanel.add(editierenButton);
-		horizontalPanel.add(abstimmenButton);
-		horizontalPanel2.add(beschreibungLabel);
-		horizontalPanel2.add(beschreibung);
+		horizontalPanel.add(beschreibungLabel);
+		horizontalPanel.add(beschreibung);
+		this.add(titel);
 		this.add(horizontalPanel);
-		this.add(horizontalPanel2);
 		this.add(film);
 		this.add(filmbeschreibung);
 		this.add(filmdetails);
 		this.add(datum);
 		this.add(einträge);
-
-	}
-
-	/*
-	 * ***************************************************************************
-	 * ABSCHNITT Nested Classes
-	 * ***************************************************************************
-	 */
-
-	/**
-	 * Diese Nested-Class implementiert das Interface ClickHandler und wird
-	 * benötigt, um die Interaktion des Nutzers mit dem "Editieren" Button zu
-	 * gewährleisten. Klickt er auf diesen Button, so wird er auf die Form zur
-	 * Bearbeitung der Umfrage geleitet.
-	 * 
-	 * @author alina
-	 *
-	 */
-
-	class EditierenClickHandler implements ClickHandler {
-
-		@Override
-		public void onClick(ClickEvent event) {
-			RootPanel.get("DetailsPanel").clear();
-			UmfrageEditierenForm editierenForm = new UmfrageEditierenForm();
-			editierenForm.setGewählteUmfrage(gewählteUmfrage);
-			RootPanel.get("DetailsPanel").add(editierenForm);
-
-
-		}
-
-	}	
-
-	/**
-	 * Diese Nested-Class implementiert das Interface ClickHandler und wird
-	 * benötigt, um die Interaktion des Nutzers mit dem "Abstimmen" Button zu
-	 * gewährleisten. Klickt er auf diesen Button, so wird er auf die Form zur
-	 * Abstimmung der Umfrage geleitet.
-	 * 
-	 * @author alina
-	 *
-	 */
-
-	class AbstimmenClickHandler implements ClickHandler {
-
-		@Override
-		public void onClick(ClickEvent event) {
-			RootPanel.get("DetailsPanel").clear();
-			AbstimmenForm abstimmenForm = new AbstimmenForm();
-			abstimmenForm.setGewählteUmfrage(gewählteUmfrage);
-			RootPanel.get("DetailsPanel").add(abstimmenForm);
-
-
-		}
 
 	}
 
@@ -216,7 +143,8 @@ public class UmfrageAnzeige extends VerticalPanel {
 				kinoadministration.getKinoByID(eintrag.getKinoID(), new Kinocallback());
 
 				einträge.setText(rowCount, 0, "Uhrzeit: \n " + spielzeitstring + "\n Kino: " + kinostring);
-
+				einträge.setWidget(rowCount, 1, new JaBox());
+				einträge.setWidget(rowCount, 2, new NeinBox());
 				rowCount++;
 
 			}
@@ -282,5 +210,33 @@ public class UmfrageAnzeige extends VerticalPanel {
 			filmdetails.setText("Filmdetails: \n" + result.getDetails());
 		}
 
+	}
+	
+	/**
+	 * Diese Klasse erweitert das Widget CheckBox und dient zur Darstellung
+	 * der Ja-Checkbox.
+	 * @author alina
+	 *
+	 */
+
+	class JaBox extends CheckBox {
+		public JaBox() {
+			super();
+			this.setHTML("<i class=\"far fa-check-circle\"></i>");
+		}
+	}
+
+	/**
+	 * Diese Klasse erweitert das Widget CheckBox und dient zur Darstellung
+	 * der Nein-Checkbox.
+	 * @author alina
+	 *
+	 */
+	class NeinBox extends CheckBox {
+
+		public NeinBox() {
+			super();
+			this.setHTML("<i class=\"far fa-times-circle\"></i>");
+		}
 	}
 }

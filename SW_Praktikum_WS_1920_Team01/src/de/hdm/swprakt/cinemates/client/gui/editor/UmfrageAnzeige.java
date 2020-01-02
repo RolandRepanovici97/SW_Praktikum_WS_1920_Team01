@@ -212,7 +212,7 @@ public class UmfrageAnzeige extends VerticalPanel {
 
 			for (Umfrageeintrag eintrag : result) {
 
-				kinoadministration.getSpielzeitByID(eintrag.getKinoID(), new SpielzeitCallback());
+				kinoadministration.getSpielzeitByID(eintrag.getSpielzeitID(), new SpielzeitCallback());
 				kinoadministration.getKinoByID(eintrag.getKinoID(), new Kinocallback());
 
 				einträge.setText(rowCount, 0, "Uhrzeit: \n " + spielzeitstring + "\n Kino: " + kinostring);
@@ -255,7 +255,7 @@ public class UmfrageAnzeige extends VerticalPanel {
 
 			@Override
 			public void onSuccess(Kino result) {
-				// kinostring = result.getKinoname() + "/n" + result.getAdresse();
+				 kinostring = result.getKinoname() + "/n" + result.getAdresse();
 
 			}
 

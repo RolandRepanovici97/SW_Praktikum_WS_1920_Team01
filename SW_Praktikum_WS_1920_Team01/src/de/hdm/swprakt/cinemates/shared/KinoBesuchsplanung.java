@@ -239,17 +239,13 @@ public interface KinoBesuchsplanung extends RemoteService {
 	public Boolean nameVerfügbarUmfrage(String umfragenname) throws IllegalArgumentException;
 
 	/**
-	 * Diese Methode wird aufgerufen, wenn eine neue Umfrage erstellt wird. Es wird
-	 * hier lediglich der Umfragenname übergeben, da wir diesen benötigen um ein
-	 * Umfrageeobjekt initial lebensfähig zu machen. Alle anderen Attribute können
-	 * wir später vergeben.
+	 * Diese Methode wird aufgerufen, wenn eine neue Umfrage erstellt wird. 
 	 * 
-	 * @param Name der Umfrage
+	 * @param Name der Umfrage, Film, Gruppe und Datum an dem der Film gesehen werden soll
 	 * @throws IllegalArgumentException
 	 * @author alina
 	 */
-	
-	public Umfrage createUmfrage(String umfragenname, Film film, Date datum) throws IllegalArgumentException;
+	public Umfrage createUmfrage(String umfragenname, Film film, Gruppe gruppe, Date datum) throws IllegalArgumentException;
 
 	/**
 	 * Diese Methode wird aufgerufen, wenn wir alle in der Datenbank gespeicherten
@@ -260,6 +256,19 @@ public interface KinoBesuchsplanung extends RemoteService {
 	 */
 
 	public Vector<Gruppe> getAllGruppen() throws IllegalArgumentException;
+
+
+
+	/**
+	 * Diese Methode wird aufgerufen, wenn eine Gruppe durch ihren Namens
+	 * gefunden werden soll.
+	 * 
+	 * @param Name der Gruppe 
+	 * @throws IllegalArgumentException
+	 * @author alina
+	 */
+
+	public Gruppe findGruppeByName(String gruppenname) throws IllegalArgumentException;
 
 	/**
 	 * Diese Methode wird aufgerufen, wenn der Owner einer Umfrage ermittelt werden

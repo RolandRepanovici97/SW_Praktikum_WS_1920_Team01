@@ -38,7 +38,7 @@ public interface KinoBesuchsplanungAsync {
 
 	void showAllUmfrage(AsyncCallback<Vector<Umfrage>> callback);
 
-	void createUmfrage(String umfragenname, Film film, Date datum, AsyncCallback<Umfrage> callback);
+	void createUmfrage(String umfragenname, Film film, Gruppe gruppe, Date datum, AsyncCallback<Umfrage> callback);
 
 	void showVotumOfUmfrageeintrag(Umfrageeintrag umfrageeintrag, AsyncCallback<Vector<Votum>> callback);
 
@@ -112,5 +112,7 @@ public interface KinoBesuchsplanungAsync {
 	void createUmfrageeinträge(Umfrage umfrage, Film film, Date datum, AsyncCallback<Vector<Umfrageeintrag>> callback);
 
 	void getOwnerOfUmfrage(Umfrage umfrage, AsyncCallback<Nutzer> callback);
+
+	void findGruppeByName(String gruppenname, AsyncCallback<Gruppe> callback);
 
 }

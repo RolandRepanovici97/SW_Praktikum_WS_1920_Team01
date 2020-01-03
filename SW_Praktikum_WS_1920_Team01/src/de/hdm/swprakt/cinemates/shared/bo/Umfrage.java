@@ -38,6 +38,10 @@ public class Umfrage extends OwnedBusinessObject {
 	private Date datum;
 
 	private int filmID;
+	
+	private int gruppenID;
+	
+	
 
 	/**
 	 * Sammlung der IDs der Umrageeintr�ge in einer Vector die aus ein
@@ -45,11 +49,7 @@ public class Umfrage extends OwnedBusinessObject {
 	 */
 	Vector<Integer> umfrageeinträgeIDs = new Vector<>();
 
-	/**
-	 * Sammlung der IDs der Gruppen in einer Vector die ein Fremdschlüsselbeziehung
-	 * zu den Spielpläne des Umfrages besteht
-	 */
-	Vector<Integer> gruppenIDs = new Vector<>();
+
 
 	/**
 	 * Auslesen des Umfrage Beschreibungs
@@ -111,21 +111,20 @@ public class Umfrage extends OwnedBusinessObject {
 	}
 
 	/**
-	 * Auslesen des IDs der Gruppen die an der Umfrage eingeladet sind.
-	 * 
-	 * @return
+	 * Auslesen der IDs der Gruppe
+	 * @return gruppenID
 	 */
-	public Vector<Integer> getGruppenIDs() {
-		return gruppenIDs;
+	public int getGruppenID() {
+		return gruppenID;
 	}
 
 	/**
-	 * Setzen des IDs der Gruppen die an der Umfrage eingeladet sind.
+	 * Setzen der ID der Gruppe
 	 * 
-	 * @param gruppenIDs
+	 * @param gruppenID
 	 */
-	public void setGruppenIDs(Vector<Integer> gruppenIDs) {
-		this.gruppenIDs = gruppenIDs;
+	public void setGruppenID(int gruppenID) {
+		this.gruppenID = gruppenID;
 	}
 
 

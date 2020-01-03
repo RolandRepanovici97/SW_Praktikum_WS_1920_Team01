@@ -176,8 +176,9 @@ public class UmfrageErstellenForm extends HorizontalPanel {
 	 */
 
 	private class ErstellenClickHandler implements ClickHandler {
-		
+
 		private Film selektierterFilm;
+		private Gruppe selektierteGruppe;
 
 		/**
 		 * @return the selektierterFilm
@@ -193,33 +194,33 @@ public class UmfrageErstellenForm extends HorizontalPanel {
 			this.selektierterFilm = selektierterFilm;
 		}
 
+		/**
+		 * @return the selektierteGruppe
+		 */
+		public Gruppe getSelektierteGruppe() {
+			return selektierteGruppe;
+		}
+
+		/**
+		 * @param selektierteGruppe the selektierteGruppe to set
+		 */
+		public void setSelektierteGruppe(Gruppe selektierteGruppe) {
+			this.selektierteGruppe = selektierteGruppe;
+		}
+
 		@Override
 		public void onClick(ClickEvent event) {
 			// Prüfung, ob alle Angaben gemacht wurden
 			if (umfragenametext != null && gruppebox != null && filmbox != null && datebox != null) {
 
-				// Neues Objekt der Klasse Umfrage wird erstellt
-				Umfrage umfrage = new Umfrage();
+				kinobesuchsplanung.findGruppeByName(gruppebox.getSelectedValue(), new SelektierteGruppeCallback());
 
-				// Setzen der Attribute
-				umfrage.setUmfragenname(umfragenametext.getText());
-				umfrage.setDatum(datebox.getValue());
-				umfrage.setBeschreibung(beschreibungtext.getText());
-//				// Wir entnehmen den Inhalt der Listbox zur Gruppe
-//				int index = gruppebox.getSelectedIndex();
-//				String gruppewert = gruppebox.getSelectedValue();
-//				// Umwandeln des Inhalts in einen Integer-Wert
-//				int gruppenwertalsint = Integer.parseInt(gruppewert);
-//				Vector<Integer> vectorgruppenwert = new Vector<Integer>();
-//				// Das ist jetzt dumm. Werden wir noch ändern
-//				vectorgruppenwert.add(gruppenwertalsint);
-//				// Setzen des Attributs
-//				umfrage.setGruppenIDs(vectorgruppenwert);
 				kinoadministration.getFilmByTitel(filmbox.getSelectedItemText(), new SelektierterFilmCallback());
-				
+
 				// Aufruf der Methode createUmfrage: Hierdurch wird implizit das neue
 				// Umfrageobjekt in der DB gespeichert
-				kinobesuchsplanung.createUmfrage(umfragenametext.getText(), selektierterFilm, datebox.getValue(), new UmfrageCallback());
+				kinobesuchsplanung.createUmfrage(umfragenametext.getText(), this.getSelektierterFilm(),
+						this.getSelektierteGruppe(), datebox.getValue(), new UmfrageCallback());
 
 			}
 			// Falls Angaben gefehlt haben, geben wir folgendes aus:
@@ -227,9 +228,6 @@ public class UmfrageErstellenForm extends HorizontalPanel {
 				Window.alert("Bitte geben Sie alle Informationen an.");
 			}
 		}
-		
-		
-		
 
 		/**
 		 * Diese Nested Class implementiert das Interface AsyncCallback und ermöglicht
@@ -247,13 +245,19 @@ public class UmfrageErstellenForm extends HorizontalPanel {
 
 			@Override
 			public void onSuccess(Umfrage result) {
+
+				// Wenn wir unsere Umfrage erstellt haben, so setzen wir auch das Attribut Beschreibung
+
+				// Setzen des Attributs beschreibung
+				result.setBeschreibung(beschreibungtext.getText());
+
 				// Wir informieren den Nutzer über den positiven Ausgang
 				Window.alert("Die Umfrage wurde erstellt. Die Teilnehmer wurden per E-Mail darüber informiert.");
 
 			}
 
 		}
-		
+
 		/**
 		 * Diese Nested Class implementiert das Interface AsyncCallback und ermöglicht
 		 * die Rückgabe eines Umfrageobjekts.
@@ -265,15 +269,42 @@ public class UmfrageErstellenForm extends HorizontalPanel {
 			@Override
 			public void onFailure(Throwable caught) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void onSuccess(Film result) {
-				Window.alert("Der Film wurde gefunden");
+
+				ClientSideSettings.getLogger().severe("Der selektierte Film wurde gefunden.");
 				setSelektierterFilm(result);
-				
+
 			}
-		
+
+		}
+
+		/**
+		 * Diese Nested Class implementiert das Interface AsyncCallback und ermöglicht
+		 * die Rückgabe eines Umfrageobjekts.
+		 * 
+		 * @author alina
+		 */
+		class SelektierteGruppeCallback implements AsyncCallback<Gruppe> {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onSuccess(Gruppe result) {
+
+				ClientSideSettings.getLogger().severe("Die selektierte Gruppe wurde gefunden.");
+				setSelektierteGruppe(result);
+
+			}
+
+		}
+
 	}
-}}
+}

@@ -256,6 +256,19 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 		return this.gruppeMapper.findAllGruppe();
 	}
 
+
+	/**
+	 * Diese Methode wird aufgerufen, wenn eine Gruppe durch ihren Namens
+	 * gefunden werden soll.
+	 * 
+	 * @param Name der Gruppe 
+	 * @throws IllegalArgumentException
+	 * @author alina
+	 */
+
+	public Gruppe findGruppeByName(String gruppenname) throws IllegalArgumentException {
+		return this.gruppeMapper.findByGruppenname(gruppenname);
+	}
 	/**
 	 * Diese Methode wird aufgerufen, wenn alle Gruppen eines Nutzers angezeigt
 	 * werden sollen.
@@ -517,17 +530,14 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	}
 
 	/**
-	 * Diese Methode wird aufgerufen, wenn eine neue Umfrage erstellt wird. Es wird
-	 * hier lediglich der Umfragenname übergeben, da wir diesen benötigen um ein
-	 * Umfrageeobjekt initial lebensfähig zu machen. Alle anderen Attribute können
-	 * wir später vergeben.
+	 * Diese Methode wird aufgerufen, wenn eine neue Umfrage erstellt wird. 
 	 * 
-	 * @param Name der Umfrage
+	 * @param Name der Umfrage, Film, Gruppe und Datum an dem der Film gesehen werden soll
 	 * @throws IllegalArgumentException
 	 * @author alina
 	 */
 
-	public Umfrage createUmfrage(String umfragenname, Film film, Date datum) throws IllegalArgumentException {
+	public Umfrage createUmfrage(String umfragenname, Film film, Gruppe gruppe, Date datum) throws IllegalArgumentException {
 		// Erzeugen eines neuen Umfrageobjekts
 		Umfrage umfrage = new Umfrage();
 
@@ -538,9 +548,11 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 
 			umfrage.setOwnerID(nutzer.getID());
 			umfrage.setFilmID(film.getID());
+			umfrage.setGruppenID(gruppe.getID());
 			umfrage.setDatum(datum);
 			this.umfrageMapper.insert(umfrage);
 
+			//Aufruf der Methode createUmfrageeinträge, um dieser Umfrage Einträge hinzuzufügen
 			createUmfrageeinträge(umfrage, film, datum);
 
 		}

@@ -111,6 +111,15 @@ public class AbstimmenForm extends VerticalPanel {
 
 	}
 
+
+
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT Nested Classes
+	 * ***************************************************************************
+	 */
+	
+	
 	/**
 	 * Diese Nested-Class implementiert das Interface AsyncCallback und wird
 	 * benötigt, um die Umfrageeinträge der gewählten Umfrage zurückzugeben.
@@ -211,7 +220,7 @@ public class AbstimmenForm extends VerticalPanel {
 		}
 
 	}
-	
+
 	/**
 	 * Diese Klasse erweitert das Widget CheckBox und dient zur Darstellung
 	 * der Ja-Checkbox.

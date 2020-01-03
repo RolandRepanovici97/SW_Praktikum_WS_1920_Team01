@@ -21,6 +21,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  * beinhaltet das Logo der Applikation, sowie den Namen
  * 
  * @author alina
+ * @author roland
  * @version 1.0
  *
  */
@@ -101,6 +102,7 @@ public class HeaderfürKinobesuchsplanung extends HorizontalPanel {
 		adminButton.addClickHandler(new AdminClickHandler());
 		planerButton.addClickHandler(new PlanerClickHandler());
 		nutzer.addClickHandler(new NutzerClickHandler());
+		gruppe.addClickHandler(new GruppeClickHandler());
 
 	}
 
@@ -161,5 +163,16 @@ public class HeaderfürKinobesuchsplanung extends HorizontalPanel {
 
 		}
 
+	}
+	
+	private class GruppeClickHandler implements ClickHandler {
+		
+		@Override
+		public void onClick(ClickEvent event) {
+			RootPanel.get("DetailsPanel").clear();
+			GruppenAnzeigenForm gruppenanzeigenform = new GruppenAnzeigenForm();
+			
+			RootPanel.get("DetailsPanel").add(gruppenanzeigenform);
+		}
 	}
 }

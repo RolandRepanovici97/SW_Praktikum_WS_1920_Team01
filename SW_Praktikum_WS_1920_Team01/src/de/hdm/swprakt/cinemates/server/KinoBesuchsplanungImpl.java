@@ -145,7 +145,7 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 		this.ownedBusinessObjectMapper = OwnedBusinessObjectMapper.ownedBusinessObjectMapper();
 
 		KinoAdministrationImpl kinoAdministrationImpl = new KinoAdministrationImpl();
-		kinoAdministrationImpl.init();
+//		kinoAdministrationImpl.init();
 		this.administration = kinoAdministrationImpl;
 	}
 

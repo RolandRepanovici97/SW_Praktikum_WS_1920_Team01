@@ -143,7 +143,7 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 
 		// Referenz auf die Kinobesuchsplanung
 		kinobesuchsplanung = new KinoBesuchsplanungImpl();
-		kinobesuchsplanung.init();
+//		kinobesuchsplanung.init();
 
 	}
 

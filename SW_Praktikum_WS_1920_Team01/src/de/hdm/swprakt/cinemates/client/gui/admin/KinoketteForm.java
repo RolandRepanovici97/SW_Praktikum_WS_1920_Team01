@@ -43,8 +43,10 @@ public class KinoketteForm extends HorizontalPanel {
 	private Button ja = new Button("JA");
 	private Button nein = new Button("NEIN");
 	private Button löschen = new Button("Löschen");
-
+	private VerticalPanel verticalpanel = new VerticalPanel();
 	private Nutzer eingeloggterNutzer;
+	private Button neuesKino = new Button();
+	private Label titel = new Label();
 
 	private Vector<Kino> kinoVector = new Vector<Kino>();
 
@@ -54,7 +56,6 @@ public class KinoketteForm extends HorizontalPanel {
 
 	KinoAdministrationAsync kinoAdministration = ClientSideSettings.getKinoAdministration();
 
-	private Image logo;
 
 	KinoverwaltungForm kf;
 	SpielplanForm sf;
@@ -68,6 +69,10 @@ public class KinoketteForm extends HorizontalPanel {
 	public void onLoad() {
 		super.onLoad();
 
+
+		titel.setText("Meine Kinokette");
+		titel.getElement().setId("TitelElemente");
+		
 		kinoAdministration.findNutzerByEmail("Kinobetreiber2@gmail.com", new AsyncCallback<Nutzer>() {
 
 			@Override
@@ -140,16 +145,17 @@ public class KinoketteForm extends HorizontalPanel {
 				Button spielplanBearbeiten = new Button("Spielplan bearbeiten");
 				Button kinoBearbeiten = new Button("Kino bearbeiten");
 				Button kinolöschen = new Button("Kino löschen");
-				Image logo = new Image("images/plus.jpg");
-
-				logo.setWidth("40px");
+				neuesKino.setHTML("<i class=\"fas fa-plus\"></i>");
+				//				Image logo = new Image("images/plus.jpg");
+				//
+				//				logo.setWidth("40px");
 				for (Kino kino : result) {
 
 					ClientSideSettings.getLogger().severe(kino.toString());
 					spielplanBearbeiten = new Button("Spielplan bearbeiten");
 					kinoBearbeiten = new Button("Kino bearbeiten");
 					kinolöschen = new Button("Kino löschen");
-					logo = new Image("images/plus.jpg");
+					//					logo = new Image("images/plus.jpg");
 
 					kinos.setText(rowcount, 0, kino.toString());
 					kinos.setWidget(rowcount, 1, spielplanBearbeiten);
@@ -158,9 +164,9 @@ public class KinoketteForm extends HorizontalPanel {
 					kinoBearbeiten.addClickHandler(new kinoBearbeitenClickHandler());
 					kinos.setWidget(rowcount, 3, kinolöschen);
 					kinolöschen.addClickHandler(new löschenClickHandler());
-					kinos.setWidget(rowcount, 4, logo);
-					kinos.setText(rowcount, 5, "Neues Kino anlegen");
-					logo.addClickHandler(new kinoAnlegenClickHandler());
+					//					kinos.setWidget(rowcount, 4, neuesKino);
+					//					kinos.setText(rowcount, 5, "Neues Kino anlegen");
+					neuesKino.addClickHandler(new kinoAnlegenClickHandler());
 					//
 					rowcount++;
 				}
@@ -188,8 +194,11 @@ public class KinoketteForm extends HorizontalPanel {
 		 * 
 		 * RootPanel.get("DetailsPanel").add(kinoketteGrid);
 		 */
-		this.add(kinos);
-		RootPanel.get("DetailsPanel").add(kinos);
+		verticalpanel.add(titel);
+		verticalpanel.add(kinos);
+		verticalpanel.add(neuesKino);
+		this.add(verticalpanel);
+		//		RootPanel.get("DetailsPanel").add(kinos);
 
 	}
 

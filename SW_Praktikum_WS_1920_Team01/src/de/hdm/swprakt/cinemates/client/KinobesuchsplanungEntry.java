@@ -1,6 +1,5 @@
 package de.hdm.swprakt.cinemates.client;
 
-
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.gwt.core.client.EntryPoint;
@@ -18,7 +17,6 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.swprakt.cinemates.client.gui.Footer;
 import de.hdm.swprakt.cinemates.client.gui.admin.HeaderfürKinoAdministration;
-import de.hdm.swprakt.cinemates.client.gui.admin.Navigator;
 import de.hdm.swprakt.cinemates.client.gui.editor.HeaderfürKinobesuchsplanung;
 import de.hdm.swprakt.cinemates.client.gui.editor.NutzerkontoForm;
 import de.hdm.swprakt.cinemates.client.gui.editor.StartseiteEditor;
@@ -32,8 +30,6 @@ import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
  */
 public class KinobesuchsplanungEntry implements EntryPoint {
 
-
-
 	/*
 	 * ***************************************************************************
 	 * ABSCHNITT LOGIN
@@ -41,7 +37,6 @@ public class KinobesuchsplanungEntry implements EntryPoint {
 	 */
 
 	private Nutzer nutzer = null;
-
 
 	private Button loginButton = new Button("Login");
 	private Anchor signInLink = new Anchor("Login");
@@ -53,8 +48,6 @@ public class KinobesuchsplanungEntry implements EntryPoint {
 	@Override
 	public void onModuleLoad() {
 
-
-
 		HeaderfürKinobesuchsplanung headerPanel = new HeaderfürKinobesuchsplanung();
 		headerPanel.getElement().setId("headerPanelKinobesuchsplanung");
 		RootPanel.get("Header").add(headerPanel);
@@ -63,13 +56,13 @@ public class KinobesuchsplanungEntry implements EntryPoint {
 		Footer footer = new Footer();
 		RootPanel.get("Footer").add(footer);
 
-		//		RootPanel.get("DetailsPanel").add(startseite);
-		//		RootPanel.get("DetailsPanel").add(loginPanel);
-		//				RootPanel.get("DetailsPanel").add(signInLink);
+		// RootPanel.get("DetailsPanel").add(startseite);
+		// RootPanel.get("DetailsPanel").add(loginPanel);
+		// RootPanel.get("DetailsPanel").add(signInLink);
 		//
-		//		loginPanel.add(loginLabel);
-		//		loginPanel.add(loginButton);
-		//		signInLink.setHref(AktuellerNutzer.getNutzer().getLoginUrl());
+		// loginPanel.add(loginLabel);
+		// loginPanel.add(loginButton);
+		// signInLink.setHref(AktuellerNutzer.getNutzer().getLoginUrl());
 
 		// Zugriff auf Instanz des asynchronen Interfaces für den Login
 
@@ -78,12 +71,12 @@ public class KinobesuchsplanungEntry implements EntryPoint {
 
 	}
 
-
-	/** Nutzung des Konzepts NestedClass für Rückgabe des LoginServiceCallbacks. 
-	 * Nach erfolgreichem Callback setzen wird den <code>AktuellerNutzer<code>
+	/**
+	 * Nutzung des Konzepts NestedClass für Rückgabe des LoginServiceCallbacks. Nach
+	 * erfolgreichem Callback setzen wird den <code>AktuellerNutzer<code>
 	 * Anschließend erfolt eine Abfrage ob der Nutzer bereits eingeloggt ist, falls
-	 * dies zutreffend ist wird er zu Cinemates (Editor-Client)
-	 * weitergeleitet. Falls nicht wird die Methode loadLogin() aufgerufen.
+	 * dies zutreffend ist wird er zu Cinemates (Editor-Client) weitergeleitet.
+	 * Falls nicht wird die Methode loadLogin() aufgerufen.
 	 * 
 	 * @author alina
 	 *
@@ -94,7 +87,6 @@ public class KinobesuchsplanungEntry implements EntryPoint {
 		public void onFailure(Throwable caught) {
 			Window.alert(caught.toString());
 		}
-
 
 		@Override
 		public void onSuccess(Nutzer nutzer) {
@@ -110,7 +102,6 @@ public class KinobesuchsplanungEntry implements EntryPoint {
 
 				} else {
 
-
 				}
 			} else {
 				loadLogin();
@@ -119,8 +110,8 @@ public class KinobesuchsplanungEntry implements EntryPoint {
 		}
 
 		/**
-		 * Diese Methode wird aufgerufen, falls der Nutzer nicht bei CineMates eingeloggt ist
-		 * In dieser wird die Google LoginMaske über den Button
+		 * Diese Methode wird aufgerufen, falls der Nutzer nicht bei CineMates
+		 * eingeloggt ist In dieser wird die Google LoginMaske über den Button
 		 * <code>loginButton </code> aufgerufen.
 		 */
 		private void loadLogin() {
@@ -150,12 +141,14 @@ public class KinobesuchsplanungEntry implements EntryPoint {
 
 		/**
 		 * Die Klasse <code>AktuellerNutzer</code> repräsentiert den aktuell im System
-		 * angemeldeten Nutzer. Da der Nutzer an weiteren Stellen nötig ist, muss er abrufbar sein.
+		 * angemeldeten Nutzer. Da der Nutzer an weiteren Stellen nötig ist, muss er
+		 * abrufbar sein.
 		 */
 	}
+
 	public static class AktuellerNutzer {
 
-		private static Nutzer nutzer  = null;
+		private static Nutzer nutzer = null;
 
 		public static Nutzer getNutzer() {
 			return nutzer;
@@ -166,11 +159,8 @@ public class KinobesuchsplanungEntry implements EntryPoint {
 		}
 	}
 
-	/* Das ist nur ein Test!
+	/*
+	 * Das ist nur ein Test!
 	 */
 
-
-
-
 }
-

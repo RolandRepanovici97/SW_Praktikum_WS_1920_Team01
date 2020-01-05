@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.hdm.swprakt.cinemates.client.gui.Footer;
 import de.hdm.swprakt.cinemates.client.gui.admin.HeaderfürKinoAdministration;
 import de.hdm.swprakt.cinemates.client.gui.admin.Navigator;
 import de.hdm.swprakt.cinemates.client.gui.editor.HeaderfürKinobesuchsplanung;
@@ -59,6 +60,8 @@ public class KinobesuchsplanungEntry implements EntryPoint {
 		RootPanel.get("Header").add(headerPanel);
 		startseite = new StartseiteEditor();
 		RootPanel.get("DetailsPanel").add(startseite);
+		Footer footer = new Footer();
+		RootPanel.get("Footer").add(footer);
 
 		//		RootPanel.get("DetailsPanel").add(startseite);
 		//		RootPanel.get("DetailsPanel").add(loginPanel);

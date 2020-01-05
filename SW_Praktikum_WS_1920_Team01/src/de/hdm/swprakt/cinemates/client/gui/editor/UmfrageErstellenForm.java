@@ -213,7 +213,7 @@ public class UmfrageErstellenForm extends HorizontalPanel {
 			// Prüfung, ob alle Angaben gemacht wurden
 			if (umfragenametext != null && gruppebox != null && filmbox != null && datebox != null) {
 
-				kinobesuchsplanung.findGruppeByName(gruppebox.getSelectedValue(), new SelektierteGruppeCallback());
+				kinobesuchsplanung.findGruppeByName(gruppebox.getSelectedItemText(), new SelektierteGruppeCallback());
 
 				kinoadministration.getFilmByTitel(filmbox.getSelectedItemText(), new SelektierterFilmCallback());
 

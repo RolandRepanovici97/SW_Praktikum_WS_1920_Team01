@@ -4,6 +4,7 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 
+import de.hdm.swprakt.cinemates.client.gui.Footer;
 import de.hdm.swprakt.cinemates.client.gui.admin.AlleKinosEinerKinokette;
 import de.hdm.swprakt.cinemates.client.gui.admin.FilmForm;
 import de.hdm.swprakt.cinemates.client.gui.admin.HeaderfürKinoAdministration;
@@ -29,6 +30,8 @@ public class KinoAdministrationEntry implements EntryPoint {
 		
 		KinoketteForm kf = new KinoketteForm();
 		RootPanel.get("DetailsPanel").add(kf);
+		Footer footer = new Footer();
+		RootPanel.get("Footer").add(footer);
 	
 		
 		

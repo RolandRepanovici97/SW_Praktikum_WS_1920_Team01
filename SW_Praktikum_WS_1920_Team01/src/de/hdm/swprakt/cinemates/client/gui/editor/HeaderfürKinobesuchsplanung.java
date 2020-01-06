@@ -57,25 +57,21 @@ public class HeaderfürKinobesuchsplanung extends HorizontalPanel {
 		adminButton = new Button("Kinoadministration");
 		adminButton.getElement().setId("adminbutton");
 		nutzer = new Button("Nutzer");
-		nutzer.setStyleName("nutzer");
 		nutzer.setHTML("<i class=\"fas fa-user\"></i>");
-		nutzer.setHeight("60x");
-		nutzer.setWidth("60px");
+		nutzer.setSize("80px", "80px");
 		nutzer.getElement().setId("NutzerButton");
 		planerButton = new Button("Kinobesuchsplanung");
 		planerButton.getElement().setId("planerbutton");
 		logo = new Image("images/CineMates Logo.jpg");
-		logo.setWidth("80px");
+		logo.setWidth("150px");
 		gruppe = new Button("Gruppe");
 		gruppe.setHTML("<i class=\"fas fa-users\"> </i>");
-		gruppe.setHeight("60px");
-		gruppe.setWidth("60px");
 		gruppe.getElement().setId("GruppeButton");
+		gruppe.setSize("80px", "80px");
 		logout = new Button("Logout");
 		logout.setHTML("<i class=\"fas fa-sign-out-alt\"> </i>");
-		logout.setHeight("60px");
-		logout.setWidth("60px");
 		logout.getElement().setId("LogoutButton");
+		logout.setSize("80px", "80px");
 
 		/**
 		 * Hinzufügen der Buttons/Widgtes zum HorizontalPanel

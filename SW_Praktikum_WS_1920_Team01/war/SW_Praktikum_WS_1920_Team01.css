@@ -94,32 +94,32 @@ div#MenuBar {
 }
 
 .gwt-Button {
-	background: #eb94d0 !important;
-	background-image: -webkit-linear-gradient(top, #eb94d0, #2079b0)
+	background: #a6a5a7!important;
+	background-image: -webkit-linear-gradient(top, #a6a5a7, #f9ecd2)
 		!important;
-	background-image: -moz-linear-gradient(top, #eb94d0, #2079b0) !important;
-	background-image: -ms-linear-gradient(top, #eb94d0, #2079b0) !important;
-	background-image: -o-linear-gradient(top, #eb94d0, #2079b0) !important;
-	background-image: linear-gradient(to bottom, #eb94d0, #2079b0)
+	background-image: -moz-linear-gradient(top, #a6a5a7, #f9ecd2) !important;
+	background-image: -ms-linear-gradient(top, #a6a5a7, #f9ecd2) !important;
+	background-image: -o-linear-gradient(top, #a6a5a7, #f9ecd2) !important;
+	background-image: linear-gradient(to bottom, #a6a5a7, #f9ecd2)
 		!important;
 	-webkit-border-radius: 28 !important;
 	-moz-border-radius: 28 !important;
 	border-radius: 28px !important;
 	font-family: 'Raleway', sans-serif !important;
 	font-size: 16px !important;
-	color: #fafafa !important;
+	color: #363536!important;
 	padding: 13px !important;
 	text-decoration: none !important;
 }
 
 .gwt-Button:hover, .gwt-Button:focus {
-	background: #2079b0 !important;
-	background-image: -webkit-linear-gradient(top, #2079b0, #eb94d0)
+	background: #f9ecd2 !important;
+	background-image: -webkit-linear-gradient(top, #f9ecd2, #a6a5a7)
 		!important;
-	background-image: -moz-linear-gradient(top, #2079b0, #eb94d0) !important;
-	background-image: -ms-linear-gradient(top, #2079b0, #eb94d0) !important;
-	background-image: -o-linear-gradient(top, #2079b0, #eb94d0) !important;
-	background-image: linear-gradient(to bottom, #2079b0, #eb94d0)
+	background-image: -moz-linear-gradient(top, #f9ecd2, #a6a5a7) !important;
+	background-image: -ms-linear-gradient(top, #f9ecd2, #a6a5a7) !important;
+	background-image: -o-linear-gradient(top, #f9ecd2, #a6a5a7) !important;
+	background-image: linear-gradient(to bottom, #f9ecd2, #a6a5a7)
 		!important;
 	text-decoration: none !important;
 }
@@ -164,14 +164,14 @@ div#MenuBar {
 #planerbutton {
 	font-weight: bold;
 	font-style: black;
-	font-size: 28px !important;
+	font-size: 25px !important;
 	font-family: 'Raleway', sans-serif;
 }
 
 #adminbutton {
 	font-weight: bold;
 	font-style: black;
-	font-size: 28px !important;
+	font-size: 25px !important;
 	font-family: 'Raleway', sans-serif;
 }
 

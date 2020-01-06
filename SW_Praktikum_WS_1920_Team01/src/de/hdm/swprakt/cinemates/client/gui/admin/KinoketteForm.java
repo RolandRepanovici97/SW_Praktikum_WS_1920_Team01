@@ -70,6 +70,8 @@ public class KinoketteForm extends HorizontalPanel {
 		super.onLoad();
 
 
+		kinos.addStyleName("flexTable");
+		kinos.setCellPadding(10);
 		titel.setText("Meine Kinokette");
 		titel.getElement().setId("TitelElemente");
 		

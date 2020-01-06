@@ -64,6 +64,8 @@ public class StartseiteEditor extends HorizontalPanel {
 		neueUmfrage.addClickHandler(new NeueUmfrageClickHandler());
 
 		tabelle = new FlexTable();
+		tabelle.addStyleName("flexTable");
+		tabelle.setCellPadding(10);
 
 		kinobesuchsplanung.showAllUmfrage(new UmfragenAnzeigenCallback());
 

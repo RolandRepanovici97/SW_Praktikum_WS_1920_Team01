@@ -9,6 +9,7 @@ h1 {
 }
 
 div#Header {
+	
 }
 
 div#Footer {
@@ -94,7 +95,7 @@ div#MenuBar {
 }
 
 .gwt-Button {
-	background: #a6a5a7!important;
+	background: #a6a5a7 !important;
 	background-image: -webkit-linear-gradient(top, #a6a5a7, #f9ecd2)
 		!important;
 	background-image: -moz-linear-gradient(top, #a6a5a7, #f9ecd2) !important;
@@ -107,7 +108,7 @@ div#MenuBar {
 	border-radius: 28px !important;
 	font-family: 'Raleway', sans-serif !important;
 	font-size: 16px !important;
-	color: #363536!important;
+	color: #363536 !important;
 	padding: 13px !important;
 	text-decoration: none !important;
 }
@@ -122,11 +123,6 @@ div#MenuBar {
 	background-image: linear-gradient(to bottom, #f9ecd2, #a6a5a7)
 		!important;
 	text-decoration: none !important;
-}
-
-.gwt-FlexTable {
-	font-family: 'Raleway', sans-serif !important;
-	font-size: 16px !important;
 }
 
 .gwt-ListBox {
@@ -144,23 +140,16 @@ div#MenuBar {
 	font-size: 16px !important;
 }
 
-.flextable {
+.flexTable td {
 	font-family: 'Raleway', sans-serif !important;
-	font-size: 16px !important;
+	font-size: 20px !important;
+	padding: 10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	font-weight: bold;
+	background: transparent;
 }
 
-.gwt-HTMLTable {
-	font-family: 'Raleway', sans-serif !important;
-	font-size: 16px !important;
-}
-
-.FlexTable {
-	font-family: 'Raleway', sans-serif !important;
-	font-size: 16px !important;
-	background-color: #e8d9e2 !important;
-}
-
-}
 #planerbutton {
 	font-weight: bold;
 	font-style: black;
@@ -189,7 +178,7 @@ div#MenuBar {
 
 #TitelElemente {
 	font-family: 'Raleway', sans-serif;
-	font-size: 28px !important;
+	font-size: 30px !important;
 	font-weight: semi-bold;
 	color: #000000;
 }

@@ -215,12 +215,7 @@ public class UmfrageErstellenForm extends HorizontalPanel {
 
 				kinobesuchsplanung.findGruppeByName(gruppebox.getSelectedItemText(), new SelektierteGruppeCallback());
 
-				kinoadministration.getFilmByTitel(filmbox.getSelectedItemText(), new SelektierterFilmCallback());
-
-				// Aufruf der Methode createUmfrage: Hierdurch wird implizit das neue
-				// Umfrageobjekt in der DB gespeichert
-				kinobesuchsplanung.createUmfrage(umfragenametext.getText(), this.getSelektierterFilm(),
-						this.getSelektierteGruppe(), datebox.getValue(), new UmfrageCallback());
+				
 
 			}
 			// Falls Angaben gefehlt haben, geben wir folgendes aus:
@@ -265,6 +260,13 @@ public class UmfrageErstellenForm extends HorizontalPanel {
 		 * @author alina
 		 */
 		class SelektierterFilmCallback implements AsyncCallback<Film> {
+			
+			Gruppe gruppe;
+			SelektierterFilmCallback(Gruppe gruppe){
+				this.gruppe = gruppe;
+				
+				
+			}
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -277,6 +279,12 @@ public class UmfrageErstellenForm extends HorizontalPanel {
 
 				ClientSideSettings.getLogger().severe("Der selektierte Film wurde gefunden.");
 				setSelektierterFilm(result);
+				
+
+				// Aufruf der Methode createUmfrage: Hierdurch wird implizit das neue
+				// Umfrageobjekt in der DB gespeichert
+				kinobesuchsplanung.createUmfrage(umfragenametext.getText(), result,
+						this.gruppe, datebox.getValue(), new UmfrageCallback());
 
 			}
 
@@ -300,6 +308,7 @@ public class UmfrageErstellenForm extends HorizontalPanel {
 			public void onSuccess(Gruppe result) {
 
 				ClientSideSettings.getLogger().severe("Die selektierte Gruppe wurde gefunden.");
+				kinoadministration.getFilmByTitel(filmbox.getSelectedItemText(), new SelektierterFilmCallback(result));
 				setSelektierteGruppe(result);
 
 			}

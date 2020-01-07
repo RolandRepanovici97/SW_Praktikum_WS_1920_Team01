@@ -546,14 +546,14 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 
 			umfrage.setUmfragenname(umfragenname);
 
-			umfrage.setOwnerID(nutzer.getID());
+//			umfrage.setOwnerID(nutzer.getID());
 			umfrage.setFilmID(film.getID());
 			umfrage.setGruppenID(gruppe.getID());
 			umfrage.setDatum(datum);
 			this.umfrageMapper.insert(umfrage);
 
 			//Aufruf der Methode createUmfrageeinträge, um dieser Umfrage Einträge hinzuzufügen
-			createUmfrageeinträge(umfrage, film, datum);
+//			createUmfrageeinträge(umfrage, film, datum);
 
 		}
 		return umfrage;

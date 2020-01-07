@@ -131,7 +131,7 @@ public class FilmMapper extends OwnedBusinessObjectMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM `film` WHERE (`filmtitel` = " + filmtitel);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `film` WHERE filmtitel = '" + filmtitel+"'");
 
 			if (rs.next()) {
 				Film f = new Film();

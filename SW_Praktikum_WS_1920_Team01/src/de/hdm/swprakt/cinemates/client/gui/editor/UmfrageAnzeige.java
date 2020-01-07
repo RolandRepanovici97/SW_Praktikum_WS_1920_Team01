@@ -193,8 +193,6 @@ public class UmfrageAnzeige extends VerticalPanel {
 	 */
 	class UmfrageeintragCallback implements AsyncCallback<Vector<Umfrageeintrag>> {
 
-		String spielzeitstring;
-		String kinostring;
 
 		@Override
 		public void onFailure(Throwable caught) {
@@ -212,10 +210,10 @@ public class UmfrageAnzeige extends VerticalPanel {
 
 			for (Umfrageeintrag eintrag : result) {
 
-				kinoadministration.getSpielzeitByID(eintrag.getSpielzeitID(), new SpielzeitCallback());
-				kinoadministration.getKinoByID(eintrag.getKinoID(), new Kinocallback());
+				kinoadministration.getSpielzeitByID(eintrag.getSpielzeitID(), new SpielzeitCallback(rowCount));
+				kinoadministration.getKinoByID(eintrag.getKinoID(), new Kinocallback(rowCount));
 
-				einträge.setText(rowCount, 0, "Uhrzeit: \n " + spielzeitstring + "\n Kino: " + kinostring);
+//				einträge.setText(rowCount, 0, "Uhrzeit: \n " + spielzeitstring + "\n Kino: " + kinostring);
 
 				rowCount++;
 
@@ -223,7 +221,11 @@ public class UmfrageAnzeige extends VerticalPanel {
 		}
 
 		class SpielzeitCallback implements AsyncCallback<Spielzeit> {
-
+			private int rowCount;
+			public SpielzeitCallback(int rowCount) {
+				this.rowCount = rowCount;
+				
+			}
 			@Override
 			public void onFailure(Throwable caught) {
 
@@ -236,14 +238,23 @@ public class UmfrageAnzeige extends VerticalPanel {
 
 			@Override
 			public void onSuccess(Spielzeit result) {
-				spielzeitstring = result.toString();
+				einträge.setText(rowCount, 0, "Uhrzeit: \n" + result.getZeitpunkt().toString());
+//				kinoadministration.getKinoByID(kinoId, new Kinocallback(result.getZeitpunkt().toString(), rowCount));
+//				spielzeitstring = result.toString();
+				
 
 			}
 
 		}
 
 		class Kinocallback implements AsyncCallback<Kino> {
-
+			String spielzeitString;
+			int rowCount;
+			
+			public Kinocallback(int rowCount) {
+				this.rowCount = rowCount;
+				// TODO Auto-generated constructor stub
+			}
 			@Override
 			public void onFailure(Throwable caught) {
 				/*
@@ -255,7 +266,8 @@ public class UmfrageAnzeige extends VerticalPanel {
 
 			@Override
 			public void onSuccess(Kino result) {
-				 kinostring = result.getKinoname() + "/n" + result.getAdresse();
+				einträge.setText(rowCount, 1, "Kino: " + result.getKinoname() + "/n" + result.getAdresse());
+//				 kinostring = result.getKinoname() + "/n" + result.getAdresse();
 
 			}
 

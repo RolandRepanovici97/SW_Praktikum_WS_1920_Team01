@@ -109,6 +109,8 @@ public class UmfrageAnzeige extends VerticalPanel {
 		beschreibung = new Label(gewählteUmfrage.getBeschreibung());
 
 		einträge = new FlexTable();
+		einträge.addStyleName("flexTable");
+
 
 		// Hier erhalten wir ein Callback Vector <Umfrageeintrag>, welcher alle
 		// Umfrageeinträge der gewählten Umfrage bereitstellt

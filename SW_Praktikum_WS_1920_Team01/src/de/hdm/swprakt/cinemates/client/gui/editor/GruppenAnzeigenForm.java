@@ -36,7 +36,7 @@ public class GruppenAnzeigenForm extends HorizontalPanel {
 
 
 
-	private Label titel = new Label("Meine Gruppenverwaltung");
+	private Label titel = new Label("Meine Gruppen");
 	private Button neueGruppe = new Button("Neue Gruppe");
 	
 	@SuppressWarnings("unused")
@@ -52,11 +52,13 @@ public class GruppenAnzeigenForm extends HorizontalPanel {
 		super.onLoad();
 
 		neueGruppe.setHTML("<i class=\"fas fa-plus\"></i>");
-		titel.getElement().setId("TitelElem:");
+		titel.getElement().setId("TitelElemente");
 
 		//neueGruppe.addClickHandler(new NeueGruppeClickHandler());
 
 		tabellefürgruppen = new FlexTable();
+		tabellefürgruppen.addStyleName("flexTable");
+		tabellefürgruppen.setCellPadding(10);
 
 		kinobesuchsplanung.getAllGruppen(new GruppenAnzeigenCallback());
 

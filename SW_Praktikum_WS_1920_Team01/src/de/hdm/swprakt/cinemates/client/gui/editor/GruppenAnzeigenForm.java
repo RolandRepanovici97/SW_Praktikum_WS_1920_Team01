@@ -9,13 +9,11 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.swprakt.cinemates.client.ClientSideSettings;
 import de.hdm.swprakt.cinemates.shared.bo.Gruppe;
-import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 import de.hdm.swprakt.cinemates.shared.KinoBesuchsplanungAsync;
 
 
@@ -54,7 +52,7 @@ public class GruppenAnzeigenForm extends HorizontalPanel {
 		neueGruppe.setHTML("<i class=\"fas fa-plus\"></i>");
 		titel.getElement().setId("TitelElemente");
 
-		//neueGruppe.addClickHandler(new NeueGruppeClickHandler());
+		neueGruppe.addClickHandler(new NeueGruppeClickHandler());
 
 		tabellefürgruppen = new FlexTable();
 		tabellefürgruppen.addStyleName("flexTable");
@@ -145,15 +143,15 @@ public class GruppenAnzeigenForm extends HorizontalPanel {
  * 
  * @author roland
  */
-//class NeueGruppeClickHandler implements ClickHandler {
-//
-//	public void onClick(ClickEvent event) {
-//
-//		RootPanel.get("DetailsPanel").clear();
-//		GruppeErstellenForm neueGruppe = new GruppeErstellenForm();
-//		RootPanel.get("DetailsPanel").add(neueGruppe);
-//	}
-//}
+class NeueGruppeClickHandler implements ClickHandler {
+
+	public void onClick(ClickEvent event) {
+
+		RootPanel.get("DetailsPanel").clear();
+		GruppeErstellenForm neueGruppe = new GruppeErstellenForm();
+		RootPanel.get("DetailsPanel").add(neueGruppe);
+	}
+}
 
 
 

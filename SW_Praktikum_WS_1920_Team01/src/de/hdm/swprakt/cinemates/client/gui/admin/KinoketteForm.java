@@ -31,6 +31,7 @@ import de.hdm.swprakt.cinemates.shared.bo.Kino;
 import de.hdm.swprakt.cinemates.shared.bo.Kinokette;
 import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 
+
 public class KinoketteForm extends HorizontalPanel {
 
 	// Nur zum Test
@@ -45,6 +46,7 @@ public class KinoketteForm extends HorizontalPanel {
 	private Button löschen = new Button("Löschen");
 	private VerticalPanel verticalpanel = new VerticalPanel();
 	private Nutzer eingeloggterNutzer;
+	private Kino kino;
 	private Button neuesKino = new Button();
 	private Label titel = new Label();
 
@@ -131,6 +133,9 @@ public class KinoketteForm extends HorizontalPanel {
 			}
 
 		});
+		
+		
+		
 
 		kinoAdministration.getAllKinos(new AsyncCallback<Vector<Kino>>() {
 
@@ -250,6 +255,7 @@ public class KinoketteForm extends HorizontalPanel {
 			jaNein.setWidget(0, 1, ja);
 			jaNein.setWidget(0, 2, nein);
 			nein.addClickHandler(new neinClickHandler());
+			ja.addClickHandler(new LöschenClickHandler());
 			setAnimationEnabled(false);
 			setGlassEnabled(false);
 			this.add(jaNein);
@@ -266,6 +272,49 @@ public class KinoketteForm extends HorizontalPanel {
 			}
 		}
 
+		/**
+		 * Diese Nested Class implementiert das Interface ClickHandler.
+		 * Klickt der Nutzer diessen Button an, so wird das Kino gelöscht.
+		 * 
+		 * 
+		 */
+
+		class LöschenClickHandler implements ClickHandler {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				kinoAdministration.deleteKino(kino, new LöschenCallback());
+				
+
+			}
+
+		}
+
 	}
+	
+	/**
+	 * Diese Nested Class implementiert das Interface AsyncCallback und das Löschen
+	 * eines Kinos.
+	 * 
+	 */
+	class LöschenCallback implements AsyncCallback <Void>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Das Kino konnte nicht gelöscht werden");
+			ClientSideSettings.getLogger().severe("Es konnten keine Kinos gelöscht werden");
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			Window.alert("Das Kino wurde erfolgreich gelöscht!");
+	
+
+		}
+
+	}
+	
+	
+
 
 }

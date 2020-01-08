@@ -19,6 +19,8 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.swprakt.cinemates.client.ClientSideSettings;
+import de.hdm.swprakt.cinemates.client.gui.editor.UmfrageAnzeige.UmfrageeintragCallback.Kinocallback;
+import de.hdm.swprakt.cinemates.client.gui.editor.UmfrageAnzeige.UmfrageeintragCallback.SpielzeitCallback;
 import de.hdm.swprakt.cinemates.shared.KinoAdministrationAsync;
 import de.hdm.swprakt.cinemates.shared.KinoBesuchsplanungAsync;
 import de.hdm.swprakt.cinemates.shared.bo.Film;
@@ -93,6 +95,7 @@ public class AbstimmenForm extends VerticalPanel {
 		beschreibung = new Label(gewählteUmfrage.getBeschreibung());
 
 		einträge = new FlexTable();
+		einträge.addStyleName("flexTable");
 
 		// Hier erhalten wir ein Callback Vector <Umfrageeintrag>, welcher alle
 		// Umfrageeinträge der gewählten Umfrage bereitstellt
@@ -118,8 +121,7 @@ public class AbstimmenForm extends VerticalPanel {
 	 * ABSCHNITT Nested Classes
 	 * ***************************************************************************
 	 */
-	
-	
+
 	/**
 	 * Diese Nested-Class implementiert das Interface AsyncCallback und wird
 	 * benötigt, um die Umfrageeinträge der gewählten Umfrage zurückzugeben.
@@ -129,8 +131,6 @@ public class AbstimmenForm extends VerticalPanel {
 	 */
 	class UmfrageeintragCallback implements AsyncCallback<Vector<Umfrageeintrag>> {
 
-		String spielzeitstring;
-		String kinostring;
 
 		@Override
 		public void onFailure(Throwable caught) {
@@ -148,19 +148,22 @@ public class AbstimmenForm extends VerticalPanel {
 
 			for (Umfrageeintrag eintrag : result) {
 
-				kinoadministration.getSpielzeitByID(eintrag.getKinoID(), new SpielzeitCallback());
-				kinoadministration.getKinoByID(eintrag.getKinoID(), new Kinocallback());
+				kinoadministration.getSpielzeitByID(eintrag.getSpielzeitID(), new SpielzeitCallback(rowCount));
+				kinoadministration.getKinoByID(eintrag.getKinoID(), new Kinocallback(rowCount));
 
-				einträge.setText(rowCount, 0, "Uhrzeit: \n " + spielzeitstring + "\n Kino: " + kinostring);
-				einträge.setWidget(rowCount, 1, new JaBox());
-				einträge.setWidget(rowCount, 2, new NeinBox());
+				//				einträge.setText(rowCount, 0, "Uhrzeit: \n " + spielzeitstring + "\n Kino: " + kinostring);
+
 				rowCount++;
 
 			}
 		}
 
 		class SpielzeitCallback implements AsyncCallback<Spielzeit> {
+			private int rowCount;
+			public SpielzeitCallback(int rowCount) {
+				this.rowCount = rowCount;
 
+			}
 			@Override
 			public void onFailure(Throwable caught) {
 
@@ -173,14 +176,23 @@ public class AbstimmenForm extends VerticalPanel {
 
 			@Override
 			public void onSuccess(Spielzeit result) {
-				spielzeitstring = result.toString();
+				einträge.setText(rowCount, 0, "Uhrzeit: \n" + result.getZeitpunkt().toString());
+				//				kinoadministration.getKinoByID(kinoId, new Kinocallback(result.getZeitpunkt().toString(), rowCount));
+				//				spielzeitstring = result.toString();
+
 
 			}
 
 		}
 
 		class Kinocallback implements AsyncCallback<Kino> {
+			String spielzeitString;
+			int rowCount;
 
+			public Kinocallback(int rowCount) {
+				this.rowCount = rowCount;
+				// TODO Auto-generated constructor stub
+			}
 			@Override
 			public void onFailure(Throwable caught) {
 				/*
@@ -192,7 +204,10 @@ public class AbstimmenForm extends VerticalPanel {
 
 			@Override
 			public void onSuccess(Kino result) {
-				// kinostring = result.getKinoname() + "/n" + result.getAdresse();
+				einträge.setText(rowCount, 1, "Kino: " + result.getKinoname() + "/n" + result.getAdresse());
+				einträge.setWidget(rowCount, 2, new JaBox());
+				einträge.setWidget(rowCount, 3, new NeinBox());
+				//				 kinostring = result.getKinoname() + "/n" + result.getAdresse();
 
 			}
 
@@ -220,7 +235,6 @@ public class AbstimmenForm extends VerticalPanel {
 		}
 
 	}
-
 	/**
 	 * Diese Klasse erweitert das Widget CheckBox und dient zur Darstellung
 	 * der Ja-Checkbox.

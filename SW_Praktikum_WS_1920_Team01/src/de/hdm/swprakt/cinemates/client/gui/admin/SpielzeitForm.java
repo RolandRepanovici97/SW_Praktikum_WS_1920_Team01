@@ -39,7 +39,7 @@ public class SpielzeitForm extends HorizontalPanel {
 	ListBox filmlistbox = new ListBox();
 	Label datum = new Label("Datum und Uhrzeit");
 	DateBox datebox = new DateBox();
-	Button speichern = new Button("Spielzeit speichern");
+	Button speichernButton = new Button("Spielzeit speichern");
 	Kinokette kinokette = new Kinokette();
 
 	VerticalPanel detailsPanel = new VerticalPanel();
@@ -68,7 +68,7 @@ public class SpielzeitForm extends HorizontalPanel {
 		spielzeitGrid.setWidget(1, 2, spielzeit);
 		spielzeitGrid.setWidget(1, 3, datebox);
 
-		spielzeitGrid.setWidget(2, 2, speichern);
+		spielzeitGrid.setWidget(2, 2, speichernButton);
 
 		detailsPanel.add(spielzeitGrid);
 
@@ -89,8 +89,11 @@ public class SpielzeitForm extends HorizontalPanel {
 		kinoAdministration.getKinosOfKinokette(kinokette, new Kinocallback());
 		// Aufruf um CallbackObjekte KinoCallback und FilmCallback zu erhalten
 		kinoAdministration.getAllKinos(new Kinocallback()); // Hier muss AllKinoofKinokette implmentiert werden.aktuell
-															// nur test
+		// nur test
 		kinoAdministration.getAllFilme(new Filmcallback());
+
+		// Hinzufügen des ClickHandlers zum Erstellen Button
+		speichernButton.addClickHandler(new SpielzeitSpeichernClickHandler());
 	}
 
 	/**
@@ -150,18 +153,77 @@ public class SpielzeitForm extends HorizontalPanel {
 		public void onClick(ClickEvent event) {
 			// Prüfen ob alle Anngaben ausgefüllt sind
 			if (kinolistbox != null && filmlistbox != null && datebox != null) {
-				;
 
-				// Spielzeit-Objekt wird erstellt
-				Spielzeit spielzeit = new Spielzeit();
-
-				// setSpielzeitName
-				// spielzeit
+				kinoAdministration.getFilmByTitel(filmlistbox.getSelectedItemText(), new SelektierterFilmCallback());
 
 			}
 			// Falls Angaben gefehlt haben,wird folgendes ausgegeben:
-			Window.alert("Bitte geben Sie alle Informationen an.");
+			else {
+				Window.alert("Bitte geben Sie alle Informationen an.");
+
+			}
+		}
+
+		class SelektierterFilmCallback implements AsyncCallback<Film> {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onSuccess(Film result) {
+				ClientSideSettings.getLogger().severe("Der selektierte Film wurde gefunden.");
+				kinoAdministration.getKinoByName(kinolistbox.getSelectedItemText(),
+						new SelektiertesKinoCallBack(result));
+
+			}
+		}
+
+		class SelektiertesKinoCallBack implements AsyncCallback<Kino> {
+
+			Film film;
+
+			SelektiertesKinoCallBack(Film film) {
+
+				this.film = film;
+
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onSuccess(Kino result) {
+
+				kinoAdministration.createSpielzeit(result.getSpielplanID(), film.getID(), datebox.getValue(),
+						new SpielzeitErstellenCallback());
+
+			}
 
 		}
+
 	}
+
+	class SpielzeitErstellenCallback implements AsyncCallback<Spielzeit> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Die Umfrage konnte nicht erstellt werden");
+
+		}
+
+		@Override
+		public void onSuccess(Spielzeit result) {
+			// Wir informieren den Nutzer über den positiven Ausgang
+			Window.alert("Die Spielzeit wurde erstellt.");
+
+		}
+
+	}
+
 }

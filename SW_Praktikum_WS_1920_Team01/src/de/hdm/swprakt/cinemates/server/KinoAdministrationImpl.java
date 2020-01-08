@@ -791,12 +791,12 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 	 * @author Ömer
 	 * @author alina
 	 */
-	public Spielzeit createSpielzeit(Spielplan spielplan, int filmID, Date zeitpunkt) throws IllegalArgumentException {
+	public Spielzeit createSpielzeit(int spielplanID, int filmID, Date zeitpunkt) throws IllegalArgumentException {
 
 		// Erstellen eines neuen Spielplanobejkts
 		Spielzeit spielzeit = new Spielzeit();
 
-		spielzeit.setSpielplanID(spielplan.getID());
+		spielzeit.setSpielplanID(spielplanID);
 		spielzeit.setFilmID(filmID);
 		spielzeit.setZeitpunkt(zeitpunkt);
 

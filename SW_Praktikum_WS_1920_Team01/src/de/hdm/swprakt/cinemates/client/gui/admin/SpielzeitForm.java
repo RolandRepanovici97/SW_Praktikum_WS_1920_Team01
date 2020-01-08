@@ -213,7 +213,7 @@ public class SpielzeitForm extends HorizontalPanel {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Window.alert("Die Umfrage konnte nicht erstellt werden");
+			Window.alert("Die Spielzeit konnte nicht erstellt werden");
 
 		}
 

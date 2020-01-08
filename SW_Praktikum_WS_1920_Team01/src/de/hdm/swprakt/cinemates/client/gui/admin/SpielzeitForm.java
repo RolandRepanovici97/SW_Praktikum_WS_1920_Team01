@@ -39,7 +39,7 @@ public class SpielzeitForm extends HorizontalPanel {
 	ListBox filmlistbox = new ListBox();
 	Label datum = new Label("Datum und Uhrzeit");
 	DateBox datebox = new DateBox();
-	Button speichern = new Button("Spielzeit speichern");
+	Button speichernButton = new Button("Spielzeit speichern");
 	Kinokette kinokette = new Kinokette();
 
 	VerticalPanel detailsPanel = new VerticalPanel();
@@ -68,7 +68,7 @@ public class SpielzeitForm extends HorizontalPanel {
 		spielzeitGrid.setWidget(1, 2, spielzeit);
 		spielzeitGrid.setWidget(1, 3, datebox);
 
-		spielzeitGrid.setWidget(2, 2, speichern);
+		spielzeitGrid.setWidget(2, 2, speichernButton);
 
 		detailsPanel.add(spielzeitGrid);
 
@@ -91,6 +91,9 @@ public class SpielzeitForm extends HorizontalPanel {
 		kinoAdministration.getAllKinos(new Kinocallback()); // Hier muss AllKinoofKinokette implmentiert werden.aktuell
 															// nur test
 		kinoAdministration.getAllFilme(new Filmcallback());
+		
+		// Hinzufügen des ClickHandlers zum Erstellen Button
+				speichernButton.addClickHandler(new SpielzeitSpeichernClickHandler());
 	}
 
 	/**
@@ -146,6 +149,9 @@ public class SpielzeitForm extends HorizontalPanel {
 
 	private class SpielzeitSpeichernClickHandler implements ClickHandler {
 
+		
+
+		
 		@Override
 		public void onClick(ClickEvent event) {
 			// Prüfen ob alle Anngaben ausgefüllt sind
@@ -155,13 +161,20 @@ public class SpielzeitForm extends HorizontalPanel {
 				// Spielzeit-Objekt wird erstellt
 				Spielzeit spielzeit = new Spielzeit();
 
-				// setSpielzeitName
+		//		spielzeit.setFilmID(filmlistbox.getTitle());
+				spielzeit.setZeitpunkt(datebox.getValue());
 				// spielzeit
+
+			//	 kinoAdministration.getFilmByTitel(filmtitel, callback);
+				// in der DB speichern
+				//kinoAdministration.createSpielzeit(spielplan, filmID, zeitpunkt, callback);
 
 			}
 			// Falls Angaben gefehlt haben,wird folgendes ausgegeben:
-			Window.alert("Bitte geben Sie alle Informationen an.");
+			else {
+				Window.alert("Bitte geben Sie alle Informationen an.");
 
+			}
 		}
-	}
-}
+		
+}}

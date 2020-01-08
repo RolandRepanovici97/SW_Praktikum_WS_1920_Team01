@@ -64,6 +64,11 @@ public class UmfrageEditierenForm extends VerticalPanel {
 	/**
 	 * @return the gewählteUmfrage
 	 */
+	
+	public UmfrageEditierenForm(Umfrage gewählteumfrage) {
+		this.gewählteUmfrage = gewählteumfrage;
+	}
+	
 	public Umfrage getGewählteUmfrage() {
 		return gewählteUmfrage;
 	}

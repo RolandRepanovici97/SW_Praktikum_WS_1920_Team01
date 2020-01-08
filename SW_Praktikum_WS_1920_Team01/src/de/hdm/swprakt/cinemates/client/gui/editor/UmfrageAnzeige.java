@@ -153,8 +153,8 @@ public class UmfrageAnzeige extends VerticalPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			RootPanel.get("DetailsPanel").clear();
-			UmfrageEditierenForm editierenForm = new UmfrageEditierenForm();
-			editierenForm.setGewählteUmfrage(gewählteUmfrage);
+			UmfrageEditierenForm editierenForm = new UmfrageEditierenForm(gewählteUmfrage);
+			//editierenForm.setGewählteUmfrage(gewählteUmfrage);
 			RootPanel.get("DetailsPanel").add(editierenForm);
 
 

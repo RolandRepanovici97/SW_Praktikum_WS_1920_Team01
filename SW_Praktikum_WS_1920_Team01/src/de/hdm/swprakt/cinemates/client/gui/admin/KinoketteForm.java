@@ -170,7 +170,16 @@ public class KinoketteForm extends HorizontalPanel {
 					kinos.setWidget(rowcount, 2, kinoBearbeiten);
 					kinoBearbeiten.addClickHandler(new kinoBearbeitenClickHandler());
 					kinos.setWidget(rowcount, 3, kinolöschen);
-					kinolöschen.addClickHandler(new löschenClickHandler());
+					kinolöschen.addClickHandler(new ClickHandler() {
+
+						@Override
+						public void onClick(ClickEvent event) {
+						
+							kinoAdministration.deleteKino(kino, new LöschenCallback());
+							
+						}
+						
+					});
 					//					kinos.setWidget(rowcount, 4, neuesKino);
 					//					kinos.setText(rowcount, 5, "Neues Kino anlegen");
 					neuesKino.addClickHandler(new kinoAnlegenClickHandler());
@@ -308,6 +317,9 @@ public class KinoketteForm extends HorizontalPanel {
 		@Override
 		public void onSuccess(Void result) {
 			Window.alert("Das Kino wurde erfolgreich gelöscht!");
+			RootPanel.get("DetailsPanel").clear();
+			KinoketteForm kkf = new KinoketteForm();
+			RootPanel.get("DetailsPanel").add(kkf);
 	
 
 		}

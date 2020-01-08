@@ -170,7 +170,7 @@ public class KinoketteForm extends HorizontalPanel {
 					kinos.setWidget(rowcount, 2, kinoBearbeiten);
 					kinoBearbeiten.addClickHandler(new kinoBearbeitenClickHandler());
 					kinos.setWidget(rowcount, 3, kinolöschen);
-					kinolöschen.addClickHandler(new löschenClickHandler());
+					kinolöschen.addClickHandler(new LöschenClickHandler());
 					//					kinos.setWidget(rowcount, 4, neuesKino);
 					//					kinos.setText(rowcount, 5, "Neues Kino anlegen");
 					neuesKino.addClickHandler(new kinoAnlegenClickHandler());
@@ -272,24 +272,6 @@ public class KinoketteForm extends HorizontalPanel {
 			}
 		}
 
-		/**
-		 * Diese Nested Class implementiert das Interface ClickHandler.
-		 * Klickt der Nutzer diessen Button an, so wird das Kino gelöscht.
-		 * 
-		 * 
-		 */
-
-		class LöschenClickHandler implements ClickHandler {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				kinoAdministration.deleteKino(kino, new LöschenCallback());
-				
-
-			}
-
-		}
-
 	}
 	
 	/**
@@ -313,6 +295,26 @@ public class KinoketteForm extends HorizontalPanel {
 		}
 
 	}
+	
+	/**
+	 * Diese Nested Class implementiert das Interface ClickHandler.
+	 * Klickt der Nutzer diessen Button an, so wird das Kino gelöscht.
+	 * 
+	 * 
+	 */
+
+	private class LöschenClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			kinoAdministration.deleteKino(kino, new LöschenCallback());
+			
+
+		}
+
+	}
+	
+
 	
 	
 

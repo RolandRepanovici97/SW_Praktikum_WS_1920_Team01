@@ -15,6 +15,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+
 import de.hdm.swprakt.cinemates.client.gui.Footer;
 import de.hdm.swprakt.cinemates.client.gui.admin.HeaderfürKinoAdministration;
 import de.hdm.swprakt.cinemates.client.gui.editor.HeaderfürKinobesuchsplanung;
@@ -36,38 +37,25 @@ public class KinobesuchsplanungEntry implements EntryPoint {
 	 * ***************************************************************************
 	 */
 
-	private Nutzer nutzer = null;
 
-	private Button loginButton = new Button("Login");
-	private Anchor signInLink = new Anchor("Login");
+	private Anchor signInLink = new Anchor("Sign In");
 	private VerticalPanel loginPanel = new VerticalPanel();
 	private StartseiteEditor startseite;
 	private Label loginLabel = new Label(
 			"Bitte melden Sie sich hier mit Ihrem Google-Konto an, um auf CineMates zugreifen zu können ");
+	
+	
+
 
 	@Override
 	public void onModuleLoad() {
-
-		HeaderfürKinobesuchsplanung headerPanel = new HeaderfürKinobesuchsplanung();
-		headerPanel.getElement().setId("headerPanelKinobesuchsplanung");
-		RootPanel.get("Header").add(headerPanel);
-		startseite = new StartseiteEditor();
-		RootPanel.get("DetailsPanel").add(startseite);
-		Footer footer = new Footer();
-		RootPanel.get("Footer").add(footer);
-
-		// RootPanel.get("DetailsPanel").add(startseite);
-		// RootPanel.get("DetailsPanel").add(loginPanel);
-		// RootPanel.get("DetailsPanel").add(signInLink);
-		//
-		// loginPanel.add(loginLabel);
-		// loginPanel.add(loginButton);
-		// signInLink.setHref(AktuellerNutzer.getNutzer().getLoginUrl());
-
+		
 		// Zugriff auf Instanz des asynchronen Interfaces für den Login
-
-//		LoginServiceAsync loginService = GWT.create(LoginService.class);
-//		loginService.login(GWT.getHostPageBaseURL(), new LoginServiceCallback());
+		LoginServiceAsync loginService = GWT.create(LoginService.class);
+	loginService.login(GWT.getHostPageBaseURL(), new LoginServiceCallback());
+	
+//	loadStartseite();
+		
 
 	}
 
@@ -94,15 +82,9 @@ public class KinobesuchsplanungEntry implements EntryPoint {
 			AktuellerNutzer.setNutzer(nutzer);
 
 			if (nutzer.isLoggedIn()) {
-				if (nutzer.getNutzername() == null) {
-					Anchor kinoBesuchsplanungLink = new Anchor();
-					kinoBesuchsplanungLink.setHref(GWT.getHostPageBaseURL());
-
-					RootPanel.get("main").add(new NutzerkontoForm());
-
-				} else {
-
-				}
+				
+					loadStartseite();
+					
 			} else {
 				loadLogin();
 
@@ -115,15 +97,14 @@ public class KinobesuchsplanungEntry implements EntryPoint {
 		 * <code>loginButton </code> aufgerufen.
 		 */
 		private void loadLogin() {
-			RootPanel.get("Selection").setVisible(false);
-			RootPanel.get("Result").setVisible(false);
-			RootPanel.get().add(loginPanel);
+			
+			
+			 signInLink.setHref(AktuellerNutzer.getNutzer().getLoginUrl());
+			    loginPanel.add(loginLabel);
+			    loginPanel.add(signInLink);
+			    RootPanel.get("DetailsPanel").add(loginPanel);
+			    
 
-			loginPanel.add(loginLabel);
-			loginPanel.add(loginButton);
-			signInLink.setHref(AktuellerNutzer.getNutzer().getLoginUrl());
-
-			loginButton.addClickHandler((ClickHandler) new LoginClickHandler());
 		}
 
 		/**
@@ -144,6 +125,20 @@ public class KinobesuchsplanungEntry implements EntryPoint {
 		 * angemeldeten Nutzer. Da der Nutzer an weiteren Stellen nötig ist, muss er
 		 * abrufbar sein.
 		 */
+	}
+	
+	
+	private void loadStartseite() {
+		
+		
+		HeaderfürKinobesuchsplanung headerPanel = new HeaderfürKinobesuchsplanung();
+		headerPanel.getElement().setId("headerPanelKinobesuchsplanung");
+		RootPanel.get("Header").add(headerPanel);
+		startseite = new StartseiteEditor();
+		RootPanel.get("DetailsPanel").add(startseite);
+		Footer footer = new Footer();
+		RootPanel.get("Footer").add(footer);
+		
 	}
 
 	public static class AktuellerNutzer {

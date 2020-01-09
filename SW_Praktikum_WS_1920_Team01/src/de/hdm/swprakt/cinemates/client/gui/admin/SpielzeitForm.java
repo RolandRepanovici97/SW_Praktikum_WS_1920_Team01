@@ -1,15 +1,21 @@
 package de.hdm.swprakt.cinemates.client.gui.admin;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Vector;
+
+import org.apache.james.mime4j.field.datetime.DateTime;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.IntegerBox;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -33,17 +39,22 @@ import de.hdm.swprakt.cinemates.shared.bo.Spielzeit;
  * @author ömer
  *
  */
+
 public class SpielzeitForm extends HorizontalPanel {
 
+	//Erzeugen der Widgets
+	
 	ListBox kinolistbox = new ListBox();
 	ListBox filmlistbox = new ListBox();
-	Label datum = new Label("Datum und Uhrzeit");
 	DateBox datebox = new DateBox();
+	IntegerBox hourbox = new IntegerBox();
+	IntegerBox minutebox = new IntegerBox();
 	Button speichernButton = new Button("Spielzeit speichern");
 	Kinokette kinokette = new Kinokette();
 
 	VerticalPanel detailsPanel = new VerticalPanel();
 
+	// Setzen des asynchronen Interfaces
 	KinoAdministrationAsync kinoAdministration = ClientSideSettings.getKinoAdministration();
 
 	public SpielzeitForm() {
@@ -53,8 +64,9 @@ public class SpielzeitForm extends HorizontalPanel {
 	public void onLoad() {
 
 		super.onLoad();
-
-		Grid spielzeitGrid = new Grid(4, 4);
+		
+		// Instanttierung der Widgets
+		Grid spielzeitGrid = new Grid(9, 9);
 
 		Label name = new Label("Kino");
 		spielzeitGrid.setWidget(0, 1, kinolistbox);
@@ -64,12 +76,22 @@ public class SpielzeitForm extends HorizontalPanel {
 		spielzeitGrid.setWidget(1, 1, filmlistbox);
 		spielzeitGrid.setWidget(1, 0, film);
 
-		Label spielzeit = new Label("Datum und Uhrzeit");
-		spielzeitGrid.setWidget(1, 2, spielzeit);
-		spielzeitGrid.setWidget(1, 3, datebox);
+		Label spieldatum = new Label("Datum");
+		spielzeitGrid.setWidget(1, 3, spieldatum);
+		spielzeitGrid.setWidget(1, 4, datebox);
+		
+		Label zeit = new Label("Zeit  Stunde");
+		spielzeitGrid.setWidget(2, 3, zeit);
+		spielzeitGrid.setWidget(2, 4, hourbox);
+		
+		Label minute = new Label("Minute");
+		spielzeitGrid.setWidget(2, 5, minute);
+		spielzeitGrid.setWidget(2, 6, minutebox);
+		
 
-		spielzeitGrid.setWidget(2, 2, speichernButton);
-
+		spielzeitGrid.setWidget(4, 4, speichernButton);
+		
+		// Hinzufügen unserer Widgets zur Tabelle
 		detailsPanel.add(spielzeitGrid);
 
 		RootPanel.get("DetailsPanel").add(detailsPanel);
@@ -82,12 +104,17 @@ public class SpielzeitForm extends HorizontalPanel {
 		datebox.setFormat(new DateBox.DefaultFormat(dateFormat));
 		datebox.getDatePicker().setYearArrowsVisible(true);
 
+		
+	
+	
 		/*
 		 * Uhrzeit fehllt hier noch..
 		 */
-
-		kinoAdministration.getKinosOfKinokette(kinokette, new Kinocallback());
+		
+		
 		// Aufruf um CallbackObjekte KinoCallback und FilmCallback zu erhalten
+		kinoAdministration.getKinosOfKinokette(kinokette, new Kinocallback());
+		
 		kinoAdministration.getAllKinos(new Kinocallback()); // Hier muss AllKinoofKinokette implmentiert werden.aktuell
 		// nur test
 		kinoAdministration.getAllFilme(new Filmcallback());
@@ -163,6 +190,13 @@ public class SpielzeitForm extends HorizontalPanel {
 
 			}
 		}
+		
+		/**
+		 * Diese Nested Class implementiert das Interface AsyncCallback und ermöglicht
+		 * die Rückgabe eines Spielzeitobjekts.
+		 * 
+		 * @author ömer
+		 */
 
 		class SelektierterFilmCallback implements AsyncCallback<Film> {
 
@@ -180,6 +214,13 @@ public class SpielzeitForm extends HorizontalPanel {
 
 			}
 		}
+		
+		/**
+		 * Diese Nested Class implementiert das Interface AsyncCallback und ermöglicht
+		 * die Rückgabe eines Spielzeitobjekts.
+		 * 
+		 * @author ömer
+		 */
 
 		class SelektiertesKinoCallBack implements AsyncCallback<Kino> {
 
@@ -199,8 +240,14 @@ public class SpielzeitForm extends HorizontalPanel {
 
 			@Override
 			public void onSuccess(Kino result) {
+				
+				Date date = new Date();
+				date = datebox.getValue();
+				date.setHours(hourbox.getValue());
+				date.setMinutes(minutebox.getValue());
+				
 
-				kinoAdministration.createSpielzeit(result.getSpielplanID(), film.getID(), datebox.getValue(),
+				kinoAdministration.createSpielzeit(result.getSpielplanID(), film.getID(), date,
 						new SpielzeitErstellenCallback());
 
 			}
@@ -208,12 +255,21 @@ public class SpielzeitForm extends HorizontalPanel {
 		}
 
 	}
+	
+	/**
+	 * Diese Nested Class implementiert das Interface ClickHandler und ermöglicht in
+	 * Interaktion mit dem Nutzer: Wenn der Nutzer die Felder ausgfüllt hat, dann
+	 * wird eine neue Spielzeit erstellt. Die Eingaben des Nutzers stellen die
+	 * Argumente dar. Dann wird die Spielzeit in der Datenbank gespeichert.
+	 * 
+	 * @author ömer
+	 */
 
 	class SpielzeitErstellenCallback implements AsyncCallback<Spielzeit> {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Window.alert("Die Umfrage konnte nicht erstellt werden");
+			Window.alert("Die Spielzeit konnte nicht erstellt werden");
 
 		}
 

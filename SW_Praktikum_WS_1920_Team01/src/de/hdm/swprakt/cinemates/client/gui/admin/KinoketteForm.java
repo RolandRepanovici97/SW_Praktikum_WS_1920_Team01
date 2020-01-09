@@ -196,7 +196,7 @@ public class KinoketteForm extends HorizontalPanel {
 					
 					
 					kinos.setWidget(rowcount, 3, kinolöschen);
-					kinolöschen.addClickHandler(new LöschenClickHandler());
+					kinolöschen.addClickHandler(new LöschenClickHandler2());
 					kinolöschen.addClickHandler(new ClickHandler() {
 
 						@Override
@@ -291,7 +291,7 @@ public class KinoketteForm extends HorizontalPanel {
 			jaNein.setWidget(0, 1, ja);
 			jaNein.setWidget(0, 2, nein);
 			nein.addClickHandler(new neinClickHandler());
-			ja.addClickHandler(new LöschenClickHandler());
+			ja.addClickHandler(new LöschenClickHandler2());
 			setAnimationEnabled(false);
 			setGlassEnabled(false);
 			this.add(jaNein);
@@ -393,7 +393,7 @@ public class KinoketteForm extends HorizontalPanel {
 	 * 
 	 */
 
-	private class LöschenClickHandler implements ClickHandler {
+	private class LöschenClickHandler2 implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {

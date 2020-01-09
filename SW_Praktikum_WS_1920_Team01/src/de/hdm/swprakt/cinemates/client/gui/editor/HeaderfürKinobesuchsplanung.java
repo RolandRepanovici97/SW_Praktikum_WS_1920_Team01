@@ -15,6 +15,8 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.hdm.swprakt.cinemates.client.KinobesuchsplanungEntry;
+
 
 /**
  * Diese Klasse dient zur Darstellung des Headers der Applikation. Sie
@@ -99,6 +101,7 @@ public class HeaderfürKinobesuchsplanung extends HorizontalPanel {
 		planerButton.addClickHandler(new PlanerClickHandler());
 		nutzer.addClickHandler(new NutzerClickHandler());
 		gruppe.addClickHandler(new GruppeClickHandler());
+		logout.addClickHandler(new LogoutClickHandler());
 
 	}
 
@@ -170,5 +173,18 @@ public class HeaderfürKinobesuchsplanung extends HorizontalPanel {
 			
 			RootPanel.get("DetailsPanel").add(gruppenanzeigenform);
 		}
+	}
+	
+	
+	private class LogoutClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			
+			Window.Location.assign(KinobesuchsplanungEntry.AktuellerNutzer.getNutzer().getLogoutUrl());
+			
+			
+		}
+		
 	}
 }

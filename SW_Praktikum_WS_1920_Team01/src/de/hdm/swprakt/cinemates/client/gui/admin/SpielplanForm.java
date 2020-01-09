@@ -3,6 +3,7 @@ package de.hdm.swprakt.cinemates.client.gui.admin;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 
 import com.google.gwt.cell.client.DateCell;
 import com.google.gwt.cell.client.TextCell;
@@ -10,6 +11,8 @@ import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Grid;
 
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -18,6 +21,8 @@ import com.google.gwt.user.client.ui.RootPanel;
 
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.view.client.ListDataProvider;
+import com.google.gwt.view.client.SelectionChangeEvent;
+import com.google.gwt.view.client.SingleSelectionModel;
 
 import de.hdm.swprakt.cinemates.shared.bo.Kino;
 
@@ -111,13 +116,44 @@ public class SpielplanForm extends HorizontalPanel {
 		 * Daten in die Tabelle hinzufügen
 		 */
 
-	    table.setRowData(0, SPIELPLAENE);
+		table.setRowData(0, SPIELPLAENE);
 
-		
 		this.add(table);
 		
 		
 		
+		// Add a selection model to handle user selection.
+	      final SingleSelectionModel<Spielplan> selectionModel 
+	      = new SingleSelectionModel<Spielplan>();
+	      table.setSelectionModel(selectionModel);
+	      selectionModel.addSelectionChangeHandler(
+	      new SelectionChangeEvent.Handler() {
+	         public void onSelectionChange(SelectionChangeEvent event) {
+	            Spielplan selected = selectionModel.getSelectedObject();
+	            if (selected != null) {
+	               Window.alert("You selected: " + selected.kinoname);
+	            }
+	         }
+	      });
+	      
+	      
+	      
+	      
+		class SpielplanCallBack implements AsyncCallback<Vector<Spielplan>> {
 
-	}
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Der Spielplan konnte nicht geladen werden");
+				
+			}
+
+			@Override
+			public void onSuccess(Vector<Spielplan> result) {
+				Window.alert("Der Spielplan wurde gefunden");
+				
+			}
+		
+		
+
+	}}
 }

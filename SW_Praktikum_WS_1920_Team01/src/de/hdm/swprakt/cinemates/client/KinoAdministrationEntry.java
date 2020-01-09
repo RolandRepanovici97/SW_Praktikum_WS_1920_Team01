@@ -26,11 +26,13 @@ import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
  */
 public class KinoAdministrationEntry implements EntryPoint {
 
+	LoginServiceAsync loginService = ClientSideSettings.getLoginService();
+	
 	@Override
 	public void onModuleLoad() {
 		// TODO Auto-generated method stub
 	
-		LoginServiceAsync loginService = GWT.create(LoginService.class);
+		
 		loginService.login(GWT.getHostPageBaseURL(), new LoginServiceCallback());
 		
 		

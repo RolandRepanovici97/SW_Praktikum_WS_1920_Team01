@@ -48,13 +48,13 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
 
 		public void init() throws IllegalArgumentException {
 			
-			KinoBesuchsplanungImpl kbi = new KinoBesuchsplanungImpl();
-			kbi.init();
-			this.kinobesuchsplanung = kbi;
-			
-			KinoAdministrationImpl kinoAdministrationImpl = new KinoAdministrationImpl();
-			kinoAdministrationImpl.init();
-			this.kinoadministration = kinoAdministrationImpl;
+//			KinoBesuchsplanungImpl kbi = new KinoBesuchsplanungImpl();
+//			kbi.init();
+//			this.kinobesuchsplanung = kbi;
+//			
+//			KinoAdministrationImpl kinoAdministrationImpl = new KinoAdministrationImpl();
+//			kinoAdministrationImpl.init();
+//			this.kinoadministration = kinoAdministrationImpl;
 		}
 
 

@@ -46,6 +46,7 @@ public class NutzerkontoForm extends HorizontalPanel {
 	private VerticalPanel panelfürnutzer = new VerticalPanel();
 	private FlexTable tabelle;
 	
+	LoginServiceAsync loginService = ClientSideSettings.getLoginService();
 	
 	
 	public void onLoad() {
@@ -53,7 +54,6 @@ public class NutzerkontoForm extends HorizontalPanel {
 
 		super.onLoad();
 		
-		LoginServiceAsync loginService = GWT.create(LoginService.class);
 		loginService.login(GWT.getHostPageBaseURL(), new LoginServiceCallback());
 		
 	}

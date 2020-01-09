@@ -45,6 +45,8 @@ public class KinobesuchsplanungEntry implements EntryPoint {
 	private Label loginLabel = new Label(
 			"Bitte melden Sie sich hier mit Ihrem Google-Konto an, um auf CineMates zugreifen zu können ");
 	
+	LoginServiceAsync loginService = ClientSideSettings.getLoginService();
+	
 	
 
 
@@ -52,7 +54,7 @@ public class KinobesuchsplanungEntry implements EntryPoint {
 	public void onModuleLoad() {
 		
 		// Zugriff auf Instanz des asynchronen Interfaces für den Login
-		LoginServiceAsync loginService = GWT.create(LoginService.class);
+	
 	loginService.login(GWT.getHostPageBaseURL(), new LoginServiceCallback());
 	
 //	loadStartseite();

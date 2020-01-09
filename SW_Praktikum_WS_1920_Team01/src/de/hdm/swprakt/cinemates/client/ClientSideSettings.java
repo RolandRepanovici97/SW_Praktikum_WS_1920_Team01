@@ -200,7 +200,7 @@ public class ClientSideSettings {
 				}
 			};
 
-			kinoBesuchsplanung.init(initLoginServiceCallBack);
+			loginService.init(initLoginServiceCallBack);
 		}
 
 		// Hier geben wir den Login-Service zurück

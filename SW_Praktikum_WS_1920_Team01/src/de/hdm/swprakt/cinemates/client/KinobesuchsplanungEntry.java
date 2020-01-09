@@ -21,6 +21,7 @@ import de.hdm.swprakt.cinemates.client.gui.admin.HeaderfürKinoAdministration;
 import de.hdm.swprakt.cinemates.client.gui.editor.HeaderfürKinobesuchsplanung;
 import de.hdm.swprakt.cinemates.client.gui.editor.NutzerkontoForm;
 import de.hdm.swprakt.cinemates.client.gui.editor.StartseiteEditor;
+import de.hdm.swprakt.cinemates.server.LoginServiceImpl;
 import de.hdm.swprakt.cinemates.shared.KinoBesuchsplanung;
 import de.hdm.swprakt.cinemates.shared.LoginService;
 import de.hdm.swprakt.cinemates.shared.LoginServiceAsync;

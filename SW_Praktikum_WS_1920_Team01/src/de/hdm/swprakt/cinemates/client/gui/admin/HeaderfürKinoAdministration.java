@@ -3,6 +3,7 @@
  */
 package de.hdm.swprakt.cinemates.client.gui.admin;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -15,8 +16,11 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.hdm.swprakt.cinemates.client.ClientSideSettings;
+import de.hdm.swprakt.cinemates.client.KinoAdministrationEntry;
 import de.hdm.swprakt.cinemates.client.KinobesuchsplanungEntry;
 import de.hdm.swprakt.cinemates.client.gui.editor.NutzerkontoForm;
+import de.hdm.swprakt.cinemates.server.LoginServiceImpl;
 
 
 /**
@@ -155,6 +159,9 @@ public class HeaderfürKinoAdministration extends HorizontalPanel {
 		public void onClick(ClickEvent event) {
 
 			RootPanel.get("DetailsPanel").clear();
+			
+			ClientSideSettings.getLogger().severe("Nutzerkonto anzeigen geklickt");
+			
 			NutzerkontoForm nutzerkontoform = new NutzerkontoForm();
 
 			RootPanel.get("DetailsPanel").add(nutzerkontoform);
@@ -168,8 +175,7 @@ public class HeaderfürKinoAdministration extends HorizontalPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			
-			Window.Location.assign(KinobesuchsplanungEntry.AktuellerNutzer.getNutzer().getLogoutUrl());
-			
+			Window.Location.assign(KinoAdministrationEntry.AktuellerNutzer.getNutzer().getLogoutUrl());
 			
 		}
 		

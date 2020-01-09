@@ -21,4 +21,5 @@ public interface LoginServiceAsync {
 
 	void login(String requestUri, AsyncCallback<Nutzer> asyncCallback);
 
+
 }

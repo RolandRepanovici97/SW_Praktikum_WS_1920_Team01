@@ -17,17 +17,37 @@ import de.hdm.swprakt.cinemates.client.ClientSideSettings;
 import de.hdm.swprakt.cinemates.shared.KinoAdministrationAsync;
 import de.hdm.swprakt.cinemates.shared.bo.Kino;
 
+
 public class KinoBearbeitenForm extends HorizontalPanel {
 
-	private Kino kino;
+	private Label titel;
+	private Kino gewähltesKino;
 	private Button kinoLöschen = new Button("Kino löschen");
 	private Button kinoAnlegen = new Button("Kino bearbeiten");
 	private Button ja = new Button("JA");
 	private Button nein = new Button("NEIN");
+	private Label neuerkinoname = new Label("Neuer Kinoname: ");
+	private TextBox kinonameText = new TextBox();
 
-	TextBox kinoname = new TextBox();
-	TextBox kinobeschreibung = new TextBox();
-	TextBox kinoadresse = new TextBox();
+	
+	
+	// Getter & Setter für die Variable kino: Wird benötigt, wenn Kino selektiert wurde
+
+		/**
+		 * @return gewähltesKino
+		 */
+		public Kino getGewähltesKino() {
+			return gewähltesKino;
+		}
+
+		/**
+		 * @param gewählteUmfrage the gewählteUmfrage to set
+		 */
+		public void setGewähltesKino(Kino gewähltesKino) {
+			this.gewähltesKino = gewähltesKino;
+		}
+
+	
 
 	// Erstellen eines data providers, für das Anlegen des Kinos.
 	private ListDataProvider<Kino> dataProvider = new ListDataProvider<Kino>();
@@ -37,27 +57,27 @@ public class KinoBearbeitenForm extends HorizontalPanel {
 	public void onLoad() {
 
 		super.onLoad();
+		
+		titel = new Label("Kino: " + gewähltesKino.getKinoname() + "bearbeiten");
+		kinonameText.setText(gewähltesKino.getKinoname());
+		
+		
 		Grid kinoGrid = new Grid(4, 4);
 
-		Label name = new Label("Kinoname");
-		kinoGrid.setWidget(0, 1, kinoname);
-		kinoGrid.setWidget(0, 0, name);
-
-		Label beschreibung = new Label("Kinobeschreibung");
-		kinoGrid.setWidget(1, 1, kinobeschreibung);
-		kinoGrid.setWidget(1, 0, beschreibung);
-
-		Label adresse = new Label("Adresse");
-		kinoGrid.setWidget(2, 1, kinoadresse);
-		kinoGrid.setWidget(2, 0, adresse);
+		kinoGrid.setWidget(1, 1, neuerkinoname);
+		kinoGrid.setWidget(1, 1, kinonameText);
 
 		kinoGrid.setWidget(3, 2, kinoAnlegen);
 		kinoAnlegen.addClickHandler(new KinoBearbeitenClickHandler());
 		kinoGrid.setWidget(3, 3, kinoLöschen);
 		kinoLöschen.addClickHandler(new löschenClickHandler());
 
+		this.add(titel);
 		this.add(kinoGrid);
-		RootPanel.get("DetailsPanel").add(kinoGrid);
+	
+		
+		
+
 	}
 
 	/**
@@ -67,8 +87,9 @@ public class KinoBearbeitenForm extends HorizontalPanel {
 	private class KinoBearbeitenClickHandler implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
-
-			kinoAdministration.save(kino, new KinoBearbeitenCallback());
+			gewähltesKino.setKinoname(kinonameText.getText());
+			
+			kinoAdministration.save(gewähltesKino, new KinoBearbeitenCallback());
 
 		}
 
@@ -87,11 +108,11 @@ public class KinoBearbeitenForm extends HorizontalPanel {
 
 		@Override
 		public void onSuccess(Void result) {
-			if (kino == null) {
+			if (gewähltesKino == null) {
 				Window.alert("Das Kino existiert bereits");
 			} else {
 				Window.alert("Das Kino wurde erfolgreich bearbeitet");
-				kinoname.setText("");
+
 				// dataProvider.getList().add(kino);
 				dataProvider.refresh();
 			}
@@ -145,7 +166,7 @@ public class KinoBearbeitenForm extends HorizontalPanel {
 	private class KinoDeleteCallback implements AsyncCallback<Kino> {
 
 		KinoDeleteCallback(Kino k) {
-			kino = k;
+			gewähltesKino = k;
 		}
 
 		@Override

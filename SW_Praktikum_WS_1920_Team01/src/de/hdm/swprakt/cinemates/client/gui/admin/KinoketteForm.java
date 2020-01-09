@@ -173,7 +173,10 @@ public class KinoketteForm extends HorizontalPanel {
 						public void onClick(ClickEvent event) {
 							kinoAdministration.getSpielplanOfKino(kino, new SpielplanBearbeitenCallback());
 							
+
+							
 						}
+						
 						
 					});
 					kinos.setWidget(rowcount, 2, kinoBearbeiten);
@@ -183,8 +186,12 @@ public class KinoketteForm extends HorizontalPanel {
 						@Override
 						public void onClick(ClickEvent event) {
 							kinoAdministration.save(kino, new BearbeitenCallback());
+							
 						}
 						
+						
+					
+					
 					});
 					
 					
@@ -312,7 +319,7 @@ public class KinoketteForm extends HorizontalPanel {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Window.alert("Das Kino konnte nicht gelöscht werden");
+			
 			ClientSideSettings.getLogger().severe("Es konnten keine Kinos gelöscht werden");
 		}
 
@@ -343,10 +350,10 @@ public class KinoketteForm extends HorizontalPanel {
 
 		@Override
 		public void onSuccess(Void result) {
-			Window.alert("Das Kino kann bearbeitet werden!");
 			RootPanel.get("DetailsPanel").clear();
 			KinoBearbeitenForm kbf = new KinoBearbeitenForm();
 			RootPanel.get("DetailsPanel").add(kbf);
+			
 	
 
 		}

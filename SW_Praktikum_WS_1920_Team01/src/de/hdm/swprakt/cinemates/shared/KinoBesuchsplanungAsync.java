@@ -70,7 +70,7 @@ public interface KinoBesuchsplanungAsync {
 
 	void mitgliedHinzufügen(Nutzer nutzer, Gruppe gruppe, AsyncCallback<Gruppe> callback);
 
-	void save(Umfrage umfrage, AsyncCallback<Umfrage> callback);
+	void save(Umfrage umfrage, AsyncCallback<Void> callback);
 
 	void showAllUmfragenOfGruppe(Gruppe gruppe, AsyncCallback<Vector<Umfrage>> callback);
 

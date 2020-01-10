@@ -144,11 +144,10 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 		this.ownedBusinessObjectMapper = OwnedBusinessObjectMapper.ownedBusinessObjectMapper();
 
 		// Referenz auf die Kinobesuchsplanung
-		
+
 		KinoBesuchsplanungImpl kbi = new KinoBesuchsplanungImpl();
 		kbi.init();
 		this.kinobesuchsplanung = kbi;
-
 
 	}
 
@@ -625,9 +624,9 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 	 * @throws IllegalArgumentException
 	 */
 
-	public Kino save(Kino kino) throws IllegalArgumentException {
+	public void save(Kino kino) throws IllegalArgumentException {
 		this.kinoMapper.update(kino);
-		return kino;
+
 	}
 
 	/*

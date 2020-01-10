@@ -487,11 +487,9 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 * @author alina
 	 */
 
-	public Umfrage save(Umfrage umfrage) throws IllegalArgumentException {
+	public void save(Umfrage umfrage) throws IllegalArgumentException {
 
 		this.umfrageMapper.update(umfrage);
-
-		return umfrage;
 
 	}
 

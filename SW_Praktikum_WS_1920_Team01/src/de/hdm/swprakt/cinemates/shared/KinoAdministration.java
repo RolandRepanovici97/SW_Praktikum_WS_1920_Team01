@@ -305,7 +305,7 @@ public interface KinoAdministration extends RemoteService {
 	 * @throws IllegalArgumentException
 	 * @author alina
 	 */
-	public Kino save(Kino kino) throws IllegalArgumentException;
+	public void save(Kino kino) throws IllegalArgumentException;
 
 	/**
 	 * Diese Methode wird aufgerufen, wenn der Spielplan eines übergebenen Kinos

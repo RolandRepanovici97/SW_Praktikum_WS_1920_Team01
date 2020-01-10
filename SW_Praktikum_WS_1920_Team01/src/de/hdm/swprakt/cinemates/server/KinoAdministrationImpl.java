@@ -621,8 +621,9 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 	 * @throws IllegalArgumentException
 	 */
 
-	public void save(Kino kino) throws IllegalArgumentException {
+	public Kino save(Kino kino) throws IllegalArgumentException {
 		this.kinoMapper.update(kino);
+		return kino;
 	}
 
 	/*

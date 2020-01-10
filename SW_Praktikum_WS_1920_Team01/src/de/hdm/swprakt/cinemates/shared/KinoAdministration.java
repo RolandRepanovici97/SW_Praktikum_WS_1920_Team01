@@ -298,13 +298,14 @@ public interface KinoAdministration extends RemoteService {
 	public void deleteKino(Kino kino) throws IllegalArgumentException;
 
 	/**
-	 * Diese Methode wird aufgerufen, wenn ein Kinoobjekt aktualisiert werden soll.
+	 * Diese Methode wird aufgerufen, wenn ein Kinoobjekt in der Datenbank gespeichert
+	 * wird.
 	 * 
-	 * @param Spielplanobjekt, welches aktualisiert werden soll
+	 * @param Kinoobjekt, welches gespeichert werden soll
 	 * @throws IllegalArgumentException
+	 * @author alina
 	 */
-
-	public void save(Kino kino) throws IllegalArgumentException;
+	public Kino save(Kino kino) throws IllegalArgumentException;
 
 	/**
 	 * Diese Methode wird aufgerufen, wenn der Spielplan eines übergebenen Kinos

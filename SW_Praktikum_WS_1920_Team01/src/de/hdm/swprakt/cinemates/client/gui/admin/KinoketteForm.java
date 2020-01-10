@@ -31,6 +31,7 @@ import de.hdm.swprakt.cinemates.shared.bo.Kino;
 import de.hdm.swprakt.cinemates.shared.bo.Kinokette;
 import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 import de.hdm.swprakt.cinemates.shared.bo.Spielplan;
+import de.hdm.swprakt.cinemates.client.gui.admin.KinoBearbeitenForm;
 
 
 public class KinoketteForm extends HorizontalPanel {
@@ -181,15 +182,50 @@ public class KinoketteForm extends HorizontalPanel {
 					});
 					kinos.setWidget(rowcount, 2, kinoBearbeiten);
 					
+					kinoBearbeiten.addClickHandler(new ClickHandler(){
+
+						@Override
+						public void onClick(ClickEvent event) {
+							RootPanel.get("DetailsPanel").clear();
+							KinoBearbeitenForm kbf = new KinoBearbeitenForm(kino);
+							RootPanel.get("DetailsPanel").add(kbf);							
+						}
+						
+					});
+					
 					kinoBearbeiten.addClickHandler(new kinoBearbeitenClickHandler() {
 
 						@Override
 						public void onClick(ClickEvent event) {
 							kinoAdministration.save(kino, new BearbeitenCallback());
+		
 							
 						}
+					
+						/**
+						 * Diese Nested Class implementiert das Interface AsyncCallback und das Löschen
+						 		* eines Kinos.
+						 * 
+						 */
+						class BearbeitenCallback implements AsyncCallback <Kino>{
+
+							@Override
+							public void onFailure(Throwable caught) {
 						
+								ClientSideSettings.getLogger().severe("Es konnten keine Kinos b werden");
+							}
+
+							@Override
+							public void onSuccess(Kino result) {
+								RootPanel.get("DetailsPanel").clear();
+								KinoBearbeitenForm kbf = new KinoBearbeitenForm(kino);
+								RootPanel.get("DetailsPanel").add(kbf);
+								
 						
+
+							}
+
+						}
 					
 					
 					});
@@ -253,7 +289,7 @@ public class KinoketteForm extends HorizontalPanel {
 
 		public void onClick(ClickEvent event) {
 			RootPanel.get("DetailsPanel").clear();
-			kbf = new KinoBearbeitenForm();
+			kbf = new KinoBearbeitenForm(kino);
 			Window.Location.getParameter("");
 			RootPanel.get("DetailsPanel").add(kbf);
 		}
@@ -335,30 +371,7 @@ public class KinoketteForm extends HorizontalPanel {
 
 	}
 	
-	/**
-	 * Diese Nested Class implementiert das Interface AsyncCallback und das Löschen
-	 * eines Kinos.
-	 * 
-	 */
-	class BearbeitenCallback implements AsyncCallback <Void>{
-
-		@Override
-		public void onFailure(Throwable caught) {
-			Window.alert("Das Kino konnte nicht gelöscht werden");
-			ClientSideSettings.getLogger().severe("Es konnten keine Kinos gelöscht werden");
-		}
-
-		@Override
-		public void onSuccess(Void result) {
-			RootPanel.get("DetailsPanel").clear();
-			KinoBearbeitenForm kbf = new KinoBearbeitenForm();
-			RootPanel.get("DetailsPanel").add(kbf);
-			
 	
-
-		}
-
-	}
 	
 	/**
 	 * Diese Nested Class implementiert das Interface AsyncCallback und das Bearbeiten

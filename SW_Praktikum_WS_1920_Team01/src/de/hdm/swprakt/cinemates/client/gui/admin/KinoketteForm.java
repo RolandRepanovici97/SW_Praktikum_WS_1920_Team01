@@ -33,33 +33,22 @@ import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 import de.hdm.swprakt.cinemates.shared.bo.Spielplan;
 import de.hdm.swprakt.cinemates.client.gui.admin.KinoBearbeitenForm;
 
-
 public class KinoketteForm extends HorizontalPanel {
 
 	// Nur zum Test
 	// Später ersetzen mit dem eingeloggten Benutzer
 
-	private Button spielplanBearbeiten = new Button("Spielplan bearbeiten");
-	private Button kinoBearbeiten = new Button("Kino bearbeiten");
-	private Button kinolöschen = new Button("Kino löschen");
-	private String kinoName = ("Kinoname 1"); // Als Array!
-	private Button ja = new Button("JA");
-	private Button nein = new Button("NEIN");
-	private Button löschen = new Button("Löschen");
 	private VerticalPanel verticalpanel = new VerticalPanel();
-	private Nutzer eingeloggterNutzer;
+
 	private Kino kino;
 	private Button neuesKino = new Button();
 	private Label titel = new Label();
-
-	private Vector<Kino> kinoVector = new Vector<Kino>();
 
 	Kinokette kinoketteEingeloggterBenutzer;
 
 	FlexTable kinos = new FlexTable();
 
 	KinoAdministrationAsync kinoAdministration = ClientSideSettings.getKinoAdministration();
-
 
 	KinoverwaltungForm kf;
 	SpielplanForm sf;
@@ -73,71 +62,78 @@ public class KinoketteForm extends HorizontalPanel {
 	public void onLoad() {
 		super.onLoad();
 
-
+		neuesKino.setHTML("<i class=\"fas fa-plus\"></i>");
 		kinos.addStyleName("flexTable");
 		kinos.setCellPadding(10);
 		titel.setText("Meine Kinokette");
 		titel.getElement().setId("TitelElemente");
-		
-//		kinoAdministration.findNutzerByEmail("Kinobetreiber2@gmail.com", new AsyncCallback<Nutzer>() {
-//
-//			@Override
-//			public void onFailure(Throwable caught) {
-//				ClientSideSettings.getLogger().severe("Der eingeloggte Benutzer wurde nicht gefunden");
-//
-//			}
-//
-//			@Override
-//			public void onSuccess(Nutzer result) {
-//				ClientSideSettings.getLogger().severe("Der eingeloggte Benutzer wurde gefunden");
-//				ClientSideSettings.getLogger().severe(result.getNutzername());
-//				eingeloggterNutzer = result;
-//
-//			}
-//
-//		});
-//
-//		kinoAdministration.getKinoketteOf(eingeloggterNutzer, new AsyncCallback<Kinokette>() {
-//
-//			@Override
-//			public void onFailure(Throwable caught) {
-//				ClientSideSettings.getLogger().severe("Die Kinokette des eingeloggten Benutzers wurde nicht gefunden");
-//
-//			}
-//
-//			@Override
-//			public void onSuccess(Kinokette result) {
-//				ClientSideSettings.getLogger().severe("Die Kinokette des eingeloggten Benutzers wurde gefunden");
-//
-//				kinoketteEingeloggterBenutzer = result;
-//
-//			}
-//
-//		});
-//
-//		kinoAdministration.getKinosOfKinokette(kinoketteEingeloggterBenutzer, new AsyncCallback<Vector<Kino>>() {
-//			@Override
-//			public void onFailure(Throwable caught) {
-//				ClientSideSettings.getLogger().severe("Es wurden keine Kinos gefunden");
-//
-//			}
-//
-//			@Override
-//			public void onSuccess(Vector<Kino> result) {
-//				// Add the data to the data provider, which automatically pushes it to the
-//				// widget.
-//
-//				ClientSideSettings.getLogger().severe("Es wurden Kinos gefunden");
-//				for (Kino kino : result) {
-//					System.out.println(kino.toString());
-//
-//				}
-//			}
-//
-//		});
-//		
-//		
-		
+		neuesKino.addClickHandler(new kinoAnlegenClickHandler());
+
+		// kinoAdministration.findNutzerByEmail("Kinobetreiber2@gmail.com", new
+		// AsyncCallback<Nutzer>() {
+		//
+		// @Override
+		// public void onFailure(Throwable caught) {
+		// ClientSideSettings.getLogger().severe("Der eingeloggte Benutzer wurde nicht
+		// gefunden");
+		//
+		// }
+		//
+		// @Override
+		// public void onSuccess(Nutzer result) {
+		// ClientSideSettings.getLogger().severe("Der eingeloggte Benutzer wurde
+		// gefunden");
+		// ClientSideSettings.getLogger().severe(result.getNutzername());
+		// eingeloggterNutzer = result;
+		//
+		// }
+		//
+		// });
+		//
+		// kinoAdministration.getKinoketteOf(eingeloggterNutzer, new
+		// AsyncCallback<Kinokette>() {
+		//
+		// @Override
+		// public void onFailure(Throwable caught) {
+		// ClientSideSettings.getLogger().severe("Die Kinokette des eingeloggten
+		// Benutzers wurde nicht gefunden");
+		//
+		// }
+		//
+		// @Override
+		// public void onSuccess(Kinokette result) {
+		// ClientSideSettings.getLogger().severe("Die Kinokette des eingeloggten
+		// Benutzers wurde gefunden");
+		//
+		// kinoketteEingeloggterBenutzer = result;
+		//
+		// }
+		//
+		// });
+		//
+		// kinoAdministration.getKinosOfKinokette(kinoketteEingeloggterBenutzer, new
+		// AsyncCallback<Vector<Kino>>() {
+		// @Override
+		// public void onFailure(Throwable caught) {
+		// ClientSideSettings.getLogger().severe("Es wurden keine Kinos gefunden");
+		//
+		// }
+		//
+		// @Override
+		// public void onSuccess(Vector<Kino> result) {
+		// // Add the data to the data provider, which automatically pushes it to the
+		// // widget.
+		//
+		// ClientSideSettings.getLogger().severe("Es wurden Kinos gefunden");
+		// for (Kino kino : result) {
+		// System.out.println(kino.toString());
+		//
+		// }
+		// }
+		//
+		// });
+		//
+		//
 
 		kinoAdministration.getAllKinos(new AsyncCallback<Vector<Kino>>() {
 
@@ -150,106 +146,24 @@ public class KinoketteForm extends HorizontalPanel {
 			@Override
 			public void onSuccess(Vector<Kino> result) {
 				ClientSideSettings.getLogger().severe("Es wurden Kinos gefunden");
+
 				int rowcount = 0;
-				Button spielplanBearbeiten = new Button("Spielplan bearbeiten");
-				Button kinoBearbeiten = new Button("Kino bearbeiten");
-				Button kinolöschen = new Button("Kino löschen");
-				neuesKino.setHTML("<i class=\"fas fa-plus\"></i>");
-				//				Image logo = new Image("images/plus.jpg");
-				//
-				//				logo.setWidth("40px");
+
 				for (Kino kino : result) {
 
-					ClientSideSettings.getLogger().severe(kino.toString());
-					spielplanBearbeiten = new Button("Spielplan bearbeiten");
-					kinoBearbeiten = new Button("Kino bearbeiten");
-					kinolöschen = new Button("Kino löschen");
-					//					logo = new Image("images/plus.jpg");
+					Button spielplanBearbeiten = new Button("Spielplan bearbeiten");
+					Button kinoBearbeiten = new Button("Kino bearbeiten");
+					spielplanBearbeiten.addClickHandler(new spielplanBearbeitenClickHandler(kino));
+					kinoBearbeiten.addClickHandler(new kinoBearbeitenClickHandler(kino));
 
 					kinos.setText(rowcount, 0, kino.toString());
+
 					kinos.setWidget(rowcount, 1, spielplanBearbeiten);
-					spielplanBearbeiten.addClickHandler(new ClickHandler() {
-
-						@Override
-						public void onClick(ClickEvent event) {
-							kinoAdministration.getSpielplanOfKino(kino, new SpielplanBearbeitenCallback());
-							
-
-							
-						}
-						
-						
-					});
 					kinos.setWidget(rowcount, 2, kinoBearbeiten);
-					
-					kinoBearbeiten.addClickHandler(new ClickHandler(){
 
-						@Override
-						public void onClick(ClickEvent event) {
-							RootPanel.get("DetailsPanel").clear();
-							KinoBearbeitenForm kbf = new KinoBearbeitenForm(kino);
-							RootPanel.get("DetailsPanel").add(kbf);							
-						}
-						
-					});
-					
-					kinoBearbeiten.addClickHandler(new kinoBearbeitenClickHandler() {
-
-						@Override
-						public void onClick(ClickEvent event) {
-							kinoAdministration.save(kino, new BearbeitenCallback());
-		
-							
-						}
-					
-						/**
-						 * Diese Nested Class implementiert das Interface AsyncCallback und das Löschen
-						 		* eines Kinos.
-						 * 
-						 */
-						class BearbeitenCallback implements AsyncCallback <Kino>{
-
-							@Override
-							public void onFailure(Throwable caught) {
-						
-								ClientSideSettings.getLogger().severe("Es konnten keine Kinos b werden");
-							}
-
-							@Override
-							public void onSuccess(Kino result) {
-								RootPanel.get("DetailsPanel").clear();
-								KinoBearbeitenForm kbf = new KinoBearbeitenForm(kino);
-								RootPanel.get("DetailsPanel").add(kbf);
-								
-						
-
-							}
-
-						}
-					
-					
-					});
-					
-					
-					kinos.setWidget(rowcount, 3, kinolöschen);
-					kinolöschen.addClickHandler(new LöschenClickHandler2());
-					kinolöschen.addClickHandler(new ClickHandler() {
-
-						@Override
-						public void onClick(ClickEvent event) {
-						
-							kinoAdministration.deleteKino(kino, new LöschenCallback());
-							
-						}
-						
-					});
-					//					kinos.setWidget(rowcount, 4, neuesKino);
-					//					kinos.setText(rowcount, 5, "Neues Kino anlegen");
-					neuesKino.addClickHandler(new kinoAnlegenClickHandler());
-					//
 					rowcount++;
-				}
 
+				}
 			}
 
 		});
@@ -277,7 +191,7 @@ public class KinoketteForm extends HorizontalPanel {
 		verticalpanel.add(kinos);
 		verticalpanel.add(neuesKino);
 		this.add(verticalpanel);
-		//		RootPanel.get("DetailsPanel").add(kinos);
+		// RootPanel.get("DetailsPanel").add(kinos);
 
 	}
 
@@ -285,25 +199,58 @@ public class KinoketteForm extends HorizontalPanel {
 	 * Click handlers und abhängige AsyncCallback Klassen.
 	 */
 
+	/**
+	 * Diese Nested Class implementiert das Interface AsyncCallback und das Löschen
+	 * eines Kinos.
+	 * 
+	 */
+	class BearbeitenCallback implements AsyncCallback<Kino> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+
+			ClientSideSettings.getLogger().severe("Es konnten keine Kinos b werden");
+		}
+
+		@Override
+		public void onSuccess(Kino result) {
+			RootPanel.get("DetailsPanel").clear();
+			KinoBearbeitenForm kbf = new KinoBearbeitenForm(kino);
+			RootPanel.get("DetailsPanel").add(kbf);
+
+		}
+
+	}
+
 	private class kinoBearbeitenClickHandler implements ClickHandler {
+
+		Kino übergabekino;
+
+		kinoBearbeitenClickHandler(Kino kino) {
+			this.übergabekino = kino;
+		}
 
 		public void onClick(ClickEvent event) {
 			RootPanel.get("DetailsPanel").clear();
-			kbf = new KinoBearbeitenForm(kino);
-			Window.Location.getParameter("");
+			KinoBearbeitenForm kbf = new KinoBearbeitenForm(übergabekino);
 			RootPanel.get("DetailsPanel").add(kbf);
 		}
 	}
 
 	private class spielplanBearbeitenClickHandler implements ClickHandler {
 
+		Kino übergabekino;
+
+		spielplanBearbeitenClickHandler(Kino kino) {
+			this.übergabekino = kino;
+		}
+
 		@Override
 		public void onClick(ClickEvent event) {
 			RootPanel.get("DetailsPanel").clear();
-			spvf = new SpielplanverwaltungForm();
-			// sf = new SpielplanForm();
-			Window.Location.getParameter("");
+			spvf = new SpielplanverwaltungForm(übergabekino);
 			RootPanel.get("DetailsPanel").add(spvf);
+
 		}
 
 	}
@@ -319,107 +266,13 @@ public class KinoketteForm extends HorizontalPanel {
 
 	}
 
-	private class löschenClickHandler extends DialogBox implements ClickHandler {
-
-		public löschenClickHandler() {
-			setText("Möchten Sie das Kino wirklich löschen?");
-			Grid jaNein = new Grid(3, 3);
-			jaNein.setWidget(0, 1, ja);
-			jaNein.setWidget(0, 2, nein);
-			nein.addClickHandler(new neinClickHandler());
-			ja.addClickHandler(new LöschenClickHandler2());
-			setAnimationEnabled(false);
-			setGlassEnabled(false);
-			this.add(jaNein);
-		}
-
-		public void onClick(ClickEvent event) {
-			new löschenClickHandler().show();
-		}
-
-		private class neinClickHandler implements ClickHandler {
-			@Override
-			public void onClick(ClickEvent event) {
-				RootPanel.get().clear();
-			}
-		}
-
-	}
-	
-	/**
-	 * Diese Nested Class implementiert das Interface AsyncCallback und das Löschen
-	 * eines Kinos.
-	 * 
-	 */
-	class LöschenCallback implements AsyncCallback <Void>{
-
-		@Override
-		public void onFailure(Throwable caught) {
-			
-			ClientSideSettings.getLogger().severe("Es konnten keine Kinos gelöscht werden");
-		}
-
-		@Override
-		public void onSuccess(Void result) {
-			Window.alert("Das Kino wurde erfolgreich gelöscht!");
-			RootPanel.get("DetailsPanel").clear();
-			KinoketteForm kkf = new KinoketteForm();
-			RootPanel.get("DetailsPanel").add(kkf);
-	
-
-		}
-
-	}
-	
-	
-	
-	/**
-	 * Diese Nested Class implementiert das Interface AsyncCallback und das Bearbeiten
-	 * eines Kinos.
-	 * 
-	 */
-	class SpielplanBearbeitenCallback implements AsyncCallback <Spielplan>{
-
-		@Override
-		public void onFailure(Throwable caught) {
-			Window.alert("Das Kino konnte nicht bearbeitet werden");
-			ClientSideSettings.getLogger().severe("Es konnten keine Kinos bearbeitet werden");
-		}
-
-
-		@Override
-		public void onSuccess(Spielplan result) {
-			RootPanel.get("DetailsPanel").clear();
-			SpielplanForm sf = new SpielplanForm();
-			RootPanel.get("DetailsPanel").add(sf);
-		//	RootPanel.get("DetailsPanel").add(kino);
-			ClientSideSettings.getLogger().severe("funktioniert");
-			
-		}
-
-	}
-	
-	/**
-	 * Diese Nested Class implementiert das Interface ClickHandler.
-	 * Klickt der Nutzer diessen Button an, so wird das Kino gelöscht.
-	 * 
-	 * 
-	 */
-
-	private class LöschenClickHandler2 implements ClickHandler {
-
-		@Override
-		public void onClick(ClickEvent event) {
-			kinoAdministration.deleteKino(kino, new LöschenCallback());
-			
-
-		}
-
-	}
-	
-
-	
-	
 
 
 }
+
+
+
+
+
+
+

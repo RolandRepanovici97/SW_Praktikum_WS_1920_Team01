@@ -13,9 +13,11 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.view.client.ListDataProvider;
 
 import de.hdm.swprakt.cinemates.client.ClientSideSettings;
+import de.hdm.swprakt.cinemates.client.KinoAdministrationEntry;
 import de.hdm.swprakt.cinemates.shared.KinoAdministrationAsync;
 import de.hdm.swprakt.cinemates.shared.bo.Kino;
 import de.hdm.swprakt.cinemates.shared.bo.Kinokette;
+import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 
 public class KinoAnlegenForm extends HorizontalPanel {
 
@@ -33,12 +35,14 @@ public class KinoAnlegenForm extends HorizontalPanel {
 
 	// Create a data provider.
 	private ListDataProvider<Kino> dataProvider = new ListDataProvider<Kino>();
-
+	
 	KinoAdministrationAsync kinoAdministration = ClientSideSettings.getKinoAdministration();
 
 	public void onLoad() {
 
 		super.onLoad();
+		
+		kinoAdministration.getKinoketteOf(KinoAdministrationEntry.AktuellerNutzer.getNutzer(), new KinoketteCallback());
 
 		Grid kinoGrid = new Grid(4, 4);
 
@@ -99,6 +103,23 @@ public class KinoAnlegenForm extends HorizontalPanel {
 			}
 
 		}
+	}
+	
+	private class KinoketteCallback implements AsyncCallback<Kinokette> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			ClientSideSettings.getLogger().severe("Der eingeloggte Nutzer wurde nicht gefunden");
+			
+		}
+
+		@Override
+		public void onSuccess(Kinokette result) {
+			ClientSideSettings.getLogger().severe("Der eingeloggte Nutzer wurde gefunden");;
+			kinoketteEingeloggterBenutzer = result;
+			
+		}
+		
 	}
 
 	private class kinoentfernenClickHandler implements ClickHandler {

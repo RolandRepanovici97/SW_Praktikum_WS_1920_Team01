@@ -50,7 +50,7 @@ public class KinoketteForm extends HorizontalPanel {
 
 	KinoAdministrationAsync kinoAdministration = ClientSideSettings.getKinoAdministration();
 
-	KinoverwaltungForm kf;
+	KinoAnlegenForm kf;
 	SpielplanForm sf;
 
 	SpielplanverwaltungForm spvf;
@@ -259,7 +259,7 @@ public class KinoketteForm extends HorizontalPanel {
 
 		public void onClick(ClickEvent event) {
 			RootPanel.get("DetailsPanel").clear();
-			kf = new KinoverwaltungForm();
+			kf = new KinoAnlegenForm();
 			Window.Location.getParameter("");
 			RootPanel.get("DetailsPanel").add(kf);
 		}

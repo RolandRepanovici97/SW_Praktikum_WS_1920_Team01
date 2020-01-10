@@ -214,7 +214,7 @@ public interface KinoBesuchsplanung extends RemoteService {
 	 * @throws IllegalArgumentException
 	 * @author alina
 	 */
-	public Umfrage save(Umfrage umfrage) throws IllegalArgumentException;
+	public void save(Umfrage umfrage) throws IllegalArgumentException;
 
 	/**
 	 * Diese Methode wird aufgerufen, wenn nach einer Umfrage mittels ihrer ID

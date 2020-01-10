@@ -59,7 +59,7 @@ public interface KinoAdministrationAsync {
 
 	void getAllSpielplan(AsyncCallback<Vector<Spielplan>> callback);
 
-	void save(Kino kino, AsyncCallback<Kino> callback);
+	void save(Kino kino, AsyncCallback<Void> callback);
 
 	void getKinoketteOf(Nutzer nutzer, AsyncCallback<Kinokette> callback);
 

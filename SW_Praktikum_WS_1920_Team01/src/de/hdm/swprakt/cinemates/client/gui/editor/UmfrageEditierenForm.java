@@ -59,16 +59,17 @@ public class UmfrageEditierenForm extends VerticalPanel {
 	private DateBox datebox;
 	private HorizontalPanel horizontalPanel;
 
-	// Getter & Setter für die Variable Umfrage: Wird benötigt, wenn Umfrage selektiert wurde
+	// Getter & Setter für die Variable Umfrage: Wird benötigt, wenn Umfrage
+	// selektiert wurde
 
 	/**
 	 * @return the gewählteUmfrage
 	 */
-	
+
 	public UmfrageEditierenForm(Umfrage gewählteumfrage) {
 		this.gewählteUmfrage = gewählteumfrage;
 	}
-	
+
 	public Umfrage getGewählteUmfrage() {
 		return gewählteUmfrage;
 	}
@@ -82,10 +83,10 @@ public class UmfrageEditierenForm extends VerticalPanel {
 
 	public void onLoad() {
 		super.onLoad();
-		
+
 		löschenButton.setHTML("<i class=\"far fa-trash-alt\"> <br> Umfrage löschen</i>");
 
-		//Panel um zwei Buttons nebeneinander anzuordnen
+		// Panel um zwei Buttons nebeneinander anzuordnen
 		horizontalPanel = new HorizontalPanel();
 		gruppebox = new ListBox();
 		filmbox = new ListBox();
@@ -94,7 +95,7 @@ public class UmfrageEditierenForm extends VerticalPanel {
 		titel = new Label("Umfrage: " + gewählteUmfrage.getUmfragenname() + " bearbeiten");
 		titel.getElement().setId("TitelElemente");
 		umfragennameText.setText(gewählteUmfrage.getUmfragenname());
-		
+
 		neueBeschreibungText.setText(gewählteUmfrage.getBeschreibung());
 		/*
 		 * Formatierung des Datumformats in den deutschen Standard
@@ -110,7 +111,7 @@ public class UmfrageEditierenForm extends VerticalPanel {
 		kinoadministration.getAllFilme(new FilmCallback());
 		kinobesuchsplanung.getAllGruppen(new GruppeCallback());
 
-		//Befüllen der Tabelle
+		// Befüllen der Tabelle
 		tabelle = new Grid(6, 3);
 		tabelle.setWidget(1, 1, umfragename);
 		tabelle.setWidget(1, 2, umfragennameText);
@@ -128,8 +129,8 @@ public class UmfrageEditierenForm extends VerticalPanel {
 
 		// Hinzufügen des ClickHandlers zum Löschen Button
 		löschenButton.addClickHandler(new LöschenClickHandler());
-		
-		//Hinzufügen der Widgets zu den Panels
+
+		// Hinzufügen der Widgets zu den Panels
 
 		this.add(titel);
 		this.add(tabelle);
@@ -197,14 +198,13 @@ public class UmfrageEditierenForm extends VerticalPanel {
 
 	}
 
-
 	/**
 	 * Diese Nested Class implementiert das Interface AsyncCallback und ermöglicht
 	 * die Rückgabe des editierten Umfrageobjekts.
 	 *
 	 * @author alina
 	 */
-	class UmfrageCallback implements AsyncCallback<Umfrage> {
+	class UmfrageCallback implements AsyncCallback<Void> {
 
 		@Override
 		public void onFailure(Throwable caught) {
@@ -212,9 +212,9 @@ public class UmfrageEditierenForm extends VerticalPanel {
 		}
 
 		@Override
-		public void onSuccess(Umfrage result) {
-
+		public void onSuccess(Void result) {
 			Window.alert("Die Umfrage wurde erfolgreich editiert!");
+			Window.Location.reload();
 
 		}
 
@@ -223,9 +223,10 @@ public class UmfrageEditierenForm extends VerticalPanel {
 	/**
 	 * Diese Nested Class implementiert das Interface AsyncCallback und das Löschen
 	 * einer selektierten Umfrage.
+	 * 
 	 * @author alina
 	 */
-	class LöschenCallback implements AsyncCallback <Void>{
+	class LöschenCallback implements AsyncCallback<Void> {
 
 		@Override
 		public void onFailure(Throwable caught) {
@@ -242,8 +243,8 @@ public class UmfrageEditierenForm extends VerticalPanel {
 	}
 
 	/**
-	 * Diese Nested Class implementiert das Interface ClickHandler.
-	 * Klickt der Nutzer diesen Button an, so werden die Änderungen an der Umfrage gespeichert.
+	 * Diese Nested Class implementiert das Interface ClickHandler. Klickt der
+	 * Nutzer diesen Button an, so werden die Änderungen an der Umfrage gespeichert.
 	 * 
 	 * @author alina
 	 */
@@ -253,18 +254,18 @@ public class UmfrageEditierenForm extends VerticalPanel {
 		public void onClick(ClickEvent event) {
 			gewählteUmfrage.setUmfragenname(umfragennameText.getText());
 			gewählteUmfrage.setBeschreibung(neueBeschreibungText.getText());
-			//			gewählteUmfrage.setGruppenIDs(gruppebox.getValue());
-			//			gewählteUmfrage.setFilmID(filmbox.getValue());
+			// gewählteUmfrage.setGruppenIDs(gruppebox.getValue());
+			// gewählteUmfrage.setFilmID(filmbox.getValue());
 			gewählteUmfrage.setDatum(datebox.getValue());
 			kinobesuchsplanung.save(gewählteUmfrage, new UmfrageCallback());
-
 
 		}
 
 	}
+
 	/**
-	 * Diese Nested Class implementiert das Interface ClickHandler.
-	 * Klickt der Nutzer diessen Button an, so wird die Umfrage gelöscht.
+	 * Diese Nested Class implementiert das Interface ClickHandler. Klickt der
+	 * Nutzer diessen Button an, so wird die Umfrage gelöscht.
 	 * 
 	 * @author alina
 	 */
@@ -274,7 +275,6 @@ public class UmfrageEditierenForm extends VerticalPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			kinobesuchsplanung.deleteUmfrage(gewählteUmfrage, new LöschenCallback());
-			
 
 		}
 

@@ -17,8 +17,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 
 import de.hdm.swprakt.cinemates.client.gui.Footer;
-import de.hdm.swprakt.cinemates.client.gui.admin.HeaderfürKinoAdministration;
-import de.hdm.swprakt.cinemates.client.gui.editor.HeaderfürKinobesuchsplanung;
+import de.hdm.swprakt.cinemates.client.gui.admin.HeaderfuerKinoAdministration;
+import de.hdm.swprakt.cinemates.client.gui.editor.HeaderfuerKinobesuchsplanung;
 import de.hdm.swprakt.cinemates.client.gui.editor.NutzerkontoForm;
 import de.hdm.swprakt.cinemates.client.gui.editor.StartseiteEditor;
 import de.hdm.swprakt.cinemates.server.LoginServiceImpl;
@@ -134,7 +134,7 @@ public class KinobesuchsplanungEntry implements EntryPoint {
 	private void loadStartseite() {
 		
 		
-		HeaderfürKinobesuchsplanung headerPanel = new HeaderfürKinobesuchsplanung();
+		HeaderfuerKinobesuchsplanung headerPanel = new HeaderfuerKinobesuchsplanung();
 		headerPanel.getElement().setId("headerPanelKinobesuchsplanung");
 		RootPanel.get("Header").add(headerPanel);
 		startseite = new StartseiteEditor();

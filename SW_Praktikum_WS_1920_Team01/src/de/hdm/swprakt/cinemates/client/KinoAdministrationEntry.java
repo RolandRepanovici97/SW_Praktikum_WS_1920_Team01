@@ -11,7 +11,7 @@ import de.hdm.swprakt.cinemates.client.KinobesuchsplanungEntry.AktuellerNutzer;
 import de.hdm.swprakt.cinemates.client.gui.Footer;
 import de.hdm.swprakt.cinemates.client.gui.admin.AlleKinosEinerKinokette;
 import de.hdm.swprakt.cinemates.client.gui.admin.FilmForm;
-import de.hdm.swprakt.cinemates.client.gui.admin.HeaderfürKinoAdministration;
+import de.hdm.swprakt.cinemates.client.gui.admin.HeaderfuerKinoAdministration;
 import de.hdm.swprakt.cinemates.client.gui.admin.KinoketteForm;
 import de.hdm.swprakt.cinemates.client.gui.admin.SpielplanForm;
 import de.hdm.swprakt.cinemates.client.gui.admin.SpielplanverwaltungForm;
@@ -66,7 +66,7 @@ public class KinoAdministrationEntry implements EntryPoint {
 	
 	private void loadStartseite() {
 		
-		HeaderfürKinoAdministration headerPanel = new HeaderfürKinoAdministration();
+		HeaderfuerKinoAdministration headerPanel = new HeaderfuerKinoAdministration();
 		headerPanel.getElement().setId("headerPanelKinoadministration");
 		RootPanel.get("Header").add(headerPanel);
 		

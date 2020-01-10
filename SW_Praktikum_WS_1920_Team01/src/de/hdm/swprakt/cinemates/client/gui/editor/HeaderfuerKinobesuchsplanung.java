@@ -29,7 +29,7 @@ import de.hdm.swprakt.cinemates.server.LoginServiceImpl;
  * @version 1.0
  *
  */
-public class HeaderfürKinobesuchsplanung extends HorizontalPanel {
+public class HeaderfuerKinobesuchsplanung extends HorizontalPanel {
 
 	/*
 	 * Diese privaten Attribute stellen Widgtes dar, deren Inhalte Variable sind.

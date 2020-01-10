@@ -30,7 +30,7 @@ import de.hdm.swprakt.cinemates.server.LoginServiceImpl;
  * @version 1.0
  *
  */
-public class HeaderfürKinoAdministration extends HorizontalPanel {
+public class HeaderfuerKinoAdministration extends HorizontalPanel {
 
 	/* Diese privaten Attribute stellen Widgtes dar, deren Inhalte Variable sind. 
 	 * Sie werden benötigt, um die Inhalte im weiteren Verlauf sinnvolll zu struktutieren. 

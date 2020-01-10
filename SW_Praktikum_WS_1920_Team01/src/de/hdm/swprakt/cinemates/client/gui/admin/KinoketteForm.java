@@ -259,7 +259,7 @@ public class KinoketteForm extends HorizontalPanel {
 
 		public void onClick(ClickEvent event) {
 			RootPanel.get("DetailsPanel").clear();
-			kf = new KinoverwaltungForm();
+			KinoAnlegenForm kf = new KinoAnlegenForm();
 			Window.Location.getParameter("");
 			RootPanel.get("DetailsPanel").add(kf);
 		}

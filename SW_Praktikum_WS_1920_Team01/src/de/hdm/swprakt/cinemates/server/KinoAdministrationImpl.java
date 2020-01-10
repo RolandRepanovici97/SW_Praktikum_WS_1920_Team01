@@ -17,6 +17,7 @@ import de.hdm.swprakt.cinemates.server.db.SpielplanMapper;
 import de.hdm.swprakt.cinemates.server.db.SpielzeitMapper;
 import de.hdm.swprakt.cinemates.server.db.UmfrageMapper;
 import de.hdm.swprakt.cinemates.shared.KinoAdministration;
+import de.hdm.swprakt.cinemates.shared.KinoBesuchsplanung;
 import de.hdm.swprakt.cinemates.shared.bo.Film;
 import de.hdm.swprakt.cinemates.shared.bo.Kino;
 import de.hdm.swprakt.cinemates.shared.bo.Kinokette;
@@ -47,7 +48,7 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 	 * Referenz auf die Kinobesuchsplanung
 	 */
 
-	private KinoBesuchsplanungImpl kinobesuchsplanung;
+	private KinoBesuchsplanung kinobesuchsplanung = null;
 
 	/**
 	 * Referenz auf einen Nutzer
@@ -143,8 +144,11 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 		this.ownedBusinessObjectMapper = OwnedBusinessObjectMapper.ownedBusinessObjectMapper();
 
 		// Referenz auf die Kinobesuchsplanung
-		kinobesuchsplanung = new KinoBesuchsplanungImpl();
-//		kinobesuchsplanung.init();
+		
+		KinoBesuchsplanungImpl kbi = new KinoBesuchsplanungImpl();
+		kbi.init();
+		this.kinobesuchsplanung = kbi;
+
 
 	}
 

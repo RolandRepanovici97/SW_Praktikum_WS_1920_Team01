@@ -79,64 +79,64 @@ public class KinoketteForm extends HorizontalPanel {
 		titel.setText("Meine Kinokette");
 		titel.getElement().setId("TitelElemente");
 		
-		kinoAdministration.findNutzerByEmail("Kinobetreiber2@gmail.com", new AsyncCallback<Nutzer>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				ClientSideSettings.getLogger().severe("Der eingeloggte Benutzer wurde nicht gefunden");
-
-			}
-
-			@Override
-			public void onSuccess(Nutzer result) {
-				ClientSideSettings.getLogger().severe("Der eingeloggte Benutzer wurde gefunden");
-				ClientSideSettings.getLogger().severe(result.getNutzername());
-				eingeloggterNutzer = result;
-
-			}
-
-		});
-
-		kinoAdministration.getKinoketteOf(eingeloggterNutzer, new AsyncCallback<Kinokette>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				ClientSideSettings.getLogger().severe("Die Kinokette des eingeloggten Benutzers wurde nicht gefunden");
-
-			}
-
-			@Override
-			public void onSuccess(Kinokette result) {
-				ClientSideSettings.getLogger().severe("Die Kinokette des eingeloggten Benutzers wurde gefunden");
-
-				kinoketteEingeloggterBenutzer = result;
-
-			}
-
-		});
-
-		kinoAdministration.getKinosOfKinokette(kinoketteEingeloggterBenutzer, new AsyncCallback<Vector<Kino>>() {
-			@Override
-			public void onFailure(Throwable caught) {
-				ClientSideSettings.getLogger().severe("Es wurden keine Kinos gefunden");
-
-			}
-
-			@Override
-			public void onSuccess(Vector<Kino> result) {
-				// Add the data to the data provider, which automatically pushes it to the
-				// widget.
-
-				ClientSideSettings.getLogger().severe("Es wurden Kinos gefunden");
-				for (Kino kino : result) {
-					System.out.println(kino.toString());
-
-				}
-			}
-
-		});
-		
-		
+//		kinoAdministration.findNutzerByEmail("Kinobetreiber2@gmail.com", new AsyncCallback<Nutzer>() {
+//
+//			@Override
+//			public void onFailure(Throwable caught) {
+//				ClientSideSettings.getLogger().severe("Der eingeloggte Benutzer wurde nicht gefunden");
+//
+//			}
+//
+//			@Override
+//			public void onSuccess(Nutzer result) {
+//				ClientSideSettings.getLogger().severe("Der eingeloggte Benutzer wurde gefunden");
+//				ClientSideSettings.getLogger().severe(result.getNutzername());
+//				eingeloggterNutzer = result;
+//
+//			}
+//
+//		});
+//
+//		kinoAdministration.getKinoketteOf(eingeloggterNutzer, new AsyncCallback<Kinokette>() {
+//
+//			@Override
+//			public void onFailure(Throwable caught) {
+//				ClientSideSettings.getLogger().severe("Die Kinokette des eingeloggten Benutzers wurde nicht gefunden");
+//
+//			}
+//
+//			@Override
+//			public void onSuccess(Kinokette result) {
+//				ClientSideSettings.getLogger().severe("Die Kinokette des eingeloggten Benutzers wurde gefunden");
+//
+//				kinoketteEingeloggterBenutzer = result;
+//
+//			}
+//
+//		});
+//
+//		kinoAdministration.getKinosOfKinokette(kinoketteEingeloggterBenutzer, new AsyncCallback<Vector<Kino>>() {
+//			@Override
+//			public void onFailure(Throwable caught) {
+//				ClientSideSettings.getLogger().severe("Es wurden keine Kinos gefunden");
+//
+//			}
+//
+//			@Override
+//			public void onSuccess(Vector<Kino> result) {
+//				// Add the data to the data provider, which automatically pushes it to the
+//				// widget.
+//
+//				ClientSideSettings.getLogger().severe("Es wurden Kinos gefunden");
+//				for (Kino kino : result) {
+//					System.out.println(kino.toString());
+//
+//				}
+//			}
+//
+//		});
+//		
+//		
 		
 
 		kinoAdministration.getAllKinos(new AsyncCallback<Vector<Kino>>() {

@@ -32,7 +32,7 @@ public interface LoginService extends RemoteService {
 	 * @return neues oder eingeloggtes Objekt der Klasse <code>Nutzer</code>
 	 */
 
-
+	public void init() throws IllegalArgumentException;
 	public Nutzer login(String requestUri);
 
 

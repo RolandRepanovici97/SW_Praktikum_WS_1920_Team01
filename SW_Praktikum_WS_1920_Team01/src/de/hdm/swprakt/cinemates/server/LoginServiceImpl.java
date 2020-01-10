@@ -8,6 +8,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.swprakt.cinemates.client.ClientSideSettings;
 import de.hdm.swprakt.cinemates.server.db.NutzerMapper;
+import de.hdm.swprakt.cinemates.shared.KinoAdministration;
 import de.hdm.swprakt.cinemates.shared.KinoBesuchsplanung;
 import de.hdm.swprakt.cinemates.shared.KinoBesuchsplanungAsync;
 import de.hdm.swprakt.cinemates.shared.LoginService;
@@ -37,17 +38,24 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
 
 	//Zugriff auf die Methoden der Kinobesuchsplanung, e.g. für die Verwaltung des eingeloggten Nutzers
 
-	private KinoBesuchsplanungAsync kinobesuchsplanung = null;
+	private KinoBesuchsplanung kinobesuchsplanung = null;
+	private KinoAdministration kinoadministration = null;
 
 
 	public LoginServiceImpl() throws IllegalArgumentException {
 	}
 
 
-	//	public void init() throws IllegalArgumentException {
-	//		KinoBesuchsplanungImpl kbi = new KinoBesuchsplanungImpl();
-	//		kbi.init();
-	//		this.kinobesuchsplanung = kbi;
+		public void init() throws IllegalArgumentException {
+			
+//			KinoBesuchsplanungImpl kbi = new KinoBesuchsplanungImpl();
+//			kbi.init();
+//			this.kinobesuchsplanung = kbi;
+//			
+//			KinoAdministrationImpl kinoAdministrationImpl = new KinoAdministrationImpl();
+//			kinoAdministrationImpl.init();
+//			this.kinoadministration = kinoAdministrationImpl;
+		}
 
 
 	/**
@@ -113,8 +121,10 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
 			nutzer.setLoggedIn(false);
 			nutzer.setLoginUrl(userService.createLoginURL(requestUri));
 		}
-
+		
 		return nutzer;
 
 	}
+	
+
 }

@@ -7,7 +7,8 @@
   "http://www.gwtproject.org/doctype/2.8.1/gwt-module.dtd">
 <module rename-to='kinoadministration'>
   <!-- Inherit the core Web Toolkit stuff.                        -->
-  <inherits name='com.google.gwt.user.User'/>
+   <inherits name='com.google.gwt.user.User'/>
+  <inherits name="com.google.gwt.logging.Logging"/>
 
   <!-- Inherit the default GWT style sheet.  You can change       -->
   <!-- the theme of your GWT application by uncommenting          -->

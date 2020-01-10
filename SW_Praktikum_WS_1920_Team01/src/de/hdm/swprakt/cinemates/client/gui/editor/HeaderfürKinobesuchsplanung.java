@@ -15,7 +15,9 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.hdm.swprakt.cinemates.client.ClientSideSettings;
 import de.hdm.swprakt.cinemates.client.KinobesuchsplanungEntry;
+import de.hdm.swprakt.cinemates.server.LoginServiceImpl;
 
 
 /**
@@ -180,6 +182,7 @@ public class HeaderfürKinobesuchsplanung extends HorizontalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
+			
 			
 			Window.Location.assign(KinobesuchsplanungEntry.AktuellerNutzer.getNutzer().getLogoutUrl());
 			

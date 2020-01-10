@@ -1,6 +1,7 @@
 
 package de.hdm.swprakt.cinemates.client.gui.editor;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -15,7 +16,11 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.swprakt.cinemates.client.ClientSideSettings;
+import de.hdm.swprakt.cinemates.client.KinobesuchsplanungEntry;
+import de.hdm.swprakt.cinemates.server.LoginServiceImpl;
 import de.hdm.swprakt.cinemates.shared.KinoBesuchsplanungAsync;
+import de.hdm.swprakt.cinemates.shared.LoginService;
+import de.hdm.swprakt.cinemates.shared.LoginServiceAsync;
 import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 
 /**
@@ -41,22 +46,28 @@ public class NutzerkontoForm extends HorizontalPanel {
 	private VerticalPanel panelfürnutzer = new VerticalPanel();
 	private FlexTable tabelle;
 	
+	LoginServiceAsync loginService = ClientSideSettings.getLoginService();
 	
-
-
-
+	
 	public void onLoad() {
 
 
 		super.onLoad();
-
+		
+		loginService.login(GWT.getHostPageBaseURL(), new LoginServiceCallback());
+		
+	}
+	
+	private void loadForm(Nutzer nutzer) {
+		
 		titel.getElement().setId("TitelElemente");
 
 		tabelle = new FlexTable();
 
 		nutzernametext = new TextBox();
+		nutzernametext.setText(nutzer.getNutzername());
 		//		emailtext = new Label(nutzer.getEmail());
-		emailtext = new Label("Hier steht die Mail des eingeloggten Nutzers");
+		emailtext = new Label(nutzer.getEmail());
 		speichernButton = new Button("Speichern");
 
 		//		speichernButton.addClickHandler(new SpeichernClickHandler());
@@ -66,6 +77,8 @@ public class NutzerkontoForm extends HorizontalPanel {
 		tabelle.setWidget(1, 2, nutzernametext);;
 		tabelle.setWidget(2,1, emaillabel);
 		tabelle.setWidget(2, 2, emailtext);
+
+		
 		panelfürnutzer.add(tabelle);
 		//		panelfürnutzer.add(emailtext);
 		panelfürnutzer.add(speichernButton);
@@ -73,6 +86,23 @@ public class NutzerkontoForm extends HorizontalPanel {
 		this.add(panelfürnutzer);
 
 		//	RootPanel.get().add(this);
+		
+	}
+	
+	private class LoginServiceCallback implements AsyncCallback<Nutzer> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert(caught.toString());
+		}
+
+		@Override
+		public void onSuccess(Nutzer nutzer) {
+			
+			loadForm(nutzer);
+			
+		}
+			
 
 	}
 

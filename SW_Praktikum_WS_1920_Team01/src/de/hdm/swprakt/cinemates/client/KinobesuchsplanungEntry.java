@@ -21,6 +21,7 @@ import de.hdm.swprakt.cinemates.client.gui.admin.HeaderfürKinoAdministration;
 import de.hdm.swprakt.cinemates.client.gui.editor.HeaderfürKinobesuchsplanung;
 import de.hdm.swprakt.cinemates.client.gui.editor.NutzerkontoForm;
 import de.hdm.swprakt.cinemates.client.gui.editor.StartseiteEditor;
+import de.hdm.swprakt.cinemates.server.LoginServiceImpl;
 import de.hdm.swprakt.cinemates.shared.KinoBesuchsplanung;
 import de.hdm.swprakt.cinemates.shared.LoginService;
 import de.hdm.swprakt.cinemates.shared.LoginServiceAsync;
@@ -44,6 +45,8 @@ public class KinobesuchsplanungEntry implements EntryPoint {
 	private Label loginLabel = new Label(
 			"Bitte melden Sie sich hier mit Ihrem Google-Konto an, um auf CineMates zugreifen zu können ");
 	
+	LoginServiceAsync loginService = ClientSideSettings.getLoginService();
+	
 	
 
 
@@ -51,7 +54,7 @@ public class KinobesuchsplanungEntry implements EntryPoint {
 	public void onModuleLoad() {
 		
 		// Zugriff auf Instanz des asynchronen Interfaces für den Login
-		LoginServiceAsync loginService = GWT.create(LoginService.class);
+	
 	loginService.login(GWT.getHostPageBaseURL(), new LoginServiceCallback());
 	
 //	loadStartseite();

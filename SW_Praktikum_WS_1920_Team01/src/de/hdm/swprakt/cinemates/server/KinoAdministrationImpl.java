@@ -244,7 +244,7 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 		// Filmnummer wird hier richtig eingesetzt
 
 		// Rückgabe des erstellten Filmobjekts
-		return film;
+		return filmMapper.findByID(film.getID());
 	}
 
 	/**
@@ -381,15 +381,18 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 	 */
 
 	public Kinokette createKinokette(Nutzer nutzer) throws IllegalArgumentException {
-		// Erstellen einer neuen Kinokette
-		Kinokette kinokette = new Kinokette();
-		// Setzen des Owners auf den aktuellen Nutzer
-		kinokette.setOwnerID(nutzer.getID());
-		// Einfügen der Kinokette in die Datenbank
-		this.kinoketteMapper.insert(kinokette);
 
-		// Wir geben unser Kinoketteobjekt zurück
-		return kinokette;
+		if (kinoketteMapper.findByOwner(nutzer) == null) {
+
+			// Erstellen einer neuen Kinokette
+			Kinokette kinokette = new Kinokette();
+			// Setzen des Owners auf den aktuellen Nutzer
+			kinokette.setOwnerID(nutzer.getID());
+			// Einfügen der Kinokette in die Datenbank
+			this.kinoketteMapper.insert(kinokette);
+
+		}
+		return this.kinoketteMapper.findKinoketteByOwner(nutzer);
 	}
 
 	/**
@@ -549,7 +552,7 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 		createSpielplan(kino);
 
 		// Zurückgeben des Kinoobjekts
-		return kino;
+		return kinoMapper.findByID(kino.getID());
 
 	}
 
@@ -815,7 +818,7 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 		// Filmnummer wird hier richtig eingesetzt
 
 		// Wir geben den erstellten Spielplan zurück
-		return spielzeit;
+		return this.spielzeitMapper.findByID(spielzeit.getID());
 	}
 
 	/**
@@ -911,7 +914,7 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 		// Erstellene einer Kinokette für den Nutzer
 		createKinokette(nutzer);
 
-		return nutzer;
+		return this.nutzerMapper.findByEmail(nutzer.getEmail());
 	}
 
 	/**

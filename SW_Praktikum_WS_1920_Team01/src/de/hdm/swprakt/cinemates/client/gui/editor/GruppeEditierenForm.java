@@ -132,7 +132,7 @@ public class GruppeEditierenForm extends HorizontalPanel {
 	 * 
 	 * @author roland
 	 */
-	class LöschenCallback implements AsyncCallback<Void> {
+	class LoeschenCallback implements AsyncCallback<Void> {
 
 		@Override
 		public void onFailure(Throwable caught) {
@@ -173,11 +173,11 @@ public class GruppeEditierenForm extends HorizontalPanel {
 	 * @author Roland
 	 */
 
-	class LöschenClickHandler implements ClickHandler {
+	class LoeschenClickHandler implements ClickHandler {
 		
 		@Override
 		public void onClick(ClickEvent event) {
-			kinobesuchsplanung.deleteGruppe(gewählteGruppe, new LöschenCallback());
+			kinobesuchsplanung.deleteGruppe(gewählteGruppe, new LoeschenCallback());
 		}
 		
 	}

@@ -128,7 +128,7 @@ public class UmfrageEditierenForm extends VerticalPanel {
 		speichernButton.addClickHandler(new SpeichernClickHandler());
 
 		// Hinzufügen des ClickHandlers zum Löschen Button
-		löschenButton.addClickHandler(new LöschenClickHandler());
+		löschenButton.addClickHandler(new LoeschenClickHandler());
 
 		// Hinzufügen der Widgets zu den Panels
 
@@ -226,7 +226,7 @@ public class UmfrageEditierenForm extends VerticalPanel {
 	 * 
 	 * @author alina
 	 */
-	class LöschenCallback implements AsyncCallback<Void> {
+	class LoeschenCallback implements AsyncCallback<Void> {
 
 		@Override
 		public void onFailure(Throwable caught) {
@@ -270,11 +270,11 @@ public class UmfrageEditierenForm extends VerticalPanel {
 	 * @author alina
 	 */
 
-	class LöschenClickHandler implements ClickHandler {
+	class LoeschenClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			kinobesuchsplanung.deleteUmfrage(gewählteUmfrage, new LöschenCallback());
+			kinobesuchsplanung.deleteUmfrage(gewählteUmfrage, new LoeschenCallback());
 
 		}
 

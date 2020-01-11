@@ -79,7 +79,7 @@ public class KinoBearbeitenForm extends HorizontalPanel {
 		kinoGrid.setWidget(3, 2, kinoBearbeiten);
 		kinoBearbeiten.addClickHandler(new KinoBearbeitenClickHandler());
 		kinoGrid.setWidget(3, 3, kinoLöschen);
-		kinoLöschen.addClickHandler(new löschenClickHandler());
+		kinoLöschen.addClickHandler(new loeschenClickHandler());
 
 		horizontalPanel.add(titel);
 		horizontalPanel.add(kinoLöschen);
@@ -125,22 +125,22 @@ public class KinoBearbeitenForm extends HorizontalPanel {
 		}
 	}
 
-	private class löschenClickHandler extends DialogBox implements ClickHandler {
+	private class loeschenClickHandler extends DialogBox implements ClickHandler {
 
-		public löschenClickHandler() {
+		public loeschenClickHandler() {
 			setText("Möchten Sie das Kino wirklich löschen?");
 			Grid jaNein = new Grid(3, 3);
 			jaNein.setWidget(0, 1, ja);
 			jaNein.setWidget(0, 2, nein);
 			nein.addClickHandler(new neinClickHandler());
-			ja.addClickHandler(new LöschenClickHandler2());
+			ja.addClickHandler(new LoeschenClickHandler2());
 			setAnimationEnabled(false);
 			setGlassEnabled(false);
 			this.add(jaNein);
 		}
 
 		public void onClick(ClickEvent event) {
-			new löschenClickHandler().show();
+			new loeschenClickHandler().show();
 		}
 
 		private class neinClickHandler implements ClickHandler {
@@ -157,7 +157,7 @@ public class KinoBearbeitenForm extends HorizontalPanel {
 	 * eines Kinos.
 	 * 
 	 */
-	class LöschenCallback implements AsyncCallback<Void> {
+	class LoeschenCallback implements AsyncCallback<Void> {
 
 		@Override
 		public void onFailure(Throwable caught) {
@@ -182,11 +182,11 @@ public class KinoBearbeitenForm extends HorizontalPanel {
 	 * 
 	 */
 
-	private class LöschenClickHandler2 implements ClickHandler {
+	private class LoeschenClickHandler2 implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			kinoAdministration.deleteKino(gewähltesKino, new LöschenCallback());
+			kinoAdministration.deleteKino(gewähltesKino, new LoeschenCallback());
 			Window.Location.reload();
 
 		}

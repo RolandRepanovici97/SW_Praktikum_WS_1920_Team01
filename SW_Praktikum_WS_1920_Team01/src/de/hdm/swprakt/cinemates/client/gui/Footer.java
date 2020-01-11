@@ -121,7 +121,7 @@ public class Footer extends VerticalPanel {
 			schließenButton.setHTML("<i class=\"far fa-window-close\"></i>");
 
 			// Hinzufügen des ClickHandlers zum Schließen Button
-			schließenButton.addClickHandler(new SchließenClickHandler());
+			schließenButton.addClickHandler(new SchliessenClickHandler());
 
 			// Hinzufügen der Widgets zu den Panels
 			verticalPanel.add(impressum);
@@ -140,7 +140,7 @@ public class Footer extends VerticalPanel {
 		 *
 		 */
 
-		class SchließenClickHandler implements ClickHandler {
+		class SchliessenClickHandler implements ClickHandler {
 
 			@Override
 			public void onClick(ClickEvent event) {

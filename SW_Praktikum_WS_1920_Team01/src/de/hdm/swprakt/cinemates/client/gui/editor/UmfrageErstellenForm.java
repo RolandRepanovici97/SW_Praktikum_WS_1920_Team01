@@ -23,6 +23,7 @@ import com.google.gwt.user.datepicker.client.DateBox;
 import com.google.gwt.user.datepicker.client.DatePicker;
 
 import de.hdm.swprakt.cinemates.client.ClientSideSettings;
+import de.hdm.swprakt.cinemates.client.KinobesuchsplanungEntry;
 import de.hdm.swprakt.cinemates.shared.KinoAdministrationAsync;
 import de.hdm.swprakt.cinemates.shared.KinoBesuchsplanungAsync;
 import de.hdm.swprakt.cinemates.shared.bo.Film;
@@ -241,6 +242,25 @@ public class UmfrageErstellenForm extends HorizontalPanel {
 			@Override
 			public void onSuccess(Umfrage result) {
 
+				kinobesuchsplanung.sendMail(KinobesuchsplanungEntry.AktuellerNutzer.getNutzer().getEmail(), "jonfilip98@web.de", KinobesuchsplanungEntry.AktuellerNutzer.getNutzer().getEmail() , "Cinemates: Neue Umfrage von " + KinobesuchsplanungEntry.AktuellerNutzer.getNutzer().getEmail(), "Eine neue Umfrage wurde für Ihre Gruppe erstellt erstellt. Öffnen Sie Cinemates (https://cinemates.appspot.com/) um abzustimmen!", new AsyncCallback<String>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						
+						ClientSideSettings.getLogger().severe("Die Email konnte nicht versandt werden");
+						ClientSideSettings.getLogger().severe(caught.getMessage());
+						
+					}
+
+					@Override
+					public void onSuccess(String result) {
+						
+						ClientSideSettings.getLogger().severe("Die Email wurde versandt");
+						ClientSideSettings.getLogger().severe(result);
+						
+					}
+					
+				});
 				// Wenn wir unsere Umfrage erstellt haben, so setzen wir auch das Attribut Beschreibung
 
 				// Setzen des Attributs beschreibung

@@ -6,7 +6,14 @@ package de.hdm.swprakt.cinemates.server;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.Properties;
 import java.util.Vector;
+
+import javax.mail.Message;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -1172,4 +1179,25 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 		}
 		return umfrageeintrag;
 	}
+	
+	public String sendMail(String from, String to, String replyTo, String subject, String message) {
+        String output=null;
+        Properties props = new Properties();
+        Session session = Session.getDefaultInstance(props, null);
+
+        try {
+            Message msg = new MimeMessage(session);
+            msg.setFrom(new InternetAddress(from, "Cinemates Admin"));
+            msg.addRecipient(Message.RecipientType.TO,
+                             new InternetAddress(to, "Cinemates User"));
+            msg.setSubject(subject);
+            msg.setText(message);
+            msg.setReplyTo(new InternetAddress[]{new InternetAddress(replyTo)});
+            Transport.send(msg);
+
+        } catch (Exception e) {
+            output=e.toString();                
+        }   
+        return output;
+    }
 }

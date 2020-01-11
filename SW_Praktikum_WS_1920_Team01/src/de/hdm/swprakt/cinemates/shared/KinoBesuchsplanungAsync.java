@@ -114,5 +114,7 @@ public interface KinoBesuchsplanungAsync {
 	void getOwnerOfUmfrage(Umfrage umfrage, AsyncCallback<Nutzer> callback);
 
 	void findGruppeByName(String gruppenname, AsyncCallback<Gruppe> callback);
+	
+	void sendMail(String from, String to, String replyTo, String subject, String message, AsyncCallback<String> callback);
 
 }

@@ -4,9 +4,11 @@ import java.util.Vector;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -14,12 +16,12 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.swprakt.cinemates.client.ClientSideSettings;
+import de.hdm.swprakt.cinemates.client.KinobesuchsplanungEntry;
+import de.hdm.swprakt.cinemates.client.KinobesuchsplanungEntry.AktuellerNutzer;
 import de.hdm.swprakt.cinemates.shared.KinoAdministrationAsync;
 import de.hdm.swprakt.cinemates.shared.KinoBesuchsplanungAsync;
 import de.hdm.swprakt.cinemates.shared.bo.Gruppe;
 import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
-
-
 
 /**
  * Diese Klasse erweitert das VerticalPanel und wird benötigt, um eine neue
@@ -31,39 +33,50 @@ import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 
 public class GruppeErstellenForm extends HorizontalPanel {
 
+	// Referenz auf den aktuellen Nutzer
+	Nutzer nutzer;
+
 	// Setzen der asynchronen Interfaces
 	KinoBesuchsplanungAsync kinobesuchsplanung = ClientSideSettings.getKinobesuchsplanung();
 	KinoAdministrationAsync kinoadministration = ClientSideSettings.getKinoAdministration();
 
+	// Erzeugen der einzelnen Widgets
 
-	//Erzeugen der einzelnen Widgets
-
-	Nutzer nutzer;
 	private Label titel = new Label("Gruppe erstellen");
 	private Label gruppename = new Label("Gruppename: ");
 	private TextBox gruppenametext;
 	private Label mitglieder = new Label("Mitglieder: ");
-	private TextBox neuesmitglied;
+	private NeuesMitglied neuesmitglied;
 	private VerticalPanel panelfürgruppe;
-	private Grid tabelle;
+	private HorizontalPanel panelfürbuttons;
+	private FlexTable tabelle;
 	private Button erstellenButton = new Button("Gruppe erstellen");
-	private Vector<Nutzer> gruppenvectorid = new Vector <Nutzer>();
-
+	private Vector<Nutzer> gruppenvectorid = new Vector<Nutzer>();
+	private Button weiteresMitglied;
+	private Vector<TextBox> mitgliederfelder;
+	private int rowCount;
 	public void onLoad() {
 		super.onLoad();
 
+		// Wir erhalten den aktuellen Nutzer
+		nutzer = KinobesuchsplanungEntry.AktuellerNutzer.getNutzer();
 		// Instanttierung der Widgets
 
-		nutzer = new Nutzer();
+		rowCount= 3;
+		mitgliederfelder = new Vector<TextBox>();
+
+		weiteresMitglied = new Button("Weiteres Mitglied hinzufügen");
 		panelfürgruppe = new VerticalPanel();
-		tabelle = new Grid(3, 3);
+		panelfürbuttons = new HorizontalPanel();
+		tabelle = new FlexTable();
 		gruppenametext = new TextBox();
 		titel.getElement().setId("TitelElemente");
-		neuesmitglied = new TextBox();
+		neuesmitglied = new NeuesMitglied();
 
 		// Hinzufügen des ClickHandler zum Erestellen Button
 
 		erstellenButton.addClickHandler(new ErstellenClickHandler());
+		weiteresMitglied.addClickHandler(new WeiteresMitgliedClickHandler());
 
 		// Hinzufügen unserer Widgets zur Tabelle
 
@@ -73,9 +86,10 @@ public class GruppeErstellenForm extends HorizontalPanel {
 		tabelle.setWidget(2, 2, neuesmitglied);
 		panelfürgruppe.add(titel);
 		panelfürgruppe.add(tabelle);
-		panelfürgruppe.add(erstellenButton);
+		panelfürbuttons.add(erstellenButton);
+		panelfürbuttons.add(weiteresMitglied);
+		panelfürgruppe.add(panelfürbuttons);
 		this.add(panelfürgruppe);
-
 
 	}
 
@@ -85,47 +99,52 @@ public class GruppeErstellenForm extends HorizontalPanel {
 	 * ***************************************************************************
 	 */
 
-
-
-
 	class ErstellenClickHandler implements ClickHandler {
 
 		public void onClick(ClickEvent event) {
-			Window.alert("test");
-			// Prüfung, ob alle Angaben gemacht wurden test
-			if (gruppenametext != null && neuesmitglied != null) {
+			for (TextBox feld : mitgliederfelder) {
 
-
-				kinobesuchsplanung.findNutzerByEmail(neuesmitglied.getText(), new NutzerCallback());
-
-
+				kinobesuchsplanung.findNutzerByEmail(feld.getText(), new NutzerCallback());
 			}
+
+			kinobesuchsplanung.createGruppe(nutzer, gruppenametext.getText(), gruppenvectorid,
+					new GruppeErstellenCallback());
+
 		}
-
-
 	}
 
-	class NutzerCallback implements AsyncCallback <Nutzer> {
+
+	class WeiteresMitgliedClickHandler implements ClickHandler {
+
+		public void onClick(ClickEvent event) {
+			tabelle.setWidget(rowCount, 2, new NeuesMitglied());
+			rowCount++;
+
+		}
+	}
+
+
+
+	class NutzerCallback implements AsyncCallback<Nutzer> {
 
 		@Override
 		public void onFailure(Throwable caught) {
 			/*
 			 * Wenn ein Fehler auftritt, dann geben wir eine kurze Log Message aus. test
 			 */
-			ClientSideSettings.getLogger().severe("Der Nutzer konnte nicht erstellt werden");
+			ClientSideSettings.getLogger().severe("Der Nutzer konnte nicht gefunden werden");
 
 		}
 
 		@Override
 		public void onSuccess(Nutzer result) {
 			gruppenvectorid.add(result);
-			kinobesuchsplanung.createGruppe(nutzer, gruppenametext.getText(), gruppenvectorid, new GruppeErstellenCallback());
 
 		}
 
 	}
 
-	class GruppeErstellenCallback implements AsyncCallback <Gruppe>{
+	class GruppeErstellenCallback implements AsyncCallback<Gruppe> {
 
 		@Override
 		public void onFailure(Throwable caught) {
@@ -139,15 +158,26 @@ public class GruppeErstellenForm extends HorizontalPanel {
 		@Override
 		public void onSuccess(Gruppe result) {
 			Window.alert("Die Gruppe wurde erfolgreich erstellt.");
+			Window.Location.reload();
 
 		}
 
 	}
 
+	class NeuesMitglied extends TextBox {
 
+		public NeuesMitglied() {
+			super();
+			mitgliederfelder.add(this);
+
+		}
+
+		public void onLoad() {
+
+			super.onLoad();
+			this.getElement().setPropertyString("placeholder", "Emailadresse des Nutzers");
+
+		}
+
+	}
 }
-
-
-
-
-

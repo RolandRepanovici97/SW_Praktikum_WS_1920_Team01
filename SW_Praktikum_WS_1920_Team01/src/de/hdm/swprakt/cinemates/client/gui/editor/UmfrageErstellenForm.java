@@ -216,8 +216,6 @@ public class UmfrageErstellenForm extends HorizontalPanel {
 
 				kinobesuchsplanung.findGruppeByName(gruppebox.getSelectedItemText(), new SelektierteGruppeCallback());
 
-				
-
 			}
 			// Falls Angaben gefehlt haben, geben wir folgendes aus:
 			else {
@@ -242,32 +240,38 @@ public class UmfrageErstellenForm extends HorizontalPanel {
 			@Override
 			public void onSuccess(Umfrage result) {
 
-				kinobesuchsplanung.sendMail(KinobesuchsplanungEntry.AktuellerNutzer.getNutzer().getEmail(), "jonfilip98@web.de", KinobesuchsplanungEntry.AktuellerNutzer.getNutzer().getEmail() , "Cinemates: Neue Umfrage von " + KinobesuchsplanungEntry.AktuellerNutzer.getNutzer().getEmail(), "Eine neue Umfrage wurde für Ihre Gruppe erstellt erstellt. Öffnen Sie Cinemates (https://cinemates.appspot.com/) um abzustimmen!", new AsyncCallback<String>() {
+				kinobesuchsplanung.sendMail(KinobesuchsplanungEntry.AktuellerNutzer.getNutzer().getEmail(),
+						"jonfilip98@web.de", KinobesuchsplanungEntry.AktuellerNutzer.getNutzer().getEmail(),
+						"Cinemates: Neue Umfrage von " + KinobesuchsplanungEntry.AktuellerNutzer.getNutzer().getEmail(),
+						"Eine neue Umfrage wurde für Ihre Gruppe erstellt erstellt. Öffnen Sie Cinemates (https://cinemates.appspot.com/) um abzustimmen!",
+						new AsyncCallback<String>() {
 
-					@Override
-					public void onFailure(Throwable caught) {
-						
-						ClientSideSettings.getLogger().severe("Die Email konnte nicht versandt werden");
-						ClientSideSettings.getLogger().severe(caught.getMessage());
-						
-					}
+							@Override
+							public void onFailure(Throwable caught) {
 
-					@Override
-					public void onSuccess(String result) {
-						
-						ClientSideSettings.getLogger().severe("Die Email wurde versandt");
-						ClientSideSettings.getLogger().severe(result);
-						
-					}
-					
-				});
-				// Wenn wir unsere Umfrage erstellt haben, so setzen wir auch das Attribut Beschreibung
+								ClientSideSettings.getLogger().severe("Die Email konnte nicht versandt werden");
+								ClientSideSettings.getLogger().severe(caught.getMessage());
+
+							}
+
+							@Override
+							public void onSuccess(String result) {
+
+								ClientSideSettings.getLogger().severe("Die Email wurde versandt");
+								ClientSideSettings.getLogger().severe(result);
+
+							}
+
+						});
+				// Wenn wir unsere Umfrage erstellt haben, so setzen wir auch das Attribut
+				// Beschreibung
 
 				// Setzen des Attributs beschreibung
 				result.setBeschreibung(beschreibungtext.getText());
 
 				// Wir informieren den Nutzer über den positiven Ausgang
 				Window.alert("Die Umfrage wurde erstellt. Die Teilnehmer wurden per E-Mail darüber informiert.");
+				Window.Location.reload();
 
 			}
 
@@ -280,12 +284,12 @@ public class UmfrageErstellenForm extends HorizontalPanel {
 		 * @author alina
 		 */
 		class SelektierterFilmCallback implements AsyncCallback<Film> {
-			
+
 			Gruppe gruppe;
-			SelektierterFilmCallback(Gruppe gruppe){
+
+			SelektierterFilmCallback(Gruppe gruppe) {
 				this.gruppe = gruppe;
-				
-				
+
 			}
 
 			@Override
@@ -299,12 +303,11 @@ public class UmfrageErstellenForm extends HorizontalPanel {
 
 				ClientSideSettings.getLogger().severe("Der selektierte Film wurde gefunden.");
 				setSelektierterFilm(result);
-				
 
 				// Aufruf der Methode createUmfrage: Hierdurch wird implizit das neue
 				// Umfrageobjekt in der DB gespeichert
-				kinobesuchsplanung.createUmfrage(umfragenametext.getText(), result,
-						this.gruppe, datebox.getValue(), new UmfrageCallback());
+				kinobesuchsplanung.createUmfrage(umfragenametext.getText(), result, this.gruppe, datebox.getValue(),
+						new UmfrageCallback());
 
 			}
 

@@ -5,16 +5,21 @@ package de.hdm.swprakt.cinemates.client.gui.editor;
 
 import java.util.Vector;
 
+import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -36,7 +41,11 @@ import de.hdm.swprakt.cinemates.shared.bo.Umfrage;
  * @author alina
  *
  */
-public class StartseiteEditor extends HorizontalPanel {
+public class StartseiteEditor extends VerticalPanel {
+
+	public StartseiteEditor() {
+		super();
+	}
 
 	/*
 	 * ***************************************************************************
@@ -46,39 +55,37 @@ public class StartseiteEditor extends HorizontalPanel {
 	 * ***************************************************************************
 	 */
 
-	private Vector<Umfrage> umfragen = new Vector<Umfrage>();
 	private Label label1 = new Label("Meine Umfragen");
-	private Nutzer nutzer;
-	private VerticalPanel panelfürumfragen = new VerticalPanel();
 	private Button neueUmfrage = new Button();
-	private FlexTable tabelle;
+	FlowPanel panel;
+	HorizontalPanel hpanel1;
+	HorizontalPanel hpanel2;
 
 	KinoBesuchsplanungAsync kinobesuchsplanung = ClientSideSettings.getKinobesuchsplanung();
 
 	public void onLoad() {
 		super.onLoad();
 
+		panel = new FlowPanel();
+		// panel.getElement().getStyle().setDisplay(Display.FLEX);
+		hpanel1 = new HorizontalPanel();
+		hpanel2 = new HorizontalPanel();
+
 		neueUmfrage.setHTML("<i class=\"fas fa-plus\"></i>");
 		label1.getElement().setId("TitelElemente");
 
 		neueUmfrage.addClickHandler(new NeueUmfrageClickHandler());
 
-		tabelle = new FlexTable();
-		tabelle.addStyleName("flexTable");
-		tabelle.setCellPadding(10);
-
 		kinobesuchsplanung.showAllUmfrage(new UmfragenAnzeigenCallback());
 
-		//		 kinobesuchsplanung.showAllUmfrageOfNutzer(nutzer, new
-		//		 UmfragenAnzeigenCallback());
+		// kinobesuchsplanung.showAllUmfrageOfNutzer(nutzer, new
+		// UmfragenAnzeigenCallback());
 
-
-		panelfürumfragen.add(label1);
-		panelfürumfragen.add(tabelle);
-		panelfürumfragen.add(neueUmfrage);
-		this.add(panelfürumfragen);
-		
-
+		hpanel1.add(label1);
+		hpanel2.add(neueUmfrage);
+		this.add(hpanel1);
+		this.add(panel);
+		this.add(hpanel2);
 
 	}
 
@@ -117,64 +124,97 @@ public class StartseiteEditor extends HorizontalPanel {
 
 			ClientSideSettings.getLogger().severe("Ihre Umfragen wurden geladen.");
 
-			int rowCount = 0;
-
 			for (Umfrage u : result) {
 
-				tabelle.setText(rowCount, 0, u.getUmfragenname());
-				Button umfrageAnzeigen = new Button("Anzeigen");
-				Button abstimmungenAnsehen = new Button("Abstimmungen ansehen");
-				umfrageAnzeigen.addClickHandler(new ClickHandler() {
+				// für jede erhaltene Umgfrage erstellen wir ein neues UmfragePanel und fügen
+				// des dem FlowPanel hinzu
 
-					@Override
-					public void onClick(ClickEvent event) {
-						RootPanel.get("DetailsPanel").clear();
-						UmfrageAnzeige anzeige = new UmfrageAnzeige();
-						anzeige.setGewählteUmfrage(u);
-						RootPanel.get("DetailsPanel").add(anzeige);
-					}
-
-				});
-				tabelle.setWidget(rowCount, 1, umfrageAnzeigen);
-				tabelle.setWidget(rowCount, 2, abstimmungenAnsehen);
-				rowCount++;
-
-				// Wir instanttieren ein neues UmfrageAuswahl-Objekt und übergeben unsere
-				// Umfrage
-				//UmfrageAuswahl auswahl = new UmfrageAuswahl(u);
-
-				//tabelle.add(auswahl);
-
-				// Wir geben diesem Umfrage-Auswahl-Objekt einen ClickHandler, durch welchen die
-				// Detailanzeige der Umfrage angezeigt wird
-				// auswahl.addClickHandler(new UmfrageAuswählenClickHandler());
+				panel.add(new UmfragePanel(u));
 
 			}
 		}
 	}
+
+	/**
+	 * Diese Nested Class wird zur Repräsentation der Umfrage benötigt benötigt.
+	 * 
+	 * @author alina
+	 */
+	class UmfragePanel extends VerticalPanel {
+
+		Umfrage umfrage;
+		HorizontalPanel horizontalPanel;
+
+		// Die Klasse benötigt die zurückgegebene Umfrage
+
+		UmfragePanel(Umfrage umfrage) {
+			this.umfrage = umfrage;
+		}
+
+		public void onLoad() {
+			super.onLoad();
+
+			// Hinzufügen des Styles
+			this.addStyleName("UmfragePanel");
+
+			horizontalPanel = new HorizontalPanel();
+			Label umfragename = new Label();
+			// Setzen des Umfragenamens
+			umfragename.setText(umfrage.getUmfragenname());
+
+			// Erzeugen der Buttons
+			Button umfrageAnzeigen = new Button("Anzeigen");
+			Button abstimmungenAnsehen = new Button("Abstimmungen ansehen");
+
+			// Klickt der Nutzer auf "Anzeigen" gelangt er zu den Details der gewählten
+			// Umfrage
+			umfrageAnzeigen.addClickHandler(new ClickHandler() {
+
+				@Override
+				public void onClick(ClickEvent event) {
+					RootPanel.get("DetailsPanel").clear();
+					UmfrageAnzeige anzeige = new UmfrageAnzeige();
+					anzeige.setGewählteUmfrage(umfrage);
+					RootPanel.get("DetailsPanel").add(anzeige);
+				}
+
+			});
+
+			// Hinzufügen der Widgets zum Panel
+			this.add(umfragename);
+			horizontalPanel.add(umfrageAnzeigen);
+			horizontalPanel.add(abstimmungenAnsehen);
+			this.add(horizontalPanel);
+
+		}
+
+	}
+
 	//
-	//	/**
-	//	 * Diese Nested Class wird als Callback für das Anzeigen neuer Umfrageobjekte
-	//	 * benötigt.
-	//	 * 
-	//	 * @author alina
-	//	 */
+	// /**
+	// * Diese Nested Class wird als Callback für das Anzeigen neuer Umfrageobjekte
+	// * benötigt.
+	// *
+	// * @author alina
+	// */
 	//
-	//	class OffeneUmfragenAnzeigenCallback implements AsyncCallback<Vector<Umfrage>> {
+	// class OffeneUmfragenAnzeigenCallback implements
+	// AsyncCallback<Vector<Umfrage>> {
 	//
-	//		@Override
-	//		public void onFailure(Throwable caught) {
-	//			/*
-	//			 * Wenn ein Fehler auftritt, dann geben wir eine kurze Log Message aus.
-	//			 */
-	//			ClientSideSettings.getLogger().severe("Ihre neuen Umfragen konnten nicht geladen werden");
-	//		}
+	// @Override
+	// public void onFailure(Throwable caught) {
+	// /*
+	// * Wenn ein Fehler auftritt, dann geben wir eine kurze Log Message aus.
+	// */
+	// ClientSideSettings.getLogger().severe("Ihre neuen Umfragen konnten nicht
+	// geladen werden");
+	// }
 	//
-	//		@Override
-	//		public void onSuccess(Vector<Umfrage> result) {
-	//			// TODO Auto-generated method stub
+	// @Override
+	// public void onSuccess(Vector<Umfrage> result) {
+	// // TODO Auto-generated method stub
 	//
-	//		}
+	// }
 }
 //
 //	/**
@@ -190,7 +230,6 @@ public class StartseiteEditor extends HorizontalPanel {
 //
 //			UmfrageAnzeige anzeige = new UmfrageAnzeige();
 //			RootPanel.get("DeatilsPanel").add(anzeige);
-
 
 //
 //		}
@@ -251,15 +290,12 @@ class NeueUmfrageClickHandler implements ClickHandler {
 //	}
 //}
 
-
 class UmfrageBearbeitenCallback implements AsyncCallback<Umfrage> {
 
 	@Override
 	public void onFailure(Throwable caught) {
 
-
 	}
-
 
 	@Override
 	public void onSuccess(Umfrage result) {

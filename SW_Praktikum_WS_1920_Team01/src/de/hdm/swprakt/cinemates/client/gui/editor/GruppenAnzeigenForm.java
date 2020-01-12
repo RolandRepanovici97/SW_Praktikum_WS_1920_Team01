@@ -7,12 +7,14 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.swprakt.cinemates.client.ClientSideSettings;
+import de.hdm.swprakt.cinemates.client.gui.editor.StartseiteEditor.UmfragePanel;
 import de.hdm.swprakt.cinemates.shared.bo.Gruppe;
 import de.hdm.swprakt.cinemates.shared.KinoBesuchsplanungAsync;
 
@@ -22,7 +24,7 @@ import de.hdm.swprakt.cinemates.shared.KinoBesuchsplanungAsync;
  * @author roland
  */
 
-public class GruppenAnzeigenForm extends HorizontalPanel {
+public class GruppenAnzeigenForm extends VerticalPanel {
 
 	/**
 	 **************************************************************************************
@@ -36,13 +38,10 @@ public class GruppenAnzeigenForm extends HorizontalPanel {
 
 	private Label titel = new Label("Meine Gruppen");
 	private Button neueGruppe = new Button("Neue Gruppe");
-	
-	@SuppressWarnings("unused")
-	private Button zurückButton = new Button ("Zurück");
+	FlowPanel panel;
 
-	private FlexTable tabellefürgruppen;
-	private VerticalPanel panelfürgruppen = new VerticalPanel ();
-	
+
+
 	KinoBesuchsplanungAsync kinobesuchsplanung = ClientSideSettings.getKinobesuchsplanung();
 
 
@@ -52,21 +51,18 @@ public class GruppenAnzeigenForm extends HorizontalPanel {
 		neueGruppe.setHTML("<i class=\"fas fa-plus\"></i>");
 		titel.getElement().setId("TitelElemente");
 
+		panel = new FlowPanel();
+
 		neueGruppe.addClickHandler(new NeueGruppeClickHandler());
 
-		tabellefürgruppen = new FlexTable();
-		tabellefürgruppen.addStyleName("flexTable");
-		tabellefürgruppen.setCellPadding(10);
 
 		kinobesuchsplanung.getAllGruppen(new GruppenAnzeigenCallback());
 
 		//  kinobesuchsplanung.getAllGruppenOfNutzernutzer(new GruppenAnzeigenCallback());
 
-
-		panelfürgruppen.add(titel);
-		panelfürgruppen.add(tabellefürgruppen);
-		panelfürgruppen.add(neueGruppe);
-		this.add(panelfürgruppen);
+		this.add(titel);
+		this.add(panel);
+		this.add(neueGruppe);
 
 
 	}
@@ -108,27 +104,11 @@ public class GruppenAnzeigenForm extends HorizontalPanel {
 
 			ClientSideSettings.getLogger().severe("Ihre Gruppen wurden geladen. ");
 
-			int rowCount = 0;
+			for (Gruppe gruppe : result) {
+				panel.add(new GruppePanel(gruppe));
 
-			for (Gruppe g : result) {
-				
-				tabellefürgruppen.setText(rowCount, 0, g.getGruppenname());
-				Button gruppeEditieren = new Button("Editieren");
-				gruppeEditieren.addClickHandler(new ClickHandler() {
-
-					@Override
-					public void onClick(ClickEvent event) {
-						RootPanel.get("DetailsPanel").clear();
-						GruppeEditierenForm editiere = new GruppeEditierenForm();
-						editiere.setGewählteGruppe(g);
-						RootPanel.get("DetailsPanel").add(editiere);
-
-					}
-
-				});
-				tabellefürgruppen.setWidget(rowCount, 1, gruppeEditieren);
-				rowCount++;
 			}
+
 
 
 		}
@@ -151,7 +131,72 @@ class NeueGruppeClickHandler implements ClickHandler {
 		GruppeErstellenForm neueGruppe = new GruppeErstellenForm();
 		RootPanel.get("DetailsPanel").add(neueGruppe);
 	}
+
 }
 
+/**
+ * Diese Nested Class wird zur Repräsentation der Gruppe benötigt benötigt.
+ * 
+ * @author alina
+ */
+class GruppePanel extends VerticalPanel{
+	Gruppe gruppe;
+	HorizontalPanel horizontalPanel;
+	
+	// Die Klasse benötigt die zurückgegebene Gruppe
+
+	public GruppePanel(Gruppe gruppe) {
+		this.gruppe= gruppe;
+
+	}
+
+	public void onLoad() {
+		super.onLoad();
+
+		// Hinzufügen des Styles
+		this.addStyleName("GruppePanel");
+
+		horizontalPanel = new HorizontalPanel();
+		Label gruppenname = new Label();
+		// Setzen des Umfragenamens
+		gruppenname.setText(gruppe.getGruppenname());
+
+		// Erzeugen der Buttons
+		Button gruppeAnzeigen = new Button("Anzeigen");
+		Button gruppeEditieren = new Button("Editieren");
+
+		// Klickt der Nutzer auf "Anzeigen" gelangt er zu den Details der gewählten
+		// Gruppe
+		gruppeAnzeigen.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				RootPanel.get("DetailsPanel").clear();
+				GruppeDetailsForm anzeige = new GruppeDetailsForm();
+				anzeige.setGewählteGruppe(gruppe);
+				RootPanel.get("DetailsPanel").add(anzeige);
+			}
+
+		});
+		gruppeEditieren.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				RootPanel.get("DetailsPanel").clear();
+				GruppeEditierenForm editiere = new GruppeEditierenForm();
+				editiere.setGewählteGruppe(gruppe);
+				RootPanel.get("DetailsPanel").add(editiere);
+
+			}
+
+		});
+
+		// Hinzufügen der Widgets zum Panel
+		this.add(gruppenname);
+		horizontalPanel.add(gruppeAnzeigen);
+		horizontalPanel.add(gruppeEditieren);
+		this.add(horizontalPanel);
+	}
+}
 
 

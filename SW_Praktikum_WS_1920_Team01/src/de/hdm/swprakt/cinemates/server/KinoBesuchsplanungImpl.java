@@ -151,9 +151,9 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 		this.votumMapper = VotumMapper.votumMapper();
 		this.ownedBusinessObjectMapper = OwnedBusinessObjectMapper.ownedBusinessObjectMapper();
 
-//		KinoAdministrationImpl kinoAdministrationImpl = new KinoAdministrationImpl();
-//		kinoAdministrationImpl.init();
-//		this.administration = kinoAdministrationImpl;
+		//		KinoAdministrationImpl kinoAdministrationImpl = new KinoAdministrationImpl();
+		//		kinoAdministrationImpl.init();
+		//		this.administration = kinoAdministrationImpl;
 	}
 
 	/*
@@ -420,10 +420,14 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 			// Iteration durch den Vector, um IDs zu bestimmen
 			for (Nutzer n : gruppenmitglieder) {
 				int id = n.getID();
+				
 
 				// Hinzufügen der IDs zum Zielvector, welcher später das Argument für das
 				// Attribut gruppenmitglieder wird
 				gruppenmitgliederids.add(id);
+				
+				ServerSideSettings.getLog().severe(gruppenmitglieder.toString());
+				
 
 			}
 
@@ -435,12 +439,20 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 
 		this.gruppeMapper.insert(gruppe);
 
+		
+		//Einfügen der Mitgliedschaft der anderen Gruppenmitglieder
+		for (int id: gruppenmitgliederids) {
+			this.gruppeMapper.insertGruppenzugehörigkeit(id, gruppe.getID());
+		}
+		
 		// Der Nutzer, welcher die Gruppe anlegt, ist natürlich auch Gruppenmitglied
 		// dieser Gruppe
 
 		this.gruppeMapper.insertGruppenzugehörigkeit(nutzer.getID(), gruppe.getID());
+
+	
 		// Zurückgeben des Gruppenobjekts
-		return gruppe;
+		return this.gruppeMapper.findByID(gruppe.getID());
 
 	}
 
@@ -551,14 +563,14 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 
 			umfrage.setUmfragenname(umfragenname);
 
-//			umfrage.setOwnerID(nutzer.getID());
+			//			umfrage.setOwnerID(nutzer.getID());
 			umfrage.setFilmID(film.getID());
 			umfrage.setGruppenID(gruppe.getID());
 			umfrage.setDatum(datum);
 			this.umfrageMapper.insert(umfrage);
 
 			//Aufruf der Methode createUmfrageeinträge, um dieser Umfrage Einträge hinzuzufügen
-//			createUmfrageeinträge(umfrage, film, datum);
+			//			createUmfrageeinträge(umfrage, film, datum);
 
 		}
 		return umfrage;
@@ -1179,25 +1191,25 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 		}
 		return umfrageeintrag;
 	}
-	
+
 	public String sendMail(String from, String to, String replyTo, String subject, String message) {
-        String output=null;
-        Properties props = new Properties();
-        Session session = Session.getDefaultInstance(props, null);
+		String output=null;
+		Properties props = new Properties();
+		Session session = Session.getDefaultInstance(props, null);
 
-        try {
-            Message msg = new MimeMessage(session);
-            msg.setFrom(new InternetAddress(from, "Cinemates Admin"));
-            msg.addRecipient(Message.RecipientType.TO,
-                             new InternetAddress(to, "Cinemates User"));
-            msg.setSubject(subject);
-            msg.setText(message);
-            msg.setReplyTo(new InternetAddress[]{new InternetAddress(replyTo)});
-            Transport.send(msg);
+		try {
+			Message msg = new MimeMessage(session);
+			msg.setFrom(new InternetAddress(from, "Cinemates Admin"));
+			msg.addRecipient(Message.RecipientType.TO,
+					new InternetAddress(to, "Cinemates User"));
+			msg.setSubject(subject);
+			msg.setText(message);
+			msg.setReplyTo(new InternetAddress[]{new InternetAddress(replyTo)});
+			Transport.send(msg);
 
-        } catch (Exception e) {
-            output=e.toString();                
-        }   
-        return output;
-    }
+		} catch (Exception e) {
+			output=e.toString();                
+		}   
+		return output;
+	}
 }

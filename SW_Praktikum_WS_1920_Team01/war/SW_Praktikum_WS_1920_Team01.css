@@ -162,6 +162,16 @@ div#MenuBar {
 	float: left;
 }
 
+.GruppePanel {
+	border: 3px bold black;
+	margin-top: 10px !important;
+	margin-bottom: 10px !important;
+	margin-left: 10px !important;
+	margin-right: 10px !important;
+	background: #ebe9f1 !important;
+	float: left;
+}
+
 #planerbutton {
 	font-weight: bold;
 	font-style: black;

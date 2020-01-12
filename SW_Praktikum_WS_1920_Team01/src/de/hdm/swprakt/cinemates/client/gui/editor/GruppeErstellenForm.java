@@ -24,10 +24,11 @@ import de.hdm.swprakt.cinemates.shared.bo.Gruppe;
 import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 
 /**
- * Diese Klasse erweitert das VerticalPanel und wird benötigt, um eine neue
+ * Diese Klasse erweitert das <code>HorizontalPanel</code> und wird benötigt, um eine neue
  * Gruppe anzulegen.
  * 
  * @author Roland
+ * @author alina 
  *
  */
 
@@ -60,9 +61,15 @@ public class GruppeErstellenForm extends HorizontalPanel {
 
 		// Wir erhalten den aktuellen Nutzer
 		nutzer = KinobesuchsplanungEntry.AktuellerNutzer.getNutzer();
-		// Instanttierung der Widgets
-
+		
+		//Initiales Setzen des RowCount auf 3, hier fangen wir an neue Zeilen hinzuzufügen
 		rowCount= 3;
+		
+		/**
+		 *  Instanttierung der Widgets
+		 */
+		
+		//Repräsentiert alle instanziierten TextBoxes 
 		mitgliederfelder = new Vector<TextBox>();
 
 		weiteresMitglied = new Button("Weiteres Mitglied hinzufügen");
@@ -71,9 +78,10 @@ public class GruppeErstellenForm extends HorizontalPanel {
 		tabelle = new FlexTable();
 		gruppenametext = new TextBox();
 		titel.getElement().setId("TitelElemente");
+		//Ein Mitglied muss auf jeden Fall hinzugefügt werden, weitere sind optional
 		neuesmitglied = new NeuesMitglied();
 
-		// Hinzufügen des ClickHandler zum Erestellen Button
+		// Hinzufügen der ClickHandler
 
 		erstellenButton.addClickHandler(new ErstellenClickHandler());
 		weiteresMitglied.addClickHandler(new WeiteresMitgliedClickHandler());
@@ -84,6 +92,8 @@ public class GruppeErstellenForm extends HorizontalPanel {
 		tabelle.setWidget(1, 2, gruppenametext);
 		tabelle.setWidget(2, 1, mitglieder);
 		tabelle.setWidget(2, 2, neuesmitglied);
+		
+		//Hinzufügen der Widgets zu den Panels
 		panelfürgruppe.add(titel);
 		panelfürgruppe.add(tabelle);
 		panelfürbuttons.add(erstellenButton);
@@ -97,6 +107,16 @@ public class GruppeErstellenForm extends HorizontalPanel {
 	 * ***************************************************************************
 	 * ABSCHNITT Nested Classes
 	 * ***************************************************************************
+	 */
+
+	
+	/**
+	 * Diese Nested Class implementiert das Interface ClickHandler und ermöglicht in
+	 * Interaktion mit dem Nutzer: Wenn der Nutzer die Felder ausgfüllt hat, dann
+	 * wird eine neue Gruppe erstellt. Die Eingaben des Nutzers stellen die
+	 * Argumente dar.
+	 * 
+	 * @author alina
 	 */
 
 	class ErstellenClickHandler implements ClickHandler {
@@ -114,6 +134,14 @@ public class GruppeErstellenForm extends HorizontalPanel {
 	}
 
 
+	/**
+	 * Diese Nested Class implementiert das Interface ClickHandler und ermöglicht in
+	 * Interaktion mit dem Nutzer: Wenn der Nutzer darauf klickt, wird der FlexTable ein neues TextFeld
+	 * hinzugefügt, in welches er einen weiteren Nutzer einfügen kann.
+	 * 
+	 * @author alina
+	 */
+
 	class WeiteresMitgliedClickHandler implements ClickHandler {
 
 		public void onClick(ClickEvent event) {
@@ -124,6 +152,15 @@ public class GruppeErstellenForm extends HorizontalPanel {
 	}
 
 
+
+	/**
+	 * Diese Nested Class implementiert das Interface AsyncCallback.
+	 * Hier erhalten wir den Nutzer der durch findByEmail gefunden wurde.
+	 * Wir fügen den Nutzer unserem gruppenvectorid hinzu. Dieser sammelt alle Nutzerobjekte
+	 * und stellt letztlich das Argument für createGruppe dar.
+	 * 
+	 * @author alina
+	 */
 
 	class NutzerCallback implements AsyncCallback<Nutzer> {
 
@@ -139,10 +176,17 @@ public class GruppeErstellenForm extends HorizontalPanel {
 		@Override
 		public void onSuccess(Nutzer result) {
 			gruppenvectorid.add(result);
-
+			
+			ClientSideSettings.getLogger().severe(gruppenvectorid.toString());
 		}
 
 	}
+
+	/**
+	 * Diese Nested Class implementiert das Interface AsyncCallback.
+	 * Wird die Gruppe ordnungsgemäß erstellt, lassen wir dies den Nutzer wissen.
+	 * @author alina
+	 */
 
 	class GruppeErstellenCallback implements AsyncCallback<Gruppe> {
 
@@ -157,15 +201,24 @@ public class GruppeErstellenForm extends HorizontalPanel {
 
 		@Override
 		public void onSuccess(Gruppe result) {
+			ClientSideSettings.getLogger().severe(result.toString());
 			Window.alert("Die Gruppe wurde erfolgreich erstellt.");
+	
 			Window.Location.reload();
 
 		}
 
 	}
-
+	/**
+	 * Diese Nested Class implementiert das Widget TextBox.
+	 * Da wir immer wieder ein solches Objekt erstellen möchten,
+	 * ist es sinnvoll, seine Funktionen in einer Klasse zu kapseln. 
+	 * 
+	 * @author alina
+	 */
 	class NeuesMitglied extends TextBox {
 
+		//Bei jeder Instanziierung wird die Textbox unserem Vector hinzugefügt.
 		public NeuesMitglied() {
 			super();
 			mitgliederfelder.add(this);

@@ -6,6 +6,9 @@ import java.util.Vector;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.cellview.client.CellTable;
+import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -19,8 +22,11 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ListDataProvider;
+import com.google.gwt.view.client.SelectionChangeEvent;
+import com.google.gwt.view.client.SingleSelectionModel;
 
 import de.hdm.swprakt.cinemates.client.ClientSideSettings;
+import de.hdm.swprakt.cinemates.client.gui.admin.FilmCellForm.AlleFilmeCallback;
 
 import de.hdm.swprakt.cinemates.shared.KinoAdministration;
 import de.hdm.swprakt.cinemates.shared.KinoAdministrationAsync;
@@ -55,13 +61,10 @@ public class FilmForm extends HorizontalPanel {
 	// Setzen der asynchronen Interfaces
 	KinoAdministrationAsync kinoAdministration = ClientSideSettings.getKinoAdministration();
 
-	// bisher leerer Konstruktor 
+	// bisher leerer Konstruktor
 	public FilmForm() {
 
 	}
-
-	// Die Liste der Daten anzeigen
-	// private static List<Film> FILMS = Arrays.asList();
 
 	/**
 	 * onload()-Methode
@@ -101,13 +104,6 @@ public class FilmForm extends HorizontalPanel {
 		// dataProvider.addDataDisplay(flexTable);
 		detailsPanel.add(flexTable);
 
-		//		Button addRowButton = new Button("Add a Row"); 
-		//      addRowButton.addClickHandler(new ClickHandler() {
-		//	         @Override
-		//         public void onClick(ClickEvent event) {
-		//	            addRow(flexTable);
-		//         }
-		//	      });
 	}
 
 	class FilmAnlegenClickHandler implements ClickHandler {
@@ -129,24 +125,13 @@ public class FilmForm extends HorizontalPanel {
 		@Override
 		public void onSuccess(Film result) {
 
-
 			Window.alert("Der Film wurde erstellt");
 
 			kinoAdministration.getAllFilme(new AlleFilmeCallback());
-			//
-			//			filmname.setText("");
-			//			filmbeschreibung.setText("");
-			//			spiellange.setText("");
-			//
-			//			flexTable.setText(1, 1, result.getFilmtitel());
-			//			flexTable.setText(1, 2, result.getBeschreibung());
-			//			flexTable.setText(1, 3, result.getDetails());
-
 
 		}
 
 	}
-
 
 	class AlleFilmeCallback implements AsyncCallback<Vector<Film>> {
 		@Override
@@ -156,68 +141,17 @@ public class FilmForm extends HorizontalPanel {
 
 		@Override
 		public void onSuccess(Vector<Film> result) {
-			// TODO Auto-generated method stub
-			Window.alert("Die Filme.... ");
+			Window.alert("Die Filme wurden geladen ");
 			int rowCount = 1;
-			for (Film f: result) {
+			for (Film f : result) {
 
 				flexTable.setText(rowCount, 1, f.getFilmtitel());
 				flexTable.setText(rowCount, 2, f.getBeschreibung());
 				flexTable.setText(rowCount, 3, f.getDetails());
 				rowCount++;
 
-
 			}
-		}
 
+		}
 	}
 }
-//class AlleFilmeClickHandler implements ClickHandler {
-//	public void onClick(ClickEvent event) {
-//
-//		kinoAdministration.getAllFilme(new AlleFilmeCallback());
-//
-//	}
-//}
-
-//class FilmLöschenClickHandler extends DialogBox implements ClickHandler {
-//
-//	public FilmLöschenClickHandler() {
-//		setText("Möchten Sie das Kino wirklich löschen?");
-//		Grid jaNein = new Grid(3, 3);
-//		jaNein.setWidget(0, 1, ja);
-//		jaNein.setWidget(0, 2, nein);
-//		nein.addClickHandler(new neinClickHandler());
-//		setAnimationEnabled(false);
-//		setGlassEnabled(false);
-//		this.add(jaNein);
-//	}
-//
-//	public void onClick(ClickEvent event) {
-//		new FilmLöschenClickHandler().show();
-//	}
-//
-//	private class neinClickHandler implements ClickHandler {
-//		@Override
-//		public void onClick(ClickEvent event) {
-//			RootPanel.get().clear();
-//		}
-//	}
-//}
-//
-////	
-////		/**
-////		  * Add a row to the flex table.
-////		 */
-////	private void addRow(FlexTable flexTable) {
-//
-//int numRows = flexTable.getRowCount();
-//flexTable.setWidget(numRows, 1, new HTML(filmname.getText()));
-//flexTable.setWidget(numRows, 2, new HTML(filmbeschreibung.getText()));
-//flexTable.setWidget(numRows, 3, new HTML(spiellange.getText()));
-////		flexTable.getFlexCellFormatter().setRowSpan(0, 1, numRows +1);
-//
-//
-////		     
-//
-//}}

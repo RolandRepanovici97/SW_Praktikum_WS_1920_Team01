@@ -187,6 +187,7 @@ public class SpielzeitForm extends HorizontalPanel {
 			// Falls Angaben gefehlt haben,wird folgendes ausgegeben:
 			else {
 				Window.alert("Bitte geben Sie alle Informationen an.");
+				Window.alert("GWT");
 
 			}
 		}

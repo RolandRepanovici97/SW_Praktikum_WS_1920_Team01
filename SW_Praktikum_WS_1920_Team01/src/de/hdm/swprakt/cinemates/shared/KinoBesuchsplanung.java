@@ -57,6 +57,8 @@ public interface KinoBesuchsplanung extends RemoteService {
 	 * @throws IllegalArgumentException
 	 * @author alina
 	 */
+	
+	public Vector<Nutzer> findAllNutzer() throws IllegalArgumentException;
 
 	public Boolean nameVerfügbarNutzer(String nutzername) throws IllegalArgumentException;
 

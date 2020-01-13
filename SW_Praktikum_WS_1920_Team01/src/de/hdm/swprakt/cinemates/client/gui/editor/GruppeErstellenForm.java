@@ -12,6 +12,9 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
+import com.google.gwt.user.client.ui.SuggestBox;
+import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -52,12 +55,18 @@ public class GruppeErstellenForm extends HorizontalPanel {
 	private HorizontalPanel panelfürbuttons;
 	private FlexTable tabelle;
 	private Button erstellenButton = new Button("Gruppe erstellen");
-	private Vector<Nutzer> gruppenvectorid = new Vector<Nutzer>();
+
+
 	private Button weiteresMitglied;
-	private Vector<TextBox> mitgliederfelder;
+	private Vector<SuggestBox> mitgliederfelder = new Vector<SuggestBox>();;
 	private int rowCount;
+	private MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
+	private Vector<Nutzer> nutzerCinemates = new Vector<Nutzer>();
+	   
 	public void onLoad() {
 		super.onLoad();
+		
+		kinobesuchsplanung.findAllNutzer(new AllNutzerCallback());
 
 		// Wir erhalten den aktuellen Nutzer
 		nutzer = KinobesuchsplanungEntry.AktuellerNutzer.getNutzer();
@@ -69,8 +78,6 @@ public class GruppeErstellenForm extends HorizontalPanel {
 		 *  Instanttierung der Widgets
 		 */
 		
-		//Repräsentiert alle instanziierten TextBoxes 
-		mitgliederfelder = new Vector<TextBox>();
 
 		weiteresMitglied = new Button("Weiteres Mitglied hinzufügen");
 		panelfürgruppe = new VerticalPanel();
@@ -79,7 +86,7 @@ public class GruppeErstellenForm extends HorizontalPanel {
 		gruppenametext = new TextBox();
 		titel.getElement().setId("TitelElemente");
 		//Ein Mitglied muss auf jeden Fall hinzugefügt werden, weitere sind optional
-		neuesmitglied = new NeuesMitglied();
+		neuesmitglied = new NeuesMitglied(oracle);
 
 		// Hinzufügen der ClickHandler
 
@@ -121,17 +128,41 @@ public class GruppeErstellenForm extends HorizontalPanel {
 
 	class ErstellenClickHandler implements ClickHandler {
 
+		
 		public void onClick(ClickEvent event) {
-			for (TextBox feld : mitgliederfelder) {
+		
+			
+			Vector<Nutzer> gruppenmitglieder = new Vector<Nutzer>();
+			
+			for (SuggestBox feld : mitgliederfelder) {
 
-				kinobesuchsplanung.findNutzerByEmail(feld.getText(), new NutzerCallback());
+				kinobesuchsplanung.findNutzerByEmail(feld.getText().trim(), new AsyncCallback<Nutzer>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						ClientSideSettings.getLogger().severe("Der Nutzer konnte nicht gefunden werden");
+						
+					}
+
+					@Override
+					public void onSuccess(Nutzer result) {
+						
+						gruppenmitglieder.add(result);
+						ClientSideSettings.getLogger().severe(result.toString());
+						
+					}
+					
+				});
 			}
-
-			kinobesuchsplanung.createGruppe(nutzer, gruppenametext.getText(), gruppenvectorid,
+			
+			
+			ClientSideSettings.getLogger().severe(gruppenmitglieder.toString());
+			kinobesuchsplanung.createGruppe(nutzer, gruppenametext.getText(), gruppenmitglieder,
 					new GruppeErstellenCallback());
 
 		}
 	}
+	
 
 
 	/**
@@ -145,7 +176,7 @@ public class GruppeErstellenForm extends HorizontalPanel {
 	class WeiteresMitgliedClickHandler implements ClickHandler {
 
 		public void onClick(ClickEvent event) {
-			tabelle.setWidget(rowCount, 2, new NeuesMitglied());
+			tabelle.setWidget(rowCount, 2, new NeuesMitglied(oracle));
 			rowCount++;
 
 		}
@@ -162,25 +193,6 @@ public class GruppeErstellenForm extends HorizontalPanel {
 	 * @author alina
 	 */
 
-	class NutzerCallback implements AsyncCallback<Nutzer> {
-
-		@Override
-		public void onFailure(Throwable caught) {
-			/*
-			 * Wenn ein Fehler auftritt, dann geben wir eine kurze Log Message aus. test
-			 */
-			ClientSideSettings.getLogger().severe("Der Nutzer konnte nicht gefunden werden");
-
-		}
-
-		@Override
-		public void onSuccess(Nutzer result) {
-			gruppenvectorid.add(result);
-			
-			ClientSideSettings.getLogger().severe(gruppenvectorid.toString());
-		}
-
-	}
 
 	/**
 	 * Diese Nested Class implementiert das Interface AsyncCallback.
@@ -209,6 +221,26 @@ public class GruppeErstellenForm extends HorizontalPanel {
 		}
 
 	}
+	
+	class AllNutzerCallback implements AsyncCallback<Vector<Nutzer>> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			
+			ClientSideSettings.getLogger().severe("Keine Nutzer gefunden");
+			
+		}
+
+		@Override
+		public void onSuccess(Vector<Nutzer> result) {
+		
+			for(Nutzer n : result) {
+				oracle.add(n.getEmail());
+			}
+			
+		}
+		
+	}
 	/**
 	 * Diese Nested Class implementiert das Widget TextBox.
 	 * Da wir immer wieder ein solches Objekt erstellen möchten,
@@ -216,11 +248,11 @@ public class GruppeErstellenForm extends HorizontalPanel {
 	 * 
 	 * @author alina
 	 */
-	class NeuesMitglied extends TextBox {
+	class NeuesMitglied extends SuggestBox {
 
 		//Bei jeder Instanziierung wird die Textbox unserem Vector hinzugefügt.
-		public NeuesMitglied() {
-			super();
+		public NeuesMitglied(SuggestOracle oracle) {
+			super(oracle);
 			mitgliederfelder.add(this);
 
 		}
@@ -233,4 +265,5 @@ public class GruppeErstellenForm extends HorizontalPanel {
 		}
 
 	}
+	
 }

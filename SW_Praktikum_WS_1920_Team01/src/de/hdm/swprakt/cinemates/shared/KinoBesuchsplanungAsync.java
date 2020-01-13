@@ -30,6 +30,8 @@ public interface KinoBesuchsplanungAsync {
 	void init(AsyncCallback<Void> callback);
 
 	void findNutzerByEmail(String email, AsyncCallback<Nutzer> callback);
+	
+	void findAllNutzer(AsyncCallback<Vector<Nutzer>> callback);
 
 	void createNutzer(String email, String nutzername, AsyncCallback<Nutzer> callback);
 

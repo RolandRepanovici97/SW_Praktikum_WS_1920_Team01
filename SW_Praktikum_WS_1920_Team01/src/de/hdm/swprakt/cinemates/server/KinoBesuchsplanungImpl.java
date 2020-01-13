@@ -174,6 +174,10 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 
 		return this.nutzerMapper.findByEmail(email);
 	}
+	
+	public Vector<Nutzer> findAllNutzer() throws IllegalArgumentException {
+		return this.nutzerMapper.findAllNutzer();
+	}
 
 	/**
 	 * Diese Methode wird aufgerufen, wenn der Nutzer seinen Nutzernamen setzen
@@ -425,8 +429,6 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 				// Hinzufügen der IDs zum Zielvector, welcher später das Argument für das
 				// Attribut gruppenmitglieder wird
 				gruppenmitgliederids.add(id);
-				
-				ServerSideSettings.getLog().severe(gruppenmitglieder.toString());
 				
 
 			}

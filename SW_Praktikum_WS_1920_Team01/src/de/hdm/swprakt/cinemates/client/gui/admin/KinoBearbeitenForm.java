@@ -12,7 +12,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.view.client.ListDataProvider;
+
 
 import de.hdm.swprakt.cinemates.client.ClientSideSettings;
 import de.hdm.swprakt.cinemates.shared.KinoAdministrationAsync;
@@ -55,8 +55,7 @@ public class KinoBearbeitenForm extends HorizontalPanel {
 		this.gewähltesKino = gewähltesKino;
 	}
 
-	// Erstellen eines data providers, für das Anlegen des Kinos.
-	private ListDataProvider<Kino> dataProvider = new ListDataProvider<Kino>();
+	
 
 	KinoAdministrationAsync kinoAdministration = ClientSideSettings.getKinoAdministration();
 
@@ -89,6 +88,8 @@ public class KinoBearbeitenForm extends HorizontalPanel {
 		this.add(verticalPanel1);
 
 	}
+	
+
 
 	/**
 	 * Sobald die Textfelder ausgefüllt wurden, wird ein neues Kino nach dem Klicken

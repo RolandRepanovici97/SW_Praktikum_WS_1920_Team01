@@ -208,7 +208,6 @@ public class AbstimmenForm extends VerticalPanel {
 				einträge.setText(rowCount, 1, "Kino: " + result.getKinoname() + "/n" + result.getAdresse());
 				einträge.setWidget(rowCount, 2, new JaBox());
 				einträge.setWidget(rowCount, 3, new NeinBox());
-				einträge.setWidget(rowCount, 4, new EgalBox());
 		
 			}
 
@@ -273,23 +272,5 @@ public class AbstimmenForm extends VerticalPanel {
 	}
 }
 	
-	
-	/**
-	 * Diese Klasse erweitert das Widget CheckBox und dient zur Darstellung
-	 * der Nein-Checkbox.
-	 * @author alina
-	 *
-	 */
-	class EgalBox extends RadioButton {
 
-		public EgalBox() {
-			super("radioGroup", "Third");
-			
-		}
-		
-		public void onLoad() {
-			super.onLoad();
-			this.setHTML("<i class=\"far fa-meh\"></i>");	
-	}
-}
 }

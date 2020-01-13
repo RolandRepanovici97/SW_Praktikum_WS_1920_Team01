@@ -56,7 +56,7 @@ public class GruppeEditierenForm extends VerticalPanel {
 	private HorizontalPanel horizontalPanel;
 	CellTable <Nutzer> tabelle;
 	List <Nutzer> liste;
-	
+
 
 
 	// Getter & Setter für die Variable Gruppe: Wird benötigt, wenn eine Gruppe selektiert wurde
@@ -86,12 +86,8 @@ public class GruppeEditierenForm extends VerticalPanel {
 
 		tabelle = new CellTable <Nutzer>();
 
-		
-		
-		kinobesuchsplanung.getAllNutzerOfGruppe(gewählteGruppe, new NutzerCallback());
 
-
-		titel = new Label("Gruppe: " + gewählteGruppe.getGruppenname() + "bearbeiten");
+		titel = new Label("Gruppe: " + gewählteGruppe.getGruppenname() + " bearbeiten");
 		titel.getElement().setId("TitelElemente");
 		gruppenameText.setText(gewählteGruppe.getGruppenname());
 
@@ -109,9 +105,6 @@ public class GruppeEditierenForm extends VerticalPanel {
 		this.add(horizontalPanel);
 		this.add(tabelle);
 		this.add(löschenButton);
-
-
-
 
 	}
 
@@ -150,102 +143,105 @@ public class GruppeEditierenForm extends VerticalPanel {
 
 		@Override
 		public void onSuccess(Vector<Nutzer> result) {
-			
-	ListDataProvider <Nutzer> model = new ListDataProvider<Nutzer>();
-			  
-			  TextColumn<Nutzer> name = new TextColumn<Nutzer>() {
-					@Override
-					public String getValue(Nutzer nutzer) {
-						return nutzer.getNutzername();
-					}
-					
-				};
 
-				tabelle.addColumn(name, "Name");
-				tabelle.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
-		
+			ListDataProvider <Nutzer> model = new ListDataProvider<Nutzer>();
+
+			TextColumn<Nutzer> name = new TextColumn<Nutzer>() {
+				@Override
+				public String getValue(Nutzer nutzer) {
+					return nutzer.getNutzername();
+				}
+
+			};
+
+			tabelle.addColumn(name, "Name");
+			tabelle.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
+
 			for(Nutzer nutzer : result) {
-				
-			model.addDataDisplay((HasData<Nutzer>) result);
-				
-				 
-		}}
+
+				model.addDataDisplay((HasData<Nutzer>) result);
 
 
-	/**
-	 * Diese Nested Class implementiert das Interface AsyncCallback und ermöglicht
-	 * die Rückgabe des editierten Gruppeobjekts
-	 * 
-	 * @author roland
-	 */
-	class GruppeCallback implements AsyncCallback<Gruppe> {
-
-		@Override
-		public void onFailure(Throwable caught) {
-			Window.alert("Ihre Gruppe konnte nicht geladen werden");
-		}
-
-		@Override
-		public void onSuccess(Gruppe result) {
-			Window.alert("Die Gruppe wurde erfolgreich editiert!");
+			}
 		}
 	}
 
+		/**
+		 * Diese Nested Class implementiert das Interface AsyncCallback und ermöglicht
+		 * die Rückgabe des editierten Gruppeobjekts
+		 * 
+		 * @author roland
+		 */
+		class GruppeCallback implements AsyncCallback<Gruppe> {
 
-	/**
-	 * Diese Nested Class implementiert das Interface AsyncCallback und das Löschen
-	 * einer selktierten Gruppe
-	 * 
-	 * @author roland
-	 */
-	class LoeschenCallback implements AsyncCallback<Void> {
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Ihre Gruppe konnte nicht geladen werden");
+			}
 
-		@Override
-		public void onFailure(Throwable caught) {
-			Window.alert("Ihre Gruppe konnte nicht gelöscht werden");
+			@Override
+			public void onSuccess(Gruppe result) {
+				Window.alert("Die Gruppe wurde erfolgreich editiert!");
+			}
 		}
 
-		@Override
-		public void onSuccess(Void result) {
-			Window.alert("Die Gruppe wurde erfolgreich gelöscht!");
+
+		/**
+		 * Diese Nested Class implementiert das Interface AsyncCallback und das Löschen
+		 * einer selktierten Gruppe
+		 * 
+		 * @author roland
+		 */
+		class LoeschenCallback implements AsyncCallback<Void> {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Ihre Gruppe konnte nicht gelöscht werden");
+			}
+
+			@Override
+			public void onSuccess(Void result) {
+				Window.alert("Die Gruppe wurde erfolgreich gelöscht!");
+			}
 		}
+
+
+		/**
+		 * Diese Nested Class implementiert das Interface ClickHandler.
+		 * Klickt der Nutzer diesen Button an, so werden die Änderungen an der Gruppe gespeichert
+		 * 
+		 * @author Roland
+		 */
+
+		class SpeichernClickHandler implements ClickHandler {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+
+				gewählteGruppe.setGruppenname(gruppenameText.getText());
+				//kinobesuchsplanung.save(gewählteGruppe, new GruppeCallback());
+
+			}
+
+		}
+
+		/**
+		 * Diese Nested Class implmentiert das Interface ClickHandler.
+		 * Klickt der Nutzer diessen Button an, so wird die Gruppe gelöscht.
+		 * 
+		 * @author Roland
+		 */
+
+		class LoeschenClickHandler implements ClickHandler {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				kinobesuchsplanung.deleteGruppe(gewählteGruppe, new LoeschenCallback());
+			}
+
+		
+
 	}
 
-
-	/**
-	 * Diese Nested Class implementiert das Interface ClickHandler.
-	 * Klickt der Nutzer diesen Button an, so werden die Änderungen an der Gruppe gespeichert
-	 * 
-	 * @author Roland
-	 */
-
-	class SpeichernClickHandler implements ClickHandler {
-
-		@Override
-		public void onClick(ClickEvent event) {
-			// TODO Auto-generated method stub
-
-			gewählteGruppe.setGruppenname(gruppenameText.getText());
-			//kinobesuchsplanung.save(gewählteGruppe, new GruppeCallback());
-
-		}
-
-	}
-
-	/**
-	 * Diese Nested Class implmentiert das Interface ClickHandler.
-	 * Klickt der Nutzer diessen Button an, so wird die Gruppe gelöscht.
-	 * 
-	 * @author Roland
-	 */
-
-	class LoeschenClickHandler implements ClickHandler {
-
-		@Override
-		public void onClick(ClickEvent event) {
-			kinobesuchsplanung.deleteGruppe(gewählteGruppe, new LoeschenCallback());
-		}
-
-	}
-
-}}
+}

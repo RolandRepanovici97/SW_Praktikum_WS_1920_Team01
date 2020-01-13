@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.RootPanel;
 
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -207,8 +208,8 @@ public class AbstimmenForm extends VerticalPanel {
 				einträge.setText(rowCount, 1, "Kino: " + result.getKinoname() + "/n" + result.getAdresse());
 				einträge.setWidget(rowCount, 2, new JaBox());
 				einträge.setWidget(rowCount, 3, new NeinBox());
-				//				 kinostring = result.getKinoname() + "/n" + result.getAdresse();
-
+				einträge.setWidget(rowCount, 4, new EgalBox());
+		
 			}
 
 		}
@@ -242,10 +243,14 @@ public class AbstimmenForm extends VerticalPanel {
 	 *
 	 */
 
-	class JaBox extends CheckBox {
+	class JaBox extends RadioButton {
 		public JaBox() {
-			super();
-			this.setHTML("<i class=\"far fa-check-circle\"></i>");
+			super("radioGroup", "First");
+			
+		}
+		public void onLoad() {
+			super.onLoad();
+			this.setHTML("<i class=\"far fa-smile\"></i>");
 		}
 	}
 
@@ -255,11 +260,36 @@ public class AbstimmenForm extends VerticalPanel {
 	 * @author alina
 	 *
 	 */
-	class NeinBox extends CheckBox {
+	class NeinBox extends RadioButton {
 
 		public NeinBox() {
-			super();
-			this.setHTML("<i class=\"far fa-times-circle\"></i>");
+			super("radioGroup", "Second");
+			
 		}
+		
+		public void onLoad() {
+			super.onLoad();
+			this.setHTML("<i class=\"far fa-frown\"></i>");	
 	}
+}
+	
+	
+	/**
+	 * Diese Klasse erweitert das Widget CheckBox und dient zur Darstellung
+	 * der Nein-Checkbox.
+	 * @author alina
+	 *
+	 */
+	class EgalBox extends RadioButton {
+
+		public EgalBox() {
+			super("radioGroup", "Third");
+			
+		}
+		
+		public void onLoad() {
+			super.onLoad();
+			this.setHTML("<i class=\"far fa-meh\"></i>");	
+	}
+}
 }

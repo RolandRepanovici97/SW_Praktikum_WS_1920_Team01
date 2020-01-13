@@ -45,32 +45,32 @@ public class NutzerkontoForm extends HorizontalPanel {
 	private Button speichernButton;
 	private VerticalPanel panelfürnutzer = new VerticalPanel();
 	private FlexTable tabelle;
-	
+
 	LoginServiceAsync loginService = ClientSideSettings.getLoginService();
-	
-	
+
+
 	public void onLoad() {
 
 
 		super.onLoad();
-		
+
 		loginService.login(GWT.getHostPageBaseURL(), new LoginServiceCallback());
-		
+
 	}
-	
+
 	private void loadForm(Nutzer nutzer) {
-		
+
 		titel.getElement().setId("TitelElemente");
 
 		tabelle = new FlexTable();
 
 		nutzernametext = new TextBox();
-		nutzernametext.setText(nutzer.getNutzername());
+		nutzernametext.getElement().setPropertyString("placeholder", nutzer.getNutzername());
 		//		emailtext = new Label(nutzer.getEmail());
 		emailtext = new Label(nutzer.getEmail());
 		speichernButton = new Button("Speichern");
 
-		//		speichernButton.addClickHandler(new SpeichernClickHandler());
+		speichernButton.addClickHandler(new SpeichernClickHandler(nutzer));
 
 		panelfürnutzer.add(titel);
 		tabelle.setWidget(1, 1, nutzernamelabel);
@@ -78,7 +78,7 @@ public class NutzerkontoForm extends HorizontalPanel {
 		tabelle.setWidget(2,1, emaillabel);
 		tabelle.setWidget(2, 2, emailtext);
 
-		
+
 		panelfürnutzer.add(tabelle);
 		//		panelfürnutzer.add(emailtext);
 		panelfürnutzer.add(speichernButton);
@@ -86,9 +86,9 @@ public class NutzerkontoForm extends HorizontalPanel {
 		this.add(panelfürnutzer);
 
 		//	RootPanel.get().add(this);
-		
+
 	}
-	
+
 	private class LoginServiceCallback implements AsyncCallback<Nutzer> {
 
 		@Override
@@ -98,11 +98,12 @@ public class NutzerkontoForm extends HorizontalPanel {
 
 		@Override
 		public void onSuccess(Nutzer nutzer) {
-			
+
 			loadForm(nutzer);
-			
+			new SpeichernClickHandler(nutzer);
+
 		}
-			
+
 
 	}
 
@@ -122,47 +123,58 @@ public class NutzerkontoForm extends HorizontalPanel {
 	 * @author alina
 	 */
 
-	//	class SpeichernClickHandler implements ClickHandler{
-	//
-	//
-	//		@Override
-	//		public void onClick(ClickEvent event) {
-	//			//Wenn die Textbox zum Nutzernamen befüllt ist, dann...
-	//
-	//			if(nutzernametext!= null) {
-	//				//Update des Nutzerobjekts. Implizit wird das Nutzerobjekt in der Datenbank aktualisiert.
-	//				kinobesuchsplanung.save(nutzer, new NutzerCallback());
-	//
-	//			}
-	//
-	//			//Andernfalls hat der Nutzers nichts geändert...
-	//			else {
-	//				Window.alert("Sie haben keine Änderungen ausgeführt");
-	//			}
-	//
-	//		}
-	//
-	//	}
-	//
-	//	/**
-	//	 * Diese Nested Class implementiert das Interface AsyncCallBack und ermöglicht die Rückgabe des Nutzerobjekts.
-	//	 * @author alina
-	//	 */
-	//	class NutzerCallback implements AsyncCallback <Void>{
-	//
-	//		@Override
-	//		public void onFailure(Throwable caught) {
-	//			Window.alert("Ihr Nutzerkonto konnte nicht aktualisiert werden");
-	//
-	//		}
-	//
-	//
-	//		@Override
-	//		public void onSuccess(Void result) {
-	//			// TODO Auto-generated method stub
-	//
-	//		}
-	//
-	//	}
-	//
+	class SpeichernClickHandler implements ClickHandler{
+
+		Nutzer nutzer;
+		public SpeichernClickHandler(Nutzer nutzer)
+		{
+			this.nutzer=nutzer;
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			//Wenn die Textbox zum Nutzernamen befüllt ist, dann...
+
+			if(nutzernametext!= null) {
+
+				nutzer.setNutzername(nutzernametext.getText());
+
+				//Update des Nutzerobjekts. Implizit wird das Nutzerobjekt in der Datenbank aktualisiert.
+				kinobesuchsplanung.save(nutzer, new NutzerCallback());
+
+
+				Window.alert("Sie haben Ihr Nutzerkonto erfolgreich aktualisiert.");
+
+			}
+
+			//Andernfalls hat der Nutzers nichts geändert...
+			else {
+				Window.alert("Sie haben keine Änderungen ausgeführt");
+			}
+
+		}
+
+	}
+
+	/**
+	 * Diese Nested Class implementiert das Interface AsyncCallBack und ermöglicht die Rückgabe des Nutzerobjekts.
+	 * @author alina
+	 */
+	class NutzerCallback implements AsyncCallback <Void>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Ihr Nutzerkonto konnte nicht aktualisiert werden");
+
+		}
+
+
+		@Override
+		public void onSuccess(Void result) {
+			Window.Location.reload();
+
+		}
+
+	}
+
 }

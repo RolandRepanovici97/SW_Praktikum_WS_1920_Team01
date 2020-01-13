@@ -149,10 +149,9 @@ public class AbstimmenForm extends VerticalPanel {
 
 			for (Umfrageeintrag eintrag : result) {
 
-				kinoadministration.getSpielzeitByID(eintrag.getSpielzeitID(), new SpielzeitCallback(rowCount));
-				kinoadministration.getKinoByID(eintrag.getKinoID(), new Kinocallback(rowCount));
+				kinoadministration.getSpielzeitByID(eintrag.getSpielzeitID(), new SpielzeitCallback(rowCount, eintrag));
+				kinoadministration.getKinoByID(eintrag.getKinoID(), new Kinocallback(rowCount, eintrag));
 
-				//				einträge.setText(rowCount, 0, "Uhrzeit: \n " + spielzeitstring + "\n Kino: " + kinostring);
 
 				rowCount++;
 
@@ -160,9 +159,11 @@ public class AbstimmenForm extends VerticalPanel {
 		}
 
 		class SpielzeitCallback implements AsyncCallback<Spielzeit> {
+			Umfrageeintrag eintrag;
 			private int rowCount;
-			public SpielzeitCallback(int rowCount) {
+			public SpielzeitCallback(int rowCount, Umfrageeintrag eintrag) {
 				this.rowCount = rowCount;
+				this.eintrag=eintrag;
 
 			}
 			@Override
@@ -177,9 +178,9 @@ public class AbstimmenForm extends VerticalPanel {
 
 			@Override
 			public void onSuccess(Spielzeit result) {
-				einträge.setText(rowCount, 0, "Uhrzeit: \n" + result.getZeitpunkt().toString());
-				//				kinoadministration.getKinoByID(kinoId, new Kinocallback(result.getZeitpunkt().toString(), rowCount));
-				//				spielzeitstring = result.toString();
+//				einträge.setText(rowCount, 0, "Uhrzeit: \n" + result.getZeitpunkt().toString());
+//								kinoadministration.getKinoByID(kinoId, new Kinocallback(result.getZeitpunkt().toString(), rowCount));
+//								spielzeitstring = result.toString();
 
 
 			}
@@ -187,11 +188,13 @@ public class AbstimmenForm extends VerticalPanel {
 		}
 
 		class Kinocallback implements AsyncCallback<Kino> {
+			Umfrageeintrag eintrag;
 			String spielzeitString;
 			int rowCount;
 
-			public Kinocallback(int rowCount) {
+			public Kinocallback(int rowCount, Umfrageeintrag eintrag) {
 				this.rowCount = rowCount;
+				this.eintrag=eintrag;
 				// TODO Auto-generated constructor stub
 			}
 			@Override
@@ -206,9 +209,8 @@ public class AbstimmenForm extends VerticalPanel {
 			@Override
 			public void onSuccess(Kino result) {
 				einträge.setText(rowCount, 1, "Kino: " + result.getKinoname() + "/n" + result.getAdresse());
-				einträge.setWidget(rowCount, 2, new JaBox());
-				einträge.setWidget(rowCount, 3, new NeinBox());
-				einträge.setWidget(rowCount, 4, new EgalBox());
+				einträge.setWidget(rowCount, 2, new JaBox(eintrag.toString()));
+				einträge.setWidget(rowCount, 3, new NeinBox(eintrag.toString()));
 		
 			}
 
@@ -244,8 +246,8 @@ public class AbstimmenForm extends VerticalPanel {
 	 */
 
 	class JaBox extends RadioButton {
-		public JaBox() {
-			super("radioGroup", "First");
+		public JaBox(String radioGroup) {
+			super(radioGroup, "First");
 			
 		}
 		public void onLoad() {
@@ -262,8 +264,8 @@ public class AbstimmenForm extends VerticalPanel {
 	 */
 	class NeinBox extends RadioButton {
 
-		public NeinBox() {
-			super("radioGroup", "Second");
+		public NeinBox(String radioGroup) {
+			super(radioGroup, "Second");
 			
 		}
 		
@@ -273,23 +275,5 @@ public class AbstimmenForm extends VerticalPanel {
 	}
 }
 	
-	
-	/**
-	 * Diese Klasse erweitert das Widget CheckBox und dient zur Darstellung
-	 * der Nein-Checkbox.
-	 * @author alina
-	 *
-	 */
-	class EgalBox extends RadioButton {
 
-		public EgalBox() {
-			super("radioGroup", "Third");
-			
-		}
-		
-		public void onLoad() {
-			super.onLoad();
-			this.setHTML("<i class=\"far fa-meh\"></i>");	
-	}
-}
 }

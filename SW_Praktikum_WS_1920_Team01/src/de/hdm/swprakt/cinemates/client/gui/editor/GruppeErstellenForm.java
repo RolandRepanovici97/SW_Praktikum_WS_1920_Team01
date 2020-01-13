@@ -152,7 +152,7 @@ public class GruppeErstellenForm extends HorizontalPanel {
 			
 			ClientSideSettings.getLogger().severe(gruppenmitglieder.toString());
 			kinobesuchsplanung.createGruppe(nutzer, gruppenametext.getText(), gruppenmitglieder,
-					new GruppeErstellenCallback());
+					new GruppeErstellenCallback(gruppenmitglieder));
 
 		}
 	}
@@ -196,6 +196,12 @@ public class GruppeErstellenForm extends HorizontalPanel {
 
 	class GruppeErstellenCallback implements AsyncCallback<Gruppe> {
 
+		Vector<String> gruppenmitglieder = new Vector<String>();
+		
+		public GruppeErstellenCallback(Vector<String> gruppenmitglieder) {
+			super();
+			this.gruppenmitglieder = gruppenmitglieder;
+		}
 		@Override
 		public void onFailure(Throwable caught) {
 			/*
@@ -210,6 +216,29 @@ public class GruppeErstellenForm extends HorizontalPanel {
 			ClientSideSettings.getLogger().severe(result.toString());
 			Window.alert("Die Gruppe wurde erfolgreich erstellt.");
 	
+			kinobesuchsplanung.sendMail(KinobesuchsplanungEntry.AktuellerNutzer.getNutzer().getEmail(),
+						gruppenmitglieder, "Cinemates: Neue Gruppe erstellt von " + KinobesuchsplanungEntry.AktuellerNutzer.getNutzer().getEmail(),
+						"Eine neue Gruppe wurde für Sie erstellt. Öffnen Sie Cinemates (https://cinemates.appspot.com/), um sie anzusehen!",
+						new AsyncCallback<String>() {
+
+							@Override
+							public void onFailure(Throwable caught) {
+
+								ClientSideSettings.getLogger().severe("Die Email konnte nicht versandt werden");
+								ClientSideSettings.getLogger().severe(caught.getMessage());
+
+							}
+
+							@Override
+							public void onSuccess(String result) {
+
+								ClientSideSettings.getLogger().severe("Die Email wurde versandt");
+								ClientSideSettings.getLogger().severe(result);
+
+							}
+
+						});
+			
 			RootPanel.get("DetailsPanel").clear();
 			GruppenAnzeigenForm graf = new GruppenAnzeigenForm();
 			RootPanel.get("DetailsPanel").add(graf);

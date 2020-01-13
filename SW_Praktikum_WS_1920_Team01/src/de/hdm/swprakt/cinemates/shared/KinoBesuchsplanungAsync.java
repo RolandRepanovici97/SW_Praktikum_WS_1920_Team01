@@ -117,6 +117,8 @@ public interface KinoBesuchsplanungAsync {
 
 	void findGruppeByName(String gruppenname, AsyncCallback<Gruppe> callback);
 	
-	void sendMail(String from, String to, String replyTo, String subject, String message, AsyncCallback<String> callback);
+	void sendMail(String from, String to, String subject, String message, AsyncCallback<String> callback);
+	
+	void sendMail(String from, Vector<String> to, String subject, String message, AsyncCallback<String> callback);
 
 }

@@ -523,6 +523,8 @@ public interface KinoBesuchsplanung extends RemoteService {
 	public Umfrageeintrag finalesErgebnisBestimmen(Umfrage umfrage, Umfrageeintrag umfrageeintrag)
 			throws IllegalArgumentException;
 	
-	public String sendMail(String from, String to, String replyTo, String subject, String message) throws IllegalArgumentException;
+	public String sendMail(String from, String to, String subject, String message) throws IllegalArgumentException;
+	
+	public String sendMail(String from, Vector<String> to, String subject, String message) throws IllegalArgumentException;
 
 }

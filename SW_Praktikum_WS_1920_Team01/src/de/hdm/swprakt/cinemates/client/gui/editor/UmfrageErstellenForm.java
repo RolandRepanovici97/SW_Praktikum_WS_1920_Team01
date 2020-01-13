@@ -241,8 +241,7 @@ public class UmfrageErstellenForm extends HorizontalPanel {
 			public void onSuccess(Umfrage result) {
 
 				kinobesuchsplanung.sendMail(KinobesuchsplanungEntry.AktuellerNutzer.getNutzer().getEmail(),
-						"jonfilip98@web.de", KinobesuchsplanungEntry.AktuellerNutzer.getNutzer().getEmail(),
-						"Cinemates: Neue Umfrage von " + KinobesuchsplanungEntry.AktuellerNutzer.getNutzer().getEmail(),
+						"jonfilip98@web.de", "Cinemates: Neue Umfrage von " + KinobesuchsplanungEntry.AktuellerNutzer.getNutzer().getEmail(),
 						"Eine neue Umfrage wurde für Ihre Gruppe erstellt erstellt. Öffnen Sie Cinemates (https://cinemates.appspot.com/) um abzustimmen!",
 						new AsyncCallback<String>() {
 

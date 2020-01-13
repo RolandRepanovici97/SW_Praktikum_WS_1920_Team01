@@ -1194,7 +1194,7 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 		return umfrageeintrag;
 	}
 
-	public String sendMail(String from, String to, String replyTo, String subject, String message) {
+	public String sendMail(String from, String to, String subject, String message) {
 		String output=null;
 		Properties props = new Properties();
 		Session session = Session.getDefaultInstance(props, null);
@@ -1206,7 +1206,31 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 					new InternetAddress(to, "Cinemates User"));
 			msg.setSubject(subject);
 			msg.setText(message);
-			msg.setReplyTo(new InternetAddress[]{new InternetAddress(replyTo)});
+			msg.setReplyTo(new InternetAddress[]{new InternetAddress(from)});
+			Transport.send(msg);
+
+		} catch (Exception e) {
+			output=e.toString();                
+		}   
+		return output;
+	}
+	
+	public String sendMail(String from, Vector<String> to, String subject, String message) {
+		String output=null;
+		Properties props = new Properties();
+		Session session = Session.getDefaultInstance(props, null);
+
+		try {
+			Message msg = new MimeMessage(session);
+			msg.setFrom(new InternetAddress(from, "Cinemates Admin"));
+			for(String mail : to) {
+				msg.addRecipient(Message.RecipientType.TO,
+					new InternetAddress(mail, "Cinemates User"));
+			}
+			
+			msg.setSubject(subject);
+			msg.setText(message);
+			msg.setReplyTo(new InternetAddress[]{new InternetAddress(from)});
 			Transport.send(msg);
 
 		} catch (Exception e) {

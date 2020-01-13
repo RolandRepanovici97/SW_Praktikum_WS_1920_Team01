@@ -8,6 +8,10 @@ package de.hdm.swprakt.cinemates.client.gui.editor;
 
 import java.util.Vector;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.DoubleClickEvent;
+import com.google.gwt.event.dom.client.DoubleClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
@@ -178,9 +182,8 @@ public class AbstimmenForm extends VerticalPanel {
 
 			@Override
 			public void onSuccess(Spielzeit result) {
-//				einträge.setText(rowCount, 0, "Uhrzeit: \n" + result.getZeitpunkt().toString());
-//								kinoadministration.getKinoByID(kinoId, new Kinocallback(result.getZeitpunkt().toString(), rowCount));
-//								spielzeitstring = result.toString();
+				einträge.setText(rowCount, 0, "Uhrzeit: \n" + result.getZeitpunkt().toString());
+
 
 
 			}
@@ -209,8 +212,23 @@ public class AbstimmenForm extends VerticalPanel {
 			@Override
 			public void onSuccess(Kino result) {
 				einträge.setText(rowCount, 1, "Kino: " + result.getKinoname() + "/n" + result.getAdresse());
-				einträge.setWidget(rowCount, 2, new JaBox(eintrag.toString()));
-				einträge.setWidget(rowCount, 3, new NeinBox(eintrag.toString()));
+				JaBox ja = new JaBox(eintrag.toString());
+				NeinBox nein = new NeinBox(eintrag.toString());
+				einträge.setWidget(rowCount, 2, ja);
+				einträge.setWidget(rowCount, 3, nein);
+				Button auswahlAufheben = new Button("Aufheben");
+				auswahlAufheben.addClickHandler(new ClickHandler() {
+
+					@Override
+					public void onClick(ClickEvent arg0) {
+						
+						ja.setChecked(false);
+						nein.setChecked(false);
+						
+					}
+					
+				});
+				einträge.setWidget(rowCount, 4, auswahlAufheben);
 		
 			}
 

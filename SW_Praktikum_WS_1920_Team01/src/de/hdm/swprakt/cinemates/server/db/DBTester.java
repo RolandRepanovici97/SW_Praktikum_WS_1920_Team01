@@ -418,8 +418,11 @@ public abstract class DBTester {
 //		
 //		System.out.println("\nfindBySpielplan(1)");
 //		Spielplan testspielplan = spielplanMapper.findByID(1);
-//		Kino kinosZuSpielplan = kinoMapper.findBySpielplan(testspielplan);
-//		System.out.println(kinosZuSpielplan.toString());
+//		Vector<Kino> kinosZuSpielplan = kinoMapper.findBySpielplan(testspielplan);
+//		for(Kino k : kinosZuSpielplan) {
+//			System.out.println(k.toString());
+//		}
+		
 //		
 //		
 //		System.out.println("\ninsert()");
@@ -543,6 +546,14 @@ public abstract class DBTester {
 //		spielplanMapper.delete(testSpielplanDelete);
 //		testSpielplanDelete = spielplanMapper.findByID(4);
 //		if(testSpielplanDelete == null) System.out.println("Der Spielplan wurde gelöscht");
+//		
+//		System.out.println("\nfindBySpielzeit()");
+//		Spielzeit testspielzeit = spielzeitMapper.findByID(1);
+//		System.out.println(testspielzeit.toString());
+//		Vector<Integer> spielzeitinspielplan = spielplanMapper.findBySpielzeit(testspielzeit);
+//		for(int sp : spielzeitinspielplan) {
+//			System.out.println(sp);
+//		}
 		
 		/*
 		 * ***************************************************************************
@@ -598,10 +609,12 @@ public abstract class DBTester {
 //			System.out.println("\nfindSpielzeitenByFilmAndDate()");
 //			java.util.Date date = new java.util.Date();
 //			Calendar cal = Calendar.getInstance();
-//			cal.set(Calendar.DAY_OF_MONTH,14);
+//			cal.set(Calendar.DAY_OF_MONTH,7);
 //			cal.set(Calendar.MONTH, Calendar.DECEMBER);
+//			cal.set(Calendar.YEAR, 2019);
 //			date = cal.getTime();
-//			Film testFilm = filmMapper.findByID(84);
+//			Film testFilm = filmMapper.findByID(2);
+//			
 //			
 //			Vector<Spielzeit> spielzeitenZuUmfrage = spielzeitMapper.findSpielzeitenByFilmAndByDate(testFilm, date);
 //			for(Spielzeit sp : spielzeitenZuUmfrage) {

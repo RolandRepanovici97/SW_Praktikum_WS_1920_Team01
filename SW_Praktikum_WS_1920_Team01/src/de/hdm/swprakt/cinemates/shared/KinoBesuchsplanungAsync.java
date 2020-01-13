@@ -40,7 +40,7 @@ public interface KinoBesuchsplanungAsync {
 
 	void showAllUmfrage(AsyncCallback<Vector<Umfrage>> callback);
 
-	void createUmfrage(String umfragenname, Film film, Gruppe gruppe, Date datum, AsyncCallback<Umfrage> callback);
+	void createUmfrage(Nutzer nutzer, String umfragenname, Film film, Gruppe gruppe, Date datum, AsyncCallback<Umfrage> callback);
 
 	void showVotumOfUmfrageeintrag(Umfrageeintrag umfrageeintrag, AsyncCallback<Vector<Votum>> callback);
 

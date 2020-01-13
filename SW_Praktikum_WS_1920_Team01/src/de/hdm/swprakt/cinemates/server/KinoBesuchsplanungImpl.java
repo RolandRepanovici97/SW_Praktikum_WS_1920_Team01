@@ -18,8 +18,10 @@ import javax.mail.internet.MimeMessage;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.swprakt.cinemates.server.db.GruppeMapper;
+import de.hdm.swprakt.cinemates.server.db.KinoMapper;
 import de.hdm.swprakt.cinemates.server.db.NutzerMapper;
 import de.hdm.swprakt.cinemates.server.db.OwnedBusinessObjectMapper;
+import de.hdm.swprakt.cinemates.server.db.SpielplanMapper;
 import de.hdm.swprakt.cinemates.server.db.SpielzeitMapper;
 import de.hdm.swprakt.cinemates.server.db.UmfrageMapper;
 import de.hdm.swprakt.cinemates.server.db.UmfrageeintragMapper;
@@ -29,6 +31,7 @@ import de.hdm.swprakt.cinemates.shared.KinoAdministrationAsync;
 import de.hdm.swprakt.cinemates.shared.KinoBesuchsplanung;
 import de.hdm.swprakt.cinemates.shared.bo.Film;
 import de.hdm.swprakt.cinemates.shared.bo.Gruppe;
+import de.hdm.swprakt.cinemates.shared.bo.Kino;
 import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 import de.hdm.swprakt.cinemates.shared.bo.Spielplan;
 import de.hdm.swprakt.cinemates.shared.bo.Spielzeit;
@@ -116,6 +119,10 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 */
 
 	private SpielzeitMapper spielzeitMapper = null;
+	
+	private SpielplanMapper spielplanMapper = null;
+	
+	private KinoMapper kinoMapper = null;
 
 	/**
 	 * Referenz auf den OwnedBusinessObjectMapper
@@ -150,6 +157,10 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 		this.umfrageeintragMapper = UmfrageeintragMapper.umfrageeintragMapper();
 		this.votumMapper = VotumMapper.votumMapper();
 		this.ownedBusinessObjectMapper = OwnedBusinessObjectMapper.ownedBusinessObjectMapper();
+		this.spielzeitMapper = SpielzeitMapper.spielzeitMapper();
+		this.spielplanMapper = SpielplanMapper.spielplanMapper();
+		this.kinoMapper = KinoMapper.kinoMapper();
+		
 
 		//		KinoAdministrationImpl kinoAdministrationImpl = new KinoAdministrationImpl();
 		//		kinoAdministrationImpl.init();
@@ -556,10 +567,11 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 * @author alina
 	 */
 
-	public Umfrage createUmfrage(String umfragenname, Film film, Gruppe gruppe, Date datum) throws IllegalArgumentException {
+	public Umfrage createUmfrage(Nutzer nutzer, String umfragenname, Film film, Gruppe gruppe, Date datum) throws IllegalArgumentException {
 		// Erzeugen eines neuen Umfrageobjekts
 		Umfrage umfrage = new Umfrage();
 
+		umfrage.setOwnerID(nutzer.getOwnerID());
 		// Wenn der Name verfügbar ist...
 		if (nameVerfügbarUmfrage(umfragenname)) {
 
@@ -569,10 +581,10 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 			umfrage.setFilmID(film.getID());
 			umfrage.setGruppenID(gruppe.getID());
 			umfrage.setDatum(datum);
-			this.umfrageMapper.insert(umfrage);
+			umfrage = this.umfrageMapper.insert(umfrage);
 
 			//Aufruf der Methode createUmfrageeinträge, um dieser Umfrage Einträge hinzuzufügen
-			//			createUmfrageeinträge(umfrage, film, datum);
+			createUmfrageeinträge(umfrage, film, datum);
 
 		}
 		return umfrage;
@@ -774,24 +786,28 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 		// Wir iterieren durch die Ergebnisse und erstellen zu jeder Spielzeit einen
 		// neuen Umfrageeintrag
 		for (Spielzeit spielzeit : spielzeiten) {
-			Umfrageeintrag umfrageeintrag = new Umfrageeintrag();
+			
+			Vector<Integer> spielpläne = this.spielplanMapper.findBySpielzeit(spielzeit);
+			for(int i : spielpläne) {
+				
+				
+				Vector<Kino> kinos = this.kinoMapper.findBySpielplan(this.spielplanMapper.findByID(i));
+				for(Kino k : kinos) {
+					Umfrageeintrag umfrageeintrag = new Umfrageeintrag();
 
-			// Wir setzen die Beziehung zur Spielzeit
-			umfrageeintrag.setSpielzeitID(spielzeit.getID());
+					// Wir setzen die Beziehung zur Spielzeit
+					umfrageeintrag.setSpielzeitID(spielzeit.getID());
+					umfrageeintrag.setUmfrageID(umfrage.getID());
+					umfrageeintrag.setKinoID(k.getID());
+					umfrageeinträge.add(umfrageeintrag);
 
-			// Und fügen diesen Eintrag dem Zielvector hinzu
-			umfrageeinträge.add(umfrageeintrag);
-
-			// Außerdem setzen wir die Beziehung jedes Umfrageeintrags zur erstellten
-			// Umfrage
-			for (Umfrageeintrag u : umfrageeinträge) {
-				u.setUmfrageID(umfrage.getID());
-
-				// Wir fügen die Umfrageeinträge auch in die Datenbank ein
-
-				this.umfrageeintragMapper.insert(u);
-
+					// Wir fügen die Umfrageeinträge auch in die Datenbank ein
+					this.umfrageeintragMapper.insert(umfrageeintrag);
+				}	
+				
 			}
+			// Und fügen diesen Eintrag dem Zielvector hinzu
+			
 
 		}
 		// Zuletzt geben wir unseren Zielvector zurück

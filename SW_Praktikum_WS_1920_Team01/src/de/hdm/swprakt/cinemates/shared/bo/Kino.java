@@ -132,7 +132,7 @@ public class Kino extends BusinessObject{
 
 	public String toString() {
 
-		return  this.kinoname ;
+		return super.toString() +  "; Kinoname: " + this.kinoname + "; Beschreibung: " + this.beschreibung + "; Adresse: " + this.adresse + "; Spielplan-ID: " + this.spielplanID + "; Kinokette-ID: " + this.kinoketteID;
 	}
 }
 

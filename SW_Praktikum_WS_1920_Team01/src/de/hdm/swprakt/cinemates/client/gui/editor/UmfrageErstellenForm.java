@@ -305,7 +305,7 @@ public class UmfrageErstellenForm extends HorizontalPanel {
 
 				// Aufruf der Methode createUmfrage: Hierdurch wird implizit das neue
 				// Umfrageobjekt in der DB gespeichert
-				kinobesuchsplanung.createUmfrage(umfragenametext.getText(), result, this.gruppe, datebox.getValue(),
+				kinobesuchsplanung.createUmfrage(KinobesuchsplanungEntry.AktuellerNutzer.getNutzer(), umfragenametext.getText(), result, this.gruppe, datebox.getValue(),
 						new UmfrageCallback());
 
 			}

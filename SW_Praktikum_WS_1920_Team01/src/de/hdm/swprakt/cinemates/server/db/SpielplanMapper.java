@@ -12,6 +12,7 @@ import de.hdm.swprakt.cinemates.shared.bo.Kino;
 import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 import de.hdm.swprakt.cinemates.shared.bo.OwnedBusinessObject;
 import de.hdm.swprakt.cinemates.shared.bo.Spielplan;
+import de.hdm.swprakt.cinemates.shared.bo.Spielzeit;
 
 
 /**
@@ -123,6 +124,30 @@ public class SpielplanMapper extends OwnedBusinessObjectMapper {
 		return null;
 
 	}
+	
+	public Vector<Integer> findBySpielzeit(Spielzeit spielzeit){
+		
+		Connection con = DBConnection.connection();
+		Vector<Integer> spielplan = new Vector<Integer>();
+		
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `spielplan_spielzeit` WHERE (`spielzeit_id` = " + spielzeit.getID() + ") ");
+		
+			while (rs.next()) {
+				int sp_id = rs.getInt("spielplan_id");
+				spielplan.add(sp_id);
+
+			}
+			
+		} catch (Exception exc) {
+			exc.printStackTrace();
+		}
+
+		return spielplan;
+			
+	}
+	
 
 	public Spielplan insert(Spielplan spielplan) {
 

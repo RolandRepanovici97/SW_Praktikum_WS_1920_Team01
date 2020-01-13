@@ -247,7 +247,7 @@ public interface KinoBesuchsplanung extends RemoteService {
 	 * @throws IllegalArgumentException
 	 * @author alina
 	 */
-	public Umfrage createUmfrage(String umfragenname, Film film, Gruppe gruppe, Date datum) throws IllegalArgumentException;
+	public Umfrage createUmfrage(Nutzer nutzer, String umfragenname, Film film, Gruppe gruppe, Date datum) throws IllegalArgumentException;
 
 	/**
 	 * Diese Methode wird aufgerufen, wenn wir alle in der Datenbank gespeicherten

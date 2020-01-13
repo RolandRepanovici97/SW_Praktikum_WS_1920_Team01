@@ -27,11 +27,14 @@ import de.hdm.swprakt.cinemates.client.ClientSideSettings;
 import de.hdm.swprakt.cinemates.server.db.NutzerMapper;
 import de.hdm.swprakt.cinemates.shared.KinoAdministrationAsync;
 import de.hdm.swprakt.cinemates.shared.KinoBesuchsplanungAsync;
+import de.hdm.swprakt.cinemates.shared.bo.Gruppe;
 import de.hdm.swprakt.cinemates.shared.bo.Kino;
 import de.hdm.swprakt.cinemates.shared.bo.Kinokette;
 import de.hdm.swprakt.cinemates.shared.bo.Nutzer;
 import de.hdm.swprakt.cinemates.shared.bo.Spielplan;
 import de.hdm.swprakt.cinemates.client.gui.admin.KinoBearbeitenForm;
+import de.hdm.swprakt.cinemates.client.gui.editor.GruppeDetailsForm;
+import de.hdm.swprakt.cinemates.client.gui.editor.GruppeEditierenForm;
 
 public class KinoketteForm extends HorizontalPanel {
 
@@ -46,8 +49,6 @@ public class KinoketteForm extends HorizontalPanel {
 
 	Kinokette kinoketteEingeloggterBenutzer;
 
-	FlexTable kinos = new FlexTable();
-
 	KinoAdministrationAsync kinoAdministration = ClientSideSettings.getKinoAdministration();
 
 	SpielplanForm sf;
@@ -57,13 +58,18 @@ public class KinoketteForm extends HorizontalPanel {
 	KinoBearbeitenForm kbf;
 
 	AlleKinosEinerKinokette akek;
+	
+	FlowPanel panel;
 
 	public void onLoad() {
 		super.onLoad();
+		
+		
+		
+		panel = new FlowPanel();
+		
 
 		neuesKino.setHTML("<i class=\"fas fa-plus\"></i>");
-		kinos.addStyleName("flexTable");
-		kinos.setCellPadding(10);
 		titel.setText("Meine Kinokette");
 		titel.getElement().setId("TitelElemente");
 		neuesKino.addClickHandler(new kinoAnlegenClickHandler());
@@ -146,21 +152,10 @@ public class KinoketteForm extends HorizontalPanel {
 			public void onSuccess(Vector<Kino> result) {
 				ClientSideSettings.getLogger().severe("Es wurden Kinos gefunden");
 
-				int rowcount = 0;
-
+	
 				for (Kino kino : result) {
-
-					Button spielplanBearbeiten = new Button("Spielplan bearbeiten");
-					Button kinoBearbeiten = new Button("Kino bearbeiten");
-					spielplanBearbeiten.addClickHandler(new spielplanBearbeitenClickHandler(kino));
-					kinoBearbeiten.addClickHandler(new kinoBearbeitenClickHandler(kino));
-
-					kinos.setText(rowcount, 0, kino.toString());
-
-					kinos.setWidget(rowcount, 1, spielplanBearbeiten);
-					kinos.setWidget(rowcount, 2, kinoBearbeiten);
-
-					rowcount++;
+					
+					panel.add(new KinoPanel(kino));
 
 				}
 			}
@@ -187,12 +182,60 @@ public class KinoketteForm extends HorizontalPanel {
 		 * RootPanel.get("DetailsPanel").add(kinoketteGrid);
 		 */
 		verticalpanel.add(titel);
-		verticalpanel.add(kinos);
+		verticalpanel.add(panel);
 		verticalpanel.add(neuesKino);
 		this.add(verticalpanel);
 		// RootPanel.get("DetailsPanel").add(kinos);
 
 	}
+	
+	
+	
+	
+	
+	/**
+	 * Diese Nested Class wird zur Repräsentation der Kinos benötigt benötigt.
+	 * 
+	 * @author alina
+	 */
+	class KinoPanel extends VerticalPanel{
+		Kino kino;
+		HorizontalPanel horizontalPanel;
+		
+		// Die Klasse benötigt die zurückgegebene Kino
+
+		public KinoPanel(Kino kino) {
+			this.kino= kino;
+
+		}
+
+		public void onLoad() {
+			super.onLoad();
+
+			// Hinzufügen des Styles
+			this.addStyleName("KinoPanel");
+
+			horizontalPanel = new HorizontalPanel();
+			Label kinoname = new Label();
+			// Setzen des Kinonamens
+			kinoname.setText(kino.getKinoname());
+
+			// Erzeugen der Buttons
+			Button kinoAnzeigen = new Button("Spielplan bearbeiten");
+			Button kinoEditieren = new Button("Kino bearbeiten");
+			
+			kinoAnzeigen.addClickHandler(new spielplanBearbeitenClickHandler(kino));
+			
+			kinoEditieren.addClickHandler(new kinoBearbeitenClickHandler(kino));
+
+			// Hinzufügen der Widgets zum Panel
+			this.add(kinoname);
+			horizontalPanel.add(kinoAnzeigen);
+			horizontalPanel.add(kinoEditieren);
+			this.add(horizontalPanel);
+		}
+	}
+
 
 	/*
 	 * Click handlers und abhängige AsyncCallback Klassen.

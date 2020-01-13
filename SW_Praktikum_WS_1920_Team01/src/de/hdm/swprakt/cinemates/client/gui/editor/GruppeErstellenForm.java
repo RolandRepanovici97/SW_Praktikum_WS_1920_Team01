@@ -13,6 +13,7 @@ import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.TextBox;
@@ -61,6 +62,7 @@ public class GruppeErstellenForm extends HorizontalPanel {
 	private Vector<SuggestBox> mitgliederfelder = new Vector<SuggestBox>();;
 	private int rowCount;
 	private MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
+	private Vector<String> cinematesNutzer = new Vector<String>();
 	   
 	public void onLoad() {
 		super.onLoad();
@@ -135,9 +137,15 @@ public class GruppeErstellenForm extends HorizontalPanel {
 			
 			for (SuggestBox feld : mitgliederfelder) {
 				
+				if(cinematesNutzer.contains(feld.getText().trim())) {
+					gruppenmitglieder.add(feld.getText().trim());
+					ClientSideSettings.getLogger().severe("der Nutzer " +  feld.getText().trim()  + " wurde erkannt");
+				}
+				
+				else {
+					Window.alert("der Nutzer " +  feld.getText().trim()  + " wurde nicht erkannt");
+				}
 			
-
-			gruppenmitglieder.add(feld.getText().trim());
 				
 			}
 			
@@ -202,7 +210,9 @@ public class GruppeErstellenForm extends HorizontalPanel {
 			ClientSideSettings.getLogger().severe(result.toString());
 			Window.alert("Die Gruppe wurde erfolgreich erstellt.");
 	
-			//Window.Location.reload();
+			RootPanel.get("DetailsPanel").clear();
+			GruppenAnzeigenForm graf = new GruppenAnzeigenForm();
+			RootPanel.get("DetailsPanel").add(graf);
 
 		}
 
@@ -222,6 +232,7 @@ public class GruppeErstellenForm extends HorizontalPanel {
 		
 			for(Nutzer n : result) {
 				oracle.add(n.getEmail());
+				cinematesNutzer.add(n.getEmail());
 			}
 			
 		}

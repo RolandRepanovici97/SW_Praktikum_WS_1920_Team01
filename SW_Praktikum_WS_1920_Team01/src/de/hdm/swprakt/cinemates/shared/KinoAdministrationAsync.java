@@ -43,7 +43,7 @@ public interface KinoAdministrationAsync {
 
 	void getAllFilme(AsyncCallback<Vector<Film>> callback);
 
-	void createSpielzeit(int spielplanID, int filmID, Date zeitpunkt, AsyncCallback<Spielzeit> callback);
+	void createSpielzeit(Nutzer nutzer, int spielplanID, int filmID, Date zeitpunkt, AsyncCallback<Spielzeit> callback);
 
 	void deleteSpielzeit(Spielzeit sz, AsyncCallback<Void> callback);
 

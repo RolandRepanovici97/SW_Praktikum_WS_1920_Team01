@@ -798,11 +798,11 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 	 * @author Ömer
 	 * @author alina
 	 */
-	public Spielzeit createSpielzeit(int spielplanID, int filmID, Date zeitpunkt) throws IllegalArgumentException {
+	public Spielzeit createSpielzeit(Nutzer nutzer, int spielplanID, int filmID, Date zeitpunkt) throws IllegalArgumentException {
 
 		// Erstellen eines neuen Spielplanobejkts
 		Spielzeit spielzeit = new Spielzeit();
-
+		spielzeit.setOwnerID(nutzer.getID());
 		spielzeit.setSpielplanID(spielplanID);
 		spielzeit.setFilmID(filmID);
 		spielzeit.setZeitpunkt(zeitpunkt);
@@ -815,6 +815,8 @@ public class KinoAdministrationImpl extends RemoteServiceServlet implements Kino
 
 		// Objekt in der DB speichern.
 		this.spielzeitMapper.insert(spielzeit);
+		
+		this.spielzeitMapper.insertSpielzeitToSpielplan(spielzeit.getID(), spielplanID);
 		// Filmnummer wird hier richtig eingesetzt
 
 		// Wir geben den erstellten Spielplan zurück

@@ -422,7 +422,7 @@ public interface KinoAdministration extends RemoteService {
 	 * @author alina
 	 */
 
-	public Spielzeit createSpielzeit(int spielplanID, int filmID, Date zeitpunkt) throws IllegalArgumentException;
+	public Spielzeit createSpielzeit(Nutzer nutzer, int spielplanID, int filmID, Date zeitpunkt) throws IllegalArgumentException;
 
 	/**
 	 * Diese Methode wird aufgerufen, wenn eine Spielzeit gelöscht werden soll

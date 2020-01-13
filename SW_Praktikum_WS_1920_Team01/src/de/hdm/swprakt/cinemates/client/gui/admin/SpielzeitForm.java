@@ -25,6 +25,7 @@ import com.google.gwt.user.datepicker.client.DateBox;
 import com.google.gwt.user.datepicker.client.DatePicker;
 
 import de.hdm.swprakt.cinemates.client.ClientSideSettings;
+import de.hdm.swprakt.cinemates.client.KinoAdministrationEntry;
 import de.hdm.swprakt.cinemates.shared.KinoAdministration;
 import de.hdm.swprakt.cinemates.shared.KinoAdministrationAsync;
 import de.hdm.swprakt.cinemates.shared.bo.Film;
@@ -248,7 +249,7 @@ public class SpielzeitForm extends HorizontalPanel {
 				date.setMinutes(minutebox.getValue());
 				
 
-				kinoAdministration.createSpielzeit(result.getSpielplanID(), film.getID(), date,
+				kinoAdministration.createSpielzeit(KinoAdministrationEntry.AktuellerNutzer.getNutzer(), result.getSpielplanID(), film.getID(), date,
 						new SpielzeitErstellenCallback());
 
 			}

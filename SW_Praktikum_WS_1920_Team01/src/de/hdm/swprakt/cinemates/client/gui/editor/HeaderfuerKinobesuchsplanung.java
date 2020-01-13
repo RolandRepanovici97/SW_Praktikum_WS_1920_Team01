@@ -58,13 +58,15 @@ public class HeaderfuerKinobesuchsplanung extends HorizontalPanel {
 		 * + Zunächst die Instantiierung der einzelenen Widgets/Buttons
 		 * 
 		 */
-		adminButton = new Button("Kinoadministration");
+		adminButton = new Button("Zur Kinoadministration");
 		adminButton.getElement().setId("adminbutton");
 		nutzer = new Button("Nutzer");
 		nutzer.setHTML("<i class=\"fas fa-user\"></i>");
 		nutzer.setSize("80px", "80px");
 		nutzer.getElement().setId("NutzerButton");
-		planerButton = new Button("Kinobesuchsplanung");
+		planerButton = new Button();
+		planerButton.setHTML("<i class=\"fas fa-sync\"></i>");
+		planerButton.setSize("80px", "80px");
 		planerButton.getElement().setId("planerbutton");
 		logo = new Image("images/CineMates Logo.jpg");
 		logo.setWidth("150px");
@@ -82,11 +84,11 @@ public class HeaderfuerKinobesuchsplanung extends HorizontalPanel {
 		 * 
 		 */
 		this.add(logo);
-		this.add(planerButton);
 		this.add(adminButton);
 		RootPanel.get("MenuBar").add(nutzer);
 		RootPanel.get("MenuBar").add(gruppe);
 		RootPanel.get("MenuBar").add(logout);
+		RootPanel.get("MenuBar").add(planerButton);
 
 		/**
 		 * Auf den Button, welcher zunächst den Nutzernamen darstellen soll, soll ein

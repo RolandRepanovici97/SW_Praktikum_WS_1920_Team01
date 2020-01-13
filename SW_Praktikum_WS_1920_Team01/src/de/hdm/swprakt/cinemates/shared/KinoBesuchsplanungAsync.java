@@ -35,7 +35,7 @@ public interface KinoBesuchsplanungAsync {
 
 	void createNutzer(String email, String nutzername, AsyncCallback<Nutzer> callback);
 
-	void createGruppe(Nutzer nutzer, String gruppenname, Vector<Nutzer> gruppenmitglieder,
+	void createGruppe(Nutzer nutzer, String gruppenname, Vector<String> gruppenmitglieder,
 			AsyncCallback<Gruppe> callback);
 
 	void showAllUmfrage(AsyncCallback<Vector<Umfrage>> callback);

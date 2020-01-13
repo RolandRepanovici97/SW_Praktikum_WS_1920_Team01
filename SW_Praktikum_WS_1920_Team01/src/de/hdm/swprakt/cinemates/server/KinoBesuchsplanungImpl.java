@@ -396,7 +396,7 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 	 * @author alina
 	 */
 
-	public Gruppe createGruppe(Nutzer nutzer, String gruppenname, Vector<Nutzer> gruppenmitglieder)
+	public Gruppe createGruppe(Nutzer nutzer, String gruppenname, Vector<String> gruppenmitglieder)
 			throws IllegalArgumentException {
 
 		// Erstellen der des neuen Gruppenobjekts
@@ -422,8 +422,8 @@ public class KinoBesuchsplanungImpl extends RemoteServiceServlet implements Kino
 		if (gruppenmitglieder != null) {
 
 			// Iteration durch den Vector, um IDs zu bestimmen
-			for (Nutzer n : gruppenmitglieder) {
-				int id = n.getID();
+			for (String n : gruppenmitglieder) {
+				int id = nutzerMapper.findByEmail(n).getID();
 				
 
 				// Hinzufügen der IDs zum Zielvector, welcher später das Argument für das

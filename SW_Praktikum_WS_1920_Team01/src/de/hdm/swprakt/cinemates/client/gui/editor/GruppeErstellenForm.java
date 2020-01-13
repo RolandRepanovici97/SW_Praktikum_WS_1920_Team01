@@ -61,7 +61,6 @@ public class GruppeErstellenForm extends HorizontalPanel {
 	private Vector<SuggestBox> mitgliederfelder = new Vector<SuggestBox>();;
 	private int rowCount;
 	private MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
-	private Vector<Nutzer> nutzerCinemates = new Vector<Nutzer>();
 	   
 	public void onLoad() {
 		super.onLoad();
@@ -132,27 +131,14 @@ public class GruppeErstellenForm extends HorizontalPanel {
 		public void onClick(ClickEvent event) {
 		
 			
-			Vector<Nutzer> gruppenmitglieder = new Vector<Nutzer>();
+			Vector<String> gruppenmitglieder = new Vector<String>();
 			
 			for (SuggestBox feld : mitgliederfelder) {
+				
+			
 
-				kinobesuchsplanung.findNutzerByEmail(feld.getText().trim(), new AsyncCallback<Nutzer>() {
-
-					@Override
-					public void onFailure(Throwable caught) {
-						ClientSideSettings.getLogger().severe("Der Nutzer konnte nicht gefunden werden");
-						
-					}
-
-					@Override
-					public void onSuccess(Nutzer result) {
-						
-						gruppenmitglieder.add(result);
-						ClientSideSettings.getLogger().severe(result.toString());
-						
-					}
-					
-				});
+			gruppenmitglieder.add(feld.getText().trim());
+				
 			}
 			
 			
@@ -216,7 +202,7 @@ public class GruppeErstellenForm extends HorizontalPanel {
 			ClientSideSettings.getLogger().severe(result.toString());
 			Window.alert("Die Gruppe wurde erfolgreich erstellt.");
 	
-			Window.Location.reload();
+			//Window.Location.reload();
 
 		}
 

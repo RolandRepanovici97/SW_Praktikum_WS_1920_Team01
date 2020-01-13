@@ -192,7 +192,7 @@ public interface KinoBesuchsplanung extends RemoteService {
 	 * @throws IllegalArgumentException
 	 * @author alina
 	 */
-	public Gruppe createGruppe(Nutzer nutzer, String gruppenname, Vector<Nutzer> gruppenmitglieder)
+	public Gruppe createGruppe(Nutzer nutzer, String gruppenname, Vector<String> gruppenmitglieder)
 			throws IllegalArgumentException;
 
 	/*

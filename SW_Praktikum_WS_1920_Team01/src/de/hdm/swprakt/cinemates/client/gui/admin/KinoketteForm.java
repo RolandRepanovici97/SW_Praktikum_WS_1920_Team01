@@ -247,7 +247,8 @@ public class KinoketteForm extends HorizontalPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			RootPanel.get("DetailsPanel").clear();
-			spvf = new SpielplanverwaltungForm(übergabekino);
+			spvf = new SpielplanverwaltungForm();
+			spvf.setGewähltesKino(übergabekino);
 			RootPanel.get("DetailsPanel").add(spvf);
 
 		}

@@ -15,8 +15,9 @@ public class SpielplanverwaltungForm extends TabPanel{
 	
 	KinoAdministrationAsync kinoAdministration = ClientSideSettings.getKinoAdministration();
 
-	public SpielplanverwaltungForm(Kino kino) {
-		this.gewähltesKino= kino;
+
+	public void setGewähltesKino(Kino gewähltesKino) {
+		this.gewähltesKino = gewähltesKino;
 	}
 
 

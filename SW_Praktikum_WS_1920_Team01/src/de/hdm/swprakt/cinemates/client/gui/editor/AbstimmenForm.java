@@ -10,22 +10,15 @@ import java.util.Vector;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.DoubleClickEvent;
-import com.google.gwt.event.dom.client.DoubleClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RadioButton;
-import com.google.gwt.user.client.ui.RootPanel;
-
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.swprakt.cinemates.client.ClientSideSettings;
-import de.hdm.swprakt.cinemates.client.gui.editor.UmfrageAnzeige.UmfrageeintragCallback.Kinocallback;
-import de.hdm.swprakt.cinemates.client.gui.editor.UmfrageAnzeige.UmfrageeintragCallback.SpielzeitCallback;
 import de.hdm.swprakt.cinemates.shared.KinoAdministrationAsync;
 import de.hdm.swprakt.cinemates.shared.KinoBesuchsplanungAsync;
 import de.hdm.swprakt.cinemates.shared.bo.Film;
@@ -258,7 +251,7 @@ public class AbstimmenForm extends VerticalPanel {
 
 	}
 	/**
-	 * Diese Klasse erweitert das Widget CheckBox und dient zur Darstellung
+	 * Diese Klasse erweitert das Widget Radio-Button und dient zur Darstellung
 	 * der Ja-Checkbox.
 	 * @author alina
 	 *
@@ -276,7 +269,7 @@ public class AbstimmenForm extends VerticalPanel {
 	}
 
 	/**
-	 * Diese Klasse erweitert das Widget CheckBox und dient zur Darstellung
+	 * Diese Klasse erweitert das Widget Radio-Button und dient zur Darstellung
 	 * der Nein-Checkbox.
 	 * @author alina
 	 *

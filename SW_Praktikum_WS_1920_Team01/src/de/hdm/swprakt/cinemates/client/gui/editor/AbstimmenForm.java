@@ -219,6 +219,7 @@ public class AbstimmenForm extends VerticalPanel {
 				Button auswahlAufheben = new Button("Aufheben");
 				auswahlAufheben.addClickHandler(new ClickHandler() {
 
+					@SuppressWarnings("deprecation")
 					@Override
 					public void onClick(ClickEvent arg0) {
 						
